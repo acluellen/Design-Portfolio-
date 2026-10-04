@@ -1,0 +1,29 @@
+---
+// TODO: Aaron to add contact links (email, LinkedIn).
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <p>Aaron · Research led product designer · Oakland, California</p>
+    <p>Contact links coming soon.</p>
+    <p class="site-footer__year">© {year}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-block-start: var(--space-10);
+    border-top: var(--rule-thin) solid var(--color-rule);
+  }
+
+  .site-footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-3) var(--space-6);
+    padding-block: var(--space-6);
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
+  }
+</style>

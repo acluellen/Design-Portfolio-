@@ -1,0 +1,100 @@
+---
+import type { CaseStudy } from "../../lib/case-studies";
+
+interface Props {
+  study: CaseStudy;
+}
+
+const { study } = Astro.props;
+const { title, summary, role, timeline, cover, status } = study.data;
+const href = `/work/${study.id}/`;
+---
+
+<article class="case-card">
+  <a class="case-card__link" href={href}>
+    {
+      cover && (
+        <img class="case-card__cover" src={cover.src} alt={cover.alt} loading="lazy" />
+      )
+    }
+    <div class="case-card__text">
+      <p class="label case-card__meta">
+        <span>{role}</span>
+        <span>{timeline}</span>
+        {status === "draft" && <span class="case-card__draft">Draft</span>}
+      </p>
+      <h2 class="case-card__title">{title}</h2>
+      <p class="case-card__summary">{summary}</p>
+      <span class="case-card__cta">Read the case study</span>
+    </div>
+  </a>
+</article>
+
+<style>
+  .case-card {
+    border-top: var(--rule-thin) solid var(--color-rule-strong);
+  }
+
+  .case-card__link {
+    display: grid;
+    gap: var(--space-5);
+    padding-block: var(--space-6) var(--space-7);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  @media (min-width: 48rem) {
+    .case-card__link:has(.case-card__cover) {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-7);
+    }
+  }
+
+  .case-card__cover {
+    width: 100%;
+    border: var(--rule-thin) solid var(--color-rule);
+  }
+
+  .case-card__text {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+    min-width: 0;
+  }
+
+  .case-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+  }
+
+  .case-card__draft {
+    color: var(--color-accent);
+  }
+
+  .case-card__title {
+    font-size: var(--step-4);
+  }
+
+  .case-card__summary {
+    max-width: var(--measure-reading);
+    font-size: var(--step-1);
+    line-height: var(--leading-snug);
+    color: var(--color-ink-muted);
+  }
+
+  .case-card__cta {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-decoration-thickness: var(--underline-thickness);
+    text-underline-offset: var(--underline-offset);
+  }
+
+  .case-card__link:hover .case-card__title {
+    color: var(--color-accent-hover);
+  }
+
+  .case-card__link:hover .case-card__cta {
+    color: var(--color-accent-hover);
+  }
+</style>

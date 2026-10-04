@@ -1,34 +1,69 @@
 ---
-// Phase 1 placeholder. Phase 3 replaces this with the real home page.
-import BaseLayout from "../layouts/BaseLayout.astro";
+import PageLayout from "../layouts/PageLayout.astro";
+import CaseCard from "../components/site/CaseCard.astro";
 import { getCaseStudies } from "../lib/case-studies";
 
 const studies = await getCaseStudies();
 ---
 
-<BaseLayout title="Aaron">
-  <main class="container">
-    <div class="reading flow" style="padding-block: var(--space-9)">
-      <p class="label">Scaffold check</p>
-      <h1>Research led product design, set in calm type.</h1>
-      <p>
-        This page exists to check the base layout, fonts, and tokens. Headlines use Source Serif 4. Body
-        text uses Inter. Links like <a href="#">this one</a> use the single terracotta accent.
-      </p>
-      <hr />
-      <h2>Second level heading</h2>
-      <p>
-        Body copy sits in a reading column of about 68 characters, with generous line height and thin
-        rules in place of shadowed cards.
-      </p>
-      <blockquote>A quote set in the display face, for scale.</blockquote>
-      <h3>Third level heading</h3>
-      <ul>
-        <li>List item one</li>
-        <li>List item two</li>
-      </ul>
-      <hr />
-      <p class="label">Case studies in the collection: {studies.length}</p>
-    </div>
-  </main>
-</BaseLayout>
+<PageLayout title="Aaron">
+  <section class="container intro">
+    <p class="label">Research led product designer · Oakland</p>
+    <h1 class="intro__title">
+      {/* TODO: Aaron to write the headline. */}
+      Headline placeholder. Aaron will write this line.
+    </h1>
+    <p class="intro__lede">
+      {/* TODO: Aaron to write a short intro, two or three sentences. */}
+      Intro placeholder. A short paragraph about how Aaron works will go here.
+    </p>
+  </section>
+
+  <section class="container work" aria-labelledby="work-heading">
+    <h2 id="work-heading" class="label work__heading">Selected work</h2>
+    {
+      studies.length > 0 ? (
+        <div class="work__list">
+          {studies.map((study) => (
+            <CaseCard study={study} />
+          ))}
+        </div>
+      ) : (
+        <p class="work__empty">Case studies are on the way.</p>
+      )
+    }
+  </section>
+</PageLayout>
+
+<style>
+  .intro {
+    display: grid;
+    gap: var(--space-5);
+    padding-block: var(--space-9) var(--space-8);
+  }
+
+  .intro__title {
+    max-width: 16ch;
+  }
+
+  .intro__lede {
+    max-width: var(--measure-reading);
+    font-size: var(--step-1);
+    line-height: var(--leading-snug);
+    color: var(--color-ink-muted);
+  }
+
+  .work__heading {
+    font-family: var(--font-text);
+    letter-spacing: var(--tracking-label);
+    margin-block-end: var(--space-4);
+  }
+
+  .work__list {
+    border-bottom: var(--rule-thin) solid var(--color-rule-strong);
+  }
+
+  .work__empty {
+    color: var(--color-ink-muted);
+  }
+</style>
