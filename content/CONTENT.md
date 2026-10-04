@@ -35,6 +35,8 @@ Available in every case study with no imports.
 - `<Figure src alt caption />` for images. `alt` is required.
 - `<Quote source>` for participant or stakeholder quotes. `source` is required. Participants are anonymous by role.
 - `<Stat value label source />` for numbers. `source` is required. Use `source="untraceable"` when the number cannot be traced; it renders "Source not traceable."
+- `<StatGroup>` lays out several `<Stat>` side by side.
+- A missing `source` on `<Quote>` or `<Stat>` fails the build. `source="TODO"` builds but renders "Source needed" in the accent color, so it stands out in review.
 - `<Callout>` for one key point per section at most.
 - `<Contribution>` with `<Mine>` and `<Team>` inside, to split ownership honestly.
 

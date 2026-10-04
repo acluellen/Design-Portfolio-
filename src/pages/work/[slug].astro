@@ -2,6 +2,7 @@
 import { render } from "astro:content";
 import CaseStudyLayout from "../../layouts/CaseStudyLayout.astro";
 import { getCaseStudies } from "../../lib/case-studies";
+import { mdxComponents } from "../../components/mdx";
 
 export async function getStaticPaths() {
   const studies = await getCaseStudies();
@@ -16,5 +17,5 @@ const { Content } = await render(study);
 ---
 
 <CaseStudyLayout study={study} prev={prev} next={next}>
-  <Content />
+  <Content components={mdxComponents} />
 </CaseStudyLayout>

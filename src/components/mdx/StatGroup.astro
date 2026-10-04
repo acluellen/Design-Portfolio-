@@ -1,0 +1,15 @@
+---
+// Lays out several <Stat> side by side. Optional.
+---
+
+<div class="stat-group">
+  <slot />
+</div>
+
+<style>
+  .stat-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+    gap: var(--space-5);
+  }
+</style>

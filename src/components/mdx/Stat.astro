@@ -1,0 +1,59 @@
+---
+import { checkSource } from "./sources";
+
+interface Props {
+  value: string | number;
+  label: string;
+  /** Where the number comes from. Required. Use "untraceable" when it cannot be traced. */
+  source: string;
+}
+
+const { value, label, source } = Astro.props;
+const state = checkSource("Stat", source);
+---
+
+<figure class="stat">
+  <p class="stat__value">{value}</p>
+  <p class="stat__label">{label}</p>
+  <figcaption class:list={["stat__source", { "is-todo": state === "todo" }]}>
+    {
+      state === "untraceable"
+        ? "Source not traceable."
+        : state === "todo"
+          ? "Source needed"
+          : `Source: ${source}`
+    }
+  </figcaption>
+</figure>
+
+<style>
+  .stat {
+    display: grid;
+    gap: var(--space-1);
+    align-content: start;
+    padding-block-start: var(--space-4);
+    border-top: var(--rule-thin) solid var(--color-rule-strong);
+  }
+
+  .stat__value {
+    font-family: var(--font-display);
+    font-size: var(--step-5);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+
+  .stat__label {
+    line-height: var(--leading-snug);
+  }
+
+  .stat__source {
+    margin-block-start: var(--space-2);
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
+  }
+
+  .is-todo {
+    color: var(--color-accent);
+  }
+</style>

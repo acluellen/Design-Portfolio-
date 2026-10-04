@@ -1,0 +1,15 @@
+---
+// Wraps <Mine> and <Team> to split ownership honestly.
+---
+
+<section class="contribution" aria-label="Contribution">
+  <slot />
+</section>
+
+<style>
+  .contribution {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: var(--space-6);
+  }
+</style>

@@ -8,9 +8,14 @@ import "../styles/global.css";
 interface Props {
   title: string;
   description?: string;
+  noindex?: boolean;
 }
 
-const { title, description = "Aaron, research led product designer in Oakland." } = Astro.props;
+const {
+  title,
+  description = "Aaron, research led product designer in Oakland.",
+  noindex = false,
+} = Astro.props;
 const siteName = "Aaron";
 const fullTitle = title === siteName ? title : `${title} · ${siteName}`;
 ---
@@ -22,6 +27,7 @@ const fullTitle = title === siteName ? title : `${title} · ${siteName}`;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </head>
   <body>

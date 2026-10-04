@@ -1,0 +1,35 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  caption?: string;
+}
+
+const { src, alt, caption } = Astro.props;
+
+if (alt === undefined) {
+  throw new Error(`<Figure src="${src}"> is missing alt text. Add alt="" only if the image is decorative.`);
+}
+---
+
+<figure class="figure">
+  <img src={src} alt={alt} loading="lazy" />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .figure {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .figure img {
+    width: 100%;
+    border: var(--rule-thin) solid var(--color-rule);
+  }
+
+  .figure figcaption {
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
+  }
+</style>

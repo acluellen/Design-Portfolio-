@@ -2,6 +2,32 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-04 · Phase 2: Components and styleguide
+
+### MDX components (`src/components/mdx/`)
+- `Figure`: image with a thin rule border and a muted caption. Missing `alt` fails the build.
+- `Quote`: display serif quote between thin rules, with the source below in muted ink.
+- `Stat`: large serif number, label, then source. A thin strong rule sits above it.
+- `StatGroup`: added to lay out several stats in a row that wraps on phones. It was not in the spec, so tell Claude if it should go.
+- `Callout`: a thick terracotta rule on top, a thin rule below, and a "Key point" label. The label can be changed with `label`.
+- `Contribution` with `Mine` and `Team`: two columns that stack on phones. `Mine` gets a thick terracotta rule and the label "What I owned". `Team` gets a thick neutral rule and "What the team owned". Both labels can be changed with `label`.
+
+### Sources
+- `Quote` and `Stat` throw when `source` is missing or empty, so the build fails with a message naming the component. Verified: exit code 1.
+- `source="untraceable"` renders "Source not traceable."
+- `source="TODO"` builds and renders "Source needed" in terracotta, so drafts can carry placeholders and still stand out in review.
+
+### Global mapping
+- `src/components/mdx/index.ts` exports `mdxComponents`. The case study route passes it to `<Content components={...} />`, so case studies need no imports. Verified with a test file.
+
+### Styleguide (`/styleguide`)
+- Reads `tokens.css` as raw text and lists every token from the first `:root` block. New tokens show up with no edits to the page.
+- Sections: color swatches, font families, type scale, weights and leading, base elements, space bars, layout and rule tokens, CaseCard with sample data, and every MDX component with each source state.
+- Buttons switch between system, light, and dark themes.
+- The page is marked `noindex` and is not linked from the site nav.
+- `BaseLayout` and `PageLayout` gained a `noindex` prop for this.
+- `public/styleguide/sample-figure.svg` is a placeholder image with raw hex values, since an image cannot read tokens.
+
 ## 2026-10-04 · Home page and site shell (Phase 3 pulled forward)
 
 Aaron asked for a fuller browser preview, so the home page, case study page, and About page were built before Phase 2's MDX components and styleguide.

@@ -1,0 +1,471 @@
+---
+// Every token and every component on one screen. This is how design changes get reviewed.
+// Tokens are read straight from tokens.css, so new tokens appear here with no edits.
+import PageLayout from "../layouts/PageLayout.astro";
+import CaseCard from "../components/site/CaseCard.astro";
+import {
+  Figure,
+  Quote,
+  Stat,
+  StatGroup,
+  Callout,
+  Contribution,
+  Mine,
+  Team,
+} from "../components/mdx";
+import type { CaseStudy } from "../lib/case-studies";
+import tokensCss from "../styles/tokens.css?raw";
+
+// Light values from the first :root block.
+const rootBlock = tokensCss.match(/:root\s*{([\s\S]*?)}/)?.[1] ?? "";
+const tokens = [...rootBlock.matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)].map(([, name, value]) => ({
+  name,
+  value: value.trim().replace(/\s+/g, " "),
+}));
+
+const group = (test: (name: string) => boolean) => tokens.filter((t) => test(t.name));
+const colors = group((n) => n.startsWith("--color-"));
+const fonts = group((n) => n.startsWith("--font-"));
+const steps = group((n) => n.startsWith("--step-"));
+const weights = group((n) => n.startsWith("--weight-"));
+const leading = group((n) => n.startsWith("--leading-") || n.startsWith("--tracking-"));
+const space = group((n) => n.startsWith("--space-"));
+const used = new Set([...colors, ...fonts, ...steps, ...weights, ...leading, ...space].map((t) => t.name));
+const other = tokens.filter((t) => !used.has(t.name));
+
+const sampleStudy = {
+  id: "sample",
+  data: {
+    title: "Sample case study",
+    summary: "A sample summary shows how one or two sentences sit on the card.",
+    role: "Sample role",
+    team: [],
+    timeline: "Sample timeline",
+    tools: [],
+    order: 0,
+    status: "draft",
+    tags: [],
+  },
+} as unknown as CaseStudy;
+
+const sections = [
+  ["color", "Color"],
+  ["type", "Type"],
+  ["space", "Space"],
+  ["other", "Layout, rules, motion"],
+  ["site", "Site components"],
+  ["mdx", "Case study components"],
+];
+---
+
+<PageLayout title="Styleguide" noindex>
+  <div class="container sg">
+    <header class="sg__intro">
+      <p class="label">Styleguide</p>
+      <h1>Tokens and components</h1>
+      <p class="sg__lede">
+        Every value from <code>tokens.css</code> and every component, rendered live. Switch the theme to
+        review both.
+      </p>
+      <div class="sg__theme" role="group" aria-label="Theme">
+        <button type="button" data-set-theme="system" aria-pressed="true">System</button>
+        <button type="button" data-set-theme="light" aria-pressed="false">Light</button>
+        <button type="button" data-set-theme="dark" aria-pressed="false">Dark</button>
+      </div>
+      <nav aria-label="Styleguide sections">
+        <ul class="sg__toc">
+          {sections.map(([id, label]) => <li><a href={`#${id}`}>{label}</a></li>)}
+        </ul>
+      </nav>
+    </header>
+
+    <section id="color" class="sg__section">
+      <h2>Color</h2>
+      <ul class="sg__swatches">
+        {
+          colors.map((t) => (
+            <li class="sg__swatch">
+              <span class="sg__chip" style={`background: var(${t.name})`} />
+              <code>{t.name}</code>
+              <span class="sg__value">{t.value}</span>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="sg__note">Chips show the active theme. Values listed are the light theme.</p>
+    </section>
+
+    <section id="type" class="sg__section">
+      <h2>Type</h2>
+      <h3 class="sg__sub">Families</h3>
+      <ul class="sg__rows">
+        {
+          fonts.map((t) => (
+            <li class="sg__row">
+              <span class="sg__fontsample" style={`font-family: var(${t.name})`}>
+                Field notes from Oakland, 0123456789
+              </span>
+              <code>{t.name}</code>
+            </li>
+          ))
+        }
+      </ul>
+
+      <h3 class="sg__sub">Scale</h3>
+      <ul class="sg__rows">
+        {
+          steps
+            .slice()
+            .reverse()
+            .map((t) => (
+              <li class="sg__row">
+                <span class="sg__stepsample" style={`font-size: var(${t.name})`}>
+                  Research shapes the work
+                </span>
+                <code>{t.name}</code>
+              </li>
+            ))
+        }
+      </ul>
+
+      <h3 class="sg__sub">Weight, leading, tracking</h3>
+      <dl class="sg__table">
+        {
+          [...weights, ...leading].map((t) => (
+            <div>
+              <dt><code>{t.name}</code></dt>
+              <dd>{t.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+
+      <h3 class="sg__sub">Base elements</h3>
+      <div class="reading flow sg__base">
+        <h1>Heading one</h1>
+        <h2>Heading two</h2>
+        <h3>Heading three</h3>
+        <h4>Heading four</h4>
+        <p>
+          Body text in the reading column, with <a href="#type">a link</a>, <strong>strong text</strong>,
+          <em>emphasis</em>, and <code>inline code</code>.
+        </p>
+        <ul>
+          <li>Unordered list item</li>
+          <li>Second item</li>
+        </ul>
+        <ol>
+          <li>Ordered list item</li>
+          <li>Second item</li>
+        </ol>
+        <blockquote>A plain blockquote, set in the display face.</blockquote>
+        <hr />
+        <p class="label">Label style</p>
+      </div>
+    </section>
+
+    <section id="space" class="sg__section">
+      <h2>Space</h2>
+      <ul class="sg__rows">
+        {
+          space.map((t) => (
+            <li class="sg__row sg__row--space">
+              <span class="sg__bar" style={`inline-size: var(${t.name})`} />
+              <code>{t.name}</code>
+              <span class="sg__value">{t.value}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section id="other" class="sg__section">
+      <h2>Layout, rules, motion</h2>
+      <dl class="sg__table">
+        {
+          other.map((t) => (
+            <div>
+              <dt><code>{t.name}</code></dt>
+              <dd>{t.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+      <div class="sg__rules">
+        <div style="border-top: var(--rule-thin) solid var(--color-rule)"><code>--rule-thin</code> with <code>--color-rule</code></div>
+        <div style="border-top: var(--rule-thin) solid var(--color-rule-strong)"><code>--rule-thin</code> with <code>--color-rule-strong</code></div>
+        <div style="border-top: var(--rule-thick) solid var(--color-accent)"><code>--rule-thick</code> with <code>--color-accent</code></div>
+      </div>
+      <p class="sg__note">
+        Focus ring: press Tab to see it on <a href="#other">this link</a>.
+      </p>
+    </section>
+
+    <section id="site" class="sg__section">
+      <h2>Site components</h2>
+      <p class="sg__note">Header and Footer frame this page. Below is CaseCard with sample data.</p>
+      <h3 class="sg__sub">CaseCard</h3>
+      <CaseCard study={sampleStudy} />
+    </section>
+
+    <section id="mdx" class="sg__section">
+      <h2>Case study components</h2>
+      <p class="sg__note">Available in every case study with no imports.</p>
+
+      <div class="reading sg__components">
+        <div class="sg__component">
+          <h3 class="sg__sub"><code>&lt;Figure&gt;</code></h3>
+          <Figure
+            src="/styleguide/sample-figure.svg"
+            alt="Sample placeholder image"
+            caption="Caption text sits below the image in muted ink."
+          />
+        </div>
+
+        <div class="sg__component">
+          <h3 class="sg__sub"><code>&lt;Quote&gt;</code>, sourced</h3>
+          <Quote source="Sample participant role">
+            Sample quote text shows how a participant's words sit on the page.
+          </Quote>
+        </div>
+
+        <div class="sg__component">
+          <h3 class="sg__sub"><code>&lt;Quote&gt;</code>, source TODO</h3>
+          <Quote source="TODO">Sample quote still waiting on a source.</Quote>
+        </div>
+
+        <div class="sg__component">
+          <h3 class="sg__sub"><code>&lt;Stat&gt;</code> in a <code>&lt;StatGroup&gt;</code></h3>
+          <StatGroup>
+            <Stat value="12" label="Sourced sample" source="Sample research log" />
+            <Stat value="34" label="Source TODO sample" source="TODO" />
+            <Stat value="56" label="Untraceable sample" source="untraceable" />
+          </StatGroup>
+        </div>
+
+        <div class="sg__component">
+          <h3 class="sg__sub"><code>&lt;Callout&gt;</code></h3>
+          <Callout>
+            <p>One key point per section at most. Sample text.</p>
+          </Callout>
+        </div>
+
+        <div class="sg__component">
+          <h3 class="sg__sub"><code>&lt;Contribution&gt;</code> with <code>&lt;Mine&gt;</code> and <code>&lt;Team&gt;</code></h3>
+          <Contribution>
+            <Mine>
+              <ul>
+                <li>Sample item Aaron owned</li>
+                <li>Another sample item</li>
+              </ul>
+            </Mine>
+            <Team>
+              <ul>
+                <li>Sample item the team owned</li>
+                <li>Another sample item</li>
+              </ul>
+            </Team>
+          </Contribution>
+        </div>
+      </div>
+    </section>
+  </div>
+</PageLayout>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>("[data-set-theme]");
+  const apply = (theme: string) => {
+    if (theme === "system") document.documentElement.removeAttribute("data-theme");
+    else document.documentElement.setAttribute("data-theme", theme);
+    buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.setTheme === theme)));
+  };
+  buttons.forEach((b) => b.addEventListener("click", () => apply(b.dataset.setTheme ?? "system")));
+</script>
+
+<style>
+  .sg {
+    display: grid;
+    gap: var(--space-9);
+    padding-block: var(--space-9) var(--space-8);
+  }
+
+  .sg__intro {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .sg__lede {
+    max-width: var(--measure-reading);
+    font-size: var(--step-1);
+    line-height: var(--leading-snug);
+    color: var(--color-ink-muted);
+  }
+
+  .sg__theme {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .sg__theme button {
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--step--1);
+    background: var(--color-paper);
+    color: var(--color-ink);
+    border: var(--rule-thin) solid var(--color-rule-strong);
+    border-radius: var(--radius-small);
+    cursor: pointer;
+  }
+
+  .sg__theme button[aria-pressed="true"] {
+    background: var(--color-ink);
+    color: var(--color-paper);
+    border-color: var(--color-ink);
+  }
+
+  .sg__toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    padding: 0;
+    list-style: none;
+    font-size: var(--step--1);
+  }
+
+  .sg__section {
+    display: grid;
+    gap: var(--space-5);
+    padding-block-start: var(--space-6);
+    border-top: var(--rule-thin) solid var(--color-rule-strong);
+  }
+
+  .sg__sub {
+    font-size: var(--step-1);
+    margin-block-start: var(--space-4);
+  }
+
+  .sg__note {
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
+  }
+
+  .sg__value {
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+  }
+
+  .sg__swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 1fr));
+    gap: var(--space-5);
+    padding: 0;
+    list-style: none;
+  }
+
+  .sg__swatch {
+    display: grid;
+    gap: var(--space-1);
+    min-width: 0;
+  }
+
+  .sg__swatch code {
+    overflow-wrap: anywhere;
+  }
+
+  .sg__chip {
+    display: block;
+    block-size: var(--space-9);
+    border: var(--rule-thin) solid var(--color-rule);
+    border-radius: var(--radius-small);
+  }
+
+  .sg__rows {
+    display: grid;
+    padding: 0;
+    list-style: none;
+  }
+
+  .sg__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-5);
+    padding-block: var(--space-3);
+    border-bottom: var(--rule-thin) solid var(--color-rule);
+  }
+
+  .sg__row > * {
+    min-width: 0;
+  }
+
+  .sg__row--space {
+    justify-content: start;
+    align-items: center;
+  }
+
+  .sg__fontsample {
+    font-size: var(--step-2);
+  }
+
+  .sg__stepsample {
+    font-family: var(--font-display);
+    line-height: var(--leading-tight);
+    overflow-wrap: anywhere;
+  }
+
+  .sg__bar {
+    display: block;
+    block-size: var(--space-4);
+    background: var(--color-accent);
+  }
+
+  .sg__table {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+    gap: 0 var(--space-6);
+  }
+
+  .sg__table > div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-4);
+    padding-block: var(--space-3);
+    border-bottom: var(--rule-thin) solid var(--color-rule);
+    min-width: 0;
+  }
+
+  .sg__table dd {
+    margin: 0;
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
+    overflow-wrap: anywhere;
+  }
+
+  .sg__rules {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .sg__rules > div {
+    padding-block-start: var(--space-3);
+    font-size: var(--step--1);
+  }
+
+  .sg__base {
+    padding: var(--space-6) 0;
+  }
+
+  .sg__components {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .sg__component {
+    display: grid;
+    gap: var(--space-4);
+  }
+</style>

@@ -1,0 +1,37 @@
+---
+interface Props {
+  label?: string;
+}
+
+const { label = "Key point" } = Astro.props;
+---
+
+<aside class="callout">
+  <p class="label callout__label">{label}</p>
+  <div class="callout__body">
+    <slot />
+  </div>
+</aside>
+
+<style>
+  .callout {
+    display: grid;
+    gap: var(--space-3);
+    padding-block: var(--space-5);
+    border-block: var(--rule-thin) solid var(--color-rule);
+    border-block-start: var(--rule-thick) solid var(--color-accent);
+  }
+
+  .callout__label {
+    color: var(--color-accent);
+  }
+
+  .callout__body {
+    font-size: var(--step-1);
+    line-height: var(--leading-snug);
+  }
+
+  .callout__body > :global(* + *) {
+    margin-block-start: var(--space-3);
+  }
+</style>
