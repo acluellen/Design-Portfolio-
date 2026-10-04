@@ -1,0 +1,30 @@
+---
+import "@fontsource-variable/source-serif-4";
+import "@fontsource-variable/source-serif-4/wght-italic.css";
+import "@fontsource-variable/inter";
+import "../styles/tokens.css";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Aaron, research led product designer in Oakland." } = Astro.props;
+const siteName = "Aaron";
+const fullTitle = title === siteName ? title : `${title} · ${siteName}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

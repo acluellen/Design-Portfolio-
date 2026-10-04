@@ -1,0 +1,195 @@
+/* Resets and base element styles. Every value comes from tokens.css. */
+
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+
+img,
+picture,
+video,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4 {
+  overflow-wrap: break-word;
+}
+
+/* Base */
+html {
+  color-scheme: light dark;
+  background: var(--color-paper);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-text);
+  font-size: var(--step-0);
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-selection);
+  color: var(--color-ink);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--step-5);
+}
+
+h2 {
+  font-size: var(--step-3);
+}
+
+h3 {
+  font-size: var(--step-2);
+  line-height: var(--leading-snug);
+}
+
+h4 {
+  font-size: var(--step-1);
+  line-height: var(--leading-snug);
+}
+
+p,
+li {
+  text-wrap: pretty;
+}
+
+ul,
+ol {
+  padding-inline-start: var(--space-5);
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration-line: underline;
+  text-decoration-thickness: var(--underline-thickness);
+  text-underline-offset: var(--underline-offset);
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+}
+
+:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+hr {
+  border: 0;
+  border-top: var(--rule-thin) solid var(--color-rule);
+}
+
+blockquote {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  line-height: var(--leading-snug);
+}
+
+code,
+kbd,
+pre {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+}
+
+pre {
+  overflow-x: auto;
+  padding: var(--space-4);
+  background: var(--color-paper-raised);
+  border: var(--rule-thin) solid var(--color-rule);
+  border-radius: var(--radius-small);
+}
+
+small {
+  font-size: var(--step--1);
+}
+
+/* Layout helpers */
+.container {
+  width: 100%;
+  max-width: var(--measure-wide);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.reading {
+  max-width: var(--measure-reading);
+}
+
+.flow > * + * {
+  margin-block-start: var(--space-5);
+}
+
+.flow > :is(h2, h3) {
+  margin-block-start: var(--space-8);
+}
+
+.label {
+  font-size: var(--step--1);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

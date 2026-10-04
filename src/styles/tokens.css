@@ -1,0 +1,118 @@
+/*
+ * Design tokens. Every visual value in the site lives here.
+ * DRAFT written by Claude because the original kit file was missing. Aaron to review.
+ */
+
+:root {
+  /* Color: light (warm paper) */
+  --color-paper: #f5f0e8;
+  --color-paper-raised: #efe8dc;
+  --color-ink: #1f1d1a;
+  --color-ink-muted: #5c564d;
+  --color-rule: #d9d0c1;
+  --color-rule-strong: #b8ad9b;
+  --color-accent: #a84a22;
+  --color-accent-hover: #84391a;
+  --color-accent-subtle: #f0dccf;
+  --color-focus: var(--color-accent);
+  --color-selection: var(--color-accent-subtle);
+
+  /* Type families (open fonts, self hosted via Fontsource) */
+  --font-display: "Source Serif 4 Variable", "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-text: "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  /* Type scale (fluid, roughly 1.25 ratio) */
+  --step--1: clamp(0.833rem, 0.81rem + 0.1vw, 0.889rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --step-1: clamp(1.25rem, 1.18rem + 0.35vw, 1.4rem);
+  --step-2: clamp(1.563rem, 1.44rem + 0.6vw, 1.875rem);
+  --step-3: clamp(1.953rem, 1.75rem + 1vw, 2.5rem);
+  --step-4: clamp(2.441rem, 2.1rem + 1.7vw, 3.5rem);
+  --step-5: clamp(3.052rem, 2.5rem + 2.75vw, 4.75rem);
+
+  /* Weights */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+
+  /* Leading and tracking */
+  --leading-tight: 1.1;
+  --leading-snug: 1.3;
+  --leading-body: 1.65;
+  --tracking-tight: -0.015em;
+  --tracking-label: 0.08em;
+
+  /* Space (4px base) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+
+  /* Layout */
+  --measure-reading: 68ch;
+  --measure-wide: 72rem;
+  --gutter: var(--space-4);
+
+  /* Rules and radii */
+  --rule-thin: 1px;
+  --rule-thick: 2px;
+  --radius-small: 2px;
+
+  /* Underlines */
+  --underline-offset: 0.2em;
+  --underline-thickness: 1px;
+
+  /* Focus */
+  --focus-ring: 2px solid var(--color-focus);
+  --focus-offset: 3px;
+
+  /* Motion */
+  --duration-fast: 150ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --gutter: var(--space-6);
+  }
+}
+
+/* Color: dark (warm charcoal) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-paper: #1c1a17;
+    --color-paper-raised: #25221e;
+    --color-ink: #ede6da;
+    --color-ink-muted: #a89f91;
+    --color-rule: #3a352e;
+    --color-rule-strong: #575046;
+    --color-accent: #e08a62;
+    --color-accent-hover: #f0a581;
+    --color-accent-subtle: #3d2a20;
+  }
+}
+
+:root[data-theme="dark"] {
+  --color-paper: #1c1a17;
+  --color-paper-raised: #25221e;
+  --color-ink: #ede6da;
+  --color-ink-muted: #a89f91;
+  --color-rule: #3a352e;
+  --color-rule-strong: #575046;
+  --color-accent: #e08a62;
+  --color-accent-hover: #f0a581;
+  --color-accent-subtle: #3d2a20;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+  }
+}
