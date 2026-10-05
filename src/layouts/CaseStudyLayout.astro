@@ -112,7 +112,7 @@ const { title, summary, role, team, timeline, tools, cover, status } = study.dat
 
   .hero__facts {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
     gap: var(--space-5) var(--space-6);
     margin-block-start: var(--space-5);
     padding-block-start: var(--space-5);
@@ -151,9 +151,19 @@ const { title, summary, role, team, timeline, tools, cover, status } = study.dat
 
   .pager {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
     gap: var(--space-5);
     margin-block-start: var(--space-9);
+  }
+
+  @media (min-width: 48rem) {
+    .pager {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .pager__link--next {
+      grid-column: 2;
+      text-align: end;
+    }
   }
 
   .pager__link {
@@ -163,11 +173,6 @@ const { title, summary, role, team, timeline, tools, cover, status } = study.dat
     border-top: var(--rule-thin) solid var(--color-rule-strong);
     color: inherit;
     text-decoration: none;
-  }
-
-  .pager__link--next {
-    text-align: end;
-    grid-column: -2;
   }
 
   .pager__title {

@@ -2,6 +2,16 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-05 · Phase 3: Pages review
+
+The home, case study, and About pages were built early, so this phase tested them with three sample case studies (since removed).
+
+- Verified: cards sort by `order`, not by title. Each case study gets the right previous and next links, and the first and last get only one.
+- Verified: a `cover` shows beside the card text from 48rem up, and below the facts row in the case study hero.
+- Fix: the pager is now two fixed columns from 48rem up. A lone Next link stays in the right column instead of stretching full width.
+- Fix: on phones the pager stacks and both links align left.
+- Fix: the hero facts row uses `auto-fill`, so each fact keeps the same column width when a case study has only two or three facts.
+
 ## 2026-10-04 · Phase 2: Components and styleguide
 
 ### MDX components (`src/components/mdx/`)
