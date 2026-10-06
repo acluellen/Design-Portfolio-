@@ -25,4 +25,5 @@ Aaron's UX portfolio: a coded site built with Astro, MDX, TypeScript, and plain 
 
 - `npm run dev` starts the local site.
 - `npm run build` builds to `dist/`.
-- `npm run check:copy` scans case study prose for writing rule breaks (added in Phase 4).
+- `npm run check:copy` scans case study prose for writing rule breaks. `npm run build` runs it first and never fails on a match.
+- `SHOW_DRAFTS=true npm run build` keeps draft case studies, for private review previews only.

@@ -2,6 +2,16 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-06 · Phase 4: Copy checker
+
+- `scripts/check-copy.mjs` scans `.mdx` files in `src/content/case-studies/`, including drafts and the template. Other paths can be passed as arguments.
+- Flags em dashes, en dashes, a spaced hyphen used as a dash, hyphenated words, "my team", "not X. It's Y" (also "isn't" and "wasn't"), and "less X, more Y".
+- Skips frontmatter, fenced and inline code, URLs and link targets, MDX and HTML comments, import and export lines, and component tags with their props. Text between component tags, like a quote, is still checked.
+- Prints file, line, column, rule, the match, and the full line. Report only, never rewrites.
+- `npm run check:copy` runs it. `npm run build` runs it first. The script always exits 0, so a match never fails the build.
+- Verified with a fixture: all 9 planted breaks were found, and nothing in the skipped regions was flagged.
+- Only case study `.mdx` is scanned, per the spec. Copy in `.astro` pages, like the home page, is not checked yet.
+
 ## 2026-10-06 · New direction: sharper Squarespace look
 
 Aaron dropped the warm editorial test. The site now follows a sharper version of the Squarespace home page. Page structure, case study components, and content rules are unchanged.
