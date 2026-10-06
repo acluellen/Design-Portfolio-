@@ -30,7 +30,7 @@ export const photos: Record<PhotoKey, { alt: string; approved: boolean }> = {
   "work-mentorship-app": { alt: "", approved: false },
   "coaching-1": {
     alt: "Black and white photo of Aaron watching a group class at a martial arts gym, hands behind his back, while students drill on pads.",
-    approved: false,
+    approved: true,
   },
   "coaching-2": {
     alt: "Black and white photo of a fighter throwing a high kick into pads held by a training partner.",
@@ -38,7 +38,7 @@ export const photos: Record<PhotoKey, { alt: string; approved: boolean }> = {
   },
   "coaching-3": {
     alt: "Black and white photo of a BridgeGood workshop, with people at laptops facing a speaker at the front of the room.",
-    approved: false,
+    approved: true,
   },
   group: {
     alt: "A large group of people smiling together on steps outside a building in San Francisco.",

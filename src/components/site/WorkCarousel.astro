@@ -1,0 +1,245 @@
+---
+// Selected Work as one sideways scrolling row, following NN/g guidance:
+// a visible peek of the next card, visible arrow controls, a position counter,
+// no autoplay, and native scrolling (swipe, trackpad, keyboard) with snap points.
+import WorkCard from "./WorkCard.astro";
+import { caseStudyHref, getAllCaseStudies } from "../../lib/case-studies";
+
+interface Props {
+  heading: string;
+  id?: string;
+}
+
+const { heading, id = "work" } = Astro.props;
+const studies = await getAllCaseStudies();
+const total = studies.length;
+---
+
+<section
+  id={id}
+  class="carousel"
+  aria-roledescription="carousel"
+  aria-labelledby={`${id}-heading`}
+  data-carousel
+>
+  <div class="container carousel__head">
+    <h2 id={`${id}-heading`}>{heading}</h2>
+    <div class="carousel__controls">
+      <button type="button" class="carousel__arrow" data-carousel-prev aria-label="Previous project" disabled>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </button>
+      <button type="button" class="carousel__arrow" data-carousel-next aria-label="Next project" disabled={total < 2}>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </button>
+    </div>
+  </div>
+
+  <ul class="carousel__track" data-carousel-track>
+    {
+      studies.map((study, i) => (
+        <li class="carousel__item" aria-roledescription="slide" aria-label={`${i + 1} of ${total}`}>
+          <WorkCard study={study} href={caseStudyHref(study)} />
+        </li>
+      ))
+    }
+  </ul>
+
+  <p class="container carousel__counter">
+    <span data-carousel-current>1</span> of {total}
+  </p>
+  <p class="visually-hidden" aria-live="polite" data-carousel-live></p>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-carousel]").forEach((carousel) => {
+    const track = carousel.querySelector<HTMLElement>("[data-carousel-track]")!;
+    const items = [...track.children] as HTMLElement[];
+    const prev = carousel.querySelector<HTMLButtonElement>("[data-carousel-prev]")!;
+    const next = carousel.querySelector<HTMLButtonElement>("[data-carousel-next]")!;
+    const current = carousel.querySelector<HTMLElement>("[data-carousel-current]")!;
+    const live = carousel.querySelector<HTMLElement>("[data-carousel-live]")!;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const total = items.length;
+
+    const startPadding = () => parseFloat(getComputedStyle(track).paddingInlineStart) || 0;
+    const maxScroll = () => track.scrollWidth - track.clientWidth;
+    const atStart = () => track.scrollLeft <= 1;
+    const atEnd = () => track.scrollLeft >= maxScroll() - 1;
+
+    // Scroll position that puts a card on the row's start line.
+    const positionOf = (item: HTMLElement) =>
+      Math.min(item.offsetLeft - track.offsetLeft - startPadding(), maxScroll());
+
+    // Index of the card closest to the start line.
+    const currentIndex = () => {
+      let best = 0;
+      items.forEach((item, i) => {
+        if (Math.abs(positionOf(item) - track.scrollLeft) < Math.abs(positionOf(items[best]) - track.scrollLeft)) best = i;
+      });
+      return best;
+    };
+
+    let liveTimer: number | undefined;
+    const update = () => {
+      const index = currentIndex();
+      current.textContent = String(index + 1);
+      prev.disabled = atStart();
+      next.disabled = atEnd() || index === total - 1;
+      window.clearTimeout(liveTimer);
+      liveTimer = window.setTimeout(() => {
+        live.textContent = `Project ${index + 1} of ${total}`;
+      }, 400);
+    };
+
+    const goTo = (index: number) => {
+      const target = items[Math.max(0, Math.min(total - 1, index))];
+      track.scrollTo({
+        left: positionOf(target),
+        behavior: reduceMotion.matches ? "auto" : "smooth",
+      });
+    };
+
+    prev.addEventListener("click", () => goTo(currentIndex() - 1));
+    next.addEventListener("click", () => goTo(currentIndex() + 1));
+
+    let frame = 0;
+    track.addEventListener(
+      "scroll",
+      () => {
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(update);
+      },
+      { passive: true },
+    );
+    window.addEventListener("resize", update);
+    update();
+  });
+</script>
+
+<style>
+  .carousel {
+    display: grid;
+    gap: var(--space-6);
+    padding-block: var(--space-9);
+  }
+
+  .carousel__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .carousel__head h2 {
+    min-width: 0;
+    font-size: var(--step-4);
+  }
+
+  .carousel__controls {
+    flex-shrink: 0;
+  }
+
+  /* Keep the heading on one line beside the arrows on narrow phones. */
+  @media (max-width: 30rem) {
+    .carousel__head h2 {
+      font-size: var(--step-3);
+    }
+  }
+
+  .carousel__controls {
+    display: flex;
+    gap: var(--space-2);
+  }
+
+  .carousel__arrow {
+    display: grid;
+    place-items: center;
+    inline-size: var(--control-height);
+    block-size: var(--control-height);
+    padding: 0;
+    background: transparent;
+    color: var(--color-ink);
+    border: var(--rule-thin) solid var(--color-ink);
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition:
+      background-color var(--duration-fast) var(--ease-standard),
+      color var(--duration-fast) var(--ease-standard);
+  }
+
+  .carousel__arrow svg {
+    inline-size: var(--icon-size);
+    block-size: var(--icon-size);
+  }
+
+  .carousel__arrow:hover:not(:disabled) {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .carousel__arrow:disabled {
+    border-color: var(--color-rule);
+    color: var(--color-rule-strong);
+    cursor: not-allowed;
+  }
+
+  /*
+   * The row starts on the heading's left edge and runs off the right edge of the screen.
+   * Padding percentages resolve against the page width, so the start line matches .container.
+   */
+  .carousel__track {
+    --row-start: max(var(--gutter), calc((100% - var(--measure-wide)) / 2 + var(--gutter)));
+    --row-gap: var(--space-4);
+    /* 100% here is the visible row: from the start line to the right edge of the screen. */
+    --card-basis: var(--carousel-card-phone);
+
+    position: relative;
+    display: flex;
+    gap: var(--row-gap);
+    margin: 0;
+    padding-block: var(--space-2) var(--space-3);
+    padding-inline: var(--row-start) 0;
+    list-style: none;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline-start: var(--row-start);
+    scroll-behavior: auto;
+    scrollbar-width: none;
+  }
+
+  .carousel__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Trailing space so the last card can also snap to the start line. */
+  .carousel__track::after {
+    content: "";
+    flex: 0 0 max(0px, calc(100% - var(--card-basis) - var(--row-gap)));
+  }
+
+  .carousel__item {
+    flex: 0 0 var(--card-basis);
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+
+  @media (min-width: 48rem) {
+    .carousel__track {
+      --row-gap: var(--space-5);
+      --card-basis: calc((100% - var(--row-gap)) / var(--carousel-cards-tablet));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .carousel__track {
+      --card-basis: calc((100% - 2 * var(--row-gap)) / var(--carousel-cards-desktop));
+    }
+  }
+
+  .carousel__counter {
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
+    font-variant-numeric: tabular-nums;
+  }
+</style>

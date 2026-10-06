@@ -59,7 +59,29 @@ Wrap always dark sections in `.surface-always-dark`. It remaps ink, muted ink, r
 - Wide column: `--measure-wide`. Reading column: `--measure-reading`.
 - Side gutter: 16px on phones, 32px from 48rem, 64px from 80rem. No horizontal scroll at any width.
 - Two column sections stack to one column on phones.
-- Selected Work: two columns on desktop, one on phones.
+- Selected Work: one row that scrolls sideways (see below).
+
+## Selected Work row
+
+Follows Nielsen Norman Group guidance for horizontal scrolling: show that more content exists, give visible controls, show position, and never move on its own.
+
+- Order comes from each case study's `order` value.
+- Desktop (64rem and up): 2 full cards plus a third of the next. Tablet: about 1.4 cards. Phone: one card at 85% of the screen width, with the next card peeking in.
+- The row starts on the heading's left edge and runs off the right edge of the screen. Space after the last card lets every card snap to the start line.
+- Cards snap into place. No autoplay.
+- Round outlined arrow buttons (44px), level with the heading on the right. Each click moves one card. They disable at either end.
+- A "1 of 4" counter sits under the row. Screen readers hear the position after scrolling settles.
+- The scrollbar is hidden. Swipe, trackpad, sideways mouse wheel, and Tab all still scroll the row.
+- Reduced motion: arrows jump instead of gliding.
+
+### Cards
+
+- Padding `--space-5` (24px). Gap between cards: 24px from 48rem, 16px on phones.
+- Image area 4:3 with 12px corners on the soft panel color. With no image, the panel shows the project name.
+- Then: title (`--step-2` serif), 16px, tagline (two lines max), 8px, focus tags as small pills, then the link or "In progress" pinned to the bottom. There is 20px (`--gap-card-media`) between the image and the title.
+- All cards are the same height.
+- Published case study: the whole card is the link, with a visible focus ring. Hover lifts it 2px and darkens the border.
+- In progress: no hover and no link. It still takes Tab focus, so keyboard users can reach every card.
 
 ## Photos
 

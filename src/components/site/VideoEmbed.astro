@@ -1,6 +1,6 @@
 ---
 // YouTube video that loads the player only when clicked. Until then, just a thumbnail.
-import { youtubeId } from "../../site.config";
+import { youtubeId, youtubeStart } from "../../site.config";
 
 interface Props {
   url: string;
@@ -9,12 +9,13 @@ interface Props {
 
 const { url, title } = Astro.props;
 const id = youtubeId(url);
+const start = youtubeStart(url);
 ---
 
 <div class="video">
   {
     id ? (
-      <button type="button" class="video__button" data-video-id={id} data-video-title={title}>
+      <button type="button" class="video__button" data-video-id={id} data-video-start={start} data-video-title={title}>
         <img
           class="video__thumb"
           src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
@@ -39,7 +40,8 @@ const id = youtubeId(url);
   document.querySelectorAll<HTMLButtonElement>("[data-video-id]").forEach((button) => {
     button.addEventListener("click", () => {
       const iframe = document.createElement("iframe");
-      iframe.src = `https://www.youtube-nocookie.com/embed/${button.dataset.videoId}?autoplay=1`;
+      const start = Number(button.dataset.videoStart) || 0;
+      iframe.src = `https://www.youtube-nocookie.com/embed/${button.dataset.videoId}?autoplay=1${start ? `&start=${start}` : ""}`;
       iframe.title = button.dataset.videoTitle ?? "Video";
       iframe.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture";
       iframe.allowFullscreen = true;

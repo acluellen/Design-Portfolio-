@@ -2,20 +2,9 @@
 import PageLayout from "../layouts/PageLayout.astro";
 import Button from "../components/site/Button.astro";
 import Photo from "../components/site/Photo.astro";
-import WorkCard from "../components/site/WorkCard.astro";
 import VideoEmbed from "../components/site/VideoEmbed.astro";
-import { work } from "../data/work";
-import { caseStudyHref, getCaseStudies } from "../lib/case-studies";
+import WorkCarousel from "../components/site/WorkCarousel.astro";
 import { site } from "../site.config";
-
-const studies = await getCaseStudies();
-const cards = await Promise.all(
-  work.map(async (item) => ({
-    item,
-    href: await caseStudyHref(item.slug),
-    draft: studies.find((s) => s.id === item.slug)?.data.status === "draft",
-  })),
-);
 ---
 
 <PageLayout title="Aaron Luellen" flushBottom>
@@ -74,12 +63,7 @@ const cards = await Promise.all(
   </section>
 
   <!-- 3. Selected Work -->
-  <section id="work" class="container work" aria-labelledby="work-heading">
-    <h2 id="work-heading">Selected Work</h2>
-    <div class="work__grid">
-      {cards.map(({ item, href, draft }) => <WorkCard item={item} href={href} draft={draft} />)}
-    </div>
-  </section>
+  <WorkCarousel heading="Selected Work" />
 
   <!-- 4. Coaching, always dark -->
   <section class="surface-always-dark coaching" aria-labelledby="coaching-heading">
@@ -196,8 +180,7 @@ const cards = await Promise.all(
     gap: var(--space-5);
   }
 
-  .recent h2,
-  .work h2 {
+  .recent h2 {
     font-size: var(--step-4);
   }
 
@@ -228,24 +211,6 @@ const cards = await Promise.all(
     .split--media {
       grid-template-columns: 7fr 5fr;
       gap: var(--space-8);
-    }
-  }
-
-  /* 3. Selected Work */
-  .work {
-    display: grid;
-    gap: var(--space-7);
-    padding-block: var(--space-9);
-  }
-
-  .work__grid {
-    display: grid;
-    gap: var(--space-6);
-  }
-
-  @media (min-width: 48rem) {
-    .work__grid {
-      grid-template-columns: 1fr 1fr;
     }
   }
 

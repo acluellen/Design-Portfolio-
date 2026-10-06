@@ -2,6 +2,39 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-06 · Selected Work as a sideways scrolling row
+
+### Order and data
+- Cards come from the case study collection, sorted by `order`: AthenaScribe 1, Klima 2, Craft Education 3, Mentorship App 4.
+- Added draft stubs for `klima.mdx`, `craft-education.mdx`, and `mentorship-app.mdx`. They hold only Aaron's title, tagline, and focus. Everything else is TODO.
+- New optional frontmatter fields: `tagline` and `focus`. Updated the schema, the template, and CONTENT.md section 1.
+- `src/data/work.ts` removed. Card content now lives in each case study's frontmatter.
+- A card links only when its case study is published. Review builds no longer link drafts from cards. The preview reaches the AthenaScribe draft through a footer link that exists only in the preview.
+
+### Row (`WorkCarousel`)
+- Replaces the two column grid. Details are in DESIGN.md under "Selected Work row".
+- New tokens: `--gap-card-media` (20px), `--card-lift` (2px), `--carousel-cards-desktop` (2.33), `--carousel-cards-tablet` (1.4), `--carousel-card-phone` (85vw).
+- Card width is measured from the start line to the right edge of the screen, so the peek is a true third on wide screens. A first version measured inside the right margin, which showed almost half a card.
+- Space after the last card lets card 4 reach the start line. Without it, the counter skipped from 2 to 4 on desktop, and Previous got stuck at the end.
+- On narrow phones the heading drops to `--step-3` so it stays on one line beside the arrows.
+
+### Cards (`WorkCard`)
+- Smaller and tighter, matching Aaron's spacing spec. Title is now `--step-2`. Tags are pills. The tagline is clamped to two lines.
+- Dashed placeholder outlines are removed. With no image, the soft panel shows the project name.
+
+### Other
+- KRON4 video URL added. The player starts at 0:31, matching the `t=31s` in the link.
+- Alt text approved for `coaching-1` (Aaron confirmed it is him) and `coaching-3` (a BridgeGood workshop).
+
+### Checked
+- At 375, 768, 1280 by 800, and 1440, in light and dark: the row starts on the heading's left edge, a peek shows (24px on phones, 40% of a card at 768, 33% on desktop), and the page never scrolls sideways.
+- Arrows move one card per click, the counter reads 1 to 4, and both arrows disable at the ends.
+- Tab reaches all four cards. Reduced motion jumps. A sideways mouse wheel scrolls and snaps.
+- The tallest card is 638px at 1440 wide and 612px at 1280 by 800, so it fits on an 800px tall laptop screen.
+
+### Photos still blocked
+- The folder opens now, but the mockups (1.2 to 1.6 MB) cannot be downloaded into this session. Google's download host is blocked by the network policy, and the Drive tool returns files as text, too large for these images. The files needed are listed in the reply to Aaron.
+
 ## 2026-10-06 · Phase 4: Copy checker
 
 - `scripts/check-copy.mjs` scans `.mdx` files in `src/content/case-studies/`, including drafts and the template. Other paths can be passed as arguments.

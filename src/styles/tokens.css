@@ -80,6 +80,13 @@
   --gutter: var(--space-4);
   --header-height: 4.5rem;
 
+  /* Selected Work row */
+  --gap-card-media: 1.25rem; /* 20px between card image and title */
+  --card-lift: 2px; /* hover rise */
+  --carousel-cards-desktop: 2.33; /* 2 full cards plus a third */
+  --carousel-cards-tablet: 1.4;
+  --carousel-card-phone: 85vw;
+
   /* Media and controls */
   --size-headshot: clamp(9rem, 6rem + 10vw, 14rem);
   --size-logo: 3rem;

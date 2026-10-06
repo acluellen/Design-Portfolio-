@@ -1,54 +1,59 @@
 ---
 import Photo from "./Photo.astro";
-import type { WorkItem } from "../../data/work";
+import { photos, type PhotoKey } from "../../data/photos";
+import type { CaseStudy } from "../../lib/case-studies";
 
 interface Props {
-  item: WorkItem;
+  study: CaseStudy;
   /** Case study URL. Without it the card shows "In progress" and does not link. */
   href?: string;
-  /** Marks a linked case study that is still a draft (review builds only). */
-  draft?: boolean;
 }
 
-const { item, href, draft = false } = Astro.props;
-const { title, tagline, focus, photo } = item;
+const { study, href } = Astro.props;
+const { title, tagline, focus } = study.data;
+const photoKey = `work-${study.id}`;
+const photo = (photoKey in photos ? photoKey : undefined) as PhotoKey | undefined;
 ---
 
-<article class:list={["work-card", { "work-card--linked": href }]}>
-  <div class="work-card__panel">
-    <Photo
-      name={photo}
-      widths={[480, 720, 960, 1280]}
-      sizes="(min-width: 64rem) 36rem, 92vw"
-      ratio="4 / 3"
-      class="work-card__image"
-    />
+<article
+  class:list={["work-card", { "work-card--linked": href }]}
+  tabindex={href ? undefined : 0}
+  aria-label={href ? undefined : `${title}, in progress`}
+>
+  <div class="work-card__media">
+    {
+      photo ? (
+        <Photo
+          name={photo}
+          widths={[400, 600, 800, 1200]}
+          sizes="(min-width: 64rem) 34rem, (min-width: 48rem) 60vw, 85vw"
+          ratio="4 / 3"
+          placeholderLabel={title}
+          class="work-card__image"
+        />
+      ) : (
+        <div class="work-card__fallback" aria-hidden="true">{title}</div>
+      )
+    }
   </div>
+
   <div class="work-card__text">
     <h3 class="work-card__title">
       {href ? <a href={href}>{title}</a> : title}
     </h3>
     {tagline && <p class="work-card__tagline">{tagline}</p>}
     {
-      focus && focus.length > 0 && (
-        <div class="work-card__focus">
-          <p class="work-card__focus-label">Focus</p>
-          <p class="work-card__tags">
-            {focus.map((tag, i) => (
-              <>
-                {i > 0 && <span aria-hidden="true"> · </span>}
-                <span>{tag}</span>
-              </>
-            ))}
-          </p>
-        </div>
+      focus.length > 0 && (
+        <ul class="work-card__tags" aria-label="Focus">
+          {focus.map((tag) => (
+            <li>{tag}</li>
+          ))}
+        </ul>
       )
     }
     {
       href ? (
-        <span class="work-card__cta" aria-hidden="true">
-          View case study{draft && <span class="work-card__draft"> (draft)</span>}
-        </span>
+        <span class="work-card__cta" aria-hidden="true">View case study</span>
       ) : (
         <p class="work-card__status">In progress</p>
       )
@@ -59,46 +64,76 @@ const { title, tagline, focus, photo } = item;
 <style>
   .work-card {
     position: relative;
-    display: grid;
-    grid-template-rows: auto 1fr;
-    gap: var(--space-5);
-    padding: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-card-media);
+    height: 100%;
+    padding: var(--space-5);
     background: var(--color-paper-raised);
     border: var(--rule-thin) solid var(--color-rule);
     border-radius: var(--radius-media);
-    transition: border-color var(--duration-fast) var(--ease-standard);
+  }
+
+  .work-card:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-offset);
+  }
+
+  .work-card--linked {
+    transition:
+      transform var(--duration-fast) var(--ease-standard),
+      border-color var(--duration-fast) var(--ease-standard);
   }
 
   .work-card--linked:hover {
+    transform: translateY(calc(-1 * var(--card-lift)));
     border-color: var(--color-ink);
   }
 
-  .work-card__panel {
+  /* Image area: 4:3 on a soft panel. */
+  .work-card__media {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--color-panel);
+    border-radius: var(--radius-media);
+  }
+
+  .work-card__media :global(picture),
+  .work-card__media :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .work-card__media :global(.photo-placeholder),
+  .work-card__fallback {
+    width: 100%;
+    height: 100%;
+  }
+
+  .work-card__media :global(img) {
+    object-fit: contain;
+  }
+
+  .work-card__fallback {
     display: grid;
     place-items: center;
     padding: var(--space-5);
-    background: var(--color-panel);
-    border-radius: var(--radius-media);
-    overflow: hidden;
-  }
-
-  .work-card__panel :global(img),
-  .work-card__panel :global(.photo-placeholder) {
-    width: 100%;
-    height: auto;
-    border-radius: var(--radius-media);
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    color: var(--color-ink-muted);
+    text-align: center;
   }
 
   .work-card__text {
-    display: grid;
-    gap: var(--space-4);
-    align-content: start;
-    padding: 0 var(--space-3) var(--space-3);
+    display: flex;
+    flex: 1;
+    flex-direction: column;
     min-width: 0;
   }
 
   .work-card__title {
-    font-size: var(--step-3);
+    font-size: var(--step-2);
   }
 
   .work-card__title a {
@@ -124,27 +159,45 @@ const { title, tagline, focus, photo } = item;
   }
 
   .work-card__tagline {
+    display: -webkit-box;
+    margin-block-start: var(--space-4);
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
     font-weight: var(--weight-medium);
     line-height: var(--leading-snug);
   }
 
-  .work-card__focus {
-    display: grid;
-    gap: var(--space-1);
-  }
-
-  .work-card__focus-label {
-    font-weight: var(--weight-semibold);
-  }
-
   .work-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-block-start: var(--space-2);
+    padding: 0;
+    list-style: none;
+  }
+
+  .work-card__tags li {
+    padding: var(--space-1) var(--space-3);
+    border: var(--rule-thin) solid var(--color-rule);
+    border-radius: var(--radius-pill);
+    font-size: var(--step--1);
     color: var(--color-ink-muted);
+    line-height: var(--leading-snug);
+  }
+
+  /* Link and status sit at the bottom so every card lines up. */
+  .work-card__cta,
+  .work-card__status {
+    margin-block-start: auto;
+    padding-block-start: var(--space-4);
+    font-size: var(--step--1);
+    font-weight: var(--weight-semibold);
   }
 
   .work-card__cta {
     color: var(--color-accent);
-    font-size: var(--step--1);
-    font-weight: var(--weight-semibold);
     text-decoration: underline;
     text-decoration-thickness: var(--underline-thickness);
     text-underline-offset: var(--underline-offset);
@@ -154,17 +207,10 @@ const { title, tagline, focus, photo } = item;
     color: var(--color-accent-hover);
   }
 
-  .work-card__draft {
-    color: var(--color-ink-muted);
-    font-weight: var(--weight-regular);
-  }
-
   .work-card__status {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: var(--space-2);
-    font-size: var(--step--1);
-    font-weight: var(--weight-semibold);
     color: var(--color-ink-muted);
   }
 

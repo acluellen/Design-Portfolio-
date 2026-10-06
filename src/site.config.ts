@@ -4,7 +4,7 @@ export const site = {
   name: "Aaron Luellen",
   email: "Aaronluellen@gmail.com",
   linkedin: "", // TODO: Aaron to send the LinkedIn URL.
-  kron4Video: "", // TODO: Aaron to send the KRON4 YouTube URL.
+  kron4Video: "https://www.youtube.com/watch?v=r4l9IsyDUD4&t=31s",
 };
 
 /** Pulls the video ID out of a YouTube URL, or returns undefined. */
@@ -12,4 +12,10 @@ export function youtubeId(url: string): string | undefined {
   if (!url) return undefined;
   const match = url.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);
   return match?.[1];
+}
+
+/** Start time in seconds from a YouTube URL's t parameter, or 0. */
+export function youtubeStart(url: string): number {
+  const match = url.match(/[?&]t=(\d+)s?/);
+  return match ? Number(match[1]) : 0;
 }

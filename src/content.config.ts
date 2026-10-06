@@ -9,6 +9,9 @@ const caseStudies = defineCollection({
   schema: z.object({
     title: z.string(),
     summary: z.string(),
+    // Home page card: one line tagline and focus tags. Both optional.
+    tagline: z.string().optional(),
+    focus: z.array(z.string()).default([]),
     role: z.string(),
     team: z.array(z.object({ name: z.string(), role: z.string() })),
     timeline: z.string(),
