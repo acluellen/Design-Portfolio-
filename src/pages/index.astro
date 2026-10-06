@@ -88,8 +88,8 @@ import { site } from "../site.config";
         </div>
       </div>
       <div class="coaching__photos">
-        <Photo name="coaching-1" widths={[400, 600, 800]} sizes="(min-width: 64rem) 20rem, 46vw" ratio="3 / 4" class="coaching__photo" />
-        <Photo name="coaching-2" widths={[400, 600, 800]} sizes="(min-width: 64rem) 20rem, 46vw" ratio="3 / 4" class="coaching__photo" />
+        <Photo name="coaching-1" widths={[400, 600, 800]} sizes="(min-width: 64rem) 20rem, 46vw" ratio="4 / 5" class="coaching__photo" />
+        <Photo name="coaching-2" widths={[400, 600, 800]} sizes="(min-width: 64rem) 20rem, 46vw" ratio="4 / 5" class="coaching__photo" />
         <Photo name="coaching-3" widths={[640, 960, 1280]} sizes="(min-width: 64rem) 40rem, 92vw" ratio="16 / 9" class="coaching__photo coaching__photo--wide" />
       </div>
     </div>
@@ -140,6 +140,7 @@ import { site } from "../site.config";
     block-size: var(--size-headshot);
     border-radius: var(--radius-pill);
     object-fit: cover;
+    object-position: 50% 30%;
   }
 
   .hero__text {
@@ -246,14 +247,22 @@ import { site } from "../site.config";
     min-width: 0;
   }
 
+  /* Two portrait crops on top, one wide photo below. */
   .coaching__photos :global(.coaching__photo) {
     width: 100%;
-    height: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
     object-fit: cover;
     border-radius: var(--radius-media);
   }
 
   .coaching__photos :global(.coaching__photo--wide) {
+    grid-column: 1 / -1;
+    aspect-ratio: 16 / 9;
+  }
+
+  /* Real photos sit inside <picture>, which is the actual grid item. */
+  .coaching__photos > :global(picture:has(.coaching__photo--wide)) {
     grid-column: 1 / -1;
   }
 
@@ -284,6 +293,7 @@ import { site } from "../site.config";
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: 50% 40%;
     border: 0;
   }
 

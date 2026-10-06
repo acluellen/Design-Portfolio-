@@ -2,6 +2,38 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-06 · Photos and logo in place
+
+Aaron dropped the photos into the chat, which got around the Drive download block.
+
+### Files
+- `src/assets/photos/`: `headshot.jpg`, `work-athenascribe.webp`, `work-klima.webp`, `coaching-1.jpg`, `coaching-2.jpg`, `coaching-3.webp`, `group.webp`.
+- `src/assets/brand/logo.png`: the AL mark, cropped from Aaron's screenshot (138px, padded to a square with the logo blue).
+- `src/assets/case-studies/athenascribe/analyzing-document.webp`: the "Analyzing document" phone mockup, held for the AthenaScribe case study.
+
+### Edits to photos
+- Workshop (`coaching-3`): converted to black and white to match the two gym photos, and cropped 28px off the top to remove a mouse pointer from the screen capture.
+- Group (`group`): cropped 28px off the top to remove a mouse pointer.
+- The workshop and group photos are screen captures about 1150px wide. They look fine at their sizes, but the full width banner may look soft on very large screens. Swap in the originals later if that shows.
+
+### Color
+- The logo file reads exactly `#054FB9`. The token was `#054FB8`, sampled from compressed screenshots. `--color-accent` and `--color-brand` now use `#054FB9`. The contrast change is negligible, still 7.1:1.
+
+### Framing
+- Headshot: circle crop focused at 30% from the top, to keep the face centered.
+- Coaching grid: two 4:5 portrait crops over one 16:9 wide photo. Fixed the wide photo spanning only one column. Astro wraps each image in `<picture>`, and that wrapper is the actual grid item.
+- Banner: group photo focused at 40% from the top under the dark overlay.
+
+### Weight
+- Picture fallbacks are now JPEG instead of PNG. Build output dropped from 13 MB to 5.5 MB.
+- What a visitor downloads: 165 KB of images on a 2x desktop screen and 85 KB on a 2x phone, all AVIF.
+
+### Alt text
+- Drafts updated for `coaching-2` (a knee into pads while the class watches) and `group` (BridgeGood shirts, steps outside Google San Francisco). Both are still waiting on Aaron's approval.
+
+### Video
+- If the YouTube thumbnail cannot load, it hides, so the dark panel and play button still read cleanly.
+
 ## 2026-10-06 · Selected Work as a sideways scrolling row
 
 ### Order and data
@@ -51,7 +83,7 @@ Aaron dropped the warm editorial test. The site now follows a sharper version of
 
 ### Design settings
 - `tokens.css` rewritten with Aaron's palette. Light: page `#FAFAFA`, gray band `#EDEDED`, ink `#0A0A0A`, muted `#5A5A5A`, rules `#DADADA`. Dark: page `#0B0B0C`, raised `#17171A`, ink `#F2F2F2`, muted `#A0A0A0`, rules `#2A2A2E`.
-- Accent `#054FB8`, sampled from the AL logo in three Squarespace screenshots. All three agreed within one step, but they are compressed screenshots, so it needs a check against the logo file. Dark mode accent `#6E9CF2`. Every pair passes 4.5:1. The full list is in `DESIGN.md`.
+- Accent `#054FB8` (later corrected to `#054FB9` from the logo file), sampled from the AL logo in three Squarespace screenshots. All three agreed within one step, but they are compressed screenshots, so it needs a check against the logo file. Dark mode accent `#6E9CF2`. Every pair passes 4.5:1. The full list is in `DESIGN.md`.
 - New tokens: `--color-band`, `--color-panel`, `--color-brand`, `--color-brand-ink`, the `--color-always-dark-*` set, `--color-overlay`, `--radius-media` (12px), `--radius-pill`, `--control-height` (44px), `--control-padding`, `--size-headshot`, `--size-logo`, `--header-height`, `--icon-size`.
 - `.surface-always-dark` remaps the core color tokens, so the coaching band and closing banner stay black in both themes, and buttons and links inside flip on their own.
 - `DESIGN.md` rewritten as final.

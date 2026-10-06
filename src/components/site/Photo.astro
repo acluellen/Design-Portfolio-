@@ -46,6 +46,7 @@ const { alt } = photos[name];
       widths={widths.filter((w) => w <= image.width)}
       sizes={sizes}
       formats={["avif", "webp"]}
+      fallbackFormat="jpg"
       loading={loading}
       decoding="async"
       class={className}

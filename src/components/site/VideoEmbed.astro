@@ -37,6 +37,13 @@ const start = youtubeStart(url);
 </div>
 
 <script>
+  // If the thumbnail cannot load, hide it so the dark panel and play button still read cleanly.
+  document.querySelectorAll<HTMLImageElement>(".video__thumb").forEach((thumb) => {
+    const hide = () => (thumb.hidden = true);
+    if (thumb.complete && thumb.naturalWidth === 0) hide();
+    else thumb.addEventListener("error", hide);
+  });
+
   document.querySelectorAll<HTMLButtonElement>("[data-video-id]").forEach((button) => {
     button.addEventListener("click", () => {
       const iframe = document.createElement("iframe");

@@ -23,7 +23,7 @@ Sharp, neutral, and photo led. Real photos carry the warmth. Everything around t
 | Ink | `#0A0A0A` | `#F2F2F2` |
 | Muted ink | `#5A5A5A` | `#A0A0A0` |
 | Rules | `#DADADA` | `#2A2A2E` |
-| Accent | `#054FB8` | `#6E9CF2` |
+| Accent | `#054FB9` | `#6E9CF2` |
 | Always dark band | `#000000` | `#000000` |
 
 Contrast, all WCAG AA or better:

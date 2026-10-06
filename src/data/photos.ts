@@ -1,6 +1,6 @@
 // Photo slots. Drop a file named <key>.<jpg|jpeg|png|webp|avif> into src/assets/photos/
 // and it replaces the placeholder. Astro resizes and compresses it at build time.
-// Alt text is a DRAFT written from Squarespace screenshots. Aaron to approve each line.
+// Alt text: approved lines are confirmed by Aaron. The rest are drafts written from the photos.
 
 export type PhotoKey =
   | "headshot"
@@ -33,7 +33,7 @@ export const photos: Record<PhotoKey, { alt: string; approved: boolean }> = {
     approved: true,
   },
   "coaching-2": {
-    alt: "Black and white photo of a fighter throwing a high kick into pads held by a training partner.",
+    alt: "Black and white photo of a fighter driving a knee into pads held by a partner while the class watches from the mats.",
     approved: false,
   },
   "coaching-3": {
@@ -41,7 +41,7 @@ export const photos: Record<PhotoKey, { alt: string; approved: boolean }> = {
     approved: true,
   },
   group: {
-    alt: "A large group of people smiling together on steps outside a building in San Francisco.",
+    alt: "A group of about twenty people, several in BridgeGood shirts, smiling together on the steps outside Google San Francisco.",
     approved: false,
   },
 };

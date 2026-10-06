@@ -15,14 +15,14 @@
   --color-rule-strong: #bdbdbd;
 
   /* Accent: AL logo blue. Links, focus rings, small markers only. 7.1:1 on paper. */
-  --color-accent: #054fb8;
+  --color-accent: #054fb9;
   --color-accent-hover: #043f93;
   --color-accent-subtle: #e3ecfa;
   --color-focus: var(--color-accent);
   --color-selection: var(--color-accent-subtle);
 
   /* Brand: the AL logo. Same in both themes. */
-  --color-brand: #054fb8;
+  --color-brand: #054fb9;
   --color-brand-ink: #ffffff;
 
   /* Always dark: same in both themes (coaching band, closing banner) */
