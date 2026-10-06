@@ -13,10 +13,10 @@ interface Props {
 
 const {
   title,
-  description = "Aaron, research led product designer in Oakland.",
+  description = "Aaron Luellen, product designer in Oakland.",
   noindex = false,
 } = Astro.props;
-const siteName = "Aaron";
+const siteName = "Aaron Luellen";
 const fullTitle = title === siteName ? title : `${title} · ${siteName}`;
 ---
 
@@ -25,6 +25,13 @@ const fullTitle = title === siteName ? title : `${title} · ${siteName}`;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      // Apply the saved theme before first paint, so the wrong theme never flashes.
+      try {
+        const theme = localStorage.getItem("theme");
+        if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
+      } catch {}
+    </script>
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}

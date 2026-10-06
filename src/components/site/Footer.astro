@@ -1,29 +1,50 @@
 ---
-// TODO: Aaron to add contact links (email, LinkedIn).
-const year = new Date().getFullYear();
+import { site } from "../../site.config";
 ---
 
 <footer class="site-footer">
   <div class="container site-footer__inner">
-    <p>Aaron · Research led product designer · Oakland, California</p>
-    <p>Contact links coming soon.</p>
-    <p class="site-footer__year">© {year}</p>
+    <a class="site-footer__email" href={`mailto:${site.email}`}>{site.email}</a>
+    {
+      site.linkedin ? (
+        <a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      ) : (
+        <span class="site-footer__pending" title="LinkedIn link coming soon">LinkedIn</span>
+      )
+    }
   </div>
 </footer>
 
 <style>
   .site-footer {
-    margin-block-start: var(--space-10);
-    border-top: var(--rule-thin) solid var(--color-rule);
+    background: var(--color-band);
   }
 
   .site-footer__inner {
     display: flex;
     flex-wrap: wrap;
+    align-items: baseline;
     justify-content: space-between;
-    gap: var(--space-3) var(--space-6);
-    padding-block: var(--space-6);
-    font-size: var(--step--1);
+    gap: var(--space-4) var(--space-6);
+    padding-block: var(--space-8);
+  }
+
+  .site-footer__email {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    color: var(--color-ink);
+    overflow-wrap: anywhere;
+  }
+
+  .site-footer__email:hover {
+    color: var(--color-accent);
+  }
+
+  .site-footer a:not(.site-footer__email) {
+    color: var(--color-ink);
+  }
+
+  .site-footer__pending {
     color: var(--color-ink-muted);
   }
 </style>

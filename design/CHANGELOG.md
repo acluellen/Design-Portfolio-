@@ -2,6 +2,49 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-06 · New direction: sharper Squarespace look
+
+Aaron dropped the warm editorial test. The site now follows a sharper version of the Squarespace home page. Page structure, case study components, and content rules are unchanged.
+
+### Design settings
+- `tokens.css` rewritten with Aaron's palette. Light: page `#FAFAFA`, gray band `#EDEDED`, ink `#0A0A0A`, muted `#5A5A5A`, rules `#DADADA`. Dark: page `#0B0B0C`, raised `#17171A`, ink `#F2F2F2`, muted `#A0A0A0`, rules `#2A2A2E`.
+- Accent `#054FB8`, sampled from the AL logo in three Squarespace screenshots. All three agreed within one step, but they are compressed screenshots, so it needs a check against the logo file. Dark mode accent `#6E9CF2`. Every pair passes 4.5:1. The full list is in `DESIGN.md`.
+- New tokens: `--color-band`, `--color-panel`, `--color-brand`, `--color-brand-ink`, the `--color-always-dark-*` set, `--color-overlay`, `--radius-media` (12px), `--radius-pill`, `--control-height` (44px), `--control-padding`, `--size-headshot`, `--size-logo`, `--header-height`, `--icon-size`.
+- `.surface-always-dark` remaps the core color tokens, so the coaching band and closing banner stay black in both themes, and buttons and links inside flip on their own.
+- `DESIGN.md` rewritten as final.
+
+### Theme
+- Follows the device setting. A header toggle switches light and dark and saves the choice in the browser.
+- An inline script in `<head>` applies the saved choice before first paint. Verified: after toggling and reloading, the page is already dark when the HTML finishes parsing.
+
+### New components
+- `Button`: pill, 44px tall. Primary is solid ink, secondary is outlined. Without `href` it renders disabled ("No link yet").
+- `ThemeToggle`, `Logo`, `Photo`, `WorkCard`, `VideoEmbed`.
+- `CaseCard` removed. `WorkCard` replaces it.
+- `Logo` uses `src/assets/brand/logo.svg` or `logo.png` when present. Until then it shows "AL" on the brand blue.
+- `VideoEmbed` shows a YouTube thumbnail and loads the player only on click, using youtube-nocookie. Without a URL it shows "Video link coming soon".
+
+### Photos
+- The Drive folder could not be reached from this session. The link points to another Google account. Photo slots are ready instead.
+- Drop `<slot>.jpg|png|webp|avif` into `src/assets/photos/` and Astro builds AVIF, WebP, and JPEG at several widths. Verified with a test file.
+- Missing photos show a dashed placeholder labeled with the slot name.
+- Draft alt text lives in `src/data/photos.ts`, marked `approved: false`.
+
+### Header and footer
+- Header: AL logo, then Work, About, LinkedIn, and the theme toggle. LinkedIn shows as muted text until a URL is set in `src/site.config.ts`.
+- Footer: the email at display size, plus LinkedIn, on the gray band. No social icons.
+
+### Home page
+- Six sections in Aaron's order and exact words: hero, Most recently band with the KRON4 video, Selected Work, coaching band, closing banner, footer.
+- "View My Work" scrolls to Selected Work with smooth scroll, which turns off under reduced motion.
+- Selected Work has four cards from `src/data/work.ts`: AthenaScribe, Klima, Craft Education, Mentorship App. A card links only to a published case study. Review builds (`SHOW_DRAFTS=true`) also link drafts and mark them "(draft)".
+- Checked: light and dark, 1440px and 390px, no horizontal scroll, no console errors.
+
+### Other pages
+- Case study, About, and styleguide pick up the new tokens. No layout changes, except Figure images and case study covers now use the 12px radius.
+- The styleguide shows the new site components: buttons on both surfaces, theme toggle, work cards, and the video placeholder.
+- Pages other than home get bottom padding before the footer. The home banner sits flush against the footer.
+
 ## 2026-10-05 · Phase 3: Pages review
 
 The home, case study, and About pages were built early, so this phase tested them with three sample case studies (since removed).

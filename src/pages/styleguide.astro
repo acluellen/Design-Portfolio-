@@ -2,7 +2,11 @@
 // Every token and every component on one screen. This is how design changes get reviewed.
 // Tokens are read straight from tokens.css, so new tokens appear here with no edits.
 import PageLayout from "../layouts/PageLayout.astro";
-import CaseCard from "../components/site/CaseCard.astro";
+import WorkCard from "../components/site/WorkCard.astro";
+import Button from "../components/site/Button.astro";
+import ThemeToggle from "../components/site/ThemeToggle.astro";
+import VideoEmbed from "../components/site/VideoEmbed.astro";
+import { work } from "../data/work";
 import {
   Figure,
   Quote,
@@ -13,7 +17,6 @@ import {
   Mine,
   Team,
 } from "../components/mdx";
-import type { CaseStudy } from "../lib/case-studies";
 import tokensCss from "../styles/tokens.css?raw";
 
 // Light values from the first :root block.
@@ -33,20 +36,6 @@ const space = group((n) => n.startsWith("--space-"));
 const used = new Set([...colors, ...fonts, ...steps, ...weights, ...leading, ...space].map((t) => t.name));
 const other = tokens.filter((t) => !used.has(t.name));
 
-const sampleStudy = {
-  id: "sample",
-  data: {
-    title: "Sample case study",
-    summary: "A sample summary shows how one or two sentences sit on the card.",
-    role: "Sample role",
-    team: [],
-    timeline: "Sample timeline",
-    tools: [],
-    order: 0,
-    status: "draft",
-    tags: [],
-  },
-} as unknown as CaseStudy;
 
 const sections = [
   ["color", "Color"],
@@ -203,9 +192,34 @@ const sections = [
 
     <section id="site" class="sg__section">
       <h2>Site components</h2>
-      <p class="sg__note">Header and Footer frame this page. Below is CaseCard with sample data.</p>
-      <h3 class="sg__sub">CaseCard</h3>
-      <CaseCard study={sampleStudy} />
+      <p class="sg__note">Header and Footer frame this page.</p>
+
+      <h3 class="sg__sub">Button</h3>
+      <div class="sg__row-inline">
+        <Button href="#site">Primary</Button>
+        <Button href="#site" variant="secondary">Secondary</Button>
+        <Button>No link yet</Button>
+      </div>
+      <div class="surface-always-dark sg__dark-sample">
+        <p class="sg__note">Inside <code>.surface-always-dark</code></p>
+        <div class="sg__row-inline">
+          <Button href="#site">Primary</Button>
+          <Button href="#site" variant="secondary">Secondary</Button>
+          <a href="#site">Link</a>
+        </div>
+      </div>
+
+      <h3 class="sg__sub">ThemeToggle</h3>
+      <div><ThemeToggle /></div>
+
+      <h3 class="sg__sub">WorkCard</h3>
+      <div class="sg__cards">
+        <WorkCard item={work[0]} href="#site" />
+        <WorkCard item={work[2]} />
+      </div>
+
+      <h3 class="sg__sub">VideoEmbed, no link yet</h3>
+      <div class="sg__video"><VideoEmbed url="" title="Sample video" /></div>
     </section>
 
     <section id="mdx" class="sg__section">
@@ -457,6 +471,30 @@ const sections = [
 
   .sg__base {
     padding: var(--space-6) 0;
+  }
+
+  .sg__row-inline {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .sg__dark-sample {
+    display: grid;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    border-radius: var(--radius-media);
+  }
+
+  .sg__cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: var(--space-6);
+  }
+
+  .sg__video {
+    max-width: var(--measure-reading);
   }
 
   .sg__components {

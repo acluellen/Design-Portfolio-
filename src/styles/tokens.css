@@ -1,21 +1,40 @@
 /*
  * Design tokens. Every visual value in the site lives here.
- * DRAFT written by Claude because the original kit file was missing. Aaron to review.
+ * Direction: sharp, neutral, photo led. See design/DESIGN.md.
  */
 
 :root {
-  /* Color: light (warm paper) */
-  --color-paper: #f5f0e8;
-  --color-paper-raised: #efe8dc;
-  --color-ink: #1f1d1a;
-  --color-ink-muted: #5c564d;
-  --color-rule: #d9d0c1;
-  --color-rule-strong: #b8ad9b;
-  --color-accent: #a84a22;
-  --color-accent-hover: #84391a;
-  --color-accent-subtle: #f0dccf;
+  /* Color: light */
+  --color-paper: #fafafa;
+  --color-paper-raised: #ffffff;
+  --color-band: #ededed;
+  --color-panel: #f0f0f0;
+  --color-ink: #0a0a0a;
+  --color-ink-muted: #5a5a5a;
+  --color-rule: #dadada;
+  --color-rule-strong: #bdbdbd;
+
+  /* Accent: AL logo blue. Links, focus rings, small markers only. 7.1:1 on paper. */
+  --color-accent: #054fb8;
+  --color-accent-hover: #043f93;
+  --color-accent-subtle: #e3ecfa;
   --color-focus: var(--color-accent);
   --color-selection: var(--color-accent-subtle);
+
+  /* Brand: the AL logo. Same in both themes. */
+  --color-brand: #054fb8;
+  --color-brand-ink: #ffffff;
+
+  /* Always dark: same in both themes (coaching band, closing banner) */
+  --color-always-dark: #000000;
+  --color-always-dark-ink: #f2f2f2;
+  --color-always-dark-muted: #a0a0a0;
+  --color-always-dark-rule: #2a2a2e;
+  --color-always-dark-raised: #17171a;
+  --color-always-dark-rule-strong: #3d3d43;
+  --color-always-dark-accent: #6e9cf2;
+  --color-always-dark-accent-hover: #8ab0f7;
+  --color-overlay: rgb(0 0 0 / 0.6);
 
   /* Type families (open fonts, self hosted via Fontsource) */
   --font-display: "Source Serif 4 Variable", "Source Serif 4", Georgia, "Times New Roman", serif;
@@ -57,13 +76,23 @@
 
   /* Layout */
   --measure-reading: 68ch;
-  --measure-wide: 72rem;
+  --measure-wide: 76rem;
   --gutter: var(--space-4);
+  --header-height: 4.5rem;
+
+  /* Media and controls */
+  --size-headshot: clamp(9rem, 6rem + 10vw, 14rem);
+  --size-logo: 3rem;
+  --control-height: 2.75rem; /* 44px */
+  --control-padding: var(--space-6);
+  --icon-size: 1.25rem;
 
   /* Rules and radii */
   --rule-thin: 1px;
   --rule-thick: 2px;
-  --radius-small: 2px;
+  --radius-small: 4px;
+  --radius-media: 12px;
+  --radius-pill: 999px;
 
   /* Underlines */
   --underline-offset: 0.2em;
@@ -84,31 +113,60 @@
   }
 }
 
-/* Color: dark (warm charcoal) */
+@media (min-width: 80rem) {
+  :root {
+    --gutter: var(--space-8);
+  }
+}
+
+/* Color: dark. Follows the device unless the header toggle sets data-theme. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --color-paper: #1c1a17;
-    --color-paper-raised: #25221e;
-    --color-ink: #ede6da;
-    --color-ink-muted: #a89f91;
-    --color-rule: #3a352e;
-    --color-rule-strong: #575046;
-    --color-accent: #e08a62;
-    --color-accent-hover: #f0a581;
-    --color-accent-subtle: #3d2a20;
+    --color-paper: #0b0b0c;
+    --color-paper-raised: #17171a;
+    --color-band: #17171a;
+    --color-panel: #17171a;
+    --color-ink: #f2f2f2;
+    --color-ink-muted: #a0a0a0;
+    --color-rule: #2a2a2e;
+    --color-rule-strong: #3d3d43;
+    --color-accent: #6e9cf2;
+    --color-accent-hover: #8ab0f7;
+    --color-accent-subtle: #16233d;
+    color-scheme: dark;
   }
 }
 
 :root[data-theme="dark"] {
-  --color-paper: #1c1a17;
-  --color-paper-raised: #25221e;
-  --color-ink: #ede6da;
-  --color-ink-muted: #a89f91;
-  --color-rule: #3a352e;
-  --color-rule-strong: #575046;
-  --color-accent: #e08a62;
-  --color-accent-hover: #f0a581;
-  --color-accent-subtle: #3d2a20;
+  --color-paper: #0b0b0c;
+  --color-paper-raised: #17171a;
+  --color-band: #17171a;
+  --color-panel: #17171a;
+  --color-ink: #f2f2f2;
+  --color-ink-muted: #a0a0a0;
+  --color-rule: #2a2a2e;
+  --color-rule-strong: #3d3d43;
+  --color-accent: #6e9cf2;
+  --color-accent-hover: #8ab0f7;
+  --color-accent-subtle: #16233d;
+  color-scheme: dark;
+}
+
+/* Always dark surface: remaps the core tokens so components inside read correctly. */
+.surface-always-dark {
+  --color-paper: var(--color-always-dark);
+  --color-paper-raised: var(--color-always-dark-raised);
+  --color-band: var(--color-always-dark-raised);
+  --color-panel: var(--color-always-dark-raised);
+  --color-rule-strong: var(--color-always-dark-rule-strong);
+  --color-ink: var(--color-always-dark-ink);
+  --color-ink-muted: var(--color-always-dark-muted);
+  --color-rule: var(--color-always-dark-rule);
+  --color-accent: var(--color-always-dark-accent);
+  --color-accent-hover: var(--color-always-dark-accent-hover);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  color-scheme: dark;
 }
 
 @media (prefers-reduced-motion: reduce) {

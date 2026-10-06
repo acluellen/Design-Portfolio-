@@ -1,0 +1,75 @@
+---
+interface Props {
+  href?: string;
+  variant?: "primary" | "secondary";
+  /** Opens in a new tab. Use for links that leave the site. */
+  external?: boolean;
+  class?: string;
+}
+
+const { href, variant = "primary", external = false, class: className } = Astro.props;
+const classes = ["button", `button--${variant}`, className];
+---
+
+{
+  href ? (
+    <a
+      class:list={classes}
+      href={href}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+    >
+      <slot />
+    </a>
+  ) : (
+    <span class:list={[...classes, "button--disabled"]} aria-disabled="true">
+      <slot />
+    </span>
+  )
+}
+
+<style>
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-block-size: var(--control-height);
+    padding-inline: var(--control-padding);
+    border: var(--rule-thick) solid var(--color-ink);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-text);
+    font-size: var(--step--1);
+    font-weight: var(--weight-semibold);
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      background-color var(--duration-fast) var(--ease-standard),
+      color var(--duration-fast) var(--ease-standard);
+  }
+
+  .button--primary {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .button--primary:hover {
+    background: var(--color-ink-muted);
+    border-color: var(--color-ink-muted);
+    color: var(--color-paper);
+  }
+
+  .button--secondary {
+    background: transparent;
+    color: var(--color-ink);
+  }
+
+  .button--secondary:hover {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .button--disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+</style>

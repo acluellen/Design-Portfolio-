@@ -1,35 +1,73 @@
 # Visual rules
 
-> DRAFT written by Claude because the original kit file was missing. Aaron to review and replace.
+Final. Approved direction from October 6, 2026: a sharper version of Aaron's Squarespace home page.
 
 ## Direction
 
-Warm editorial. Calm, reading first. The page should feel like a well set essay on good paper.
+Sharp, neutral, and photo led. Real photos carry the warmth. Everything around them stays quiet.
 
-- Warm paper background, near black ink.
-- One accent: terracotta. Use it for links, focus rings, and small markers. Never for large fills.
-- Large serif headlines. Clean sans for body and interface text.
-- Generous whitespace. Let sections breathe.
-- Thin rules separate things. No drop shadows, no shadowed cards, no gradients.
-- Open fonts only, self hosted: Source Serif 4 for display, Inter for text.
-
-## Layout
-
-- Reading column: `--measure-reading` (about 68 characters).
-- Wide column for figures and the home grid: `--measure-wide`.
-- Side gutter on phones: `--space-4` (16px). No horizontal scroll at any width.
-
-## Type
-
-- Headings use `--font-display` at the `--step-*` sizes, tight leading.
-- Body uses `--font-text` at `--step-0`, leading `--leading-body`.
-- Labels and metadata use `--step--1`, uppercase tracking only for small labels.
+- Near white page, near black ink, one gray band to separate sections.
+- One accent: the blue from the AL logo. Use it for links, focus rings, and small markers only. Never for buttons, fills, or large areas.
+- Large serif headlines in Source Serif 4. Clean body text in Inter. No other fonts.
+- Generous whitespace between sections.
+- No drop shadows and no gradients. Thin rules and the gray band separate content.
+- Two sections are always dark in both themes: the coaching band and the closing banner.
 
 ## Color
 
-- Text on paper must meet WCAG AA. Muted ink is for metadata only.
-- Dark mode is a warm charcoal paper with light ink, same single accent, lightened for contrast.
+| Role | Light | Dark |
+|---|---|---|
+| Page | `#FAFAFA` | `#0B0B0C` |
+| Raised surface | `#FFFFFF` | `#17171A` |
+| Gray band | `#EDEDED` | `#17171A` |
+| Ink | `#0A0A0A` | `#F2F2F2` |
+| Muted ink | `#5A5A5A` | `#A0A0A0` |
+| Rules | `#DADADA` | `#2A2A2E` |
+| Accent | `#054FB8` | `#6E9CF2` |
+| Always dark band | `#000000` | `#000000` |
+
+Contrast, all WCAG AA or better:
+
+- Accent on page: 7.1:1 light, 7.2:1 dark. Accent on gray band: 6.4:1 light, 6.6:1 dark.
+- Muted ink on page: 6.6:1 light, 7.5:1 dark. Muted ink on gray band: 5.9:1 light, 6.8:1 dark.
+
+Wrap always dark sections in `.surface-always-dark`. It remaps ink, muted ink, rules, and accent, so buttons and links inside read correctly with no extra styles.
+
+## Theme
+
+- Follows the visitor's device setting by default.
+- A small toggle in the header switches light and dark. The choice is saved in the browser.
+- An inline script in the head sets the theme before first paint, so the wrong theme never flashes.
+
+## Type
+
+- Headlines: `--font-display`, regular weight, tight leading, balanced wrapping.
+- Body: `--font-text` at `--step-0`, leading `--leading-body`.
+- Labels and metadata: `--step--1`. Uppercase tracking only for small labels.
+
+## Shape
+
+- Images and cards: `--radius-media` (12px).
+- Headshot: a full circle.
+- Buttons: pills, 44px tall (`--control-height`).
+  - Primary: solid ink fill, page color text.
+  - Secondary: transparent fill, ink outline, ink text.
+  - Inside always dark sections the tokens flip, so primary becomes a light pill with dark text.
+
+## Layout
+
+- Wide column: `--measure-wide`. Reading column: `--measure-reading`.
+- Side gutter: 16px on phones, 32px from 48rem, 64px from 80rem. No horizontal scroll at any width.
+- Two column sections stack to one column on phones.
+- Selected Work: two columns on desktop, one on phones.
+
+## Photos
+
+- Stored in `src/assets/photos/` and optimized at build time by Astro.
+- Every photo has alt text approved by Aaron.
+- Missing photos render a neutral placeholder so layout never breaks.
 
 ## Motion
 
-- Minimal. Color and underline transitions only, `--duration-fast`. Respect `prefers-reduced-motion`.
+- Minimal. Color transitions only, `--duration-fast`. Smooth scroll for in page links.
+- Respect `prefers-reduced-motion`.

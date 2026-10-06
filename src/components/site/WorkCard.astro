@@ -1,0 +1,179 @@
+---
+import Photo from "./Photo.astro";
+import type { WorkItem } from "../../data/work";
+
+interface Props {
+  item: WorkItem;
+  /** Case study URL. Without it the card shows "In progress" and does not link. */
+  href?: string;
+  /** Marks a linked case study that is still a draft (review builds only). */
+  draft?: boolean;
+}
+
+const { item, href, draft = false } = Astro.props;
+const { title, tagline, focus, photo } = item;
+---
+
+<article class:list={["work-card", { "work-card--linked": href }]}>
+  <div class="work-card__panel">
+    <Photo
+      name={photo}
+      widths={[480, 720, 960, 1280]}
+      sizes="(min-width: 64rem) 36rem, 92vw"
+      ratio="4 / 3"
+      class="work-card__image"
+    />
+  </div>
+  <div class="work-card__text">
+    <h3 class="work-card__title">
+      {href ? <a href={href}>{title}</a> : title}
+    </h3>
+    {tagline && <p class="work-card__tagline">{tagline}</p>}
+    {
+      focus && focus.length > 0 && (
+        <div class="work-card__focus">
+          <p class="work-card__focus-label">Focus</p>
+          <p class="work-card__tags">
+            {focus.map((tag, i) => (
+              <>
+                {i > 0 && <span aria-hidden="true"> · </span>}
+                <span>{tag}</span>
+              </>
+            ))}
+          </p>
+        </div>
+      )
+    }
+    {
+      href ? (
+        <span class="work-card__cta" aria-hidden="true">
+          View case study{draft && <span class="work-card__draft"> (draft)</span>}
+        </span>
+      ) : (
+        <p class="work-card__status">In progress</p>
+      )
+    }
+  </div>
+</article>
+
+<style>
+  .work-card {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: var(--space-5);
+    padding: var(--space-4);
+    background: var(--color-paper-raised);
+    border: var(--rule-thin) solid var(--color-rule);
+    border-radius: var(--radius-media);
+    transition: border-color var(--duration-fast) var(--ease-standard);
+  }
+
+  .work-card--linked:hover {
+    border-color: var(--color-ink);
+  }
+
+  .work-card__panel {
+    display: grid;
+    place-items: center;
+    padding: var(--space-5);
+    background: var(--color-panel);
+    border-radius: var(--radius-media);
+    overflow: hidden;
+  }
+
+  .work-card__panel :global(img),
+  .work-card__panel :global(.photo-placeholder) {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-media);
+  }
+
+  .work-card__text {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+    padding: 0 var(--space-3) var(--space-3);
+    min-width: 0;
+  }
+
+  .work-card__title {
+    font-size: var(--step-3);
+  }
+
+  .work-card__title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* The title link covers the whole card. */
+  .work-card__title a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-media);
+  }
+
+  .work-card__title a:focus-visible {
+    outline: none;
+  }
+
+  .work-card__title a:focus-visible::after {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-offset);
+  }
+
+  .work-card__tagline {
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-snug);
+  }
+
+  .work-card__focus {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  .work-card__focus-label {
+    font-weight: var(--weight-semibold);
+  }
+
+  .work-card__tags {
+    color: var(--color-ink-muted);
+  }
+
+  .work-card__cta {
+    color: var(--color-accent);
+    font-size: var(--step--1);
+    font-weight: var(--weight-semibold);
+    text-decoration: underline;
+    text-decoration-thickness: var(--underline-thickness);
+    text-underline-offset: var(--underline-offset);
+  }
+
+  .work-card--linked:hover .work-card__cta {
+    color: var(--color-accent-hover);
+  }
+
+  .work-card__draft {
+    color: var(--color-ink-muted);
+    font-weight: var(--weight-regular);
+  }
+
+  .work-card__status {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--step--1);
+    font-weight: var(--weight-semibold);
+    color: var(--color-ink-muted);
+  }
+
+  /* Small accent marker before "In progress". */
+  .work-card__status::before {
+    content: "";
+    inline-size: var(--space-2);
+    block-size: var(--space-2);
+    border-radius: var(--radius-pill);
+    background: var(--color-accent);
+  }
+</style>

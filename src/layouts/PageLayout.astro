@@ -7,21 +7,27 @@ interface Props {
   title: string;
   description?: string;
   noindex?: boolean;
+  /** Lets the last section touch the footer (home page banner). */
+  flushBottom?: boolean;
 }
 
-const { title, description, noindex } = Astro.props;
+const { title, description, noindex, flushBottom = false } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description} noindex={noindex}>
   <a class="skip-link" href="#main">Skip to content</a>
   <Header />
-  <main id="main">
+  <main id="main" class:list={{ "main--padded": !flushBottom }}>
     <slot />
   </main>
   <Footer />
 </BaseLayout>
 
 <style>
+  .main--padded {
+    padding-block-end: var(--space-10);
+  }
+
   .skip-link {
     position: absolute;
     left: var(--space-4);
@@ -29,6 +35,8 @@ const { title, description, noindex } = Astro.props;
     padding: var(--space-2) var(--space-4);
     background: var(--color-paper);
     border: var(--rule-thin) solid var(--color-rule-strong);
+    border-radius: var(--radius-pill);
+    z-index: 10;
   }
 
   .skip-link:focus {

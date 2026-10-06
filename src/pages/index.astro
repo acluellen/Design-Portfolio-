@@ -1,69 +1,347 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
-import CaseCard from "../components/site/CaseCard.astro";
-import { getCaseStudies } from "../lib/case-studies";
+import Button from "../components/site/Button.astro";
+import Photo from "../components/site/Photo.astro";
+import WorkCard from "../components/site/WorkCard.astro";
+import VideoEmbed from "../components/site/VideoEmbed.astro";
+import { work } from "../data/work";
+import { caseStudyHref, getCaseStudies } from "../lib/case-studies";
+import { site } from "../site.config";
 
 const studies = await getCaseStudies();
+const cards = await Promise.all(
+  work.map(async (item) => ({
+    item,
+    href: await caseStudyHref(item.slug),
+    draft: studies.find((s) => s.id === item.slug)?.data.status === "draft",
+  })),
+);
 ---
 
-<PageLayout title="Aaron">
-  <section class="container intro">
-    <p class="label">Research led product designer · Oakland</p>
-    <h1 class="intro__title">
-      {/* TODO: Aaron to write the headline. */}
-      Headline placeholder. Aaron will write this line.
-    </h1>
-    <p class="intro__lede">
-      {/* TODO: Aaron to write a short intro, two or three sentences. */}
-      Intro placeholder. A short paragraph about how Aaron works will go here.
-    </p>
+<PageLayout title="Aaron Luellen" flushBottom>
+  <!-- 1. Hero -->
+  <section class="container hero">
+    <Photo
+      name="headshot"
+      widths={[240, 360, 480]}
+      sizes="14rem"
+      loading="eager"
+      ratio="1 / 1"
+      class="hero__headshot"
+    />
+    <div class="hero__text">
+      <h1>Hi, I’m Aaron</h1>
+      <p class="hero__lede">
+        I’m a product designer with a background in MMA, bringing a human centered mindset from the gym
+        to the products I design. I focus on understanding people, solving real problems, and helping
+        users reach their goals.
+      </p>
+      <div class="actions">
+        <Button href="#work">View My Work</Button>
+        <Button href="/about/" variant="secondary">About Me</Button>
+      </div>
+    </div>
   </section>
 
-  <section class="container work" aria-labelledby="work-heading">
-    <h2 id="work-heading" class="label work__heading">Selected work</h2>
-    {
-      studies.length > 0 ? (
-        <div class="work__list">
-          {studies.map((study) => (
-            <CaseCard study={study} />
-          ))}
+  <!-- 2. Most recently -->
+  <section class="band" aria-labelledby="recent-heading">
+    <div class="container band__inner">
+      <div class="recent">
+        <h2 id="recent-heading">Most recently,</h2>
+        <p>
+          I attended the BridgeGood UX Design Apprenticeship, a program launched by Google and the Golden
+          State Warriors, with mentors from Meta, PayPal, and Adobe. The team built AthenaScribe, an AI
+          translation platform for families of Oakland Unified School District receiving school documents
+          they could not read, then presented it at Demo Day at Block HQ.
+        </p>
+      </div>
+      <div class="split split--media">
+        <VideoEmbed url={site.kron4Video} title="Purpose to Pixels: BridgeGood on KRON4" />
+        <div class="split__text">
+          <h3 class="split__title">Purpose to Pixels: BridgeGood on KRON4</h3>
+          <p>
+            Live with BridgeGood’s executive director, talking about open communication between Oakland
+            families and their schools, and why design for social good matters.
+          </p>
+          <div class="actions">
+            <Button href={site.kron4Video || undefined} variant="secondary" external>
+              Watch on YouTube
+            </Button>
+          </div>
         </div>
-      ) : (
-        <p class="work__empty">Case studies are on the way.</p>
-      )
-    }
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Selected Work -->
+  <section id="work" class="container work" aria-labelledby="work-heading">
+    <h2 id="work-heading">Selected Work</h2>
+    <div class="work__grid">
+      {cards.map(({ item, href, draft }) => <WorkCard item={item} href={href} draft={draft} />)}
+    </div>
+  </section>
+
+  <!-- 4. Coaching, always dark -->
+  <section class="surface-always-dark coaching" aria-labelledby="coaching-heading">
+    <div class="container coaching__inner">
+      <div class="coaching__text">
+        <h2 id="coaching-heading">From coaching systems to Product Design.</h2>
+        <div class="coaching__body">
+          <p>
+            My approach to teamwork was built through years of competing and coaching in martial arts. In
+            my last role, I ran the fight team: recruiting fighters out of group classes, planning their
+            camps and weight cuts, and getting them ready to compete.
+          </p>
+          <p>
+            Competing taught me that close fights come down to the basics. Coaching taught me that every
+            fighter uses those basics differently.
+          </p>
+          <p>
+            On a design team, that means knowing the fundamentals cold and finding what each person does
+            best. On your team, I will learn how everyone works and put my effort where it moves the whole
+            group forward.
+          </p>
+        </div>
+      </div>
+      <div class="coaching__photos">
+        <Photo name="coaching-1" widths={[400, 600, 800]} sizes="(min-width: 64rem) 20rem, 46vw" ratio="3 / 4" class="coaching__photo" />
+        <Photo name="coaching-2" widths={[400, 600, 800]} sizes="(min-width: 64rem) 20rem, 46vw" ratio="3 / 4" class="coaching__photo" />
+        <Photo name="coaching-3" widths={[640, 960, 1280]} sizes="(min-width: 64rem) 40rem, 92vw" ratio="16 / 9" class="coaching__photo coaching__photo--wide" />
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Closing banner, always dark -->
+  <section class="surface-always-dark banner" aria-labelledby="banner-heading">
+    <Photo name="group" widths={[800, 1280, 1920, 2560]} sizes="100vw" ratio="auto" class="banner__photo" />
+    <div class="banner__overlay" aria-hidden="true"></div>
+    <div class="container banner__content">
+      <h2 id="banner-heading">Interested in working together?</h2>
+      <p>
+        I’m open to Product Design opportunities where research, product thinking, and clear interaction
+        design can help make complicated systems easier to use.
+      </p>
+      <div class="actions actions--center">
+        <Button href="#work">View My Work</Button>
+      </div>
+    </div>
   </section>
 </PageLayout>
 
 <style>
-  .intro {
+  section {
+    scroll-margin-top: var(--space-5);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .actions--center {
+    justify-content: center;
+  }
+
+  /* 1. Hero */
+  .hero {
+    display: grid;
+    gap: var(--space-6);
+    align-items: center;
+    padding-block: var(--space-9);
+  }
+
+  .hero :global(.hero__headshot) {
+    inline-size: var(--size-headshot);
+    block-size: var(--size-headshot);
+    border-radius: var(--radius-pill);
+    object-fit: cover;
+  }
+
+  .hero__text {
     display: grid;
     gap: var(--space-5);
-    padding-block: var(--space-9) var(--space-8);
+    min-width: 0;
   }
 
-  .intro__title {
-    max-width: 16ch;
+  .hero__text h1 {
+    font-size: var(--step-5);
   }
 
-  .intro__lede {
+  .hero__lede {
     max-width: var(--measure-reading);
-    font-size: var(--step-1);
-    line-height: var(--leading-snug);
     color: var(--color-ink-muted);
   }
 
-  .work__heading {
-    font-family: var(--font-text);
-    letter-spacing: var(--tracking-label);
-    margin-block-end: var(--space-4);
+  @media (min-width: 48rem) {
+    .hero {
+      grid-template-columns: auto 1fr;
+      gap: var(--space-8);
+    }
   }
 
-  .work__list {
-    border-bottom: var(--rule-thin) solid var(--color-rule-strong);
+  /* 2. Most recently */
+  .band {
+    background: var(--color-band);
   }
 
-  .work__empty {
-    color: var(--color-ink-muted);
+  .band__inner {
+    display: grid;
+    gap: var(--space-8);
+    padding-block: var(--space-9);
+  }
+
+  .recent {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .recent h2,
+  .work h2 {
+    font-size: var(--step-4);
+  }
+
+  .recent p {
+    max-width: var(--measure-reading);
+  }
+
+  .split {
+    display: grid;
+    gap: var(--space-6);
+    align-items: center;
+  }
+
+  .split > * {
+    min-width: 0;
+  }
+
+  .split__text {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .split__title {
+    font-size: var(--step-3);
+  }
+
+  @media (min-width: 56rem) {
+    .split--media {
+      grid-template-columns: 7fr 5fr;
+      gap: var(--space-8);
+    }
+  }
+
+  /* 3. Selected Work */
+  .work {
+    display: grid;
+    gap: var(--space-7);
+    padding-block: var(--space-9);
+  }
+
+  .work__grid {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 48rem) {
+    .work__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  /* 4. Coaching */
+  .coaching__inner {
+    display: grid;
+    gap: var(--space-8);
+    padding-block: var(--space-9);
+  }
+
+  .coaching__text {
+    display: grid;
+    gap: var(--space-7);
+    align-content: start;
+    min-width: 0;
+  }
+
+  .coaching__text h2 {
+    font-size: var(--step-4);
+  }
+
+  .coaching__body {
+    display: grid;
+    gap: var(--space-4);
+    max-width: var(--measure-reading);
+  }
+
+  .coaching__photos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+    align-content: start;
+    min-width: 0;
+  }
+
+  .coaching__photos :global(.coaching__photo) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-media);
+  }
+
+  .coaching__photos :global(.coaching__photo--wide) {
+    grid-column: 1 / -1;
+  }
+
+  @media (min-width: 64rem) {
+    .coaching__inner {
+      grid-template-columns: 5fr 6fr;
+      gap: var(--space-9);
+    }
+  }
+
+  @media (max-width: 30rem) {
+    .coaching__photos {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* 5. Closing banner */
+  .banner {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .banner :global(.banner__photo) {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 0;
+  }
+
+  .banner__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--color-overlay);
+  }
+
+  .banner__content {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-5);
+    padding-block: var(--space-10);
+    text-align: center;
+  }
+
+  .banner__content h2 {
+    font-size: var(--step-4);
+  }
+
+  .banner__content p {
+    max-width: var(--measure-reading);
   }
 </style>
