@@ -10,11 +10,13 @@ Each case study is one `.mdx` file in `src/content/case-studies/`. Files startin
 |------------|---------------------------------------|----------|-------|
 | `title`    | string                                | yes      | Short, plain. |
 | `summary`  | string                                | yes      | One or two sentences for the case study hero. |
+| `headline` | string                                | no       | One line stating the project, shown large under the title. |
 | `card`     | `{ label, description, detail }`      | no       | Home page card: small label on top, one description, one detail line at the bottom. |
 | `featured` | boolean                               | no       | Defaults to false. The featured case study shows as the large card at the top of Selected work. |
 | `role`     | string                                | yes      | Aaron's role, as on the project. |
 | `team`     | list of `{ name, role }`              | yes      | Everyone credited. Aaron is not listed here. |
 | `timeline` | string                                | yes      | Duration and dates in plain words. |
+| `program`  | string                                | no       | The program the work was part of. |
 | `tools`    | list of strings                       | no       | Defaults to empty. |
 | `cover`    | `{ src, alt }`                        | no       | Image path under `public/` and required alt text. |
 | `order`    | number                                | yes      | Lower numbers show first in Selected work. |
@@ -34,7 +36,9 @@ Each case study is one `.mdx` file in `src/content/case-studies/`. Files startin
 
 Available in every case study with no imports.
 
-- `<Figure src alt caption />` for images. `alt` is required.
+- `<Figure src alt caption />` for images. `alt` is required. Import the image at the top of the file (`import shot from "../../assets/case-studies/<slug>/shot.webp"`, then `src={shot}`) so it is optimized. Add `narrow` for tall phone screens.
+- `<Sources>` for a short list of sources under a finding, separated by " · ".
+- Markdown tables work for comparisons and targets.
 - `<Quote source>` for participant or stakeholder quotes. `source` is required. Participants are anonymous by role.
 - `<Stat value label source />` for numbers. `source` is required. Use `source="untraceable"` when the number cannot be traced; it renders "Source not traceable."
 - `<StatGroup>` lays out several `<Stat>` side by side.

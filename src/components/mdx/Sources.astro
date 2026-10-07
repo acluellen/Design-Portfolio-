@@ -1,0 +1,18 @@
+---
+// A small "Sources" line under a finding or a set of numbers. Each source goes in the slot,
+// separated by " · ". Link a source once Aaron supplies its address.
+---
+
+<p class="sources"><span class="label sources__label">Sources</span> <slot /></p>
+
+<style>
+  .sources {
+    font-size: var(--step--1);
+    line-height: var(--leading-snug);
+    color: var(--color-ink-muted);
+  }
+
+  .sources__label {
+    margin-inline-end: var(--space-2);
+  }
+</style>

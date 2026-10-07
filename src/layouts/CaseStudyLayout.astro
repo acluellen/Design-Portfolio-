@@ -9,7 +9,7 @@ interface Props {
 }
 
 const { study, prev, next } = Astro.props;
-const { title, summary, role, team, timeline, tools, cover, status } = study.data;
+const { title, summary, headline, role, team, timeline, program, tools, cover, status } = study.data;
 ---
 
 <PageLayout title={title} description={summary}>
@@ -19,7 +19,8 @@ const { title, summary, role, team, timeline, tools, cover, status } = study.dat
         Case study
         {status === "draft" && <span class="hero__draft">Draft</span>}
       </p>
-      <h1>{title}</h1>
+      <h1 translate="no">{title}</h1>
+      {headline && <p class="hero__headline">{headline}</p>}
       <p class="hero__summary">{summary}</p>
 
       <dl class="hero__facts">
@@ -44,6 +45,14 @@ const { title, summary, role, team, timeline, tools, cover, status } = study.dat
                   ))}
                 </ul>
               </dd>
+            </div>
+          )
+        }
+        {
+          program && (
+            <div>
+              <dt class="label">Program</dt>
+              <dd>{program}</dd>
             </div>
           )
         }
@@ -103,6 +112,16 @@ const { title, summary, role, team, timeline, tools, cover, status } = study.dat
     color: var(--color-accent);
   }
 
+  .hero__headline {
+    max-width: 24ch;
+    font-family: var(--font-display);
+    font-size: var(--step-4);
+    font-weight: var(--weight-heading);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+    text-wrap: balance;
+  }
+
   .hero__summary {
     max-width: var(--measure-reading);
     font-size: var(--step-1);
@@ -148,6 +167,43 @@ const { title, summary, role, team, timeline, tools, cover, status } = study.dat
 
   .body {
     padding-block-start: var(--space-4);
+  }
+
+  /* Tables written in Markdown: comparisons and targets. Scroll sideways inside their own box
+     on narrow screens instead of widening the page. */
+  .body :global(table) {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-size: var(--step--1);
+    line-height: var(--leading-snug);
+  }
+
+  .body :global(th),
+  .body :global(td) {
+    padding: var(--space-3) var(--space-4) var(--space-3) 0;
+    border-bottom: var(--rule-thin) solid var(--color-rule);
+    text-align: start;
+    vertical-align: top;
+  }
+
+  .body :global(thead th) {
+    font-weight: var(--weight-semibold);
+    border-bottom-color: var(--color-rule-strong);
+  }
+
+  .body :global(h3) {
+    margin-block-start: var(--space-7);
+  }
+
+  /* A small label written just above a heading belongs to it: the space goes above the label. */
+  .body > :global(p.label:has(+ h2)) {
+    margin-block-start: var(--space-8);
+  }
+
+  .body > :global(p.label + h2) {
+    margin-block-start: var(--space-2);
   }
 
   .pager {

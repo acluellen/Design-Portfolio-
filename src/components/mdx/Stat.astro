@@ -35,9 +35,10 @@ const state = checkSource("Stat", source);
     border-top: var(--rule-thin) solid var(--color-rule-strong);
   }
 
+  /* step 4 so values with words ("2+ weeks", "8.5 out of 10") stay on one line in a group. */
   .stat__value {
     font-family: var(--font-display);
-    font-size: var(--step-5);
+    font-size: var(--step-4);
     line-height: var(--leading-tight);
     letter-spacing: var(--tracking-tight);
     font-variant-numeric: lining-nums tabular-nums;

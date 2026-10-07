@@ -8,7 +8,8 @@ import Callout from "./Callout.astro";
 import Contribution from "./Contribution.astro";
 import Mine from "./Mine.astro";
 import Team from "./Team.astro";
+import Sources from "./Sources.astro";
 
-export const mdxComponents = { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team };
+export const mdxComponents = { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team, Sources };
 
-export { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team };
+export { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team, Sources };

@@ -2,6 +2,15 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-07 · AthenaScribe case study page (Phase 5)
+
+- Built `/work/athenascribe/` from Aaron's Claude Design draft (AthenaScribe Case Study canvas, Main board). Words are the draft's, in its order, rebuilt in the site's own styles. The older "Approach and Insights" board on the same canvas (7 interviews, 11 clusters) was not used; the Main board says 12 interviews and 15 clusters.
+- Images: the round one phone upload screen (the file already held for Phase 5, renamed `round-one-upload.webp`) and the round one admin queue on a laptop (`round-one-admin-queue.webp`, taken from the draft).
+- Still a draft page (`status: "draft"`): hidden from the live site and its card does not link. Missing from the draft and left as TODO comments: the live prototype link, the FigJam affinity map link, the six source links, and the prototype walkthrough video.
+- Inferred, to confirm: which source backs each of the three numbers at the top, and that the "buckets" quote came from an administrator in round one testing. Kept from Aaron's first brief though the draft leaves them out: team surnames, Tyler as project coach, and "July to August 2026".
+- New for case studies: `headline` and `program` frontmatter fields, a `Sources` component, Markdown table styles, `Figure` takes imported images (optimized like the site photos) and a `narrow` option for tall phone screens, stat values one step smaller so values with words stay on one line, and a small label above a heading sits with that heading.
+- The copy check reports "RFP 26-01". It is a document number, so it stays as written.
+
 ## 2026-10-07 · i-have-adhd skill added
 
 - Added the i-have-adhd skill (`.claude/skills/i-have-adhd`) from github.com/ayghri/i-have-adhd, commit 723af7d. It only changes how Claude writes replies, never the site. It runs when Aaron types `/i-have-adhd` and stays on until "stop adhd mode". Its always-on hook is not installed.

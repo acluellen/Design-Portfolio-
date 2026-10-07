@@ -9,6 +9,8 @@ const caseStudies = defineCollection({
   schema: z.object({
     title: z.string(),
     summary: z.string(),
+    /** One line that states the project, shown large under the title. */
+    headline: z.string().optional(),
     // Home page card: a small label, one description, and one detail line.
     card: z
       .object({ label: z.string(), description: z.string(), detail: z.string() })
@@ -20,6 +22,8 @@ const caseStudies = defineCollection({
     role: z.string(),
     team: z.array(z.object({ name: z.string(), role: z.string() })),
     timeline: z.string(),
+    /** The program the work was part of, such as an apprenticeship. */
+    program: z.string().optional(),
     tools: z.array(z.string()).default([]),
     cover: z.object({ src: z.string(), alt: z.string() }).optional(),
     order: z.number(),

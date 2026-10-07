@@ -1,62 +1,193 @@
 ---
-# Every known fact below still needs a source from Aaron before this publishes.
+# Words come from Aaron's Claude Design draft (AthenaScribe Case Study, Main board, Oct 7 2026).
+# Links marked TODO below are still "#" in the draft.
 title: "AthenaScribe"
-summary: "Summary placeholder. Aaron will write one or two sentences."
+headline: "Human review for school document translation."
+summary: "AthenaScribe translates full school documents for districts. A person approves the vital ones before families receive them."
 card:
   label: "Research lead · BRIDGEGOOD capstone"
   description: "The team built a translation tool so Oakland families get school documents in their own language, with staff checking the important ones. I led the research."
   detail: "12 stakeholder interviews · Tested with counselors and vice principals · Presented at Demo Day, Block HQ"
 featured: true
-role: "Research Lead, Product Design" # source TODO
-team: # source TODO
+role: "Research Lead"
+team:
   - name: "Gaby Garcia"
-    role: "Product lead"
+    role: "Product Lead"
   - name: "Miriam Maenner"
-    role: "Design systems lead"
+    role: "Design Systems"
   - name: "Renato Villagran"
-    role: "UI lead"
-  - name: "Tyler"
+    role: "User Flows"
+  - name: "Tyler" # Not in the draft. Kept from Aaron's first brief; confirm.
     role: "Project coach"
-timeline: "4 weeks, July to August 2026" # source TODO
-tools: ["FigJam"] # source TODO; other tools TODO
+timeline: "4 week design sprint, July to August 2026"
+program: "BRIDGEGOOD UX Design Apprenticeship"
+tools: ["FigJam"]
 order: 1
 status: "draft"
 ---
 
-{/*
-  Known facts to place once MDX components exist (Phase 2). Each needs a source.
-  Demo Day: August 14, 2026.
-  Aaron owned: research, interviews, synthesis, desk research, IA, FigJam work,
-    the verification screen after upload, and the question that led to the human review gate.
-  Renato built the user flows. Do not credit flows to Aaron.
-  Research scale: 63 outreach contacts, 6 Oakland organizations visited,
-    12 stakeholder interviews (confirmed by Aaron, Oct 7), 11 affinity clusters. Use <Stat> with a source for each.
-  Participants stay anonymous by role. Name no individuals and no school.
-  Testing: done with counselors and vice principals (card text, Oct 7). Details come from Aaron's draft.
-  For the case study page: the team visited PayPal, who helped with KPIs and the problem statement.
-  Aaron's full case study draft lives in Claude Design. Bring it in for Phase 5; it replaces these placeholders.
-*/}
+import uploadScreen from "../../assets/case-studies/athenascribe/round-one-upload.webp";
+import adminQueue from "../../assets/case-studies/athenascribe/round-one-admin-queue.webp";
 
-## Context
+I talked about AthenaScribe live on KRON4. [Watch on YouTube](https://www.youtube.com/watch?v=r4l9IsyDUD4)
 
-TODO
+{/* TODO: "View live prototype" link. The draft has "#"; Aaron to send the prototype URL. */}
 
-## Research
+<Contribution>
+  <Mine label="My contribution">Research framing, workflow audit, risk synthesis, product pivot, core reviewer flow.</Mine>
+  <Team label="Team contribution">Visual system, supporting flows, prototype refinement, Demo Day delivery.</Team>
+</Contribution>
 
-TODO
+## Translating one school form takes two weeks of notice.
 
-## Decisions
+It started with one principal's complaint. The team traced it to a workflow gap: messages translate automatically, and attachments wait on the district translation unit. A family waiting on a special education plan or a health form gets it late, or reads it through their child:
 
-TODO
+{/* The draft lists the three sources together. Each Stat below names the one it most likely
+    comes from; Aaron to confirm. */}
+<StatGroup>
+  <Stat value="2+ weeks" label="notice for a 1 to 3 page document" source="OUSD AR 5124" />
+  <Stat value="3+ weeks" label="longer documents" source="OUSD AR 5124" />
+  <Stat value="9 staff" label="for 13,314 English learners" source="OUSD Interpretation and Translation Unit · California Department of Education, 2025 to 2026" />
+</StatGroup>
 
-## Contribution
+<Callout label="Design target">Shorten translation turnaround and route vital documents to the right person to approve.</Callout>
 
-TODO
+## Interviews, an audit and a policy review landed on attachments.
 
-## Outcome
+### 12 stakeholder interviews
 
-TODO
+**Why:** District approval for research involving student data would outlast a four week sprint, so the team used guerrilla recruiting to reach administrators, counselors and teachers across Bay Area schools.
 
-## Reflection
+### Platform audit
 
-TODO
+**Why:** The team audited the district's family messaging platform from two accounts, then mapped competitors and adjacent school tools to see where document translation falls through.
+
+### Policy and legal review
+
+**Why:** State education code, district policy and federal privacy law showed who holds the translation duty and what unreviewed machine translation puts at risk.
+
+The product lead ran outreach across 63 contacts. I led the interviews and synthesis. The design systems lead built the design system, and the user flows lead mapped the user flows.
+
+I synthesized the 12 interviews into 15 affinity clusters in FigJam.
+
+{/* TODO: "View the affinity map in FigJam" link. The draft has "#". */}
+
+## Two findings changed who the product serves and how it works.
+
+| | The original idea: ParentSquare translator | What research led to: District platform |
+|---|---|---|
+| Buyer | The messaging platform | School districts <sup>1</sup> |
+| Who translates | Third party translation model | AI, checked by an administrator <sup>1</sup> |
+| Accuracy | Machine output, no human check | Human approval before delivery <sup>2</sup> |
+| Privacy | Records leave district control | Records stay under district control <sup>2</sup> |
+
+### Why it changed: finding 1
+
+State law puts the translation duty on the district, and only the district's board can sign the contract.
+
+**What the team did:** After an engineer and a design consultant pointed the team toward schools, the product lead made the district the buyer. The UX and UI leads rebuilt the flows and screens around school staff.
+
+**Changes:** Buyer · Who translates
+
+<Sources>Cal. Educ. Code § 48985 · OUSD Board Policy 5124 · Cal. Educ. Code § 17604</Sources>
+
+### Why it changed: finding 2
+
+Unreviewed machine translation of student records creates Title VI and FERPA exposure.
+
+**What the team did:** Districts already have a person check vital translations, so the team made that step part of the product. I introduced the review flow, and the UX and UI leads rebuilt the user flow and screens around it, including a verification screen with the source and translation side by side.
+
+**Changes:** Accuracy · Privacy
+
+<Sources>U.S. v. Cherry Creek School District settlement, 2024 · 34 CFR § 99.31(a)(1)(i)(B) · Orange County Dept. of Education RFP 26-01, 2026</Sources>
+
+Competing school apps tell schools their document translation "is not intended for use with legal documents." AthenaScribe was built for those documents. It flags them on upload and routes them to a person.
+
+<p class="label">Round one of usability testing</p>
+
+## The new design held up in testing, and the queue needed sorting.
+
+The two findings above put a person in charge of approving vital documents. We gave that step to the administrators who would run it and asked two things: can they use it, and does it fit their day?
+
+### As tested
+
+1. Scan
+2. Translate
+3. Right person
+
+<Figure
+  src={uploadScreen}
+  narrow
+  alt="Round one upload screen on a phone: Analyzing document, 86 percent, a field trip permission slip being scanned, checking for vital information and checking for personal data"
+  caption="Upload: the app scans and translates each document, then sends the vital ones to the right person to approve."
+/>
+
+<Figure
+  src={adminQueue}
+  alt="Round one admin queue on a laptop: eight documents in one list, from a school photo order to a special education IEP notice"
+  caption="Review: every document sat in one list, from a school photo order to a special education IEP notice."
+/>
+
+### Can a school administrator complete the approval flow?
+
+<p class="label">Research question · Phone</p>
+
+**Yes, with guidance.** All 3 tasks completed. Ease of navigation rated 8.5 out of 10.
+
+### Does the review step fit an administrator's workload?
+
+<p class="label">Research question · Laptop</p>
+
+**Not at high school volume.** With 120 teachers sending forms, reviewing every one would not fit an administrator's day.
+
+{/* The draft gives this quote no speaker. "Administrator" is inferred from the testing section; Aaron to confirm. */}
+<Quote source="Administrator, round one usability testing">"I would like buckets to where it says, okay, health forms, field trip forms. Wellness checks."</Quote>
+
+### Next version
+
+- **Severity 3:** Documents sorted into buckets by type, with flags for the types an administrator wants to see.
+- **Severity 2:** The refresh control shows a visible update with a timestamp.
+
+Round one: live prototype · Informed by administrators, counselors, community school staff and nonprofit leaders across the Bay Area · Tasks: upload, work the review queue, approve for delivery · Measures: task completion, think aloud, rating questions
+
+<p class="label">Redesign after round one</p>
+
+## Translation is automatic. Approval stays human.
+
+Staff upload a document. AI translates it and flags the vital ones. A person approves before it sends.
+
+1. Staff upload
+2. Language from school records
+3. Sorted by document type
+4. Sent to the right reviewer
+5. Family reads and signs
+
+{/* TODO: "View live prototype" link (draft has "#").
+    TODO: prototype walkthrough video (phone screen recording). The draft has a placeholder with this caption:
+    "A walkthrough of the redesign, from scan to the buckets each admin sees: assistant principal,
+    counselor and district translator. Designed after round one." */}
+
+### Refinements from testing
+
+- **Language:** Reads each family's home language from Aeries, so no one chooses it again.
+- **Text size:** Larger type and a wider layout that hold at 200 percent zoom. Severity 3.
+- **Read aloud:** Now a labeled button, since its purpose was unclear. Severity 2.
+- **Opened by:** Each document shows "Opened by X of Y families" and a trend. Red stays reserved for problems.
+
+## The target: same day for routine documents, two school days for vital ones.
+
+Design target · Not yet measured · Baseline: OUSD AR 5124
+
+| Document | OUSD today | AthenaScribe target |
+|---|---|---|
+| Routine | 2+ weeks | Same day |
+| Vital | 2 to 3+ weeks | 2 school days |
+
+<StatGroup>
+  <Stat value="6" label="design changes for V2" source="Round one usability testing" />
+  <Stat value="8.5 out of 10" label="ease of navigation in usability testing" source="Round one usability testing" />
+</StatGroup>
+
+## A safeguard nobody has time to use is still a delay.
+
+I designed the review step for accuracy first. Testing showed speed matters just as much, so the next version puts a deadline on every vital document, visible to staff and administrators.
