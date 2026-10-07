@@ -1,37 +1,43 @@
 ---
+// A Selected work card: image, small label, title, one description, one detail line.
+// `featured` makes the large card: image and text side by side from 56rem up.
 import Photo from "./Photo.astro";
 import { photos, type PhotoKey } from "../../data/photos";
-import { cardImageSizes } from "../../lib/carousel-sizes";
 import type { CaseStudy } from "../../lib/case-studies";
 
 interface Props {
   study: CaseStudy;
-  /** Case study URL. Without it the card shows "In progress" and does not link. */
+  /** Case study URL. Without it the card does not link. */
   href?: string;
+  featured?: boolean;
 }
 
-const { study, href } = Astro.props;
-const { title, tagline, focus } = study.data;
+const { study, href, featured = false } = Astro.props;
+const { title, card } = study.data;
 const photoKey = `work-${study.id}`;
 const photo = (photoKey in photos ? photoKey : undefined) as PhotoKey | undefined;
+
+// The image area is 4:3. Featured images take about 7/12 of the wide column, small ones half.
+const sizes = featured
+  ? "(min-width: 76rem) 38rem, (min-width: 56rem) 52vw, 92vw"
+  : "(min-width: 76rem) 31rem, (min-width: 48rem) 44vw, 92vw";
 ---
 
 <article
-  class:list={["work-card", { "work-card--linked": href }]}
-  tabindex={href ? undefined : 0}
-  aria-label={href ? undefined : `${title}, in progress`}
+  class:list={["work-card", { "work-card--featured": featured, "work-card--linked": href }]}
 >
   <div class="work-card__media">
     {
       photo ? (
         <Photo
           name={photo}
-          widths={[400, 600, 800, 1000, 1200, 1448]}
-          sizes={cardImageSizes}
-          cover={4 / 3}
+          widths={featured ? [600, 900, 1200, 1448] : [400, 600, 800, 1000, 1200]}
+          sizes={sizes}
           ratio="4 / 3"
+          cover={4 / 3}
           placeholderLabel={title}
           class="work-card__image"
+          loading={featured ? "eager" : "lazy"}
         />
       ) : (
         <div class="work-card__fallback" aria-hidden="true">{title}</div>
@@ -40,26 +46,13 @@ const photo = (photoKey in photos ? photoKey : undefined) as PhotoKey | undefine
   </div>
 
   <div class="work-card__text">
+    {card?.label && <p class="work-card__label">{card.label}</p>}
     <h3 class="work-card__title">
       {href ? <a href={href}>{title}</a> : title}
     </h3>
-    {tagline && <p class="work-card__tagline">{tagline}</p>}
-    {
-      focus.length > 0 && (
-        <ul class="work-card__tags" aria-label="Focus">
-          {focus.map((tag) => (
-            <li>{tag}</li>
-          ))}
-        </ul>
-      )
-    }
-    {
-      href ? (
-        <span class="work-card__cta" aria-hidden="true">View case study</span>
-      ) : (
-        <p class="work-card__status">In progress</p>
-      )
-    }
+    {card?.description && <p class="work-card__description">{card.description}</p>}
+    {card?.detail && <p class="work-card__detail">{card.detail}</p>}
+    {href && <span class="work-card__cta" aria-hidden="true">View case study</span>}
   </div>
 </article>
 
@@ -74,11 +67,6 @@ const photo = (photoKey in photos ? photoKey : undefined) as PhotoKey | undefine
     background: var(--color-paper-raised);
     border: var(--rule-thin) solid var(--color-rule);
     border-radius: var(--radius-media);
-  }
-
-  .work-card:focus-visible {
-    outline: var(--focus-ring);
-    outline-offset: var(--focus-offset);
   }
 
   .work-card--linked {
@@ -107,22 +95,23 @@ const photo = (photoKey in photos ? photoKey : undefined) as PhotoKey | undefine
     height: 100%;
   }
 
+  .work-card__media :global(img) {
+    object-fit: cover;
+  }
+
   .work-card__media :global(.photo-placeholder),
   .work-card__fallback {
     width: 100%;
     height: 100%;
   }
 
-  .work-card__media :global(img) {
-    object-fit: contain;
-  }
-
   .work-card__fallback {
     display: grid;
     place-items: center;
     padding: var(--space-5);
-    font-family: var(--font-display);
     font-size: var(--step-2);
+    font-weight: var(--weight-heading);
+    letter-spacing: var(--tracking-tight);
     color: var(--color-ink-muted);
     text-align: center;
   }
@@ -131,7 +120,14 @@ const photo = (photoKey in photos ? photoKey : undefined) as PhotoKey | undefine
     display: flex;
     flex: 1;
     flex-direction: column;
+    gap: var(--space-3);
     min-width: 0;
+  }
+
+  .work-card__label {
+    font-size: var(--step--1);
+    font-weight: var(--weight-medium);
+    color: var(--color-accent);
   }
 
   .work-card__title {
@@ -160,45 +156,22 @@ const photo = (photoKey in photos ? photoKey : undefined) as PhotoKey | undefine
     outline-offset: var(--focus-offset);
   }
 
-  .work-card__tagline {
-    display: -webkit-box;
-    margin-block-start: var(--space-4);
-    overflow: hidden;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    font-weight: var(--weight-medium);
+  .work-card__description {
     line-height: var(--leading-snug);
   }
 
-  .work-card__tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    margin-block-start: var(--space-2);
-    padding: 0;
-    list-style: none;
-  }
-
-  .work-card__tags li {
-    padding: var(--space-1) var(--space-3);
-    border: var(--rule-thin) solid var(--color-rule);
-    border-radius: var(--radius-pill);
-    font-size: var(--step--1);
-    color: var(--color-ink-muted);
-    line-height: var(--leading-snug);
-  }
-
-  /* Link and status sit at the bottom so every card lines up. */
-  .work-card__cta,
-  .work-card__status {
+  /* Detail line sits at the bottom so cards in a row line up. */
+  .work-card__detail {
     margin-block-start: auto;
     padding-block-start: var(--space-4);
+    border-top: var(--rule-thin) solid var(--color-rule);
     font-size: var(--step--1);
-    font-weight: var(--weight-semibold);
+    color: var(--color-ink-muted);
   }
 
   .work-card__cta {
+    font-size: var(--step--1);
+    font-weight: var(--weight-semibold);
     color: var(--color-accent);
     text-decoration: underline;
     text-decoration-thickness: var(--underline-thickness);
@@ -209,19 +182,31 @@ const photo = (photoKey in photos ? photoKey : undefined) as PhotoKey | undefine
     color: var(--color-accent-hover);
   }
 
-  .work-card__status {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    color: var(--color-ink-muted);
+  /* Featured: larger type, image and text side by side on wide screens. */
+  .work-card--featured .work-card__title {
+    font-size: var(--step-4);
   }
 
-  /* Small accent marker before "In progress". */
-  .work-card__status::before {
-    content: "";
-    inline-size: var(--space-2);
-    block-size: var(--space-2);
-    border-radius: var(--radius-pill);
-    background: var(--color-accent);
+  .work-card--featured .work-card__description {
+    font-size: var(--step-1);
+  }
+
+  @media (min-width: 56rem) {
+    .work-card--featured {
+      display: grid;
+      grid-template-columns: 7fr 5fr;
+      align-items: stretch;
+      gap: var(--space-7);
+      padding: var(--space-6);
+    }
+
+    .work-card--featured .work-card__text {
+      justify-content: center;
+      padding-block: var(--space-5);
+    }
+
+    .work-card--featured .work-card__detail {
+      margin-block-start: var(--space-5);
+    }
   }
 </style>

@@ -2,6 +2,40 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-07 · Home page redesign: warm, one sans, featured work
+
+The previous home page is saved on the `saved/home-v1` branch (commit `e0bce20`). A local tag `home-v1` points to the same commit; pushing tags failed through the network proxy, so the branch is the saved copy on GitHub.
+
+### Look and feel
+- Light mode: warm off white page `#F8F6F1`, cards `#FFFDF9`, band `#EFEBE3`, panel `#F1EDE6`, ink `#141210`, muted `#57534C`, rules `#E0DBD1`. Dark mode is unchanged. All pairs pass AA. The logo blue is 6.9:1 on the page.
+- Headlines now use Inter, semibold, with `--tracking-tight` at -0.025em. Source Serif 4 is removed from the layout and from `package.json`. `--font-display` now points to `--font-text`.
+- The only accent is the logo blue. No orange or brown was left in the site's colors. The one warm brown asset, the styleguide's sample figure SVG, is now neutral gray.
+- Corners: cards and images 16px (`--radius-media`), buttons 12px (`--radius-control`, new). The headshot, theme toggle, and video play button stay round.
+- Section spacing: new `--section-space` (96px to 160px, fluid) replaces `--space-9` around every home section.
+- Headings in sentence case: "Selected work", "From coaching systems to product design." Proper names keep their capitals: "BRIDGEGOOD UX Design Apprenticeship" (Aaron's exact text) and "Purpose to Pixels: BridgeGood on KRON4" (the segment's name). Button labels keep Aaron's words.
+- The hero already had the photo left and words right from 48rem. Phones still stack the photo above the words.
+- The coaching section stays always dark.
+
+### Content
+- Apprenticeship section: Aaron's new heading and two lines replace "Most recently," and its paragraph. The KRON4 video block is unchanged.
+- Closing button: "Email me", which opens `mailto:` with the footer address.
+
+### Selected work
+- The sideways scrolling row is removed: `WorkCarousel.astro`, `src/lib/carousel-sizes.ts`, and the carousel tokens are gone.
+- New layout: AthenaScribe as one large featured card, with Klima and Craft Education in two columns below.
+- Cards: image, small blue label, title, one description, and one detail line. No tags. Text comes from new frontmatter `card: { label, description, detail }` and `featured`. The `tagline` and `focus` fields are removed.
+- The Mentorship App stub is deleted.
+- Cards still link only to published case studies. All three are drafts, so none link yet.
+
+### Facts to confirm (Aaron's new card text differs from earlier notes)
+- AthenaScribe detail says "12 stakeholder interviews". The Phase 5 notes say 7 stakeholder interviews.
+- AthenaScribe detail says "Tested with counselors and vice principals". The case study draft says "Testing has not happened yet."
+- The apprenticeship mentors are now Google, Meta, and YouTube (earlier Meta, PayPal, and Adobe), and the program is launched by Google.org (earlier Google).
+- The text is used exactly as Aaron wrote it. The case study draft is not changed until he confirms.
+
+### Checked
+- 1440 and 390, light and dark: no sideways scroll, no console errors. Inter on every heading. The closing button opens the footer email.
+
 ## 2026-10-07 · KRON4 video cover stored in the site
 
 - `src/assets/photos/kron4-cover.jpg`: YouTube's full size thumbnail (1280 by 720), saved by Aaron.

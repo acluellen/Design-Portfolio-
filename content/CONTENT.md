@@ -10,14 +10,14 @@ Each case study is one `.mdx` file in `src/content/case-studies/`. Files startin
 |------------|---------------------------------------|----------|-------|
 | `title`    | string                                | yes      | Short, plain. |
 | `summary`  | string                                | yes      | One or two sentences for the case study hero. |
-| `tagline`  | string                                | no       | One line for the home page card. Two lines max on screen. |
-| `focus`    | list of strings                       | no       | Focus tags for the home page card. |
+| `card`     | `{ label, description, detail }`      | no       | Home page card: small label on top, one description, one detail line at the bottom. |
+| `featured` | boolean                               | no       | Defaults to false. The featured case study shows as the large card at the top of Selected work. |
 | `role`     | string                                | yes      | Aaron's role, as on the project. |
 | `team`     | list of `{ name, role }`              | yes      | Everyone credited. Aaron is not listed here. |
 | `timeline` | string                                | yes      | Duration and dates in plain words. |
 | `tools`    | list of strings                       | no       | Defaults to empty. |
 | `cover`    | `{ src, alt }`                        | no       | Image path under `public/` and required alt text. |
-| `order`    | number                                | yes      | Lower numbers show first in Selected Work. |
+| `order`    | number                                | yes      | Lower numbers show first in Selected work. |
 | `status`   | `"draft"` or `"published"`            | no       | Defaults to `"draft"`. Draft pages are hidden in production builds. Draft cards still show on the home page as "In progress" and do not link. |
 | `tags`     | list of strings                       | no       | Defaults to empty. |
 

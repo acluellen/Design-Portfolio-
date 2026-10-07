@@ -20,8 +20,8 @@ import {
 import tokensCss from "../styles/tokens.css?raw";
 
 const allStudies = await getAllCaseStudies();
-const linkedSample = allStudies.find((s) => s.data.tagline);
-const progressSample = allStudies.find((s) => !s.data.tagline);
+const featuredSample = allStudies.find((s) => s.data.featured);
+const cardSample = allStudies.find((s) => s.data.card && !s.data.featured);
 
 // Light values from the first :root block.
 const rootBlock = tokensCss.match(/:root\s*{([\s\S]*?)}/)?.[1] ?? "";
@@ -216,11 +216,11 @@ const sections = [
       <h3 class="sg__sub">ThemeToggle</h3>
       <div><ThemeToggle /></div>
 
-      <h3 class="sg__sub">WorkCard, linked and in progress</h3>
-      <p class="sg__note">The home page shows these in WorkCarousel, one row that scrolls sideways.</p>
+      <h3 class="sg__sub">WorkCard, featured and small</h3>
+      <p class="sg__note">The featured card is shown linked so its hover state can be reviewed. On the home page, cards link only to published case studies.</p>
       <div class="sg__cards">
-        {linkedSample && <WorkCard study={linkedSample} href="#site" />}
-        {progressSample && <WorkCard study={progressSample} />}
+        {featuredSample && <WorkCard study={featuredSample} href="#site" featured />}
+        {cardSample && <WorkCard study={cardSample} />}
       </div>
 
       <h3 class="sg__sub">VideoEmbed, no link yet</h3>
@@ -494,7 +494,6 @@ const sections = [
 
   .sg__cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
     gap: var(--space-6);
   }
 

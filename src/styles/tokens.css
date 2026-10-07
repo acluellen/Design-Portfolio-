@@ -1,20 +1,20 @@
 /*
  * Design tokens. Every visual value in the site lives here.
- * Direction: sharp, neutral, photo led. See design/DESIGN.md.
+ * Direction: warm off white, one clean sans, logo blue accent, soft corners. See design/DESIGN.md.
  */
 
 :root {
-  /* Color: light */
-  --color-paper: #fafafa;
-  --color-paper-raised: #ffffff;
-  --color-band: #ededed;
-  --color-panel: #f0f0f0;
-  --color-ink: #0a0a0a;
-  --color-ink-muted: #5a5a5a;
-  --color-rule: #dadada;
-  --color-rule-strong: #bdbdbd;
+  /* Color: light (warm off white) */
+  --color-paper: #f8f6f1;
+  --color-paper-raised: #fffdf9;
+  --color-band: #efebe3;
+  --color-panel: #f1ede6;
+  --color-ink: #141210;
+  --color-ink-muted: #57534c;
+  --color-rule: #e0dbd1;
+  --color-rule-strong: #c4bdb0;
 
-  /* Accent: AL logo blue. Links, focus rings, small markers only. 7.1:1 on paper. */
+  /* Accent: AL logo blue, the only accent. Links, focus rings, small markers. 6.9:1 on paper. */
   --color-accent: #054fb9;
   --color-accent-hover: #043f93;
   --color-accent-subtle: #e3ecfa;
@@ -25,7 +25,7 @@
   --color-brand: #054fb9;
   --color-brand-ink: #ffffff;
 
-  /* Always dark: same in both themes (coaching band, closing banner) */
+  /* Always dark: same in both themes (coaching section, closing section) */
   --color-always-dark: #000000;
   --color-always-dark-ink: #f2f2f2;
   --color-always-dark-muted: #a0a0a0;
@@ -36,9 +36,9 @@
   --color-always-dark-accent-hover: #8ab0f7;
   --color-overlay: rgb(0 0 0 / 0.6);
 
-  /* Type families (open fonts, self hosted via Fontsource) */
-  --font-display: "Source Serif 4 Variable", "Source Serif 4", Georgia, "Times New Roman", serif;
+  /* Type families (open fonts, self hosted via Fontsource). One sans for headlines and body. */
   --font-text: "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-text);
   --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
   /* Type scale (fluid, roughly 1.25 ratio) */
@@ -54,12 +54,13 @@
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
+  --weight-heading: 600;
 
   /* Leading and tracking */
-  --leading-tight: 1.1;
+  --leading-tight: 1.12;
   --leading-snug: 1.3;
   --leading-body: 1.65;
-  --tracking-tight: -0.015em;
+  --tracking-tight: -0.025em;
   --tracking-label: 0.08em;
 
   /* Space (4px base) */
@@ -79,13 +80,11 @@
   --measure-wide: 76rem;
   --gutter: var(--space-4);
   --header-height: 4.5rem;
+  --section-space: clamp(var(--space-9), 6rem + 4vw, 10rem); /* vertical room around each home section */
 
-  /* Selected Work row */
-  --gap-card-media: 1.25rem; /* 20px between card image and title */
+  /* Selected work cards */
+  --gap-card-media: 1.25rem; /* 20px between card image and text */
   --card-lift: 2px; /* hover rise */
-  --carousel-cards-desktop: 2.33; /* 2 full cards plus a third */
-  --carousel-cards-tablet: 1.4;
-  --carousel-card-phone: 85vw;
 
   /* Media and controls */
   --size-headshot: clamp(9rem, 6rem + 10vw, 14rem);
@@ -97,9 +96,10 @@
   /* Rules and radii */
   --rule-thin: 1px;
   --rule-thick: 2px;
-  --radius-small: 4px;
-  --radius-media: 12px;
-  --radius-pill: 999px;
+  --radius-small: 6px;
+  --radius-media: 16px; /* cards and images */
+  --radius-control: 12px; /* buttons */
+  --radius-pill: 999px; /* round icon buttons, tags */
 
   /* Underlines */
   --underline-offset: 0.2em;

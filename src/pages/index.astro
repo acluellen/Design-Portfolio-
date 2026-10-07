@@ -3,8 +3,14 @@ import PageLayout from "../layouts/PageLayout.astro";
 import Button from "../components/site/Button.astro";
 import Photo from "../components/site/Photo.astro";
 import VideoEmbed from "../components/site/VideoEmbed.astro";
-import WorkCarousel from "../components/site/WorkCarousel.astro";
+import WorkCard from "../components/site/WorkCard.astro";
+import { caseStudyHref, getAllCaseStudies } from "../lib/case-studies";
 import { site } from "../site.config";
+
+// Selected work: the featured case study as one large card, the rest below by `order`.
+const studies = (await getAllCaseStudies()).filter((s) => s.data.card);
+const featured = studies.find((s) => s.data.featured);
+const others = studies.filter((s) => s !== featured);
 ---
 
 <PageLayout title="Aaron Luellen" flushBottom>
@@ -33,17 +39,18 @@ import { site } from "../site.config";
     </div>
   </section>
 
-  <!-- 2. Most recently -->
+  <!-- 2. BRIDGEGOOD apprenticeship -->
   <section class="band" aria-labelledby="recent-heading">
     <div class="container band__inner">
       <div class="recent">
-        <h2 id="recent-heading">Most recently,</h2>
-        <p>
-          I attended the BridgeGood UX Design Apprenticeship, a program launched by Google and the Golden
-          State Warriors, with mentors from Meta, PayPal, and Adobe. The team built AthenaScribe, an AI
-          translation platform for families of Oakland Unified School District receiving school documents
-          they could not read, then presented it at Demo Day at Block HQ.
-        </p>
+        <h2 id="recent-heading">BRIDGEGOOD UX Design Apprenticeship</h2>
+        <div class="recent__lines">
+          <p>Launched by Google.org and the Golden State Warriors, with mentors from Google, Meta, and YouTube.</p>
+          <p>
+            The team built AthenaScribe, a translation tool with human review for Oakland Unified families,
+            and presented it at Demo Day at Block HQ.
+          </p>
+        </div>
       </div>
       <div class="split split--media">
         <VideoEmbed
@@ -68,14 +75,26 @@ import { site } from "../site.config";
     </div>
   </section>
 
-  <!-- 3. Selected Work -->
-  <WorkCarousel heading="Selected Work" />
+  <!-- 3. Selected work: one featured card, then smaller cards. Cards link only when published. -->
+  <section id="work" class="container work" aria-labelledby="work-heading">
+    <h2 id="work-heading">Selected work</h2>
+    {featured && <WorkCard study={featured} href={caseStudyHref(featured)} featured />}
+    {
+      others.length > 0 && (
+        <div class="work__grid">
+          {others.map((study) => (
+            <WorkCard study={study} href={caseStudyHref(study)} />
+          ))}
+        </div>
+      )
+    }
+  </section>
 
   <!-- 4. Coaching, always dark -->
   <section class="surface-always-dark coaching" aria-labelledby="coaching-heading">
     <div class="container coaching__inner">
       <div class="coaching__text">
-        <h2 id="coaching-heading">From coaching systems to Product Design.</h2>
+        <h2 id="coaching-heading">From coaching systems to product design.</h2>
         <div class="coaching__body">
           <p>
             My approach to teamwork was built through years of competing and coaching in martial arts. In
@@ -117,7 +136,7 @@ import { site } from "../site.config";
         design can help make complicated systems easier to use.
       </p>
       <div class="actions actions--center">
-        <Button href="#work">View My Work</Button>
+        <Button href={`mailto:${site.email}`}>Email me</Button>
       </div>
     </div>
   </section>
@@ -143,7 +162,7 @@ import { site } from "../site.config";
     display: grid;
     gap: var(--space-6);
     align-items: center;
-    padding-block: var(--space-9);
+    padding-block: var(--section-space);
   }
 
   .hero :global(.hero__headshot) {
@@ -184,7 +203,7 @@ import { site } from "../site.config";
   .band__inner {
     display: grid;
     gap: var(--space-8);
-    padding-block: var(--space-9);
+    padding-block: var(--section-space);
   }
 
   .recent {
@@ -196,8 +215,12 @@ import { site } from "../site.config";
     font-size: var(--step-4);
   }
 
-  .recent p {
+  .recent__lines {
+    display: grid;
+    gap: var(--space-3);
     max-width: var(--measure-reading);
+    font-size: var(--step-1);
+    line-height: var(--leading-snug);
   }
 
   .split {
@@ -226,11 +249,34 @@ import { site } from "../site.config";
     }
   }
 
+  /* 3. Selected work */
+  .work {
+    display: grid;
+    gap: var(--space-6);
+    padding-block: var(--section-space);
+  }
+
+  .work h2 {
+    font-size: var(--step-4);
+    margin-block-end: var(--space-2);
+  }
+
+  .work__grid {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 48rem) {
+    .work__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
   /* 4. Coaching */
   .coaching__inner {
     display: grid;
     gap: var(--space-8);
-    padding-block: var(--space-9);
+    padding-block: var(--section-space);
   }
 
   .coaching__text {
@@ -322,7 +368,7 @@ import { site } from "../site.config";
     display: grid;
     justify-items: center;
     gap: var(--space-5);
-    padding-block: var(--space-8) var(--space-9);
+    padding-block: var(--space-8) var(--section-space);
     text-align: center;
   }
 
