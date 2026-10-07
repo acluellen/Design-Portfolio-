@@ -11,7 +11,8 @@ export type PhotoKey =
   | "coaching-1"
   | "coaching-2"
   | "coaching-3"
-  | "group";
+  | "group"
+  | "kron4-cover";
 
 export const photos: Record<PhotoKey, { alt: string; approved: boolean }> = {
   headshot: {
@@ -44,4 +45,6 @@ export const photos: Record<PhotoKey, { alt: string; approved: boolean }> = {
     alt: "The BridgeGood cohort smiling together on the steps outside Google San Francisco.",
     approved: true,
   },
+  // Decorative: the play button already says "Play video: Purpose to Pixels: BridgeGood on KRON4".
+  "kron4-cover": { alt: "", approved: true },
 };

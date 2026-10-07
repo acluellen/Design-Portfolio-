@@ -1,13 +1,19 @@
 ---
-// YouTube video that loads the player only when clicked. Until then, just a thumbnail.
+// YouTube video that loads the player only when clicked. Until then, just a cover image.
+// With `cover`, the cover is a local photo slot, so nothing loads from YouTube before the click.
+import Photo from "./Photo.astro";
+import type { PhotoKey } from "../../data/photos";
 import { youtubeId, youtubeStart } from "../../site.config";
 
 interface Props {
   url: string;
   title: string;
+  cover?: PhotoKey;
+  /** Sizes hint for the local cover image. */
+  sizes?: string;
 }
 
-const { url, title } = Astro.props;
+const { url, title, cover, sizes = "100vw" } = Astro.props;
 const id = youtubeId(url);
 const start = youtubeStart(url);
 ---
@@ -16,13 +22,17 @@ const start = youtubeStart(url);
   {
     id ? (
       <button type="button" class="video__button" data-video-id={id} data-video-start={start} data-video-title={title}>
-        <img
-          class="video__thumb"
-          src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
-          alt=""
-          loading="lazy"
-          decoding="async"
-        />
+        {cover ? (
+          <Photo name={cover} widths={[640, 960, 1280]} sizes={sizes} cover={16 / 9} class="video__thumb" />
+        ) : (
+          <img
+            class="video__thumb"
+            src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+        )}
         <span class="video__play" aria-hidden="true">
           <svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
         </span>
@@ -80,7 +90,7 @@ const start = youtubeStart(url);
     cursor: pointer;
   }
 
-  .video__thumb {
+  .video :global(.video__thumb) {
     position: absolute;
     inset: 0;
     width: 100%;

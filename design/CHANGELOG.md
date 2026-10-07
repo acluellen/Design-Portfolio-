@@ -2,6 +2,14 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-07 · KRON4 video cover stored in the site
+
+- `src/assets/photos/kron4-cover.jpg`: YouTube's full size thumbnail (1280 by 720), saved by Aaron.
+- `VideoEmbed` takes a `cover` photo slot. With one, it shows the local optimized cover (AVIF and WebP, up to 1280 wide) instead of loading the thumbnail from YouTube. The page now makes no YouTube request until someone clicks play.
+- The cover has empty alt text because the play button already reads "Play video: Purpose to Pixels: BridgeGood on KRON4".
+- This also fixes the blank cover in the Claude preview, which blocks images from other sites.
+- Checked: at 1440 the 597px box gets a sharp AVIF, at 375 dark the 343px box gets one too, and a click still loads youtube-nocookie at 0:31.
+
 ## 2026-10-07 · Closing banner: photo first, text below
 
 Aaron wanted to see himself and the Google sign fully, matching a crop he sent. Any text over the photo covers the sign or someone's face, so the text moved below the photo.
