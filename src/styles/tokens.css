@@ -94,11 +94,6 @@
   --gap-card-media: 1.25rem; /* 20px between card image and text */
   --card-lift: 3px; /* hover rise */
   --card-image-zoom: 1.03; /* hover zoom on card images */
-  /* KRON4 clip: starts at half size and grows with scroll. The file is 520px wide, so it
-     stops at two thirds of the page (never below its own width, so phones get the full column). */
-  --clip-native: 32.5rem;
-  --clip-max: max(66.667vw, var(--clip-native));
-  --clip-scale-start: 0.5;
 
   /* Media and controls */
   --size-portrait: clamp(16rem, 4rem + 20vw, 26rem); /* hero portrait width from 48rem up */

@@ -2,6 +2,15 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-07 · BRIDGEGOOD section restored under the hero, KRON4 clip in color
+
+- The BRIDGEGOOD section is back exactly as in preview version 16 (commit bd28141): the linked "BRIDGEGOOD UX Design Apprenticeship" heading, both lines, the "Purpose to Pixels: BRIDGEGOOD on KRON4" title, its paragraph, and the Watch on YouTube button. Same layout: text left and video right from 64rem, text first on phones.
+- It now sits right under the hero, before Selected work. Order: hero, BRIDGEGOOD and KRON4, Selected work, coaching, closing.
+- The YouTube player is replaced by Aaron's color loop (`aaron-kron4-loop-color.mp4`, WebM backup, 490 and 344 KB) over its color still (`kron4-still-color.jpg`, 520 by 390). Muted, looping, plays only while on screen, with the site's 24px corners. No grow or scroll effect. The black and white files are removed.
+- Reduced motion: the still only. Checked: no video request.
+- A small "Pause clip" text button sits under the clip, because the loop runs past five seconds (WCAG 2.2.2).
+- Removed with the grow effect: the clip tokens (`--clip-native`, `--clip-max`, `--clip-scale-start`), the caption line, and `overflow-anchor: none` on `html`.
+
 ## 2026-10-07 · KRON4 clip moves under the hero
 
 - The KRON4 section now sits right under the hero, before Selected work. Order: hero, KRON4 clip, Selected work, coaching, closing.

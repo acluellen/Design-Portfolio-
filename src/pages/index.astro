@@ -4,6 +4,7 @@ import Button from "../components/site/Button.astro";
 import Photo from "../components/site/Photo.astro";
 import ContactEmail from "../components/site/ContactEmail.astro";
 import KronClip from "../components/site/KronClip.astro";
+import { site } from "../site.config";
 import WorkCard from "../components/site/WorkCard.astro";
 import { caseStudyHref, getAllCaseStudies } from "../lib/case-studies";
 
@@ -41,9 +42,37 @@ const others = studies.filter((s) => s !== featured);
     </div>
   </section>
 
-  <!-- KRON4 clip: no heading or paragraph, just the clip, centered, growing with scroll. -->
-  <section class="kron" aria-label="On air with KRON4" data-reveal>
-    <KronClip />
+  <!-- BRIDGEGOOD and the KRON4 clip, right under the hero: text left, clip right. Phones: text first. -->
+  <section class="panel panel--light apprenticeship" aria-labelledby="recent-heading" data-reveal>
+    <div class="apprenticeship__text">
+      <div class="recent">
+        <h2 id="recent-heading">
+          <a class="recent__org" href={site.bridgegood} target="_blank" rel="noopener noreferrer">BRIDGEGOOD<span class="visually-hidden"> (opens in a new tab)</span></a> UX Design Apprenticeship
+        </h2>
+        <div class="recent__lines">
+          <p>Launched by Google.org and the Golden State Warriors, with mentors from Google, Meta, and YouTube.</p>
+          <p>
+            The team built AthenaScribe, a translation tool with human review for Oakland Unified families,
+            and presented it at Demo Day at Block HQ.
+          </p>
+        </div>
+      </div>
+      <div class="split__text">
+        <h3 class="split__title">Purpose to Pixels: BRIDGEGOOD on KRON4</h3>
+        <p>
+          Live with BRIDGEGOOD’s executive director, talking about open communication between Oakland
+          families and their schools, and why design for social good matters.
+        </p>
+        <div class="actions">
+          <Button href={site.kron4Video || undefined} variant="secondary" external>
+            Watch on YouTube
+          </Button>
+        </div>
+      </div>
+    </div>
+    <div class="apprenticeship__video">
+      <KronClip />
+    </div>
   </section>
 
   <!-- 2. Selected work: one featured card, then smaller cards. Cards link only when published. -->
@@ -125,6 +154,11 @@ const others = studies.filter((s) => s !== featured);
     padding: var(--panel-padding);
   }
 
+  .panel--light {
+    background: var(--color-paper-raised);
+    border: var(--rule-thin) solid var(--color-rule);
+  }
+
   .panel--dark {
     border: var(--rule-thin) solid var(--color-dark-panel-edge);
   }
@@ -194,9 +228,72 @@ const others = studies.filter((s) => s !== featured);
     }
   }
 
-  /* KRON4 clip, right under the hero. No panel: it sits on the page background. */
-  .kron {
+  /* 3. BRIDGEGOOD and KRON4: one panel, text left and video right. Stacks text first. */
+  .apprenticeship {
     display: grid;
+    gap: var(--space-7);
+    align-items: center;
+  }
+
+  .apprenticeship > * {
+    min-width: 0;
+  }
+
+  .apprenticeship__text {
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  @media (min-width: 64rem) {
+    .apprenticeship {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
+    }
+  }
+
+  .recent {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  /* About half the size of "Hi, I'm Aaron", so the name stays the biggest text on the page. */
+  .recent h2 {
+    font-size: var(--step-2);
+  }
+
+  @media (min-width: 48rem) {
+    .recent h2 {
+      font-size: var(--step-3);
+    }
+  }
+
+  .recent__org {
+    color: inherit;
+    text-decoration-line: underline;
+    text-decoration-color: var(--color-accent);
+    text-decoration-thickness: var(--rule-thick);
+    text-underline-offset: var(--underline-offset);
+  }
+
+  .recent__org:hover {
+    color: var(--color-accent);
+  }
+
+  .recent__lines {
+    display: grid;
+    gap: var(--space-3);
+    max-width: var(--measure-reading);
+    font-size: var(--step-1);
+    line-height: var(--leading-snug);
+  }
+
+  .split__text {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .split__title {
+    font-size: var(--step-2);
   }
 
   /* 2. Selected work */

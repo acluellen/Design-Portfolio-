@@ -12,7 +12,7 @@ export type PhotoKey =
   | "coaching-3"
   | "group"
   | "kron4-cover"
-  | "kron4-still";
+  | "kron4-still-color";
 
 export const photos: Record<PhotoKey, { alt: string; approved: boolean }> = {
   headshot: {
@@ -50,8 +50,8 @@ export const photos: Record<PhotoKey, { alt: string; approved: boolean }> = {
     approved: false,
   },
   // Cover frame of the KRON4 loop. Also the only image shown with reduced motion.
-  "kron4-still": {
-    alt: "Black and white still of Aaron on the KRON4 set, speaking, in glasses and a Design shirt.",
+  "kron4-still-color": {
+    alt: "Aaron on the KRON4 set, speaking, in glasses and a navy Design shirt.",
     approved: false,
   },
 };

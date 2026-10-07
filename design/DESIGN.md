@@ -12,7 +12,7 @@ Calm, warm, and photo led. Real photos carry the story. Everything around them s
 - "Hi, I'm Aaron" is the largest text on the page (`--step-5`). Section headings are smaller; the apprenticeship heading is about half its size (`--step-3`).
 - Button labels in sentence case: "View my work", "About me". Button text uses `--tracking-button` (-0.01em).
 - Sentence case for every heading. Proper names keep their capitals (BRIDGEGOOD UX Design Apprenticeship, Purpose to Pixels).
-- Home section order: hero, KRON4 clip, Selected work, coaching (About), closing. One smooth scroll: every home section sits in a single stack with the same gap (`--section-gap`, 32px on phones up to 64px). The apprenticeship section is a white rounded panel, coaching and closing are dark rounded panels, and the hero and Selected work sit on the page background. No full width bands.
+- Home section order: hero, BRIDGEGOOD and KRON4, Selected work, coaching (About), closing. One smooth scroll: every home section sits in a single stack with the same gap (`--section-gap`, 32px on phones up to 64px). The apprenticeship section is a white rounded panel, coaching and closing are dark rounded panels, and the hero and Selected work sit on the page background. No full width bands.
 - No drop shadows and no gradients. Thin rules and the band separate content.
 - Two panels are dark in both themes: coaching and closing. They use `#181715`, never pure black.
 
@@ -112,6 +112,6 @@ Wrap dark panels in `.surface-always-dark`. It remaps ink, muted ink, rules, acc
 - Sections marked `data-reveal` fade in and slide up `--reveal-distance` (14px) over `--duration-reveal` as they enter the screen. The hero never animates. Anything on screen at load shows at once.
 - The hero portrait lifts `--lift-headshot` (4px) on hover.
 - Linked project cards lift `--card-lift` (3px) and their image zooms to `--card-image-zoom` (1.03) on hover, over `--duration-hover` (200ms). All three are zero with reduced motion.
-- The KRON4 clip is centered and grows evenly from its center, from `--clip-scale-start` to full size, with scroll, using transforms only (no layout change, no scroll hijack), up to `--clip-max`. It has a pause control. Reduced motion shows the still image only and never loads the video.
+- The KRON4 clip is a muted color loop that plays only while on screen, with a "Pause clip" control. Reduced motion shows the still image only and never loads the video.
 - Everything shows fully with JavaScript off. With reduced motion on, the reveal distance, lift, and durations are all zero, so nothing moves or hides.
 - Respect `prefers-reduced-motion`.

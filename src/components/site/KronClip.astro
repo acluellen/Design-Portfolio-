@@ -1,24 +1,17 @@
 ---
-// The KRON4 loop: muted, looping, plays on its own while on screen.
-// It starts at half size in the center and grows evenly from the center as the section scrolls
-// up the page, then shrinks back the same way.
-// The clip scales from its center. The space it takes in the page follows its size: above it,
-// only the half of the growth still to come; below it, nothing, so the next section follows
-// right after. Nothing above the clip changes size, so scrolling stays normal.
-// Reduced motion (or no JavaScript): the still image only, at a fixed size.
+// The KRON4 loop, in color: muted, looping, and playing on its own while on screen.
+// Reduced motion (or no JavaScript): the still image only, and the clip never downloads.
 import Photo from "./Photo.astro";
-import { site } from "../../site.config";
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
 <div class="clip" data-clip>
-  <div class="clip__stage">
-  <div class="clip__frame" data-clip-frame>
+  <div class="clip__frame">
     <Photo
-      name="kron4-still"
+      name="kron4-still-color"
       widths={[520]}
-      sizes="(min-width: 48rem) 32.5rem, 92vw"
+      sizes="(min-width: 64rem) 32.5rem, 92vw"
       ratio="4 / 3"
       class="clip__still"
     />
@@ -32,36 +25,26 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       aria-hidden="true"
       tabindex="-1"
       data-sources={JSON.stringify([
-        { src: `${base}/video/aaron-kron4-loop.mp4`, type: "video/mp4" },
-        { src: `${base}/video/aaron-kron4-loop.webm`, type: "video/webm" },
+        { src: `${base}/video/aaron-kron4-loop-color.mp4`, type: "video/mp4" },
+        { src: `${base}/video/aaron-kron4-loop-color.webm`, type: "video/webm" },
       ])}
     ></video>
   </div>
-  </div>
-  <div class="clip__links" data-clip-links>
-    <p class="clip__caption">On air with KRON4 · BRIDGEGOOD UX apprenticeship</p>
-    <a href={site.kron4Video} target="_blank" rel="noopener noreferrer">
-      Watch the full segment<span class="visually-hidden"> on YouTube (opens in a new tab)</span>
-    </a>
-    <button class="clip__toggle" type="button" data-clip-toggle hidden>Pause clip</button>
-  </div>
+  <!-- The loop runs past five seconds, so it needs a way to stop it (WCAG 2.2.2). -->
+  <button class="clip__toggle" type="button" data-clip-toggle hidden>Pause clip</button>
 </div>
 
 <script>
   const motion = window.matchMedia("(prefers-reduced-motion: no-preference)");
 
   document.querySelectorAll<HTMLElement>("[data-clip]").forEach((clip) => {
-    const frame = clip.querySelector<HTMLElement>("[data-clip-frame]")!;
     const video = clip.querySelector<HTMLVideoElement>("[data-clip-video]")!;
     const toggle = clip.querySelector<HTMLButtonElement>("[data-clip-toggle]")!;
-    const start = parseFloat(getComputedStyle(clip).getPropertyValue("--clip-scale-start")) || 0.5;
     let inView = false;
     let pausedByVisitor = false;
     let loaded = false;
-    let frameHeight = 0;
-    let queued = false;
 
-    // Sources are added only when motion is allowed, so reduced motion never downloads the clip.
+    // Sources are added only when motion is allowed and the clip is near the screen.
     const load = () => {
       if (loaded) return;
       loaded = true;
@@ -90,45 +73,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       toggle.textContent = pausedByVisitor ? "Play clip" : "Pause clip";
     });
 
-    // Grow from `start` to full size while the clip's top moves up to a fifth of the way down
-    // the screen. It starts from the bottom of the screen, or from where the clip sits at the top
-    // of the page when it is already in the first screen, so it is always small at the start.
-    // Shrinks back the same way when scrolling up.
-    const update = () => {
-      queued = false;
-      const rect = clip.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const from = Math.min(vh, clip.getBoundingClientRect().top + window.scrollY);
-      const to = vh * 0.2;
-      const range = Math.max(vh * 0.3, from - to);
-      const progress = Math.min(1, Math.max(0, (from - rect.top) / range));
-      const eased = 1 - (1 - progress) ** 2;
-      const scale = start + (1 - start) * eased;
-      clip.style.setProperty("--clip-scale", scale.toFixed(4));
-
-    };
-    const queue = () => {
-      if (!queued && motion.matches) {
-        queued = true;
-        requestAnimationFrame(update);
-      }
-    };
-    const measure = () => {
-      frameHeight = frame.offsetHeight;
-      clip.style.setProperty("--clip-h", `${frameHeight}px`);
-      queue();
-    };
-
     const setUp = () => {
-      if (motion.matches) {
-        clip.classList.add("is-animated");
-        toggle.hidden = false;
-        measure();
-        play();
-      } else {
-        clip.classList.remove("is-animated", "is-playing");
-        toggle.hidden = true;
+      toggle.hidden = !motion.matches;
+      if (motion.matches) play();
+      else {
         video.pause();
+        clip.classList.remove("is-playing");
       }
     };
 
@@ -138,8 +88,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       else video.pause();
     }, { rootMargin: "200px 0px" }).observe(clip);
 
-    window.addEventListener("scroll", queue, { passive: true });
-    window.addEventListener("resize", measure);
     motion.addEventListener("change", setUp);
     setUp();
   });
@@ -147,43 +95,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 <style>
   .clip {
-    --clip-scale: 1;
-    inline-size: min(100%, var(--clip-native));
-    margin-inline: auto;
-  }
-
-  /* With motion: the box is the full grown size, and the clip scales inside it from its center. */
-  .clip.is-animated {
-    inline-size: min(100%, var(--clip-max));
+    display: grid;
+    justify-items: start;
+    gap: var(--space-2);
   }
 
   .clip__frame {
     position: relative;
+    inline-size: 100%;
     aspect-ratio: 4 / 3;
     overflow: hidden;
     border-radius: var(--radius-media);
     background: var(--color-panel);
-    transform-origin: center;
-  }
-
-  /* The stage is as tall as the clip's top gap plus its scaled height: H × (1 + scale) / 2.
-     The frame keeps its full size inside it and scales from its center, so its scaled bottom
-     edge sits on the stage's bottom edge and the caption follows straight after. */
-  .clip.is-animated .clip__stage {
-    position: relative;
-    block-size: calc(var(--clip-h, 0px) * (1 + var(--clip-scale)) / 2);
-  }
-
-  .clip.is-animated .clip__frame {
-    position: absolute;
-    inset: 0 0 auto;
-    transform: scale(var(--clip-scale));
-    will-change: transform;
-  }
-
-  /* Counter the scale on the curve, so corners stay the site radius at every size. */
-  .clip.is-animated .clip__frame {
-    border-radius: calc(var(--radius-media) / var(--clip-scale));
   }
 
   .clip__frame :global(picture),
@@ -205,49 +128,24 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     opacity: 1;
   }
 
-  /* Caption on its own line, then the link and the pause control, all centered. */
-  .clip__links {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0 var(--space-5);
-    padding-block-start: var(--space-3);
-    font-size: var(--step--1);
-    text-align: center;
-  }
-
-  .clip__caption {
-    flex-basis: 100%;
-    color: var(--color-ink-muted);
-  }
-
-  .clip__links a,
+  /* A small text link under the clip. */
   .clip__toggle {
     display: inline-flex;
     align-items: center;
     min-block-size: var(--control-height);
-  }
-
-  .clip__links a {
-    color: var(--color-ink);
-    text-decoration-color: var(--color-accent);
-    text-decoration-thickness: var(--underline-thickness);
-    text-underline-offset: var(--underline-offset);
-  }
-
-  .clip__links a:hover {
-    color: var(--color-accent);
-  }
-
-  .clip__toggle {
     padding: 0;
     border: 0;
     background: none;
     font: inherit;
+    font-size: var(--step--1);
     color: var(--color-ink-muted);
     text-decoration: underline;
     text-underline-offset: var(--underline-offset);
     cursor: pointer;
+  }
+
+  .clip__toggle:hover {
+    color: var(--color-accent);
   }
 
   .clip__toggle[hidden] {
