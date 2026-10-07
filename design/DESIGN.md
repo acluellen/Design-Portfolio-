@@ -85,9 +85,15 @@ Follows Nielsen Norman Group guidance for horizontal scrolling: show that more c
 
 ## Photos
 
-- Stored in `src/assets/photos/` and optimized at build time by Astro.
+- Stored in `src/assets/photos/` and optimized at build time by Astro: AVIF and WebP at quality 80, with a JPEG fallback.
+- Pre-crop each source to the shape it is shown in (square headshot, 4:5 gym portraits, 16:9 workshop). A file cropped by `object-fit: cover` in the browser is zoomed in, so it looks softer than its width suggests.
+- Crop rule in `Photo.astro`: pass `cover` (the box's width ÷ height) for any photo shown with `object-fit: cover`. When the file is wider than the box, Photo multiplies both the srcset widths and the `sizes` lengths by that zoom, and warns at build time to pre-crop the source.
+- The closing banner changes shape by screen size, so its `sizes` is set by hand. On phones the box is taller than the photo, and its height stays near 520 to 610px, so it asks for 56rem. From 48rem up it asks for 100vw.
+- Work card `sizes` come from `src/lib/carousel-sizes.ts`, which reads the carousel tokens from `tokens.css`.
+- Photo credits: a small muted "Photos: BRIDGEGOOD" line under the coaching photos and in the banner's lower right.
 - Every photo has alt text approved by Aaron.
 - Missing photos render a neutral placeholder so layout never breaks.
+- Logo: `src/assets/brand/logo.svg` (Aaron's file) in the header and as `public/favicon.svg`.
 
 ## Motion
 

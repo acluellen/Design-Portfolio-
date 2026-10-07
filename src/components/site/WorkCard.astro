@@ -1,6 +1,7 @@
 ---
 import Photo from "./Photo.astro";
 import { photos, type PhotoKey } from "../../data/photos";
+import { cardImageSizes } from "../../lib/carousel-sizes";
 import type { CaseStudy } from "../../lib/case-studies";
 
 interface Props {
@@ -25,8 +26,9 @@ const photo = (photoKey in photos ? photoKey : undefined) as PhotoKey | undefine
       photo ? (
         <Photo
           name={photo}
-          widths={[400, 600, 800, 1200]}
-          sizes="(min-width: 64rem) 34rem, (min-width: 48rem) 60vw, 85vw"
+          widths={[400, 600, 800, 1000, 1200, 1448]}
+          sizes={cardImageSizes}
+          cover={4 / 3}
           ratio="4 / 3"
           placeholderLabel={title}
           class="work-card__image"

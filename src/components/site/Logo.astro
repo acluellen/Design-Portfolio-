@@ -1,9 +1,9 @@
 ---
-// Uses src/assets/brand/logo.(svg|png) when present. Until then, a text mark in the accent blue.
+// The AL mark from src/assets/brand/logo.svg (Aaron's file). Falls back to a text mark if it is missing.
 import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
 
-const files = import.meta.glob<{ default: ImageMetadata }>("/src/assets/brand/logo.{svg,png}", {
+const files = import.meta.glob<{ default: ImageMetadata }>("/src/assets/brand/logo.svg", {
   eager: true,
 });
 const logo = Object.values(files)[0]?.default;
@@ -18,14 +18,15 @@ const logo = Object.values(files)[0]?.default;
 }
 
 <style>
+  /* The SVG draws its own rounded corners. */
   .logo {
     display: block;
     inline-size: var(--size-logo);
     block-size: var(--size-logo);
-    border-radius: var(--radius-media);
   }
 
   .logo--text {
+    border-radius: var(--radius-media);
     display: grid;
     place-items: center;
     background: var(--color-brand);

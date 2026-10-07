@@ -2,6 +2,47 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-07 · Full size photos, SVG logo, and sharper crops
+
+### Replaced files
+- `group.jpg`: full size original from Aaron, 2000px wide (was a 1147px screen capture). Chat uploads cap at 2000px, so this is the largest available here.
+- `coaching-3.jpg`: Aaron's cropped workshop original, 1848px wide, 16:9, watermark removed by Aaron. Converted to black and white, with no further crop.
+- `src/assets/brand/logo.svg`: Aaron's `al-logo.svg`. Replaces `logo.png` in the header and `public/favicon.svg`. Shown to Aaron beside the old PNG before the swap. The SVG draws its own corners, so the CSS radius on the logo is gone.
+- Neither photo was HEIC. Both were JPG.
+
+### Pre-cropped sources
+- `headshot.jpg`: 1333 by 1333 square around the face, from the 2000 by 1333 original. Variants at 240, 480, 720.
+- `coaching-1.jpg` and `coaching-2.jpg`: 1143 by 1429 (4:5) around the action, from the 2000 by 1429 originals. Variants at 400, 600, 800.
+- `coaching-3.jpg`: variants at 640, 960, 1280. `group.jpg`: 800, 1280, 1920, 2000.
+- Work cards: 400, 600, 800, 1000, 1200, 1448.
+
+### Sizing rules
+- `Photo.astro` takes `cover` (box width ÷ height). When `object-fit: cover` zooms into a wider file, it scales the srcset widths and the `sizes` lengths by the zoom and warns at build time. All current sources are pre-cropped, so every zoom is 1.
+- Work card `sizes` come from `src/lib/carousel-sizes.ts`, which reads `--carousel-cards-*` and `--measure-wide` from `tokens.css` and repeats the carousel math at each breakpoint.
+- Banner `sizes`: `(max-width: 48rem) 56rem, 100vw`. On phones the banner is portrait, so cover zooms the photo about 2.2x at 375px.
+- Quality 80 for AVIF, WebP, and the JPEG fallback.
+
+### Banner framing
+- Photo anchored at the top (`object-position: 40% 0%`). The headline sits over the sign and the brick wall, clear of faces at 1440 and 375.
+- Content padding is now `--space-8` on top and `--space-10 + --space-8` on the bottom, so the group shows below the button. The banner height is unchanged.
+
+### Credits
+- "Photos: BRIDGEGOOD" in small muted type, under the coaching photos (as the figure caption) and in the banner's lower right.
+
+### Alt text
+- Approved: `coaching-2` now names Aaron throwing the knee, and `group` names the BridgeGood cohort. All seven photos are now approved.
+
+### Checked: file width the browser picks against the width needed (box × 2 × zoom)
+| Photo | 1440 @2x needs / gets | 375 @2x needs / gets |
+|---|---|---|
+| headshot | 448 / 480 | 288 / 480 |
+| work cards | 944 / 1000 | 538 / 600 |
+| coaching 1, 2 | 529 / 600 | 686 / 800 |
+| coaching 3 | 1082 / 1280 | 686 / 960 |
+| group | 2880 / 2000 (short, file limit) | 1628 / 1920 |
+
+Same results in light and dark. No sideways scroll.
+
 ## 2026-10-06 · Photos and logo in place
 
 Aaron dropped the photos into the chat, which got around the Drive download block.

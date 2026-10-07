@@ -12,8 +12,9 @@ import { site } from "../site.config";
   <section class="container hero">
     <Photo
       name="headshot"
-      widths={[240, 360, 480]}
-      sizes="14rem"
+      widths={[240, 480, 720]}
+      sizes="clamp(9rem, 6rem + 10vw, 14rem)"
+      cover={1}
       loading="eager"
       ratio="1 / 1"
       class="hero__headshot"
@@ -87,17 +88,22 @@ import { site } from "../site.config";
           </p>
         </div>
       </div>
+      <figure class="coaching__figure">
       <div class="coaching__photos">
-        <Photo name="coaching-1" widths={[400, 600, 800]} sizes="(min-width: 64rem) 20rem, 46vw" ratio="4 / 5" class="coaching__photo" />
-        <Photo name="coaching-2" widths={[400, 600, 800]} sizes="(min-width: 64rem) 20rem, 46vw" ratio="4 / 5" class="coaching__photo" />
-        <Photo name="coaching-3" widths={[640, 960, 1280]} sizes="(min-width: 64rem) 40rem, 92vw" ratio="16 / 9" class="coaching__photo coaching__photo--wide" />
+        <Photo name="coaching-1" widths={[400, 600, 800]} sizes="(min-width: 64rem) 17rem, (min-width: 30rem) 46vw, 92vw" cover={4 / 5} class="coaching__photo" />
+        <Photo name="coaching-2" widths={[400, 600, 800]} sizes="(min-width: 64rem) 17rem, (min-width: 30rem) 46vw, 92vw" cover={4 / 5} class="coaching__photo" />
+        <Photo name="coaching-3" widths={[640, 960, 1280]} sizes="(min-width: 64rem) 34rem, 92vw" cover={16 / 9} class="coaching__photo coaching__photo--wide" />
       </div>
+        <figcaption class="credit">Photos: BRIDGEGOOD</figcaption>
+      </figure>
     </div>
   </section>
 
   <!-- 5. Closing banner, always dark -->
   <section class="surface-always-dark banner" aria-labelledby="banner-heading">
-    <Photo name="group" widths={[800, 1280, 1920, 2560]} sizes="100vw" ratio="auto" class="banner__photo" />
+    <!-- On phones the banner is taller than the photo's shape, so cover zooms in. Its height
+         stays near 520 to 610px, so the file needs about 1.5 times that height in width. -->
+    <Photo name="group" widths={[800, 1280, 1920, 2560]} sizes="(max-width: 48rem) 56rem, 100vw" ratio="auto" class="banner__photo" />
     <div class="banner__overlay" aria-hidden="true"></div>
     <div class="container banner__content">
       <h2 id="banner-heading">Interested in working together?</h2>
@@ -109,6 +115,7 @@ import { site } from "../site.config";
         <Button href="#work">View My Work</Button>
       </div>
     </div>
+    <p class="container credit banner__credit">Photos: BRIDGEGOOD</p>
   </section>
 </PageLayout>
 
@@ -239,6 +246,18 @@ import { site } from "../site.config";
     max-width: var(--measure-reading);
   }
 
+  .coaching__figure {
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
+    min-width: 0;
+  }
+
+  .credit {
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
+  }
+
   .coaching__photos {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -293,7 +312,8 @@ import { site } from "../site.config";
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 50% 40%;
+    /* Top of the photo: the sign and sky sit behind the headline, faces stay below it. */
+    object-position: 40% 0%;
     border: 0;
   }
 
@@ -308,8 +328,16 @@ import { site } from "../site.config";
     display: grid;
     justify-items: center;
     gap: var(--space-5);
-    padding-block: var(--space-10);
+    /* Extra room at the bottom shows the group below the button. */
+    padding-block: var(--space-8) calc(var(--space-10) + var(--space-8));
     text-align: center;
+  }
+
+  .banner__credit {
+    position: absolute;
+    inset-inline: 0;
+    bottom: var(--space-4);
+    text-align: end;
   }
 
   .banner__content h2 {

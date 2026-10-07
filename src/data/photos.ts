@@ -33,15 +33,15 @@ export const photos: Record<PhotoKey, { alt: string; approved: boolean }> = {
     approved: true,
   },
   "coaching-2": {
-    alt: "Black and white photo of a fighter driving a knee into pads held by a partner while the class watches from the mats.",
-    approved: false,
+    alt: "Black and white photo of Aaron driving a knee into pads held by a partner while the class watches from the mats.",
+    approved: true,
   },
   "coaching-3": {
     alt: "Black and white photo of a BridgeGood workshop, with people at laptops facing a speaker at the front of the room.",
     approved: true,
   },
   group: {
-    alt: "A group of about twenty people, several in BridgeGood shirts, smiling together on the steps outside Google San Francisco.",
-    approved: false,
+    alt: "The BridgeGood cohort smiling together on the steps outside Google San Francisco.",
+    approved: true,
   },
 };
