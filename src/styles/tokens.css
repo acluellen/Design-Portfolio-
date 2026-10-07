@@ -1,18 +1,19 @@
 /*
  * Design tokens. Every visual value in the site lives here.
- * Direction: warm off white, one clean sans, logo blue accent, soft corners. See design/DESIGN.md.
+ * Direction: warm off white, rounded panels, one blue accent. See design/DESIGN.md.
+ * Never pure black (#000000) anywhere.
  */
 
 :root {
   /* Color: light (warm off white) */
-  --color-paper: #f8f6f1;
-  --color-paper-raised: #fffdf9;
-  --color-band: #efebe3;
-  --color-panel: #f1ede6;
-  --color-ink: #141210;
-  --color-ink-muted: #57534c;
-  --color-rule: #e0dbd1;
-  --color-rule-strong: #c4bdb0;
+  --color-paper: #faf9f5;
+  --color-paper-raised: #ffffff; /* cards */
+  --color-band: #ffffff; /* light panels use the card color */
+  --color-panel: #faf9f5; /* soft backdrop behind card images */
+  --color-ink: #141413;
+  --color-ink-muted: #5d5b54;
+  --color-rule: #e8e6df; /* card borders, thin lines */
+  --color-rule-strong: #d3d0c7;
 
   /* Accent: AL logo blue, the only accent. Links, focus rings, small markers. 6.9:1 on paper. */
   --color-accent: #054fb9;
@@ -21,25 +22,28 @@
   --color-focus: var(--color-accent);
   --color-selection: var(--color-accent-subtle);
 
-  /* Brand: the AL logo. Same in both themes. */
-  --color-brand: #054fb9;
-  --color-brand-hover: #043f93;
-  --color-brand-ink: #ffffff; /* white on brand blue: 7.5:1, hover 9.8:1 */
+  /* Primary buttons: the same blue with white text in every theme. White on blue 6.7:1, hover 8.7:1. */
+  --color-brand: #1d4ed8;
+  --color-brand-hover: #1e40af;
+  --color-brand-ink: #ffffff;
 
-  /* Always dark: same in both themes (coaching section, closing section) */
-  --color-always-dark: #000000;
-  --color-always-dark-ink: #f2f2f2;
-  --color-always-dark-muted: #a0a0a0;
-  --color-always-dark-rule: #2a2a2e;
-  --color-always-dark-raised: #17171a;
-  --color-always-dark-rule-strong: #3d3d43;
-  --color-always-dark-accent: #6e9cf2;
-  --color-always-dark-accent-hover: #8ab0f7;
-  --color-overlay: rgb(0 0 0 / 0.6);
+  /* Dark panels: the coaching and closing sections in both themes, and the dark mode page. */
+  --color-always-dark: #181715;
+  --color-always-dark-ink: #f5f4ef;
+  --color-always-dark-muted: #b5b3ad;
+  --color-always-dark-rule: #34312c;
+  --color-always-dark-raised: #252320;
+  --color-always-dark-rule-strong: #4a4640;
+  --color-always-dark-accent: #60a5fa;
+  --color-always-dark-accent-hover: #93c5fd;
+  --color-dark-label-bg: #1e2a44; /* small labels on dark: #60a5fa text, 5.6:1 */
+  /* Edge for dark panels. Invisible on the light page, a thin line on the dark page. */
+  --color-dark-panel-edge: transparent;
 
-  /* Type families (open fonts, self hosted via Fontsource). One sans for headlines and body. */
-  --font-text: "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-display: var(--font-text);
+  /* Type families (open fonts, self hosted via Fontsource).
+     Body, buttons, and menu: Atkinson Hyperlegible Next, built for legibility. Headings: Inter. */
+  --font-text: "Atkinson Hyperlegible Next Variable", "Atkinson Hyperlegible Next", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
   /* Type scale (fluid, roughly 1.25 ratio) */
@@ -63,6 +67,7 @@
   --leading-body: 1.65;
   --tracking-tight: -0.025em;
   --tracking-label: 0.08em;
+  --tracking-button: -0.01em;
 
   /* Space (4px base) */
   --space-1: 0.25rem;
@@ -81,7 +86,8 @@
   --measure-wide: 76rem;
   --gutter: var(--space-4);
   --header-height: 4.5rem;
-  --section-space: clamp(var(--space-9), 6rem + 4vw, 10rem); /* vertical room around each home section */
+  --section-gap: clamp(2rem, 1rem + 3vw, 4rem); /* the same space between every home section */
+  --panel-padding: clamp(1.5rem, 0.5rem + 4vw, 5rem); /* inside rounded section panels */
 
   /* Selected work cards */
   --gap-card-media: 1.25rem; /* 20px between card image and text */
@@ -91,6 +97,7 @@
   --size-headshot: clamp(9rem, 6rem + 10vw, 14rem);
   --size-logo: 3rem;
   --control-height: 2.75rem; /* 44px */
+  --control-height-small: 2.25rem; /* 36px, the button look inside a card (the card itself is the link) */
   --control-padding: var(--space-6);
   --icon-size: 1.25rem;
 
@@ -98,9 +105,10 @@
   --rule-thin: 1px;
   --rule-thick: 2px;
   --radius-small: 6px;
-  --radius-media: 16px; /* cards and images */
-  --radius-control: 12px; /* buttons */
-  --radius-pill: 999px; /* round icon buttons, tags */
+  --radius-section: 24px; /* the one large curve: sections, photos, video, cards */
+  --radius-media: var(--radius-section);
+  --radius-pill: 999px; /* buttons, round icon buttons, tags */
+  --radius-control: var(--radius-pill); /* buttons: fully round */
 
   /* Underlines */
   --underline-offset: 0.2em;
@@ -112,7 +120,10 @@
 
   /* Motion */
   --duration-fast: 150ms;
+  --duration-reveal: 600ms;
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --reveal-distance: 14px; /* sections slide up this far as they fade in */
+  --lift-headshot: 4px;
 }
 
 @media (min-width: 48rem) {
@@ -130,39 +141,45 @@
 /* Color: dark. Follows the device unless the header toggle sets data-theme. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --color-paper: #0b0b0c;
-    --color-paper-raised: #17171a;
-    --color-band: #17171a;
-    --color-panel: #17171a;
-    --color-ink: #f2f2f2;
-    --color-ink-muted: #a0a0a0;
-    --color-rule: #2a2a2e;
-    --color-rule-strong: #3d3d43;
-    --color-accent: #6e9cf2;
-    --color-accent-hover: #8ab0f7;
-    --color-accent-subtle: #16233d;
+    --color-paper: #181715;
+    --color-paper-raised: #252320;
+    --color-band: #252320;
+    --color-panel: #181715;
+    --color-ink: #f5f4ef;
+    --color-ink-muted: #b5b3ad;
+    --color-rule: #34312c;
+    --color-rule-strong: #4a4640;
+    --color-accent: #60a5fa;
+    --color-accent-hover: #93c5fd;
+    --color-accent-subtle: #1e2a44;
+    --color-label-ink: #60a5fa;
+    --color-dark-panel-edge: #34312c;
     color-scheme: dark;
   }
 }
 
 :root[data-theme="dark"] {
-  --color-paper: #0b0b0c;
-  --color-paper-raised: #17171a;
-  --color-band: #17171a;
-  --color-panel: #17171a;
-  --color-ink: #f2f2f2;
-  --color-ink-muted: #a0a0a0;
-  --color-rule: #2a2a2e;
-  --color-rule-strong: #3d3d43;
-  --color-accent: #6e9cf2;
-  --color-accent-hover: #8ab0f7;
-  --color-accent-subtle: #16233d;
+  --color-paper: #181715;
+  --color-paper-raised: #252320;
+  --color-band: #252320;
+  --color-panel: #181715;
+  --color-ink: #f5f4ef;
+  --color-ink-muted: #b5b3ad;
+  --color-rule: #34312c;
+  --color-rule-strong: #4a4640;
+  --color-accent: #60a5fa;
+  --color-accent-hover: #93c5fd;
+  --color-accent-subtle: #1e2a44;
+  --color-label-ink: #60a5fa;
+  --color-dark-panel-edge: #34312c;
   color-scheme: dark;
 }
 
 /* Always dark surface: remaps the core tokens so components inside read correctly. */
 .surface-always-dark {
   --color-paper: var(--color-always-dark);
+  --color-accent-subtle: var(--color-dark-label-bg);
+  --color-label-ink: var(--color-always-dark-accent);
   --color-paper-raised: var(--color-always-dark-raised);
   --color-band: var(--color-always-dark-raised);
   --color-panel: var(--color-always-dark-raised);
@@ -180,5 +197,8 @@
 @media (prefers-reduced-motion: reduce) {
   :root {
     --duration-fast: 0ms;
+    --duration-reveal: 0ms;
+    --reveal-distance: 0px;
+    --lift-headshot: 0px;
   }
 }

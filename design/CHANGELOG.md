@@ -2,6 +2,81 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-07 · New colors, one curve, rounded panels
+
+All words unchanged.
+
+### Colors
+- Light: page `#FAF9F5`, cards `#FFFFFF` with border `#E8E6DF`, main text `#141413`, secondary `#5D5B54`, accent `#1D4ED8`, small labels `#1D4ED8` on `#DBEAFE`.
+- Dark mode, plus the coaching and closing panels in both modes: background `#181715`, cards `#252320`, main text `#F5F4EF`, secondary `#B5B3AD`, accent `#60A5FA`.
+- Derived to fill gaps, all checked for contrast: button and link hover `#1E40AF`, dark hover `#93C5FD`, dark lines `#34312C` and `#4A4640`, light outline `#D3D0C7`, dark label background `#1E2A44` (`#60A5FA` text, 5.6:1).
+- Primary buttons are `#1D4ED8` with white text in both modes. On dark, `#60A5FA` with white text would be 2.5:1, so it stays for links and labels only.
+- No pure black anywhere: the old `#000000` dark panel color and the black overlay token are gone. The `<html>` element now has the ink color too, so even the browser default is not black. Checked: no element computes to rgb(0, 0, 0).
+- Note: the AL logo file is `#054FB9`, a deeper blue than the new `#1D4ED8`. The logo file is unchanged.
+
+### The curve
+- New `--radius-section` (24px). Every section panel, card, card image, photo, and the video use it. `--radius-media` points to it. Buttons stay pills. Checked: all large elements compute to 24px.
+
+### Flow
+- The home page is one stack (`.stack`) with the same gap between every section: new `--section-gap`, 32px at 390 and 59px at 1440. Measured equal across all four gaps.
+- The apprenticeship section is a white rounded panel with the card border. Coaching and closing are dark rounded panels. In dark mode the dark panels get a thin edge (`--color-dark-panel-edge`) so they still read as panels on the dark page.
+- The closing panel clips the group photo to its curve. Credit, heading, and button keep the panel padding (new `--panel-padding`).
+- Removed: the full width gray band, the black coaching and closing bands, the footer's band background (the footer now has a thin top line), and `--section-space`.
+- Card labels and "In progress" are now small blue pills.
+
+### Checked
+- 1440 and 390, light and dark: no sideways scroll, equal gaps, 24px corners, pill buttons. `astro check` 0 errors. Copy check clean.
+
+## 2026-10-07 · Home page finishing pass (Tyler's review)
+
+The hero headline and paragraph are untouched. Aaron is rewriting them.
+
+### About moves to the home page
+- The dark coaching section has the anchor `id="about"`. The hero "About me" button goes to `#about`, and the header "About" goes to `/#about`.
+- `src/pages/about.astro` is removed. `astro.config.mjs` redirects `/about` to `/#about`. Checked: the old link lands on the section.
+- Header current state: on a case study page, Work is current. On the home page, a small script marks Work or About while that section fills the middle of the screen, using `aria-current="location"`. Nothing is marked at the top of the page.
+
+### Sticky header
+- `position: sticky` with its solid page background, thin bottom line, and `z-index`.
+- `html { scroll-padding-top }` makes jump links land just below the header. Checked: `#about` starts 8 to 14px below the header at 1440 and 390. The old `scroll-margin-top` on sections is removed so the two do not add up.
+
+### Font
+- Body text, buttons, and the menu: Atkinson Hyperlegible Next, variable, self hosted (`@fontsource-variable/atkinson-hyperlegible-next`). Headings stay Inter. The footer email is styled as a heading.
+- Sizes are unchanged: 18px body with 29.7px line height at 1440, and 16.1px with 26.6px at 390. It reads well in light and dark at both widths.
+
+### Buttons
+- Fully round again: `--radius-control` now points to `--radius-pill`.
+- New `--tracking-button` (-0.01em) on all button text.
+
+### Work cards
+- New frontmatter `inProgress`. Klima and Craft Education set it, and show a small outlined "In progress" tag beside their label, with no link and no button. "In progress" is removed from their detail lines.
+- `caseStudyHref` links only when a case study is published and not in progress. AthenaScribe links as soon as it is published.
+- "View case study" is now a small outlined button (new `--control-height-small`, 36px), part of the whole card link. It fills with ink on card hover.
+
+### Motion
+- Sections with `data-reveal` (apprenticeship, Selected work, coaching, closing) fade in and slide up 14px (`--reveal-distance`) over 600ms (`--duration-reveal`). The hero does not animate.
+- Hiding starts only after the script runs, and anything on screen at load is shown at once. The transition runs only on the way in.
+- The headshot lifts 4px on hover (`--lift-headshot`).
+- Reduced motion sets the distance, lift, and durations to zero. Checked: 0 hidden sections with JavaScript off, 0 with reduced motion, and 3 below the fold that reveal on scroll with normal motion.
+
+### Links and footer
+- LinkedIn: no URL yet. Aaron's message still had the "[YOUR LINKEDIN URL]" placeholder, so header and footer keep the muted "LinkedIn" text. Fill in `site.linkedin` in `src/site.config.ts`.
+- Every email link opens with the subject "Interested in working together" (`mailto` in `site.config.ts`).
+- Footer: Back to top (to `#top` on the body), and a Resume link that appears only when `public/resume.pdf` exists.
+- "BRIDGEGOOD" in the apprenticeship heading links to https://www.bridgegood.org in a new tab, with a screen reader note.
+- BRIDGEGOOD is spelled in capitals everywhere: the KRON4 title, its description, the video button label, and the workshop and group alt text.
+
+### Link preview
+- `public/og-image.png`, 1200 by 630, 20 KB: AL logo, "Aaron Luellen", "Product designer" on `#F8F6F1`, with a logo blue bar at the bottom. Rendered from `design/share/og-image.html` by `scripts/make-og-image.cjs`.
+- Open Graph and Twitter card tags are in `BaseLayout.astro`. The default description is now "Product designer".
+- Needed before sharing: the live domain in `site` in `astro.config.mjs`. LinkedIn needs absolute image URLs. Until the domain is set, the tags use relative paths.
+
+### Other
+- Added `@types/node` (dev) so the Footer's file check passes `astro check`.
+
+### Checked
+- 1440 and 390, light and dark: no sideways scroll. Copy check: no matches. `astro check`: 0 errors.
+
 ## 2026-10-07 · Blue primary buttons, sentence case labels, smaller apprenticeship heading
 
 - Primary buttons ("View my work", "Email me") use the AL logo blue `--color-brand` with white text in light, dark, and always dark sections. Hover is the new `--color-brand-hover` (`#043F93`). White on blue is 7.5:1, and 9.8:1 on hover. DESIGN.md now allows the accent on primary buttons.

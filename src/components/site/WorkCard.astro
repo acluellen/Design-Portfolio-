@@ -13,7 +13,7 @@ interface Props {
 }
 
 const { study, href, featured = false } = Astro.props;
-const { title, card } = study.data;
+const { title, card, inProgress } = study.data;
 const photoKey = `work-${study.id}`;
 const photo = (photoKey in photos ? photoKey : undefined) as PhotoKey | undefined;
 
@@ -46,13 +46,22 @@ const sizes = featured
   </div>
 
   <div class="work-card__text">
-    {card?.label && <p class="work-card__label">{card.label}</p>}
+    <div class="work-card__top">
+      {card?.label && <p class="work-card__label">{card.label}</p>}
+      {inProgress && <p class="work-card__status">In progress</p>}
+    </div>
     <h3 class="work-card__title">
       {href ? <a href={href}>{title}</a> : title}
     </h3>
     {card?.description && <p class="work-card__description">{card.description}</p>}
     {card?.detail && <p class="work-card__detail">{card.detail}</p>}
-    {href && <span class="work-card__cta" aria-hidden="true">View case study</span>}
+    {
+      href && (
+        <span class="work-card__cta" aria-hidden="true">
+          View case study
+        </span>
+      )
+    }
   </div>
 </article>
 
@@ -124,10 +133,24 @@ const sizes = featured
     min-width: 0;
   }
 
-  .work-card__label {
+  .work-card__top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-4);
+  }
+
+  /* Small labels: blue text on light blue (dark blue panel on dark), as pills. */
+  .work-card__label,
+  .work-card__status {
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+    background: var(--color-accent-subtle);
+    color: var(--color-label-ink);
     font-size: var(--step--1);
     font-weight: var(--weight-medium);
-    color: var(--color-accent);
+    line-height: var(--leading-snug);
   }
 
   .work-card__title {
@@ -169,17 +192,27 @@ const sizes = featured
     color: var(--color-ink-muted);
   }
 
+  /* Looks like a small secondary button. The whole card is the actual link. */
   .work-card__cta {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--control-height-small);
+    padding-inline: var(--space-4);
+    border: var(--rule-thin) solid var(--color-ink);
+    border-radius: var(--radius-control);
     font-size: var(--step--1);
     font-weight: var(--weight-semibold);
-    color: var(--color-accent);
-    text-decoration: underline;
-    text-decoration-thickness: var(--underline-thickness);
-    text-underline-offset: var(--underline-offset);
+    letter-spacing: var(--tracking-button);
+    color: var(--color-ink);
+    transition:
+      background-color var(--duration-fast) var(--ease-standard),
+      color var(--duration-fast) var(--ease-standard);
   }
 
   .work-card--linked:hover .work-card__cta {
-    color: var(--color-accent-hover);
+    background: var(--color-ink);
+    color: var(--color-paper-raised);
   }
 
   /* Featured: larger type, image and text side by side on wide screens. */

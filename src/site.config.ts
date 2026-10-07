@@ -3,9 +3,17 @@
 export const site = {
   name: "Aaron Luellen",
   email: "Aaronluellen@gmail.com",
-  linkedin: "", // TODO: Aaron to send the LinkedIn URL.
+  linkedin: "", // TODO: Aaron to send the LinkedIn URL. Header and footer show it once filled in.
   kron4Video: "https://www.youtube.com/watch?v=r4l9IsyDUD4&t=31s",
+  bridgegood: "https://www.bridgegood.org",
+  emailSubject: "Interested in working together",
+  /** Drop a PDF at public/resume.pdf and the footer shows a Resume link. */
+  resumePath: "/resume.pdf",
+  role: "Product designer",
 };
+
+/** Every email link on the site opens with the same subject line. */
+export const mailto = `mailto:${site.email}?subject=${encodeURIComponent(site.emailSubject)}`;
 
 /** Pulls the video ID out of a YouTube URL, or returns undefined. */
 export function youtubeId(url: string): string | undefined {

@@ -20,7 +20,7 @@ export async function getAllCaseStudies(): Promise<CaseStudy[]> {
   return entries.sort((a, b) => a.data.order - b.data.order);
 }
 
-/** A card links to its case study only when the case study is published. */
+/** A card links to its case study only when the case study is published and not marked in progress. */
 export function caseStudyHref(study: CaseStudy): string | undefined {
-  return study.data.status === "published" ? `/work/${study.id}/` : undefined;
+  return study.data.status === "published" && !study.data.inProgress ? `/work/${study.id}/` : undefined;
 }

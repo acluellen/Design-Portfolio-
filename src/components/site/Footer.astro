@@ -1,23 +1,36 @@
 ---
-import { site } from "../../site.config";
+import fs from "node:fs";
+import path from "node:path";
+import { mailto, site } from "../../site.config";
+
+// The Resume link appears only once a PDF exists at public/resume.pdf.
+const hasResume = fs.existsSync(path.join(process.cwd(), "public", site.resumePath));
 ---
 
 <footer class="site-footer">
   <div class="container site-footer__inner">
-    <a class="site-footer__email" href={`mailto:${site.email}`}>{site.email}</a>
-    {
-      site.linkedin ? (
-        <a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      ) : (
-        <span class="site-footer__pending" title="LinkedIn link coming soon">LinkedIn</span>
-      )
-    }
+    <a class="site-footer__email" href={mailto}>{site.email}</a>
+    <ul class="site-footer__links">
+      <li>
+        {
+          site.linkedin ? (
+            <a href={site.linkedin} target="_blank" rel="noopener noreferrer">
+              LinkedIn<span class="visually-hidden"> (opens in a new tab)</span>
+            </a>
+          ) : (
+            <span class="site-footer__pending" title="LinkedIn link coming soon">LinkedIn</span>
+          )
+        }
+      </li>
+      {hasResume && <li><a href={site.resumePath}>Resume</a></li>}
+      <li><a href="#top">Back to top</a></li>
+    </ul>
   </div>
 </footer>
 
 <style>
   .site-footer {
-    background: var(--color-band);
+    border-top: var(--rule-thin) solid var(--color-rule);
   }
 
   .site-footer__inner {
@@ -32,6 +45,8 @@ import { site } from "../../site.config";
   .site-footer__email {
     font-family: var(--font-display);
     font-size: var(--step-2);
+    font-weight: var(--weight-heading);
+    letter-spacing: var(--tracking-tight);
     color: var(--color-ink);
     overflow-wrap: anywhere;
   }
@@ -40,8 +55,20 @@ import { site } from "../../site.config";
     color: var(--color-accent);
   }
 
-  .site-footer a:not(.site-footer__email) {
+  .site-footer__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-footer__links a {
     color: var(--color-ink);
+  }
+
+  .site-footer__links a:hover {
+    color: var(--color-accent);
   }
 
   .site-footer__pending {

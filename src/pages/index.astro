@@ -5,7 +5,7 @@ import Photo from "../components/site/Photo.astro";
 import VideoEmbed from "../components/site/VideoEmbed.astro";
 import WorkCard from "../components/site/WorkCard.astro";
 import { caseStudyHref, getAllCaseStudies } from "../lib/case-studies";
-import { site } from "../site.config";
+import { mailto, site } from "../site.config";
 
 // Selected work: the featured case study as one large card, the rest below by `order`.
 const studies = (await getAllCaseStudies()).filter((s) => s.data.card);
@@ -14,8 +14,10 @@ const others = studies.filter((s) => s !== featured);
 ---
 
 <PageLayout title="Aaron Luellen" flushBottom>
+  <!-- Every section sits in one stack with the same gap between them. -->
+  <div class="container stack">
   <!-- 1. Hero -->
-  <section class="container hero">
+  <section class="hero">
     <Photo
       name="headshot"
       widths={[240, 480, 720]}
@@ -34,16 +36,18 @@ const others = studies.filter((s) => s !== featured);
       </p>
       <div class="actions">
         <Button href="#work">View my work</Button>
-        <Button href="/about/" variant="secondary">About me</Button>
+        <Button href="#about" variant="secondary">About me</Button>
       </div>
     </div>
   </section>
 
   <!-- 2. BRIDGEGOOD apprenticeship -->
-  <section class="band" aria-labelledby="recent-heading">
-    <div class="container band__inner">
+  <section class="panel panel--light" aria-labelledby="recent-heading" data-reveal>
+    <div class="band__inner">
       <div class="recent">
-        <h2 id="recent-heading">BRIDGEGOOD UX Design Apprenticeship</h2>
+        <h2 id="recent-heading">
+          <a class="recent__org" href={site.bridgegood} target="_blank" rel="noopener noreferrer">BRIDGEGOOD<span class="visually-hidden"> (opens in a new tab)</span></a> UX Design Apprenticeship
+        </h2>
         <div class="recent__lines">
           <p>Launched by Google.org and the Golden State Warriors, with mentors from Google, Meta, and YouTube.</p>
           <p>
@@ -55,14 +59,14 @@ const others = studies.filter((s) => s !== featured);
       <div class="split split--media">
         <VideoEmbed
           url={site.kron4Video}
-          title="Purpose to Pixels: BridgeGood on KRON4"
+          title="Purpose to Pixels: BRIDGEGOOD on KRON4"
           cover="kron4-cover"
           sizes="(min-width: 76rem) 37rem, (min-width: 56rem) 52vw, 92vw"
         />
         <div class="split__text">
-          <h3 class="split__title">Purpose to Pixels: BridgeGood on KRON4</h3>
+          <h3 class="split__title">Purpose to Pixels: BRIDGEGOOD on KRON4</h3>
           <p>
-            Live with BridgeGood’s executive director, talking about open communication between Oakland
+            Live with BRIDGEGOOD’s executive director, talking about open communication between Oakland
             families and their schools, and why design for social good matters.
           </p>
           <div class="actions">
@@ -76,7 +80,7 @@ const others = studies.filter((s) => s !== featured);
   </section>
 
   <!-- 3. Selected work: one featured card, then smaller cards. Cards link only when published. -->
-  <section id="work" class="container work" aria-labelledby="work-heading">
+  <section id="work" class="work" aria-labelledby="work-heading" data-reveal>
     <h2 id="work-heading">Selected work</h2>
     {featured && <WorkCard study={featured} href={caseStudyHref(featured)} featured />}
     {
@@ -91,8 +95,8 @@ const others = studies.filter((s) => s !== featured);
   </section>
 
   <!-- 4. Coaching, always dark -->
-  <section class="surface-always-dark coaching" aria-labelledby="coaching-heading">
-    <div class="container coaching__inner">
+  <section id="about" class="panel panel--dark surface-always-dark coaching" aria-labelledby="coaching-heading" data-reveal>
+    <div class="coaching__inner">
       <div class="coaching__text">
         <h2 id="coaching-heading">From coaching systems to product design.</h2>
         <div class="coaching__body">
@@ -124,27 +128,52 @@ const others = studies.filter((s) => s !== featured);
   </section>
 
   <!-- 5. Closing banner, always dark: the whole group photo, then the invitation below it -->
-  <section class="surface-always-dark banner" aria-labelledby="banner-heading">
+  <section class="panel panel--dark panel--flush surface-always-dark banner" aria-labelledby="banner-heading" data-reveal>
     <figure class="banner__figure">
-      <Photo name="group" widths={[800, 1280, 1920, 2560]} sizes="100vw" ratio="2000 / 1150" class="banner__photo" />
-      <figcaption class="container credit banner__credit">Photos: BRIDGEGOOD</figcaption>
+      <Photo name="group" widths={[800, 1280, 1920, 2560]} sizes="(min-width: 76rem) 72rem, 94vw" ratio="2000 / 1150" class="banner__photo" />
+      <figcaption class="credit banner__credit">Photos: BRIDGEGOOD</figcaption>
     </figure>
-    <div class="container banner__content">
+    <div class="banner__content">
       <h2 id="banner-heading">Interested in working together?</h2>
       <p>
         I’m open to Product Design opportunities where research, product thinking, and clear interaction
         design can help make complicated systems easier to use.
       </p>
       <div class="actions actions--center">
-        <Button href={`mailto:${site.email}`}>Email me</Button>
+        <Button href={mailto}>Email me</Button>
       </div>
     </div>
   </section>
+  </div>
 </PageLayout>
 
 <style>
-  section {
-    scroll-margin-top: var(--space-5);
+  /* One stack: the same gap between every section, and before the footer. */
+  .stack {
+    display: grid;
+    gap: var(--section-gap);
+    padding-block: var(--section-gap);
+  }
+
+  /* Rounded section panels on the page background. All share --radius-section. */
+  .panel {
+    border-radius: var(--radius-section);
+    padding: var(--panel-padding);
+  }
+
+  .panel--light {
+    background: var(--color-paper-raised);
+    border: var(--rule-thin) solid var(--color-rule);
+  }
+
+  .panel--dark {
+    border: var(--rule-thin) solid var(--color-dark-panel-edge);
+  }
+
+  /* Media runs to the panel edges; the curve clips it. */
+  .panel--flush {
+    padding: 0;
+    overflow: hidden;
   }
 
   .actions {
@@ -158,11 +187,12 @@ const others = studies.filter((s) => s !== featured);
   }
 
   /* 1. Hero */
+  /* Extra air above the hero only; the stack gap handles the space below it. */
   .hero {
     display: grid;
     gap: var(--space-6);
     align-items: center;
-    padding-block: var(--section-space);
+    padding-block-start: var(--section-gap);
   }
 
   .hero :global(.hero__headshot) {
@@ -171,6 +201,12 @@ const others = studies.filter((s) => s !== featured);
     border-radius: var(--radius-pill);
     object-fit: cover;
     object-position: 50% 30%;
+    transition: transform var(--duration-reveal) var(--ease-standard);
+  }
+
+  /* Small lift on hover. --lift-headshot is 0 with reduced motion. */
+  .hero :global(.hero__headshot:hover) {
+    transform: translateY(calc(-1 * var(--lift-headshot)));
   }
 
   .hero__text {
@@ -195,15 +231,10 @@ const others = studies.filter((s) => s !== featured);
     }
   }
 
-  /* 2. Most recently */
-  .band {
-    background: var(--color-band);
-  }
-
+  /* 2. BRIDGEGOOD apprenticeship */
   .band__inner {
     display: grid;
     gap: var(--space-8);
-    padding-block: var(--section-space);
   }
 
   .recent {
@@ -220,6 +251,18 @@ const others = studies.filter((s) => s !== featured);
     .recent h2 {
       font-size: var(--step-3);
     }
+  }
+
+  .recent__org {
+    color: inherit;
+    text-decoration-line: underline;
+    text-decoration-color: var(--color-accent);
+    text-decoration-thickness: var(--rule-thick);
+    text-underline-offset: var(--underline-offset);
+  }
+
+  .recent__org:hover {
+    color: var(--color-accent);
   }
 
   .recent__lines {
@@ -260,7 +303,6 @@ const others = studies.filter((s) => s !== featured);
   .work {
     display: grid;
     gap: var(--space-6);
-    padding-block: var(--section-space);
   }
 
   .work h2 {
@@ -283,7 +325,6 @@ const others = studies.filter((s) => s !== featured);
   .coaching__inner {
     display: grid;
     gap: var(--space-8);
-    padding-block: var(--section-space);
   }
 
   .coaching__text {
@@ -345,7 +386,7 @@ const others = studies.filter((s) => s !== featured);
   @media (min-width: 64rem) {
     .coaching__inner {
       grid-template-columns: 5fr 6fr;
-      gap: var(--space-9);
+      gap: var(--space-8);
     }
   }
 
@@ -359,6 +400,11 @@ const others = studies.filter((s) => s !== featured);
   .banner__figure {
     display: grid;
     gap: var(--space-3);
+  }
+
+  /* Credit and text keep the panel padding; only the photo runs edge to edge. */
+  .banner__credit {
+    padding-inline: var(--panel-padding);
   }
 
   .banner :global(.banner__photo) {
@@ -375,7 +421,7 @@ const others = studies.filter((s) => s !== featured);
     display: grid;
     justify-items: center;
     gap: var(--space-5);
-    padding-block: var(--space-8) var(--section-space);
+    padding: var(--space-6) var(--panel-padding) var(--panel-padding);
     text-align: center;
   }
 

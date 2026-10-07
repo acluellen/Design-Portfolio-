@@ -45,6 +45,12 @@ h4 {
 html {
   color-scheme: light;
   background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+/* Jump links (#work, #about, #top) land below the sticky header, not under it. */
+html {
+  scroll-padding-top: calc(var(--header-height) + var(--space-4));
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -190,4 +196,23 @@ small {
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
+}
+
+/*
+ * Scroll reveal. Sections marked [data-reveal] fade and slide up as they enter the screen.
+ * Hidden only after the script adds .reveal-ready, so everything shows with JavaScript off.
+ * With reduced motion on, nothing is hidden or moved.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-ready [data-reveal]:not(.is-revealed) {
+    opacity: 0;
+    transform: translateY(var(--reveal-distance));
+  }
+
+  /* Transition only on the way in, so hiding at load is instant. */
+  .reveal-ready [data-reveal].is-revealed {
+    transition:
+      opacity var(--duration-reveal) var(--ease-standard),
+      transform var(--duration-reveal) var(--ease-standard);
+  }
 }

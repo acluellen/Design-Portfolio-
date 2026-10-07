@@ -38,13 +38,13 @@ export const photos: Record<PhotoKey, { alt: string; approved: boolean }> = {
     approved: true,
   },
   "coaching-3": {
-    alt: "Black and white photo of a BridgeGood workshop, with people at laptops facing a speaker at the front of the room.",
+    alt: "Black and white photo of a BRIDGEGOOD workshop, with people at laptops facing a speaker at the front of the room.",
     approved: true,
   },
   group: {
-    alt: "The BridgeGood cohort smiling together on the steps outside Google San Francisco.",
+    alt: "The BRIDGEGOOD cohort smiling together on the steps outside Google San Francisco.",
     approved: true,
   },
-  // Decorative: the play button already says "Play video: Purpose to Pixels: BridgeGood on KRON4".
+  // Decorative: the play button already says "Play video: Purpose to Pixels: BRIDGEGOOD on KRON4".
   "kron4-cover": { alt: "", approved: true },
 };

@@ -23,6 +23,34 @@ const { title, description, noindex, flushBottom = false } = Astro.props;
   <Footer />
 </BaseLayout>
 
+<script>
+  // Scroll reveal for [data-reveal] sections. See global.css.
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const targets = [...document.querySelectorAll<HTMLElement>("[data-reveal]")];
+
+  if (!reduce && targets.length > 0 && "IntersectionObserver" in window) {
+    // Anything already on screen shows right away, so nothing flashes.
+    targets.forEach((el) => {
+      if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add("is-revealed");
+    });
+    document.documentElement.classList.add("reveal-ready");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-revealed");
+          observer.unobserve(entry.target);
+        });
+      },
+      { rootMargin: "0px 0px -10% 0px" },
+    );
+    targets.forEach((el) => {
+      if (!el.classList.contains("is-revealed")) observer.observe(el);
+    });
+  }
+</script>
+
 <style>
   .main--padded {
     padding-block-end: var(--space-10);

@@ -3,9 +3,10 @@ import Logo from "./Logo.astro";
 import ThemeToggle from "./ThemeToggle.astro";
 import { site } from "../../site.config";
 
+// Work and About are sections on the home page. On a case study page, Work is current.
+// On the home page, a small script marks the section in view (see below).
 const path = Astro.url.pathname;
-const isAbout = path.startsWith("/about");
-const isWork = !isAbout && (path === "/" || path.startsWith("/work/"));
+const onCaseStudy = path.startsWith("/work/");
 ---
 
 <header class="site-header">
@@ -15,12 +16,16 @@ const isWork = !isAbout && (path === "/" || path.startsWith("/work/"));
     </a>
     <nav aria-label="Main">
       <ul class="site-header__nav">
-        <li><a href="/#work" aria-current={isWork ? "page" : undefined}>Work</a></li>
-        <li><a href="/about/" aria-current={isAbout ? "page" : undefined}>About</a></li>
+        <li>
+          <a href="/#work" data-nav-section="work" aria-current={onCaseStudy ? "page" : undefined}>Work</a>
+        </li>
+        <li><a href="/#about" data-nav-section="about">About</a></li>
         <li>
           {
             site.linkedin ? (
-              <a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a href={site.linkedin} target="_blank" rel="noopener noreferrer">
+                LinkedIn<span class="visually-hidden"> (opens in a new tab)</span>
+              </a>
             ) : (
               <span class="site-header__pending" title="LinkedIn link coming soon">LinkedIn</span>
             )
@@ -32,8 +37,40 @@ const isWork = !isAbout && (path === "/" || path.startsWith("/work/"));
   </div>
 </header>
 
+<script>
+  // On the home page, mark Work or About as current while that section is on screen.
+  const links = [...document.querySelectorAll<HTMLAnchorElement>("[data-nav-section]")];
+  const sections = links
+    .map((link) => document.getElementById(link.dataset.navSection ?? ""))
+    .filter((el): el is HTMLElement => el !== null);
+
+  if (sections.length > 0 && "IntersectionObserver" in window) {
+    const visible = new Set<string>();
+    const mark = () => {
+      // The topmost visible section wins.
+      const current = sections.find((s) => visible.has(s.id))?.id;
+      links.forEach((link) => {
+        if (link.dataset.navSection === current) link.setAttribute("aria-current", "location");
+        else link.removeAttribute("aria-current");
+      });
+    };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => (e.isIntersecting ? visible.add(e.target.id) : visible.delete(e.target.id)));
+        mark();
+      },
+      { rootMargin: "-40% 0px -55% 0px" },
+    );
+    sections.forEach((s) => observer.observe(s));
+  }
+</script>
+
 <style>
+  /* Sticky: stays at the top while scrolling, with its solid background and thin bottom line. */
   .site-header {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 20;
     background: var(--color-paper);
     border-bottom: var(--rule-thin) solid var(--color-rule);
   }
@@ -58,6 +95,7 @@ const isWork = !isAbout && (path === "/" || path.startsWith("/work/"));
     gap: var(--space-2) var(--space-5);
     padding: 0;
     list-style: none;
+    font-family: var(--font-text);
     font-size: var(--step--1);
   }
 
@@ -69,7 +107,7 @@ const isWork = !isAbout && (path === "/" || path.startsWith("/work/"));
   }
 
   .site-header__nav a:hover,
-  .site-header__nav a[aria-current="page"] {
+  .site-header__nav a[aria-current] {
     text-decoration: underline;
     text-decoration-thickness: var(--underline-thickness);
     text-underline-offset: var(--underline-offset);

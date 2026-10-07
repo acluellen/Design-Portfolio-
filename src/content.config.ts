@@ -15,6 +15,8 @@ const caseStudies = defineCollection({
       .optional(),
     // The one large card at the top of Selected work.
     featured: z.boolean().default(false),
+    // Shows a small "In progress" label on the home page card. The card never links while true.
+    inProgress: z.boolean().default(false),
     role: z.string(),
     team: z.array(z.object({ name: z.string(), role: z.string() })),
     timeline: z.string(),
