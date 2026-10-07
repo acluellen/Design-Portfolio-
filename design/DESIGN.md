@@ -85,7 +85,7 @@ Wrap dark panels in `.surface-always-dark`. It remaps ink, muted ink, rules, acc
 - Photo credits: a small muted "Photos: BRIDGEGOOD" line under the coaching photos and in the banner's lower right.
 - Every photo has alt text approved by Aaron.
 - Missing photos render a neutral placeholder so layout never breaks.
-- Logo: `src/assets/brand/logo.svg` (Aaron's file) in the header and as `public/favicon.svg`.
+- Logo: `src/assets/brand/logo.svg` (Aaron's mark, recolored to the accent `#1D4ED8`) in the header and as `public/favicon.svg`.
 
 ## Navigation and links
 

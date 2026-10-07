@@ -15,10 +15,11 @@
   --color-rule: #e8e6df; /* card borders, thin lines */
   --color-rule-strong: #d3d0c7;
 
-  /* Accent: AL logo blue, the only accent. Links, focus rings, small markers. 6.9:1 on paper. */
-  --color-accent: #054fb9;
-  --color-accent-hover: #043f93;
-  --color-accent-subtle: #e3ecfa;
+  /* Accent: the AL logo blue, the only accent. Buttons, links, and labels. 6.4:1 on page, 6.7:1 on cards. */
+  --color-accent: #1d4ed8;
+  --color-accent-hover: #1e40af;
+  --color-accent-subtle: #dbeafe; /* behind small labels */
+  --color-label-ink: #1d4ed8; /* label text on --color-accent-subtle: 5.5:1 */
   --color-focus: var(--color-accent);
   --color-selection: var(--color-accent-subtle);
 

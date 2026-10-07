@@ -2,6 +2,12 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-07 · Logo matches the accent blue; light accent fix
+
+- Aaron left the logo color to my judgment. One brand blue reads more polished than two near matches, so the logo is now the accent: `#1D4ED8` replaces `#054FB9` in `src/assets/brand/logo.svg` and `public/favicon.svg`. White on it is 6.7:1.
+- Share image regenerated with the new page, ink, secondary, and blue colors (`design/share/og-image.html`, `public/og-image.png`).
+- Fix: the previous entry's light accent tokens had not applied. The block's comment had changed, so the replacement missed. Light mode links and focus rings were still `#054FB9`, the label background was the old `#E3ECFA`, and `--color-label-ink` was undefined in light mode, so labels fell back to the main text color. Now `--color-accent: #1D4ED8`, `--color-accent-hover: #1E40AF`, `--color-accent-subtle: #DBEAFE`, `--color-label-ink: #1D4ED8`. Checked computed colors: light links, labels, "In progress", and buttons are rgb(29, 78, 216). Dark links and labels are rgb(96, 165, 250), and dark buttons stay rgb(29, 78, 216).
+
 ## 2026-10-07 · New colors, one curve, rounded panels
 
 All words unchanged.
