@@ -299,10 +299,16 @@ import { site } from "../site.config";
   }
 
   /* 5. Closing banner */
+  /*
+   * The banner takes the photo's 3:2 shape, so the whole group shows on laptops and desktops.
+   * On phones the text needs more height than 3:2 allows, so the banner grows and the
+   * photo crops at the sides.
+   */
   .banner {
     position: relative;
     isolation: isolate;
     overflow: hidden;
+    min-height: var(--banner-min-height);
   }
 
   .banner :global(.banner__photo) {
@@ -328,8 +334,8 @@ import { site } from "../site.config";
     display: grid;
     justify-items: center;
     gap: var(--space-5);
-    /* Extra room at the bottom shows the group below the button. */
-    padding-block: var(--space-8) calc(var(--space-10) + var(--space-8));
+    /* Text starts over the sign. Extra room at the bottom shows the group on phones. */
+    padding-block: max(var(--space-8), var(--banner-text-top)) calc(var(--space-10) + var(--space-8));
     text-align: center;
   }
 

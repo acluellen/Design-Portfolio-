@@ -2,6 +2,25 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-07 · Closing banner shows the whole group
+
+Aaron felt the banner looked too zoomed in, like the Squarespace version. His reference showed the full photo with the headline over the sign.
+
+- The banner was a short strip, about 470px tall at 1440, so a third of the photo was cut. It now has `min-height: var(--banner-min-height)`, which is the height of a 3:2 box at full width (the photo's own shape), capped at the screen height.
+- The text starts at `--banner-text-top` (12% of the banner width, at least `--space-8`), so the headline lands on the Google sign.
+- New tokens: `--banner-min-height`, `--banner-text-top`.
+- A first try used `aspect-ratio` with a max height. That shrank the banner's width on wide screens and clipped the text on phones, so it was replaced with the min height.
+
+| Screen | Banner | Photo visible |
+|---|---|---|
+| 375 by 812 | 375 by 542 | full height, middle 46% of the width |
+| 768 by 1024 | 768 by 512 | all of it |
+| 1280 by 800 | 1280 by 800 | full width, 94% of the height |
+| 1440 by 900 | 1440 by 900 | full width, 94% of the height |
+| 1920 by 1080 | 1920 by 1080 | full width, 84% of the height |
+
+- Image sharpness is unchanged. On a 1440 screen at 2x it still wants 2880px and gets the 2000px original.
+
 ## 2026-10-07 · Full size photos, SVG logo, and sharper crops
 
 ### Replaced files
