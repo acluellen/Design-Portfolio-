@@ -2,6 +2,13 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-07 · AthenaScribe case study published
+
+- `status` is now "published": the page is part of the site build and the AthenaScribe card links to it, lifts on hover, and shows "View case study". "Case study coming soon" is gone. Checked: clicking the card opens `/work/athenascribe/`, with no Draft label.
+- Aaron confirmed the number sources and that the "buckets" quote came from an administrator in round one testing.
+- Team shown as first initial and last name (G. Garcia, M. Maenner, R. Villagran). Tyler stays as "Tyler" until Aaron sends a last name.
+- The prototype, FigJam and source links are still missing; nothing on the page points to them yet.
+
 ## 2026-10-07 · AthenaScribe case study page (Phase 5)
 
 - Built `/work/athenascribe/` from Aaron's Claude Design draft (AthenaScribe Case Study canvas, Main board). Words are the draft's, in its order, rebuilt in the site's own styles. The older "Approach and Insights" board on the same canvas (7 interviews, 11 clusters) was not used; the Main board says 12 interviews and 15 clusters.
