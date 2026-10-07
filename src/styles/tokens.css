@@ -23,7 +23,8 @@
 
   /* Brand: the AL logo. Same in both themes. */
   --color-brand: #054fb9;
-  --color-brand-ink: #ffffff;
+  --color-brand-hover: #043f93;
+  --color-brand-ink: #ffffff; /* white on brand blue: 7.5:1, hover 9.8:1 */
 
   /* Always dark: same in both themes (coaching section, closing section) */
   --color-always-dark: #000000;

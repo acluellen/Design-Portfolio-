@@ -2,6 +2,13 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-07 · Blue primary buttons, sentence case labels, smaller apprenticeship heading
+
+- Primary buttons ("View my work", "Email me") use the AL logo blue `--color-brand` with white text in light, dark, and always dark sections. Hover is the new `--color-brand-hover` (`#043F93`). White on blue is 7.5:1, and 9.8:1 on hover. DESIGN.md now allows the accent on primary buttons.
+- Button labels in sentence case: "View my work", "About me". "Watch on YouTube" keeps the capital because YouTube is a name.
+- The apprenticeship heading is about half the size of "Hi, I'm Aaron": `--step-3` from 48rem (40px against 76px at 1440) and `--step-2` on phones (25px against 51px at 390). The name is the largest text on the page in every check.
+- Confirmed: the light mode page background is `#F8F6F1`, warm off white (measured rgb 248, 246, 241).
+
 ## 2026-10-07 · Home page redesign: warm, one sans, featured work
 
 The previous home page is saved on the `saved/home-v1` branch (commit `e0bce20`). A local tag `home-v1` points to the same commit; pushing tags failed through the network proxy, so the branch is the saved copy on GitHub.

@@ -47,15 +47,17 @@ const classes = ["button", `button--${variant}`, className];
       color var(--duration-fast) var(--ease-standard);
   }
 
+  /* Primary: the AL logo blue with white text, the same in light, dark, and always dark sections. */
   .button--primary {
-    background: var(--color-ink);
-    color: var(--color-paper);
+    background: var(--color-brand);
+    border-color: var(--color-brand);
+    color: var(--color-brand-ink);
   }
 
   .button--primary:hover {
-    background: var(--color-ink-muted);
-    border-color: var(--color-ink-muted);
-    color: var(--color-paper);
+    background: var(--color-brand-hover);
+    border-color: var(--color-brand-hover);
+    color: var(--color-brand-ink);
   }
 
   .button--secondary {

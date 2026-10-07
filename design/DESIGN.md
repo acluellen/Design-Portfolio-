@@ -7,8 +7,10 @@ Current direction from October 7, 2026: warm off white, one clean sans, soft cor
 Calm, warm, and photo led. Real photos carry the story. Everything around them stays quiet.
 
 - Warm off white page, near black ink, one warm gray band to separate sections.
-- One accent: the blue from the AL logo. Use it for links, focus rings, card labels, and small markers. Never for buttons, fills, or large areas.
+- One accent: the blue from the AL logo. Use it for links, focus rings, card labels, small markers, and primary buttons. Never for large fills or backgrounds.
 - Inter for everything, headlines and body. Headlines are semibold with tight tracking. No serif.
+- "Hi, I'm Aaron" is the largest text on the page (`--step-5`). Section headings are smaller; the apprenticeship heading is about half its size (`--step-3`).
+- Button labels in sentence case: "View my work", "About me".
 - Sentence case for every heading. Proper names keep their capitals (BRIDGEGOOD UX Design Apprenticeship, Purpose to Pixels).
 - Lots of whitespace between sections (`--section-space`).
 - No drop shadows and no gradients. Thin rules and the band separate content.
@@ -53,9 +55,9 @@ Wrap always dark sections in `.surface-always-dark`. It remaps ink, muted ink, r
 - Images and cards: `--radius-media` (16px).
 - Headshot: a full circle. Round icon buttons (theme toggle, video play) stay round.
 - Buttons: soft rounded rectangles, `--radius-control` (12px), 44px tall (`--control-height`).
-  - Primary: solid ink fill, page color text.
+  - Primary: AL logo blue (`--color-brand`) with white text, in every theme and inside always dark sections. Hover goes to `--color-brand-hover`.
   - Secondary: transparent fill, ink outline, ink text.
-  - Inside always dark sections the tokens flip, so primary becomes a light button with dark text.
+  - Inside always dark sections the secondary button's tokens flip to a light outline.
 
 ## Layout
 

@@ -33,8 +33,8 @@ const others = studies.filter((s) => s !== featured);
         users reach their goals.
       </p>
       <div class="actions">
-        <Button href="#work">View My Work</Button>
-        <Button href="/about/" variant="secondary">About Me</Button>
+        <Button href="#work">View my work</Button>
+        <Button href="/about/" variant="secondary">About me</Button>
       </div>
     </div>
   </section>
@@ -211,8 +211,15 @@ const others = studies.filter((s) => s !== featured);
     gap: var(--space-5);
   }
 
+  /* About half the size of "Hi, I'm Aaron", so the name stays the biggest text on the page. */
   .recent h2 {
-    font-size: var(--step-4);
+    font-size: var(--step-2);
+  }
+
+  @media (min-width: 48rem) {
+    .recent h2 {
+      font-size: var(--step-3);
+    }
   }
 
   .recent__lines {
