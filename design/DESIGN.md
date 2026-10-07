@@ -12,7 +12,7 @@ Calm, warm, and photo led. Real photos carry the story. Everything around them s
 - "Hi, I'm Aaron" is the largest text on the page (`--step-5`). Section headings are smaller; the apprenticeship heading is about half its size (`--step-3`).
 - Button labels in sentence case: "View my work", "About me". Button text uses `--tracking-button` (-0.01em).
 - Sentence case for every heading. Proper names keep their capitals (BRIDGEGOOD UX Design Apprenticeship, Purpose to Pixels).
-- Home section order: hero, Selected work, BRIDGEGOOD and KRON4, coaching (About), closing. One smooth scroll: every home section sits in a single stack with the same gap (`--section-gap`, 32px on phones up to 64px). The apprenticeship section is a white rounded panel, coaching and closing are dark rounded panels, and the hero and Selected work sit on the page background. No full width bands.
+- Home section order: hero, KRON4 clip, Selected work, coaching (About), closing. One smooth scroll: every home section sits in a single stack with the same gap (`--section-gap`, 32px on phones up to 64px). The apprenticeship section is a white rounded panel, coaching and closing are dark rounded panels, and the hero and Selected work sit on the page background. No full width bands.
 - No drop shadows and no gradients. Thin rules and the band separate content.
 - Two panels are dark in both themes: coaching and closing. They use `#181715`, never pure black.
 

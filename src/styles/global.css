@@ -11,6 +11,12 @@
   margin: 0;
 }
 
+/* No scroll anchoring: the KRON4 clip changes the page height as it grows, and anchoring would
+   nudge the scroll position to compensate, which would fight the scroll driven size. */
+html {
+  overflow-anchor: none;
+}
+
 html {
   -webkit-text-size-adjust: none;
   text-size-adjust: none;

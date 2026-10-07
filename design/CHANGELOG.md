@@ -2,6 +2,14 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-07 · KRON4 clip moves under the hero
+
+- The KRON4 section now sits right under the hero, before Selected work. Order: hero, KRON4 clip, Selected work, coaching, closing.
+- Modeled on Zeel Shah's portfolio: no heading and no paragraph, and no panel. Just the clip, centered on the page background, then one small line ("On air with KRON4 · BRIDGEGOOD UX apprenticeship") and the "Watch the full segment" link. "Pause clip" stays beside the link (WCAG 2.2.2). No workshop photo.
+- The clip starts at half size at the top of the page, even though it now sits in the first screen. It reaches full size once its top is a fifth of the way down the screen.
+- The section's space follows the clip's size: H × (1 + scale) / 2. The clip still scales from its center, so the space above it is the half of the growth still to come, and nothing is left empty below it. The caption and Selected work follow straight after. Selected work now starts 1369px down at 1440 (was 1563) and 1108px at 390.
+- Scroll anchoring is off for the page (`overflow-anchor: none` on `html`). The page height now changes as the clip grows, and anchoring would nudge the scroll position against it. Nothing above the clip changes size, so scrolling stays normal. Checked with mouse wheel steps down and back up: no jumps, the clip's center stays at the page center, and it is back at half size at the top.
+
 ## 2026-10-07 · Top section restored, KRON4 clip centered
 
 ### Top section

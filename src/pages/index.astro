@@ -41,6 +41,11 @@ const others = studies.filter((s) => s !== featured);
     </div>
   </section>
 
+  <!-- KRON4 clip: no heading or paragraph, just the clip, centered, growing with scroll. -->
+  <section class="kron" aria-label="On air with KRON4" data-reveal>
+    <KronClip />
+  </section>
+
   <!-- 2. Selected work: one featured card, then smaller cards. Cards link only when published. -->
   <section id="work" class="work" aria-labelledby="work-heading" data-reveal>
     <h2 id="work-heading">Selected work</h2>
@@ -54,19 +59,6 @@ const others = studies.filter((s) => s !== featured);
         </div>
       )
     }
-  </section>
-
-  <!-- 3. KRON4: short text, then the loop, which grows as the section scrolls into view. -->
-  <section class="panel panel--light kron" aria-labelledby="kron-heading" data-reveal>
-    <div class="kron__text">
-      <h2 id="kron-heading">On air with KRON4</h2>
-      <p>
-        The team went live on KRON4 with BRIDGEGOOD’s executive director to talk about how Oakland schools
-        and families can understand each other.
-      </p>
-      <p class="kron__note">BRIDGEGOOD UX apprenticeship, launched by Google.org and the Golden State Warriors.</p>
-    </div>
-    <KronClip />
   </section>
 
   <!-- 4. Coaching, always dark -->
@@ -131,11 +123,6 @@ const others = studies.filter((s) => s !== featured);
   .panel {
     border-radius: var(--radius-section);
     padding: var(--panel-padding);
-  }
-
-  .panel--light {
-    background: var(--color-paper-raised);
-    border: var(--rule-thin) solid var(--color-rule);
   }
 
   .panel--dark {
@@ -207,28 +194,9 @@ const others = studies.filter((s) => s !== featured);
     }
   }
 
-  /* 3. KRON4: heading and text on top, the clip centered below them. */
+  /* KRON4 clip, right under the hero. No panel: it sits on the page background. */
   .kron {
     display: grid;
-    gap: var(--space-6);
-  }
-
-  .kron__text {
-    display: grid;
-    justify-items: center;
-    gap: var(--space-4);
-    max-width: var(--measure-reading);
-    margin-inline: auto;
-    text-align: center;
-  }
-
-  .kron__text h2 {
-    font-size: var(--step-4);
-  }
-
-  .kron__note {
-    font-size: var(--step--1);
-    color: var(--color-ink-muted);
   }
 
   /* 2. Selected work */
