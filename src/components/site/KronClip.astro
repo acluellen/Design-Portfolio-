@@ -1,6 +1,7 @@
 ---
 // The KRON4 loop: muted, looping, plays on its own while on screen.
-// It starts at half size and grows as the section scrolls up the page, then shrinks back.
+// It starts at half size in the center and grows evenly from the center as the section scrolls
+// up the page, then shrinks back the same way.
 // Only transforms change, so the page never jumps and scrolling stays normal.
 // Reduced motion (or no JavaScript): the still image only, at a fixed size.
 import Photo from "./Photo.astro";
@@ -94,8 +95,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       const eased = 1 - (1 - progress) ** 2;
       const scale = start + (1 - start) * eased;
       clip.style.setProperty("--clip-scale", scale.toFixed(4));
-      // The links follow the bottom edge of the scaled clip.
-      clip.style.setProperty("--clip-shift", `${((scale - 1) * frameHeight).toFixed(1)}px`);
+      // The links follow the bottom edge of the clip, which moves half as far as it shrinks.
+      clip.style.setProperty("--clip-shift", `${(((scale - 1) * frameHeight) / 2).toFixed(1)}px`);
     };
     const queue = () => {
       if (!queued && motion.matches) {
@@ -139,9 +140,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     --clip-scale: 1;
     --clip-shift: 0px;
     inline-size: min(100%, var(--clip-native));
+    margin-inline: auto;
   }
 
-  /* With motion: the box is the full grown size, and the clip scales inside it from the top left. */
+  /* With motion: the box is the full grown size, and the clip scales inside it from its center. */
   .clip.is-animated {
     inline-size: min(100%, var(--clip-max));
   }
@@ -152,7 +154,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     overflow: hidden;
     border-radius: var(--radius-media);
     background: var(--color-panel);
-    transform-origin: top left;
+    transform-origin: center;
   }
 
   .clip.is-animated .clip__frame,
@@ -195,6 +197,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   .clip__links {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 0 var(--space-5);
     padding-block-start: var(--space-2);
     font-size: var(--step--1);

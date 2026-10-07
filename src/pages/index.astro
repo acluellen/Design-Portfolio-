@@ -20,21 +20,19 @@ const others = studies.filter((s) => s !== featured);
   <section class="hero">
     <Photo
       name="headshot"
-      widths={[256, 384, 576, 768]}
-      sizes="(min-width: 48rem) clamp(12.8rem, 3.2rem + 16vw, 20.8rem), 70vw"
+      widths={[320, 480, 720, 960]}
+      sizes="(min-width: 80rem) 26rem, (min-width: 48rem) 24vw, 70vw"
       cover={4 / 5}
       loading="eager"
       ratio="4 / 5"
       class="hero__portrait"
     />
     <div class="hero__text">
-      <h1>Aaron Luellen</h1>
-      <p class="hero__tagline">Research led product designer for schools, families, and people short on time.</p>
-      <p class="hero__meta">
-        <span>Product designer</span><span aria-hidden="true"> · </span><span>Oakland, California</span><span aria-hidden="true"> · </span><span>Available for work</span>
-      </p>
+      <h1>Hi, I’m Aaron</h1>
       <p class="hero__lede">
-        I start with research, sit with the people who will use the product, and design from what they tell me.
+        I’m a product designer with a background in Muay Thai, bringing a human centered mindset from the gym
+        to the products I design. I focus on understanding people, solving real problems, and helping
+        users reach their goals.
       </p>
       <div class="actions">
         <Button href="#work">View my work</Button>
@@ -183,39 +181,17 @@ const others = studies.filter((s) => s !== featured);
 
   .hero__text {
     display: grid;
-    gap: var(--space-4);
+    gap: var(--space-5);
     min-width: 0;
   }
 
   .hero__text h1 {
-    font-size: var(--step-6);
-    line-height: 1;
-  }
-
-  .hero__tagline {
-    max-width: 30ch;
-    font-family: var(--font-display);
-    font-size: var(--step-2);
-    font-weight: var(--weight-medium);
-    letter-spacing: var(--tracking-tight);
-    line-height: var(--leading-snug);
-  }
-
-  .hero__meta {
-    font-size: var(--step--1);
-    font-weight: var(--weight-medium);
-    letter-spacing: var(--tracking-label);
-    text-transform: uppercase;
-    color: var(--color-ink-muted);
+    font-size: var(--step-5);
   }
 
   .hero__lede {
-    max-width: 52ch;
+    max-width: var(--measure-reading);
     color: var(--color-ink-muted);
-  }
-
-  .hero .actions {
-    margin-block-start: var(--space-2);
   }
 
   @media (max-width: 47.99rem) {
@@ -231,7 +207,7 @@ const others = studies.filter((s) => s !== featured);
     }
   }
 
-  /* 3. KRON4: text on top, the clip below it, both on the left edge. */
+  /* 3. KRON4: heading and text on top, the clip centered below them. */
   .kron {
     display: grid;
     gap: var(--space-6);
@@ -239,8 +215,11 @@ const others = studies.filter((s) => s !== featured);
 
   .kron__text {
     display: grid;
+    justify-items: center;
     gap: var(--space-4);
     max-width: var(--measure-reading);
+    margin-inline: auto;
+    text-align: center;
   }
 
   .kron__text h2 {

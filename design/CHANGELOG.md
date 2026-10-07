@@ -2,6 +2,16 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-07 · Top section restored, KRON4 clip centered
+
+### Top section
+- Restored exactly as in preview version 16 (commit bd28141): the "Hi, I'm Aaron" heading, the same intro, both buttons, the same layout, and the same portrait size (`--size-portrait` back to `clamp(16rem, 4rem + 20vw, 26rem)`, 352px at 1440). One word changed in the intro: "MMA" is now "Muay Thai".
+- Removed the name heading, the tagline, the uppercase info row, and the unused `--step-6` token.
+
+### KRON4
+- The heading and text sit above the clip and are centered over it.
+- The clip is centered in the section and scales from its own center, so it grows and shrinks evenly on all sides and never moves sideways. Checked: the clip's center stays at the page center (720px at 1440, 195px at 390) at every scroll position. The links below it follow its bottom edge.
+
 ## 2026-10-07 · Calm home page: new hero words, plain labels, KRON4 clip, copy email
 
 Replaces the finishing touches brief. Words come from Aaron's brief. Colors, fonts, themes, and section order are unchanged.

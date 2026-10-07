@@ -51,7 +51,7 @@ Wrap dark panels in `.surface-always-dark`. It remaps ink, muted ink, rules, acc
 ## Shape
 
 - One large curve, `--radius-section` (24px), on every section panel, card, photo, video, and card image. `--radius-media` points to it.
-- Hero portrait: 4:5, chest up, `--size-portrait` wide (up to 20.8rem), with `--radius-section`. Sized so the top of the first work card shows on a laptop before scrolling. Round icon buttons (theme toggle, video play) stay round.
+- Hero portrait: 4:5, chest up, `--size-portrait` wide (up to 26rem), with `--radius-section`. Round icon buttons (theme toggle, video play) stay round.
 - Buttons: fully round (pill), `--radius-control`, 44px tall (`--control-height`).
   - Primary: AL logo blue (`--color-brand`) with white text, in every theme and inside always dark sections. Hover goes to `--color-brand-hover`.
   - Secondary: transparent fill, ink outline, ink text.
@@ -112,6 +112,6 @@ Wrap dark panels in `.surface-always-dark`. It remaps ink, muted ink, rules, acc
 - Sections marked `data-reveal` fade in and slide up `--reveal-distance` (14px) over `--duration-reveal` as they enter the screen. The hero never animates. Anything on screen at load shows at once.
 - The hero portrait lifts `--lift-headshot` (4px) on hover.
 - Linked project cards lift `--card-lift` (3px) and their image zooms to `--card-image-zoom` (1.03) on hover, over `--duration-hover` (200ms). All three are zero with reduced motion.
-- The KRON4 clip grows from `--clip-scale-start` to full size with scroll, using transforms only (no layout change, no scroll hijack), up to `--clip-max`. It has a pause control. Reduced motion shows the still image only and never loads the video.
+- The KRON4 clip is centered and grows evenly from its center, from `--clip-scale-start` to full size, with scroll, using transforms only (no layout change, no scroll hijack), up to `--clip-max`. It has a pause control. Reduced motion shows the still image only and never loads the video.
 - Everything shows fully with JavaScript off. With reduced motion on, the reveal distance, lift, and durations are all zero, so nothing moves or hides.
 - Respect `prefers-reduced-motion`.
