@@ -2,6 +2,10 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-07 · i-have-adhd skill added
+
+- Added the i-have-adhd skill (`.claude/skills/i-have-adhd`) from github.com/ayghri/i-have-adhd, commit 723af7d. It only changes how Claude writes replies, never the site. It runs when Aaron types `/i-have-adhd` and stays on until "stop adhd mode". Its always-on hook is not installed.
+
 ## 2026-10-07 · Fixes from the critique, audit, and Vercel review
 
 Only the items Aaron picked. Words unchanged except the two new lines below.
