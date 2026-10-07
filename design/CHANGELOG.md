@@ -2,6 +2,12 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-07 · Two design skills added to the repo
+
+- Added Impeccable 4.5.0 (`.claude/skills/impeccable`, plus four helper agents in `.claude/agents/`) and Vercel's web-design-guidelines 1.0.0 (`.claude/skills/web-design-guidelines`), copied from their GitHub repos so they stay with the project. Sources, versions, and commits are in `.claude/skills/SOURCES.md`.
+- Impeccable's automatic hooks are not installed. They would run its checker after every edit and at the end of every turn.
+- Neither skill has been run yet.
+
 ## 2026-10-07 · BRIDGEGOOD section restored under the hero, KRON4 clip in color
 
 - The BRIDGEGOOD section is back exactly as in preview version 16 (commit bd28141): the linked "BRIDGEGOOD UX Design Apprenticeship" heading, both lines, the "Purpose to Pixels: BRIDGEGOOD on KRON4" title, its paragraph, and the Watch on YouTube button. Same layout: text left and video right from 64rem, text first on phones.
