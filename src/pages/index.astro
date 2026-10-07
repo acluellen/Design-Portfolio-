@@ -25,6 +25,7 @@ const others = studies.filter((s) => s !== featured);
       sizes="(min-width: 80rem) 26rem, (min-width: 48rem) 24vw, 70vw"
       cover={4 / 5}
       loading="eager"
+      priority
       ratio="4 / 5"
       class="hero__portrait"
     />
@@ -47,20 +48,21 @@ const others = studies.filter((s) => s !== featured);
     <div class="apprenticeship__text">
       <div class="recent">
         <h2 id="recent-heading">
-          <a class="recent__org" href={site.bridgegood} target="_blank" rel="noopener noreferrer">BRIDGEGOOD<span class="visually-hidden"> (opens in a new tab)</span></a> UX Design Apprenticeship
+          <a class="recent__org" href={site.bridgegood} target="_blank" rel="noopener noreferrer" aria-describedby="bridgegood-new-tab" translate="no">BRIDGEGOOD</a> UX Design Apprenticeship
         </h2>
+        <span id="bridgegood-new-tab" class="visually-hidden">Opens in a new tab</span>
         <div class="recent__lines">
-          <p>Launched by Google.org and the Golden State Warriors, with mentors from Google, Meta, and YouTube.</p>
+          <p>Launched by <span translate="no">Google.org</span> and the <span translate="no">Golden State Warriors</span>, with mentors from <span translate="no">Google</span>, <span translate="no">Meta</span>, and <span translate="no">YouTube</span>.</p>
           <p>
-            The team built AthenaScribe, a translation tool with human review for Oakland Unified families,
-            and presented it at Demo Day at Block HQ.
+            The team built <span translate="no">AthenaScribe</span>, a translation tool with human review for <span translate="no">Oakland Unified</span> families,
+            and presented it at Demo Day at <span translate="no">Block HQ</span>.
           </p>
         </div>
       </div>
       <div class="split__text">
-        <h3 class="split__title">Purpose to Pixels: BRIDGEGOOD on KRON4</h3>
+        <h3 class="split__title" translate="no">Purpose to Pixels: BRIDGEGOOD on KRON4</h3>
         <p>
-          Live with BRIDGEGOOD’s executive director, talking about open communication between Oakland
+          Live with <span translate="no">BRIDGEGOOD</span>’s executive director, talking about open communication between Oakland
           families and their schools, and why design for social good matters.
         </p>
         <div class="actions">
@@ -192,12 +194,6 @@ const others = studies.filter((s) => s !== featured);
     aspect-ratio: 4 / 5;
     border-radius: var(--radius-section);
     object-fit: cover;
-    transition: transform var(--duration-reveal) var(--ease-standard);
-  }
-
-  /* Small lift on hover. --lift-headshot is 0 with reduced motion. */
-  .hero :global(.hero__portrait:hover) {
-    transform: translateY(calc(-1 * var(--lift-headshot)));
   }
 
   .hero__text {
@@ -242,6 +238,13 @@ const others = studies.filter((s) => s !== featured);
   .apprenticeship__text {
     display: grid;
     gap: var(--space-7);
+  }
+
+  /* Stacked (phones and small tablets): the clip comes first, above the text. */
+  @media (max-width: 63.99rem) {
+    .apprenticeship__video {
+      order: -1;
+    }
   }
 
   @media (min-width: 64rem) {

@@ -2,6 +2,25 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-07 · Fixes from the critique, audit, and Vercel review
+
+Only the items Aaron picked. Words unchanged except the two new lines below.
+
+- AthenaScribe card: new small line "Case study coming soon", shown on any card that is finished but has no page yet. It already did not lift (only cards with a page do); confirmed.
+- LinkedIn is hidden in the header and footer until `site.linkedin` is set.
+- Copy email: if copying fails, a note appears under the email, "Copying didn’t work here. Use the email link instead.", and screen readers hear it.
+- Header: the row wraps instead of stacking at very large text, and the header stops sticking under 24rem wide or when it is taller than a fifth of the screen. `text-size-adjust` is now 100% (was none), so phone text size settings work.
+- Dark mode only: the coaching and closing panels use #201e1b (new `--color-always-dark-surface`), one step lighter than the #181715 page. Light mode is unchanged.
+- BRIDGEGOOD heading: the hidden "opens in a new tab" note moved out of the heading (linked with `aria-describedby`), so the heading reads "BRIDGEGOOD UX Design Apprenticeship".
+- Card descriptions use the paragraph line spacing (`--leading-body`, 1.65; was 1.3). Side effect, fixed: the taller featured text stretched the AthenaScribe image wider than its column, over the text, on laptops. The image now keeps its 4:3 size and centers beside the text.
+- The portrait loads first (`fetchpriority="high"`, new `priority` option on `Photo`) and no longer moves on hover.
+- Browser bar color: `theme-color` for light (#faf9f5) and dark (#181715), read from `tokens.css` at build time, and switched by the theme toggle.
+- Fonts: the two main font files (Inter and Atkinson, Latin) are preloaded. No grey tap flash on phones. Brand names (BRIDGEGOOD, AthenaScribe, KRON4, Google.org, the Warriors, Google, Meta, YouTube, Oakland Unified, Block HQ, project titles, and Aaron's name in the footer) are marked `translate="no"`.
+- Stacked layout (under 64rem): the KRON4 clip now comes before the BRIDGEGOOD text.
+- Footer: "Built with Claude Code" removed.
+
+Still open, not changed: at very large text or zoom on phones (about 150% and up) the top section is wider than the screen. The cause is its single column sizing to the two buttons side by side; `minmax(0, 1fr)` on `.hero` would fix it.
+
 ## 2026-10-07 · Two design skills added to the repo
 
 - Added Impeccable 4.5.0 (`.claude/skills/impeccable`, plus four helper agents in `.claude/agents/`) and Vercel's web-design-guidelines 1.0.0 (`.claude/skills/web-design-guidelines`), copied from their GitHub repos so they stay with the project. Sources, versions, and commits are in `.claude/skills/SOURCES.md`.

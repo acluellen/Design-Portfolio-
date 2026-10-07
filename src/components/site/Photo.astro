@@ -25,6 +25,8 @@ interface Props {
   cover?: number;
   /** Encoder quality. 60 on AVIF looks like JPEG 80 at about half the size. */
   quality?: number;
+  /** The main image of the first screen: the browser fetches it before other images. */
+  priority?: boolean;
 }
 
 const {
@@ -37,6 +39,7 @@ const {
   placeholderLabel,
   cover,
   quality = 60,
+  priority = false,
 } = Astro.props;
 
 const files = import.meta.glob<{ default: ImageMetadata }>(
@@ -88,6 +91,7 @@ const srcSizes =
       fallbackFormat="jpg"
       loading={loading}
       decoding="async"
+      fetchpriority={priority ? "high" : undefined}
       class={className}
     />
   ) : (

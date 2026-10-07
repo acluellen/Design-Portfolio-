@@ -20,17 +20,16 @@ const onCaseStudy = path.startsWith("/work/");
           <a href="/#work" data-nav-section="work" aria-current={onCaseStudy ? "page" : undefined}>Work</a>
         </li>
         <li><a href="/#about" data-nav-section="about">About</a></li>
-        <li>
-          {
-            site.linkedin ? (
+        {/* Hidden until site.linkedin has Aaron's link. */}
+        {
+          site.linkedin && (
+            <li>
               <a href={site.linkedin} target="_blank" rel="noopener noreferrer">
                 LinkedIn<span class="visually-hidden"> (opens in a new tab)</span>
               </a>
-            ) : (
-              <span class="site-header__pending" title="LinkedIn link coming soon">LinkedIn</span>
-            )
-          }
-        </li>
+            </li>
+          )
+        }
       </ul>
     </nav>
     <ThemeToggle />
@@ -38,6 +37,16 @@ const onCaseStudy = path.startsWith("/work/");
 </header>
 
 <script>
+  // At very large text sizes the header can grow tall. Past a fifth of the screen it stops
+  // sticking and scrolls away with the page, so it never covers the content.
+  const header = document.querySelector<HTMLElement>(".site-header");
+  if (header && "ResizeObserver" in window) {
+    const MAX_SHARE = 0.2;
+    const check = () => header.classList.toggle("site-header--tall", header.offsetHeight > window.innerHeight * MAX_SHARE);
+    new ResizeObserver(check).observe(header);
+    window.addEventListener("resize", check);
+  }
+
   // On the home page, mark Work or About as current while that section is on screen.
   const links = [...document.querySelectorAll<HTMLAnchorElement>("[data-nav-section]")];
   const sections = links
@@ -75,10 +84,12 @@ const onCaseStudy = path.startsWith("/work/");
     border-bottom: var(--rule-thin) solid var(--color-rule);
   }
 
+  /* Wraps instead of stacking: at very large text the links move to a second row, side by side. */
   .site-header__inner {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: var(--space-5);
+    gap: var(--space-2) var(--space-5);
     min-block-size: var(--header-height);
     padding-block: var(--space-3);
   }
@@ -91,7 +102,6 @@ const onCaseStudy = path.startsWith("/work/");
 
   .site-header__nav {
     display: flex;
-    flex-wrap: wrap;
     gap: var(--space-2) var(--space-5);
     padding: 0;
     list-style: none;
@@ -100,8 +110,7 @@ const onCaseStudy = path.startsWith("/work/");
   }
 
   /* 44px tall tap targets. */
-  .site-header__nav a,
-  .site-header__pending {
+  .site-header__nav a {
     display: inline-flex;
     align-items: center;
     min-block-size: var(--control-height);
@@ -120,8 +129,23 @@ const onCaseStudy = path.startsWith("/work/");
     text-decoration-color: var(--color-accent);
   }
 
-  .site-header__pending {
-    color: var(--color-ink-muted);
-    cursor: not-allowed;
+  /* Very narrow screens, which is also a phone at its largest text or zoom setting: tighter
+     spacing, and the header scrolls away instead of covering a third of the screen. */
+  .site-header--tall {
+    position: static;
+  }
+
+  @media (max-width: 24rem) {
+    .site-header {
+      position: static;
+    }
+
+    .site-header__inner {
+      gap: var(--space-2) var(--space-4);
+    }
+
+    .site-header__nav {
+      gap: var(--space-4);
+    }
   }
 </style>

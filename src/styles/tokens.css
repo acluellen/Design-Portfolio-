@@ -30,6 +30,9 @@
 
   /* Dark panels: the coaching and closing sections in both themes, and the dark mode page. */
   --color-always-dark: #181715;
+  /* Background of the dark panels. Same as --color-always-dark on the light page; one step
+     lighter on the dark page (see the dark blocks) so the panels don't blend into it. */
+  --color-always-dark-surface: var(--color-always-dark);
   --color-always-dark-ink: #f5f4ef;
   --color-always-dark-muted: #b5b3ad;
   --color-always-dark-rule: #34312c;
@@ -158,6 +161,7 @@
     --color-accent-subtle: #1e2a44;
     --color-label-ink: #60a5fa;
     --color-dark-panel-edge: #34312c;
+    --color-always-dark-surface: #201e1b;
     color-scheme: dark;
   }
 }
@@ -176,13 +180,14 @@
   --color-accent-subtle: #1e2a44;
   --color-label-ink: #60a5fa;
   --color-dark-panel-edge: #34312c;
+  --color-always-dark-surface: #201e1b;
   color-scheme: dark;
 }
 
 /* Always dark surface: remaps the core tokens so components inside read correctly. */
 .surface-always-dark {
   --color-focus: var(--color-always-dark-accent);
-  --color-paper: var(--color-always-dark);
+  --color-paper: var(--color-always-dark-surface);
   --color-accent-subtle: var(--color-dark-label-bg);
   --color-label-ink: var(--color-always-dark-accent);
   --color-paper-raised: var(--color-always-dark-raised);

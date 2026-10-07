@@ -1,6 +1,7 @@
 ---
 // The email, large, with a small Copy email button beside it.
-// Copying shows "Copied" for two seconds; a live region reads it out.
+// Copying shows "Copied" for two seconds; a live region reads it out. If copying fails, a short
+// note points to the email link instead.
 import { mailto, site } from "../../site.config";
 
 interface Props {
@@ -16,6 +17,9 @@ const { class: className } = Astro.props;
     <span data-copy-label>Copy email</span>
   </button>
   <span class="visually-hidden" aria-live="polite" data-copy-status></span>
+  <p class="contact-email__note" data-copy-note hidden>
+    Copying didn’t work here. Use the email link instead.
+  </p>
 </div>
 
 <script>
@@ -34,7 +38,12 @@ const { class: className } = Astro.props;
       field.style.opacity = "0";
       document.body.append(field);
       field.select();
-      const ok = document.execCommand("copy");
+      let ok = false;
+      try {
+        ok = document.execCommand("copy");
+      } catch {
+        ok = false;
+      }
       field.remove();
       return ok;
     }
@@ -43,10 +52,18 @@ const { class: className } = Astro.props;
   document.querySelectorAll<HTMLButtonElement>("[data-copy-email]").forEach((button) => {
     const label = button.querySelector<HTMLElement>("[data-copy-label]");
     const status = button.parentElement?.querySelector<HTMLElement>("[data-copy-status]");
+    const note = button.parentElement?.querySelector<HTMLElement>("[data-copy-note]");
     let timer: number | undefined;
 
     button.addEventListener("click", async () => {
-      if (!label || !(await copy(button.dataset.copyEmail ?? ""))) return;
+      if (!label) return;
+      if (!(await copy(button.dataset.copyEmail ?? ""))) {
+        // The note is visible text, so screen readers get it from the live region as well.
+        if (note) note.hidden = false;
+        if (status) status.textContent = note?.textContent?.trim() ?? "";
+        return;
+      }
+      if (note) note.hidden = true;
       label.textContent = "Copied";
       if (status) status.textContent = "Email copied";
       window.clearTimeout(timer);
@@ -90,6 +107,16 @@ const { class: className } = Astro.props;
 
   .contact-email__address:hover {
     color: var(--color-accent);
+  }
+
+  .contact-email__note {
+    flex-basis: 100%;
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
+  }
+
+  .contact-email__note[hidden] {
+    display: none;
   }
 
   /* Reads as a small text link. */

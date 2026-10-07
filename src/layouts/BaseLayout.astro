@@ -3,6 +3,10 @@ import "@fontsource-variable/inter";
 import "@fontsource-variable/atkinson-hyperlegible-next";
 import "../styles/tokens.css";
 import "../styles/global.css";
+// Font files, so the head can ask for them before the CSS that uses them has loaded.
+import interFont from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
+import atkinsonFont from "@fontsource-variable/atkinson-hyperlegible-next/files/atkinson-hyperlegible-next-latin-wght-normal.woff2?url";
+import tokensCss from "../styles/tokens.css?raw";
 
 interface Props {
   title: string;
@@ -23,6 +27,12 @@ const fullTitle = title === siteName ? title : `${title} · ${siteName}`;
 const absolute = (path: string) => (Astro.site ? new URL(path, Astro.site).href : path);
 const shareImage = absolute("/og-image.png");
 const pageUrl = absolute(Astro.url.pathname);
+
+// Browser bar color on phones: the page background, read from tokens.css so it stays in sync.
+// Light is the first --color-paper; dark is the one in the :root[data-theme="dark"] block.
+const paperIn = (css: string) => css.match(/--color-paper:\s*(#[0-9a-fA-F]{3,8})/)?.[1];
+const themeLight = paperIn(tokensCss);
+const themeDark = paperIn(tokensCss.slice(tokensCss.indexOf(':root[data-theme="dark"]')));
 ---
 
 <!doctype html>
@@ -30,11 +40,26 @@ const pageUrl = absolute(Astro.url.pathname);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content={themeLight} media="(prefers-color-scheme: light)" data-theme-color="light" />
+    <meta name="theme-color" content={themeDark} media="(prefers-color-scheme: dark)" data-theme-color="dark" />
+    <link rel="preload" href={interFont} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={atkinsonFont} as="font" type="font/woff2" crossorigin />
     <script is:inline>
       // Apply the saved theme before first paint, so the wrong theme never flashes.
+      // A saved choice also sets the browser bar color, whatever the device setting is.
+      window.applyThemeColor = (theme) => {
+        document.querySelectorAll("meta[data-theme-color]").forEach((meta) => {
+          const own = meta.dataset.themeColor;
+          meta.media = theme ? "all" : `(prefers-color-scheme: ${own})`;
+          if (theme && own !== theme) meta.media = "not all";
+        });
+      };
       try {
         const theme = localStorage.getItem("theme");
-        if (theme === "light" || theme === "dark") document.documentElement.dataset.theme = theme;
+        if (theme === "light" || theme === "dark") {
+          document.documentElement.dataset.theme = theme;
+          window.applyThemeColor(theme);
+        }
       } catch {}
     </script>
     <title>{fullTitle}</title>

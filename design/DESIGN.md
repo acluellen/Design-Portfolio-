@@ -96,7 +96,10 @@ Wrap dark panels in `.surface-always-dark`. It remaps ink, muted ink, rules, acc
 - Every email link uses the subject "Interested in working together" (`mailto` in `src/site.config.ts`).
 - Links that open a new tab say so to screen readers.
 - Spell BRIDGEGOOD in capitals everywhere. The word links to bridgegood.org in the apprenticeship heading.
-- Footer: email (left out on home, where the closing shows it), LinkedIn, and a small uppercase credit line. A Resume link appears only when `public/resume.pdf` exists.
+- Footer: email (left out on home, where the closing shows it), LinkedIn, and a small uppercase copyright line. LinkedIn (header and footer) appears only once `site.linkedin` is set, and Resume only when `public/resume.pdf` exists.
+- Header: sticky, but it scrolls away on screens under 24rem wide and whenever it grows past a fifth of the screen (very large text), so it never covers the page.
+- Dark panels use `--color-always-dark-surface`: the same as `--color-always-dark` on the light page, one step lighter (#201e1b) on the dark page.
+- A finished case study without its page yet shows "Case study coming soon" on its card and does not move on hover.
 - The email always comes with a "Copy email" text button that reads "Copied" for two seconds.
 - Tap targets: header links, footer links, and buttons are at least 44px tall.
 - Keyboard focus: a 3px outline (`--focus-width`) in `--color-focus`, read where it is used, so it is blue on light and light blue (`#60A5FA`) on dark panels.
@@ -110,7 +113,7 @@ Wrap dark panels in `.surface-always-dark`. It remaps ink, muted ink, rules, acc
 
 - Minimal. Color transitions at `--duration-fast`. Smooth scroll for in page links.
 - Sections marked `data-reveal` fade in and slide up `--reveal-distance` (14px) over `--duration-reveal` as they enter the screen. The hero never animates. Anything on screen at load shows at once.
-- The hero portrait lifts `--lift-headshot` (4px) on hover.
+- The hero portrait does not move on hover; it is not a link.
 - Linked project cards lift `--card-lift` (3px) and their image zooms to `--card-image-zoom` (1.03) on hover, over `--duration-hover` (200ms). All three are zero with reduced motion.
 - The KRON4 clip is a muted color loop that plays only while on screen, with a "Pause clip" control. Reduced motion shows the still image only and never loads the video.
 - Everything shows fully with JavaScript off. With reduced motion on, the reveal distance, lift, and durations are all zero, so nothing moves or hides.

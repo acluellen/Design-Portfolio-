@@ -49,11 +49,13 @@ const sizes = featured
       {card?.label && <p class="work-card__label">{card.label}</p>}
       {inProgress && <p class="work-card__status">In progress</p>}
     </div>
-    <h3 class="work-card__title">
+    <h3 class="work-card__title" translate="no">
       {href ? <a href={href}>{title}</a> : title}
     </h3>
     {card?.description && <p class="work-card__description">{card.description}</p>}
     {card?.detail && <p class="work-card__detail">{card.detail}</p>}
+    {/* A finished study without its page yet. In progress cards already say so in their own words. */}
+    {!href && !inProgress && <p class="work-card__soon">Case study coming soon</p>}
     {
       href && (
         <span class="work-card__cta" aria-hidden="true">
@@ -194,7 +196,7 @@ const sizes = featured
   }
 
   .work-card__description {
-    line-height: var(--leading-snug);
+    line-height: var(--leading-body);
   }
 
   /* Detail line sits at the bottom so cards in a row line up. */
@@ -202,6 +204,11 @@ const sizes = featured
     margin-block-start: auto;
     padding-block-start: var(--space-4);
     border-top: var(--rule-thin) solid var(--color-rule);
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
+  }
+
+  .work-card__soon {
     font-size: var(--step--1);
     color: var(--color-ink-muted);
   }
@@ -245,6 +252,12 @@ const sizes = featured
       align-items: stretch;
       gap: var(--space-7);
       padding: var(--space-6);
+    }
+
+    /* The image keeps its 4:3 size and centers beside the text. Stretched to a taller text
+       column, its shape would make it wider than its column. */
+    .work-card--featured .work-card__media {
+      align-self: center;
     }
 
     .work-card--featured .work-card__text {

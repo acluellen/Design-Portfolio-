@@ -11,9 +11,12 @@
   margin: 0;
 }
 
+/* 100% (not none) so phone text size settings still work; it only stops the automatic
+   boost when a phone turns sideways. */
 html {
-  -webkit-text-size-adjust: none;
-  text-size-adjust: none;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
 }
 
 img,
