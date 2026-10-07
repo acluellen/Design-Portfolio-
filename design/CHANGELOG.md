@@ -31,7 +31,8 @@ The previous home page is saved on the `saved/home-v1` branch (commit `e0bce20`)
 - AthenaScribe detail says "12 stakeholder interviews". The Phase 5 notes say 7 stakeholder interviews.
 - AthenaScribe detail says "Tested with counselors and vice principals". The case study draft says "Testing has not happened yet."
 - The apprenticeship mentors are now Google, Meta, and YouTube (earlier Meta, PayPal, and Adobe), and the program is launched by Google.org (earlier Google).
-- The text is used exactly as Aaron wrote it. The case study draft is not changed until he confirms.
+- The text is used exactly as Aaron wrote it.
+- Resolved Oct 7: Aaron confirmed 12 interviews and that testing happened. The placeholder `athenascribe.mdx` was updated to match: its Outcome is back to TODO. Aaron's real draft is in Claude Design and comes in at Phase 5. The PayPal visit (KPIs and problem statement) is noted there for the case study page. The new mentor list stands for the home page.
 
 ### Checked
 - 1440 and 390, light and dark: no sideways scroll, no console errors. Inter on every heading. The closing button opens the footer email.
