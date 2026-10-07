@@ -88,8 +88,7 @@ Follows Nielsen Norman Group guidance for horizontal scrolling: show that more c
 - Stored in `src/assets/photos/` and optimized at build time by Astro: AVIF and WebP at quality 80, with a JPEG fallback.
 - Pre-crop each source to the shape it is shown in (square headshot, 4:5 gym portraits, 16:9 workshop). A file cropped by `object-fit: cover` in the browser is zoomed in, so it looks softer than its width suggests.
 - Crop rule in `Photo.astro`: pass `cover` (the box's width ÷ height) for any photo shown with `object-fit: cover`. When the file is wider than the box, Photo multiplies both the srcset widths and the `sizes` lengths by that zoom, and warns at build time to pre-crop the source.
-- Closing banner: at least as tall as a 3:2 box at full width (`--banner-min-height`), capped at the screen height. On laptops and desktops the whole group shows, and the headline sits over the sign (`--banner-text-top`). On phones the text needs more height, so the banner grows and the photo crops at the sides.
-- The banner's `sizes` is set by hand. On phones the box is taller than the photo, so it asks for 56rem. From 48rem up it asks for 100vw.
+- Closing banner: the group photo runs full width at its own shape (2000 by 1150, Aaron's framing), with no overlay and nothing laid over it. The credit sits under the photo on the right. The headline, text, and button follow below in the always dark band. Nothing crops at any width, so `sizes` is simply 100vw.
 - Work card `sizes` come from `src/lib/carousel-sizes.ts`, which reads the carousel tokens from `tokens.css`.
 - Photo credits: a small muted "Photos: BRIDGEGOOD" line under the coaching photos and in the banner's lower right.
 - Every photo has alt text approved by Aaron.

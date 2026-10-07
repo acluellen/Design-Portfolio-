@@ -87,11 +87,6 @@
   --carousel-cards-tablet: 1.4;
   --carousel-card-phone: 85vw;
 
-  /* Closing banner: the group photo's shape, so the whole photo shows on wide screens */
-  /* Height of a 3:2 box at full width, but never taller than the screen. Content can grow it. */
-  --banner-min-height: min(calc(100vw * 2 / 3), 100svh);
-  --banner-text-top: 12%; /* of the banner width, puts the headline over the sign */
-
   /* Media and controls */
   --size-headshot: clamp(9rem, 6rem + 10vw, 14rem);
   --size-logo: 3rem;

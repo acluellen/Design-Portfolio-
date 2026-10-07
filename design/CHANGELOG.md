@@ -2,6 +2,15 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-07 · Closing banner: photo first, text below
+
+Aaron wanted to see himself and the Google sign fully, matching a crop he sent. Any text over the photo covers the sign or someone's face, so the text moved below the photo.
+
+- `group.jpg` is now the full quality original cropped to Aaron's framing: 180px off the top, 2000 by 1150. It was matched against his screenshot, so it keeps the original quality rather than his recompressed copy.
+- The photo runs full width with no dark overlay. "Photos: BRIDGEGOOD" sits under it on the right. Headline, text, and button follow, centered in the black band.
+- Removed `--banner-min-height`, `--banner-text-top`, the overlay, and the hand set phone `sizes`. The photo never crops now, so `sizes="100vw"` is accurate.
+- Photo size: 1440 by 828 at 1440, 768 by 442 at 768, 375 by 216 at 375. No sideways scroll.
+
 ## 2026-10-07 · Closing banner shows the whole group
 
 Aaron felt the banner looked too zoomed in, like the Squarespace version. His reference showed the full photo with the headline over the sign.
