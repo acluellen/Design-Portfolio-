@@ -7,6 +7,7 @@ Newest first. Every design or structure decision goes here.
 - `status` is now "published": the page is part of the site build and the AthenaScribe card links to it, lifts on hover, and shows "View case study". "Case study coming soon" is gone. Checked: clicking the card opens `/work/athenascribe/`, with no Draft label.
 - Aaron confirmed the number sources and that the "buckets" quote came from an administrator in round one testing.
 - Team shown as first initial and last name (G. Garcia, M. Maenner, R. Villagran). Tyler stays as "Tyler" until Aaron sends a last name.
+- Timeline is "4 week design sprint", as in the draft. "July to August 2026" removed at Aaron's request.
 - The prototype, FigJam and source links are still missing; nothing on the page points to them yet.
 
 ## 2026-10-07 · AthenaScribe case study page (Phase 5)
