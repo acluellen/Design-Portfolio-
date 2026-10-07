@@ -2,6 +2,14 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-07 · Klima card and case study draft
+
+- Home card: label "Gamification design · General Assembly", new description about making sustainable action easier to understand and more engaging. The old line about single use plastic is gone; the research never mentions it.
+- Case study draft at `/work/klima/` (hidden from the live site), written from the team's 34 slide General Assembly deck and Aaron's answers. Aaron's role is the gamification redesign plus the competitive analysis, feature inventory, feature analysis and pluses and deltas; the research process is credited to the team. Isabel led onboarding and Maya led exploration.
+- An "About this project" note says it was an independent General Assembly exercise, not commissioned by Klima.
+- Following Aaron's rules: the System Usability Scale result (40 to 90) is held until verified; engagement, retention and conversion are described as goals the design supported, not measured outcomes; persona and testing lines are written as synthesis, not quotes; the deck's "not X, it's Y" opening and closing lines are rewritten; dashes, hyphens and typos fixed.
+- TODO before publishing: project duration, FigJam and design file images, the refreshed 2026 gamification screens with their disclosure note, and a prototype link if there is one.
+
 ## 2026-10-07 · AthenaScribe case study published
 
 - `status` is now "published": the page is part of the site build and the AthenaScribe card links to it, lifts on hover, and shows "View case study". "Case study coming soon" is gone. Checked: clicking the card opens `/work/athenascribe/`, with no Draft label.
