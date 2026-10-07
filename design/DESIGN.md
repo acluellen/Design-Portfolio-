@@ -51,7 +51,7 @@ Wrap dark panels in `.surface-always-dark`. It remaps ink, muted ink, rules, acc
 ## Shape
 
 - One large curve, `--radius-section` (24px), on every section panel, card, photo, video, and card image. `--radius-media` points to it.
-- Hero portrait: 4:5, chest up, `--size-portrait` wide (up to 26rem), with `--radius-section`. Round icon buttons (theme toggle, video play) stay round.
+- Hero portrait: 4:5, chest up, `--size-portrait` wide (up to 20.8rem), with `--radius-section`. Sized so the top of the first work card shows on a laptop before scrolling. Round icon buttons (theme toggle, video play) stay round.
 - Buttons: fully round (pill), `--radius-control`, 44px tall (`--control-height`).
   - Primary: AL logo blue (`--color-brand`) with white text, in every theme and inside always dark sections. Hover goes to `--color-brand-hover`.
   - Secondary: transparent fill, ink outline, ink text.
@@ -72,7 +72,8 @@ Wrap dark panels in `.surface-always-dark`. It remaps ink, muted ink, rules, acc
 - A published case study's card shows "View case study" as a small outlined button (`--control-height-small`). The whole card is the one link.
 - Featured card: image and text side by side from 56rem (7 to 5), bigger title and description.
 - Card text lives in each case study's frontmatter under `card` (`label`, `description`, `detail`).
-- A card links to its case study only when that case study is published. The whole card is then the link, with a visible focus ring and a 2px lift on hover. Unpublished cards have no link and no hover.
+- A card links to its case study only when that case study is published. The whole card is then the link, with a visible focus ring, a lift, and an image zoom on hover. Unpublished cards have no link and no hover.
+- Card labels are plain small uppercase text, never pills: what Aaron did, then where. "In progress" sits next to the label in the label blue.
 - With no image, the panel shows the project name.
 
 ## Photos
@@ -95,7 +96,8 @@ Wrap dark panels in `.surface-always-dark`. It remaps ink, muted ink, rules, acc
 - Every email link uses the subject "Interested in working together" (`mailto` in `src/site.config.ts`).
 - Links that open a new tab say so to screen readers.
 - Spell BRIDGEGOOD in capitals everywhere. The word links to bridgegood.org in the apprenticeship heading.
-- Footer: email and LinkedIn only. A Resume link appears only when `public/resume.pdf` exists.
+- Footer: email (left out on home, where the closing shows it), LinkedIn, and a small uppercase credit line. A Resume link appears only when `public/resume.pdf` exists.
+- The email always comes with a "Copy email" text button that reads "Copied" for two seconds.
 - Tap targets: header links, footer links, and buttons are at least 44px tall.
 - Keyboard focus: a 3px outline (`--focus-width`) in `--color-focus`, read where it is used, so it is blue on light and light blue (`#60A5FA`) on dark panels.
 
@@ -109,6 +111,7 @@ Wrap dark panels in `.surface-always-dark`. It remaps ink, muted ink, rules, acc
 - Minimal. Color transitions at `--duration-fast`. Smooth scroll for in page links.
 - Sections marked `data-reveal` fade in and slide up `--reveal-distance` (14px) over `--duration-reveal` as they enter the screen. The hero never animates. Anything on screen at load shows at once.
 - The hero portrait lifts `--lift-headshot` (4px) on hover.
-- Project cards lift `--card-lift` (3px) and their image zooms to `--card-image-zoom` (1.03) on hover, over `--duration-hover` (200ms). All three are zero with reduced motion.
+- Linked project cards lift `--card-lift` (3px) and their image zooms to `--card-image-zoom` (1.03) on hover, over `--duration-hover` (200ms). All three are zero with reduced motion.
+- The KRON4 clip grows from `--clip-scale-start` to full size with scroll, using transforms only (no layout change, no scroll hijack), up to `--clip-max`. It has a pause control. Reduced motion shows the still image only and never loads the video.
 - Everything shows fully with JavaScript off. With reduced motion on, the reveal distance, lift, and durations are all zero, so nothing moves or hides.
 - Respect `prefers-reduced-motion`.

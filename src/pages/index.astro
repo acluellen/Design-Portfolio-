@@ -2,10 +2,10 @@
 import PageLayout from "../layouts/PageLayout.astro";
 import Button from "../components/site/Button.astro";
 import Photo from "../components/site/Photo.astro";
-import VideoEmbed from "../components/site/VideoEmbed.astro";
+import ContactEmail from "../components/site/ContactEmail.astro";
+import KronClip from "../components/site/KronClip.astro";
 import WorkCard from "../components/site/WorkCard.astro";
 import { caseStudyHref, getAllCaseStudies } from "../lib/case-studies";
-import { mailto, site } from "../site.config";
 
 // Selected work: the featured case study as one large card, the rest below by `order`.
 const studies = (await getAllCaseStudies()).filter((s) => s.data.card);
@@ -13,26 +13,28 @@ const featured = studies.find((s) => s.data.featured);
 const others = studies.filter((s) => s !== featured);
 ---
 
-<PageLayout title="Aaron Luellen" flushBottom>
+<PageLayout title="Aaron Luellen" flushBottom footerEmail={false}>
   <!-- Every section sits in one stack with the same gap between them. -->
   <div class="container stack">
   <!-- 1. Hero -->
   <section class="hero">
     <Photo
       name="headshot"
-      widths={[320, 480, 720, 960]}
-      sizes="(min-width: 80rem) 26rem, (min-width: 48rem) 24vw, 70vw"
+      widths={[256, 384, 576, 768]}
+      sizes="(min-width: 48rem) clamp(12.8rem, 3.2rem + 16vw, 20.8rem), 70vw"
       cover={4 / 5}
       loading="eager"
       ratio="4 / 5"
       class="hero__portrait"
     />
     <div class="hero__text">
-      <h1>Hi, I’m Aaron</h1>
+      <h1>Aaron Luellen</h1>
+      <p class="hero__tagline">Research led product designer for schools, families, and people short on time.</p>
+      <p class="hero__meta">
+        <span>Product designer</span><span aria-hidden="true"> · </span><span>Oakland, California</span><span aria-hidden="true"> · </span><span>Available for work</span>
+      </p>
       <p class="hero__lede">
-        I’m a product designer with a background in MMA, bringing a human centered mindset from the gym
-        to the products I design. I focus on understanding people, solving real problems, and helping
-        users reach their goals.
+        I start with research, sit with the people who will use the product, and design from what they tell me.
       </p>
       <div class="actions">
         <Button href="#work">View my work</Button>
@@ -56,42 +58,17 @@ const others = studies.filter((s) => s !== featured);
     }
   </section>
 
-  <!-- 3. BRIDGEGOOD and the KRON4 video: text left, video right. Phones: text first. -->
-  <section class="panel panel--light apprenticeship" aria-labelledby="recent-heading" data-reveal>
-    <div class="apprenticeship__text">
-      <div class="recent">
-        <h2 id="recent-heading">
-          <a class="recent__org" href={site.bridgegood} target="_blank" rel="noopener noreferrer">BRIDGEGOOD<span class="visually-hidden"> (opens in a new tab)</span></a> UX Design Apprenticeship
-        </h2>
-        <div class="recent__lines">
-          <p>Launched by Google.org and the Golden State Warriors, with mentors from Google, Meta, and YouTube.</p>
-          <p>
-            The team built AthenaScribe, a translation tool with human review for Oakland Unified families,
-            and presented it at Demo Day at Block HQ.
-          </p>
-        </div>
-      </div>
-      <div class="split__text">
-        <h3 class="split__title">Purpose to Pixels: BRIDGEGOOD on KRON4</h3>
-        <p>
-          Live with BRIDGEGOOD’s executive director, talking about open communication between Oakland
-          families and their schools, and why design for social good matters.
-        </p>
-        <div class="actions">
-          <Button href={site.kron4Video || undefined} variant="secondary" external>
-            Watch on YouTube
-          </Button>
-        </div>
-      </div>
+  <!-- 3. KRON4: short text, then the loop, which grows as the section scrolls into view. -->
+  <section class="panel panel--light kron" aria-labelledby="kron-heading" data-reveal>
+    <div class="kron__text">
+      <h2 id="kron-heading">On air with KRON4</h2>
+      <p>
+        The team went live on KRON4 with BRIDGEGOOD’s executive director to talk about how Oakland schools
+        and families can understand each other.
+      </p>
+      <p class="kron__note">BRIDGEGOOD UX apprenticeship, launched by Google.org and the Golden State Warriors.</p>
     </div>
-    <div class="apprenticeship__video">
-      <VideoEmbed
-        url={site.kron4Video}
-        title="Purpose to Pixels: BRIDGEGOOD on KRON4"
-        cover="kron4-cover"
-        sizes="(min-width: 76rem) 36rem, (min-width: 64rem) 46vw, 88vw"
-      />
-    </div>
+    <KronClip />
   </section>
 
   <!-- 4. Coaching, always dark -->
@@ -120,7 +97,6 @@ const others = studies.filter((s) => s !== featured);
       <div class="coaching__photos">
         <Photo name="coaching-1" widths={[400, 600, 800]} sizes="(min-width: 64rem) 17rem, (min-width: 30rem) 46vw, 92vw" cover={4 / 5} class="coaching__photo" />
         <Photo name="coaching-2" widths={[400, 600, 800]} sizes="(min-width: 64rem) 17rem, (min-width: 30rem) 46vw, 92vw" cover={4 / 5} class="coaching__photo" />
-        <Photo name="coaching-3" widths={[640, 960, 1280]} sizes="(min-width: 64rem) 34rem, 92vw" cover={16 / 9} class="coaching__photo coaching__photo--wide" />
       </div>
         <figcaption class="credit">Photos: BRIDGEGOOD</figcaption>
       </figure>
@@ -134,14 +110,12 @@ const others = studies.filter((s) => s !== featured);
       <figcaption class="credit banner__credit">Photos: BRIDGEGOOD</figcaption>
     </figure>
     <div class="banner__content">
-      <h2 id="banner-heading">Interested in working together?</h2>
+      <h2 id="banner-heading">Hiring an associate product designer?</h2>
       <p>
-        I’m open to Product Design opportunities where research, product thinking, and clear interaction
-        design can help make complicated systems easier to use.
+        I’m open to associate product design roles, especially on teams building for schools, families, or
+        people short on time.
       </p>
-      <div class="actions actions--center">
-        <Button href={mailto}>Email me</Button>
-      </div>
+      <ContactEmail class="banner__email" />
     </div>
   </section>
   </div>
@@ -182,10 +156,6 @@ const others = studies.filter((s) => s !== featured);
     gap: var(--space-3);
   }
 
-  .actions--center {
-    justify-content: center;
-  }
-
   /* 1. Hero */
   /* Extra air above the hero only; the stack gap handles the space below it. */
   .hero {
@@ -213,17 +183,39 @@ const others = studies.filter((s) => s !== featured);
 
   .hero__text {
     display: grid;
-    gap: var(--space-5);
+    gap: var(--space-4);
     min-width: 0;
   }
 
   .hero__text h1 {
-    font-size: var(--step-5);
+    font-size: var(--step-6);
+    line-height: 1;
+  }
+
+  .hero__tagline {
+    max-width: 30ch;
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--leading-snug);
+  }
+
+  .hero__meta {
+    font-size: var(--step--1);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
   }
 
   .hero__lede {
-    max-width: var(--measure-reading);
+    max-width: 52ch;
     color: var(--color-ink-muted);
+  }
+
+  .hero .actions {
+    margin-block-start: var(--space-2);
   }
 
   @media (max-width: 47.99rem) {
@@ -239,72 +231,25 @@ const others = studies.filter((s) => s !== featured);
     }
   }
 
-  /* 3. BRIDGEGOOD and KRON4: one panel, text left and video right. Stacks text first. */
-  .apprenticeship {
+  /* 3. KRON4: text on top, the clip below it, both on the left edge. */
+  .kron {
     display: grid;
-    gap: var(--space-7);
-    align-items: center;
+    gap: var(--space-6);
   }
 
-  .apprenticeship > * {
-    min-width: 0;
-  }
-
-  .apprenticeship__text {
-    display: grid;
-    gap: var(--space-7);
-  }
-
-  @media (min-width: 64rem) {
-    .apprenticeship {
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-8);
-    }
-  }
-
-  .recent {
-    display: grid;
-    gap: var(--space-5);
-  }
-
-  /* About half the size of "Hi, I'm Aaron", so the name stays the biggest text on the page. */
-  .recent h2 {
-    font-size: var(--step-2);
-  }
-
-  @media (min-width: 48rem) {
-    .recent h2 {
-      font-size: var(--step-3);
-    }
-  }
-
-  .recent__org {
-    color: inherit;
-    text-decoration-line: underline;
-    text-decoration-color: var(--color-accent);
-    text-decoration-thickness: var(--rule-thick);
-    text-underline-offset: var(--underline-offset);
-  }
-
-  .recent__org:hover {
-    color: var(--color-accent);
-  }
-
-  .recent__lines {
-    display: grid;
-    gap: var(--space-3);
-    max-width: var(--measure-reading);
-    font-size: var(--step-1);
-    line-height: var(--leading-snug);
-  }
-
-  .split__text {
+  .kron__text {
     display: grid;
     gap: var(--space-4);
+    max-width: var(--measure-reading);
   }
 
-  .split__title {
-    font-size: var(--step-2);
+  .kron__text h2 {
+    font-size: var(--step-4);
+  }
+
+  .kron__note {
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
   }
 
   /* 2. Selected work */
@@ -372,23 +317,13 @@ const others = studies.filter((s) => s !== featured);
     min-width: 0;
   }
 
-  /* Two portrait crops on top, one wide photo below. */
+  /* Two portrait crops side by side. */
   .coaching__photos :global(.coaching__photo) {
     width: 100%;
     height: auto;
     aspect-ratio: 4 / 5;
     object-fit: cover;
     border-radius: var(--radius-media);
-  }
-
-  .coaching__photos :global(.coaching__photo--wide) {
-    grid-column: 1 / -1;
-    aspect-ratio: 16 / 9;
-  }
-
-  /* Real photos sit inside <picture>, which is the actual grid item. */
-  .coaching__photos > :global(picture:has(.coaching__photo--wide)) {
-    grid-column: 1 / -1;
   }
 
   @media (min-width: 64rem) {
@@ -439,5 +374,10 @@ const others = studies.filter((s) => s !== featured);
 
   .banner__content p {
     max-width: var(--measure-reading);
+  }
+
+  .banner__content :global(.banner__email) {
+    justify-content: center;
+    margin-block-start: var(--space-2);
   }
 </style>

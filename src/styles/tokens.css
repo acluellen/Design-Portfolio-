@@ -55,6 +55,7 @@
   --step-3: clamp(1.953rem, 1.75rem + 1vw, 2.5rem);
   --step-4: clamp(2.441rem, 2.1rem + 1.7vw, 3.5rem);
   --step-5: clamp(3.052rem, 2.5rem + 2.75vw, 4.75rem);
+  --step-6: clamp(3rem, 2.2rem + 4vw, 6rem); /* the name in the hero, the largest text on the site */
 
   /* Weights */
   --weight-regular: 400;
@@ -94,9 +95,14 @@
   --gap-card-media: 1.25rem; /* 20px between card image and text */
   --card-lift: 3px; /* hover rise */
   --card-image-zoom: 1.03; /* hover zoom on card images */
+  /* KRON4 clip: starts at half size and grows with scroll. The file is 520px wide, so it
+     stops at two thirds of the page (never below its own width, so phones get the full column). */
+  --clip-native: 32.5rem;
+  --clip-max: max(66.667vw, var(--clip-native));
+  --clip-scale-start: 0.5;
 
   /* Media and controls */
-  --size-portrait: clamp(16rem, 4rem + 20vw, 26rem); /* hero portrait width from 48rem up */
+  --size-portrait: clamp(12.8rem, 3.2rem + 16vw, 20.8rem); /* hero portrait width from 48rem up */
   --size-logo: 3rem;
   --control-height: 2.75rem; /* 44px */
   --control-height-small: 2.25rem; /* 36px, the button look inside a card (the card itself is the link) */

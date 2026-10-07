@@ -2,6 +2,32 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-07 · Calm home page: new hero words, plain labels, KRON4 clip, copy email
+
+Replaces the finishing touches brief. Words come from Aaron's brief. Colors, fonts, themes, and section order are unchanged.
+
+### Hero
+- Portrait about 20 percent smaller: `--size-portrait` is now `clamp(12.8rem, 3.2rem + 16vw, 20.8rem)` (282px at 1440, was 352). The top of the AthenaScribe card now shows before scrolling: 138px at 1440 by 900, 90px at 1536 by 864, 60px at 1280 by 800.
+- Name "Aaron Luellen" at the new `--step-6` (up to 6rem), the largest text on the site. Then the tagline, a small uppercase row (product designer, Oakland, available for work), the intro, and the two buttons.
+
+### Selected work
+- No pills. The card label and "In progress" are plain small uppercase text (`--tracking-label`); the label is muted, "In progress" is the label blue, and it sits right after the label.
+- New AthenaScribe sentence and bottom line. Klima and Craft Education bottom lines now say the full case study is coming soon.
+- Hover is back to linked cards only: lift, image zoom, and border. Cards that open nothing stay still.
+
+### KRON4
+- One short section: heading, one paragraph, one small line. The BRIDGEGOOD heading and the AthenaScribe sentence are removed.
+- The YouTube player is replaced by Aaron's 5.5 second loop (`public/video/`, MP4 first, WebM as backup, 230 and 188 KB) over its still (`kron4-still.jpg`, 520 by 390). Muted, looping, plays only while on screen, and nothing downloads until then.
+- The clip starts at half size and grows as it rises up the screen, full size once its top is a fifth of the way down; it shrinks back on the way up. Only transforms change, so nothing below it moves and scrolling stays normal. Largest size: two thirds of the page width (955px at 1440), or the full column on phones (`--clip-max`, `--clip-native`, `--clip-scale-start`). The file is 520px wide, so it is softer at full size on a laptop.
+- Reduced motion: the still only, at its own 520px width. Checked: no video request.
+- A "Pause clip" control sits beside "Watch the full segment", because the loop runs longer than five seconds (WCAG 2.2.2).
+- The BRIDGEGOOD workshop photo is dropped. Next to a moving clip the section felt crowded, and the brief keeps it about KRON4 only. The file stays in `src/assets/photos/`.
+
+### Coaching, closing, footer
+- Coaching shows the two gym photos only.
+- Closing: new heading and line. The email shows once, large, with a "Copy email" text button that reads "Copied" for two seconds and announces it to screen readers. New `ContactEmail` component.
+- Footer: LinkedIn marked "coming soon" in visible text, then "© 2026 Aaron Luellen · Built with Claude Code" in small uppercase. The home footer leaves out the email (the closing shows it); other pages keep it.
+
 ## 2026-10-07 · Home finishing touches: order, portrait, combined video section
 
 All words unchanged.

@@ -1,0 +1,235 @@
+---
+// The KRON4 loop: muted, looping, plays on its own while on screen.
+// It starts at half size and grows as the section scrolls up the page, then shrinks back.
+// Only transforms change, so the page never jumps and scrolling stays normal.
+// Reduced motion (or no JavaScript): the still image only, at a fixed size.
+import Photo from "./Photo.astro";
+import { site } from "../../site.config";
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<div class="clip" data-clip>
+  <div class="clip__frame" data-clip-frame>
+    <Photo
+      name="kron4-still"
+      widths={[520]}
+      sizes="(min-width: 48rem) 32.5rem, 92vw"
+      ratio="4 / 3"
+      class="clip__still"
+    />
+    <video
+      class="clip__video"
+      data-clip-video
+      muted
+      loop
+      playsinline
+      preload="none"
+      aria-hidden="true"
+      tabindex="-1"
+      data-sources={JSON.stringify([
+        { src: `${base}/video/aaron-kron4-loop.mp4`, type: "video/mp4" },
+        { src: `${base}/video/aaron-kron4-loop.webm`, type: "video/webm" },
+      ])}
+    ></video>
+  </div>
+  <div class="clip__links" data-clip-links>
+    <a href={site.kron4Video} target="_blank" rel="noopener noreferrer">
+      Watch the full segment<span class="visually-hidden"> on YouTube (opens in a new tab)</span>
+    </a>
+    <button class="clip__toggle" type="button" data-clip-toggle hidden>Pause clip</button>
+  </div>
+</div>
+
+<script>
+  const motion = window.matchMedia("(prefers-reduced-motion: no-preference)");
+
+  document.querySelectorAll<HTMLElement>("[data-clip]").forEach((clip) => {
+    const frame = clip.querySelector<HTMLElement>("[data-clip-frame]")!;
+    const video = clip.querySelector<HTMLVideoElement>("[data-clip-video]")!;
+    const toggle = clip.querySelector<HTMLButtonElement>("[data-clip-toggle]")!;
+    const start = parseFloat(getComputedStyle(clip).getPropertyValue("--clip-scale-start")) || 0.5;
+    let inView = false;
+    let pausedByVisitor = false;
+    let loaded = false;
+    let frameHeight = 0;
+    let queued = false;
+
+    // Sources are added only when motion is allowed, so reduced motion never downloads the clip.
+    const load = () => {
+      if (loaded) return;
+      loaded = true;
+      const sources: { src: string; type: string }[] = JSON.parse(video.dataset.sources ?? "[]");
+      sources.forEach(({ src, type }) => {
+        const source = document.createElement("source");
+        source.src = src;
+        source.type = type;
+        video.append(source);
+      });
+      video.load();
+    };
+
+    const play = () => {
+      if (!motion.matches || pausedByVisitor || !inView) return;
+      load();
+      video.play().catch(() => {});
+    };
+
+    video.addEventListener("playing", () => clip.classList.add("is-playing"));
+
+    toggle.addEventListener("click", () => {
+      pausedByVisitor = !video.paused;
+      if (pausedByVisitor) video.pause();
+      else play();
+      toggle.textContent = pausedByVisitor ? "Play clip" : "Pause clip";
+    });
+
+    // Grow from `start` to full size while the clip's top moves from the bottom of the
+    // screen to a fifth of the way down. Shrinks back the same way when scrolling up.
+    const update = () => {
+      queued = false;
+      const rect = clip.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const progress = Math.min(1, Math.max(0, (vh - rect.top) / (vh * 0.8)));
+      const eased = 1 - (1 - progress) ** 2;
+      const scale = start + (1 - start) * eased;
+      clip.style.setProperty("--clip-scale", scale.toFixed(4));
+      // The links follow the bottom edge of the scaled clip.
+      clip.style.setProperty("--clip-shift", `${((scale - 1) * frameHeight).toFixed(1)}px`);
+    };
+    const queue = () => {
+      if (!queued && motion.matches) {
+        queued = true;
+        requestAnimationFrame(update);
+      }
+    };
+    const measure = () => {
+      frameHeight = frame.offsetHeight;
+      queue();
+    };
+
+    const setUp = () => {
+      if (motion.matches) {
+        clip.classList.add("is-animated");
+        toggle.hidden = false;
+        measure();
+        play();
+      } else {
+        clip.classList.remove("is-animated", "is-playing");
+        toggle.hidden = true;
+        video.pause();
+      }
+    };
+
+    new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      if (inView) play();
+      else video.pause();
+    }, { rootMargin: "200px 0px" }).observe(clip);
+
+    window.addEventListener("scroll", queue, { passive: true });
+    window.addEventListener("resize", measure);
+    motion.addEventListener("change", setUp);
+    setUp();
+  });
+</script>
+
+<style>
+  .clip {
+    --clip-scale: 1;
+    --clip-shift: 0px;
+    inline-size: min(100%, var(--clip-native));
+  }
+
+  /* With motion: the box is the full grown size, and the clip scales inside it from the top left. */
+  .clip.is-animated {
+    inline-size: min(100%, var(--clip-max));
+  }
+
+  .clip__frame {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: var(--radius-media);
+    background: var(--color-panel);
+    transform-origin: top left;
+  }
+
+  .clip.is-animated .clip__frame,
+  .clip.is-animated .clip__links {
+    will-change: transform;
+  }
+
+  .clip.is-animated .clip__frame {
+    transform: scale(var(--clip-scale));
+  }
+
+  /* Counter the scale on the curve, so corners stay the site radius at every size. */
+  .clip.is-animated .clip__frame {
+    border-radius: calc(var(--radius-media) / var(--clip-scale));
+  }
+
+  .clip.is-animated .clip__links {
+    transform: translateY(var(--clip-shift));
+  }
+
+  .clip__frame :global(picture),
+  .clip__frame :global(img),
+  .clip__video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .clip__video {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+  }
+
+  .clip.is-playing .clip__video {
+    opacity: 1;
+  }
+
+  .clip__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-5);
+    padding-block-start: var(--space-2);
+    font-size: var(--step--1);
+  }
+
+  .clip__links a,
+  .clip__toggle {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--control-height);
+  }
+
+  .clip__links a {
+    color: var(--color-ink);
+    text-decoration-color: var(--color-accent);
+    text-decoration-thickness: var(--underline-thickness);
+    text-underline-offset: var(--underline-offset);
+  }
+
+  .clip__links a:hover {
+    color: var(--color-accent);
+  }
+
+  .clip__toggle {
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: var(--color-ink-muted);
+    text-decoration: underline;
+    text-underline-offset: var(--underline-offset);
+    cursor: pointer;
+  }
+
+  .clip__toggle[hidden] {
+    display: none;
+  }
+</style>

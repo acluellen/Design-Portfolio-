@@ -1,0 +1,115 @@
+---
+// The email, large, with a small Copy email button beside it.
+// Copying shows "Copied" for two seconds; a live region reads it out.
+import { mailto, site } from "../../site.config";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={["contact-email", className]}>
+  <a class="contact-email__address" href={mailto}>{site.email}</a>
+  <button class="contact-email__copy" type="button" data-copy-email={site.email}>
+    <span data-copy-label>Copy email</span>
+  </button>
+  <span class="visually-hidden" aria-live="polite" data-copy-status></span>
+</div>
+
+<script>
+  const COPIED_FOR_MS = 2000;
+
+  async function copy(text: string) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      // Older browsers and some embedded views: copy from a hidden field.
+      const field = document.createElement("textarea");
+      field.value = text;
+      field.setAttribute("readonly", "");
+      field.style.position = "fixed";
+      field.style.opacity = "0";
+      document.body.append(field);
+      field.select();
+      const ok = document.execCommand("copy");
+      field.remove();
+      return ok;
+    }
+  }
+
+  document.querySelectorAll<HTMLButtonElement>("[data-copy-email]").forEach((button) => {
+    const label = button.querySelector<HTMLElement>("[data-copy-label]");
+    const status = button.parentElement?.querySelector<HTMLElement>("[data-copy-status]");
+    let timer: number | undefined;
+
+    button.addEventListener("click", async () => {
+      if (!label || !(await copy(button.dataset.copyEmail ?? ""))) return;
+      label.textContent = "Copied";
+      if (status) status.textContent = "Email copied";
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        label.textContent = "Copy email";
+        if (status) status.textContent = "";
+      }, COPIED_FOR_MS);
+    });
+  });
+</script>
+
+<style>
+  .contact-email {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: inherit;
+    gap: var(--space-2) var(--space-5);
+  }
+
+  .contact-email__address {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--control-height);
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: var(--weight-heading);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-ink);
+    overflow-wrap: break-word;
+    text-decoration-color: var(--color-accent);
+    text-decoration-thickness: var(--underline-thickness);
+    text-underline-offset: var(--underline-offset);
+  }
+
+  @media (min-width: 30rem) {
+    .contact-email__address {
+      font-size: var(--step-3);
+    }
+  }
+
+  .contact-email__address:hover {
+    color: var(--color-accent);
+  }
+
+  /* Reads as a small text link. */
+  .contact-email__copy {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--control-height);
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
+    text-decoration: underline;
+    text-decoration-thickness: var(--underline-thickness);
+    text-underline-offset: var(--underline-offset);
+    cursor: pointer;
+  }
+
+  .contact-email__copy:hover {
+    color: var(--color-accent);
+  }
+</style>

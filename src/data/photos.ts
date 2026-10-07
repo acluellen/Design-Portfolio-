@@ -11,7 +11,8 @@ export type PhotoKey =
   | "coaching-2"
   | "coaching-3"
   | "group"
-  | "kron4-cover";
+  | "kron4-cover"
+  | "kron4-still";
 
 export const photos: Record<PhotoKey, { alt: string; approved: boolean }> = {
   headshot: {
@@ -46,6 +47,11 @@ export const photos: Record<PhotoKey, { alt: string; approved: boolean }> = {
   // Read together with the play button's label, "Play video: Purpose to Pixels: BRIDGEGOOD on KRON4".
   "kron4-cover": {
     alt: "KRON4 thumbnail: four people on the studio couch beside the Purpose to Pixels title.",
+    approved: false,
+  },
+  // Cover frame of the KRON4 loop. Also the only image shown with reduced motion.
+  "kron4-still": {
+    alt: "Black and white still of Aaron on the KRON4 set, speaking, in glasses and a Design shirt.",
     approved: false,
   },
 };

@@ -1,15 +1,24 @@
 ---
 import fs from "node:fs";
 import path from "node:path";
-import { mailto, site } from "../../site.config";
+import ContactEmail from "./ContactEmail.astro";
+import { site } from "../../site.config";
+
+interface Props {
+  /** The home page shows the email in its closing section, so its footer leaves it out. */
+  showEmail?: boolean;
+}
+
+const { showEmail = true } = Astro.props;
 
 // The Resume link appears only once a PDF exists at public/resume.pdf.
 const hasResume = fs.existsSync(path.join(process.cwd(), "public", site.resumePath));
+const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
   <div class="container site-footer__inner">
-    <a class="site-footer__email" href={mailto}>{site.email}</a>
+    {showEmail && <ContactEmail />}
     <ul class="site-footer__links">
       <li>
         {
@@ -18,13 +27,14 @@ const hasResume = fs.existsSync(path.join(process.cwd(), "public", site.resumePa
               LinkedIn<span class="visually-hidden"> (opens in a new tab)</span>
             </a>
           ) : (
-            <span class="site-footer__pending" title="LinkedIn link coming soon">LinkedIn</span>
+            <span class="site-footer__pending">LinkedIn, coming soon</span>
           )
         }
       </li>
       {/* Hidden until public/resume.pdf exists. */}
       {hasResume && <li><a href={site.resumePath}>Resume</a></li>}
     </ul>
+    <p class="site-footer__fine">© {year} {site.name} · Built with Claude Code</p>
   </div>
 </footer>
 
@@ -34,25 +44,9 @@ const hasResume = fs.existsSync(path.join(process.cwd(), "public", site.resumePa
   }
 
   .site-footer__inner {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--space-4) var(--space-6);
-    padding-block: var(--space-8);
-  }
-
-  .site-footer__email {
-    font-family: var(--font-display);
-    font-size: var(--step-2);
-    font-weight: var(--weight-heading);
-    letter-spacing: var(--tracking-tight);
-    color: var(--color-ink);
-    overflow-wrap: anywhere;
-  }
-
-  .site-footer__email:hover {
-    color: var(--color-accent);
+    display: grid;
+    gap: var(--space-3);
+    padding-block: var(--space-7);
   }
 
   .site-footer__links {
@@ -61,6 +55,7 @@ const hasResume = fs.existsSync(path.join(process.cwd(), "public", site.resumePa
     gap: var(--space-2) var(--space-5);
     padding: 0;
     list-style: none;
+    font-size: var(--step--1);
   }
 
   .site-footer__links a,
@@ -79,9 +74,10 @@ const hasResume = fs.existsSync(path.join(process.cwd(), "public", site.resumePa
     color: var(--color-ink-muted);
   }
 
-  .site-footer__email {
-    display: inline-flex;
-    align-items: center;
-    min-block-size: var(--control-height);
+  .site-footer__fine {
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
   }
 </style>

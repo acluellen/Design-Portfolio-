@@ -9,9 +9,11 @@ interface Props {
   noindex?: boolean;
   /** Lets the last section touch the footer (home page banner). */
   flushBottom?: boolean;
+  /** Show the email in the footer. The home page shows it in its closing section instead. */
+  footerEmail?: boolean;
 }
 
-const { title, description, noindex, flushBottom = false } = Astro.props;
+const { title, description, noindex, flushBottom = false, footerEmail = true } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description} noindex={noindex}>
@@ -20,7 +22,7 @@ const { title, description, noindex, flushBottom = false } = Astro.props;
   <main id="main" class:list={{ "main--padded": !flushBottom }}>
     <slot />
   </main>
-  <Footer />
+  <Footer showEmail={footerEmail} />
 </BaseLayout>
 
 <script>
