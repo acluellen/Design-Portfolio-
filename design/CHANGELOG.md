@@ -2,6 +2,35 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-07 · Home finishing touches: order, portrait, combined video section
+
+All words unchanged.
+
+### Order and layout
+- New section order: hero, Selected work, BRIDGEGOOD and KRON4, coaching, closing, footer. "View my work" goes to `#work`.
+- BRIDGEGOOD and the KRON4 video are one panel: apprenticeship text and the KRON4 title, description, and button on the left, the video on the right from 64rem. On phones the text comes first, then the video.
+- Footer: email and LinkedIn only. "Back to top" is removed. The Resume link stays hidden until `public/resume.pdf` exists. There was no "Site Title" placeholder in this build; that was the Squarespace footer.
+
+### Photos
+- New hero photo from Aaron, cropped to a 4:5 chest up portrait, 1066 by 1333, from the 2000 by 1333 original. Shown at `--size-portrait` (new, up to 26rem; 352px at 1440) with the site's 24px curve. Files are 320 to 960 wide. Checked: 960 for a 704px need at 1440 on a 2x screen, and 720 for 501 at 390. `--size-headshot` is removed.
+- Coaching photos already shared the curve, the black and white tone, and even 12px gaps (two on top, one wide below, stacked on phones). No change needed.
+
+### Interaction
+- Every project card lifts 3px and its image zooms to 1.03 on hover, over 200ms (new tokens `--card-image-zoom`, `--duration-hover`). Reduced motion sets lift, zoom, and duration to zero. Checked with computed transforms. Only linked cards also darken their border.
+
+### Accessibility
+- Alt text on every photo and mockup. The KRON4 cover now has one ("KRON4 thumbnail: four people on the studio couch beside the Purpose to Pixels title."), read before the button's "Play video" label. Awaiting Aaron's approval. The unused Mentorship App photo slot is removed.
+- Header links, footer links, and the footer email are at least 44px tall. Checked: no link or button under 44px at 390, except inline text links in headings and paragraphs.
+- Keyboard focus: a 3px outline in `--color-focus`, read where it is used. It is blue `#1D4ED8` on light and `#60A5FA` inside dark panels. Before, the outline color was fixed at the page level, so it stayed dark blue on dark panels. `--focus-ring` is replaced by `--focus-width`.
+
+### Speed
+- Photo quality default 80 to 60. AVIF at 60 matches JPEG 80 by eye. Photos downloaded across the whole page: 999 KB to 583 KB at 1440 on 2x, and 656 KB to 354 KB at 390 on 2x. Each phone photo is 23 to 74 KB.
+- Only the hero portrait and logo load at once (the logo is now eager). Every other photo is lazy and loads as it nears the screen.
+- KRON4: the thumbnail is local, and no request goes to YouTube until play is clicked. Checked: no iframe and no outside requests before the click.
+
+### Checked
+- 1440 and 390, light and dark: correct order, no sideways scroll, every section visible after scrolling. `astro check` 0 errors. Copy check clean.
+
 ## 2026-10-07 · Logo matches the accent blue; light accent fix
 
 - Aaron left the logo color to my judgment. One brand blue reads more polished than two near matches, so the logo is now the accent: `#1D4ED8` replaces `#054FB9` in `src/assets/brand/logo.svg` and `public/favicon.svg`. White on it is 6.7:1.

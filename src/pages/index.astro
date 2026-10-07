@@ -20,12 +20,12 @@ const others = studies.filter((s) => s !== featured);
   <section class="hero">
     <Photo
       name="headshot"
-      widths={[240, 480, 720]}
-      sizes="clamp(9rem, 6rem + 10vw, 14rem)"
-      cover={1}
+      widths={[320, 480, 720, 960]}
+      sizes="(min-width: 80rem) 26rem, (min-width: 48rem) 24vw, 70vw"
+      cover={4 / 5}
       loading="eager"
-      ratio="1 / 1"
-      class="hero__headshot"
+      ratio="4 / 5"
+      class="hero__portrait"
     />
     <div class="hero__text">
       <h1>Hi, I’m Aaron</h1>
@@ -41,45 +41,7 @@ const others = studies.filter((s) => s !== featured);
     </div>
   </section>
 
-  <!-- 2. BRIDGEGOOD apprenticeship -->
-  <section class="panel panel--light" aria-labelledby="recent-heading" data-reveal>
-    <div class="band__inner">
-      <div class="recent">
-        <h2 id="recent-heading">
-          <a class="recent__org" href={site.bridgegood} target="_blank" rel="noopener noreferrer">BRIDGEGOOD<span class="visually-hidden"> (opens in a new tab)</span></a> UX Design Apprenticeship
-        </h2>
-        <div class="recent__lines">
-          <p>Launched by Google.org and the Golden State Warriors, with mentors from Google, Meta, and YouTube.</p>
-          <p>
-            The team built AthenaScribe, a translation tool with human review for Oakland Unified families,
-            and presented it at Demo Day at Block HQ.
-          </p>
-        </div>
-      </div>
-      <div class="split split--media">
-        <VideoEmbed
-          url={site.kron4Video}
-          title="Purpose to Pixels: BRIDGEGOOD on KRON4"
-          cover="kron4-cover"
-          sizes="(min-width: 76rem) 37rem, (min-width: 56rem) 52vw, 92vw"
-        />
-        <div class="split__text">
-          <h3 class="split__title">Purpose to Pixels: BRIDGEGOOD on KRON4</h3>
-          <p>
-            Live with BRIDGEGOOD’s executive director, talking about open communication between Oakland
-            families and their schools, and why design for social good matters.
-          </p>
-          <div class="actions">
-            <Button href={site.kron4Video || undefined} variant="secondary" external>
-              Watch on YouTube
-            </Button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 3. Selected work: one featured card, then smaller cards. Cards link only when published. -->
+  <!-- 2. Selected work: one featured card, then smaller cards. Cards link only when published. -->
   <section id="work" class="work" aria-labelledby="work-heading" data-reveal>
     <h2 id="work-heading">Selected work</h2>
     {featured && <WorkCard study={featured} href={caseStudyHref(featured)} featured />}
@@ -92,6 +54,44 @@ const others = studies.filter((s) => s !== featured);
         </div>
       )
     }
+  </section>
+
+  <!-- 3. BRIDGEGOOD and the KRON4 video: text left, video right. Phones: text first. -->
+  <section class="panel panel--light apprenticeship" aria-labelledby="recent-heading" data-reveal>
+    <div class="apprenticeship__text">
+      <div class="recent">
+        <h2 id="recent-heading">
+          <a class="recent__org" href={site.bridgegood} target="_blank" rel="noopener noreferrer">BRIDGEGOOD<span class="visually-hidden"> (opens in a new tab)</span></a> UX Design Apprenticeship
+        </h2>
+        <div class="recent__lines">
+          <p>Launched by Google.org and the Golden State Warriors, with mentors from Google, Meta, and YouTube.</p>
+          <p>
+            The team built AthenaScribe, a translation tool with human review for Oakland Unified families,
+            and presented it at Demo Day at Block HQ.
+          </p>
+        </div>
+      </div>
+      <div class="split__text">
+        <h3 class="split__title">Purpose to Pixels: BRIDGEGOOD on KRON4</h3>
+        <p>
+          Live with BRIDGEGOOD’s executive director, talking about open communication between Oakland
+          families and their schools, and why design for social good matters.
+        </p>
+        <div class="actions">
+          <Button href={site.kron4Video || undefined} variant="secondary" external>
+            Watch on YouTube
+          </Button>
+        </div>
+      </div>
+    </div>
+    <div class="apprenticeship__video">
+      <VideoEmbed
+        url={site.kron4Video}
+        title="Purpose to Pixels: BRIDGEGOOD on KRON4"
+        cover="kron4-cover"
+        sizes="(min-width: 76rem) 36rem, (min-width: 64rem) 46vw, 88vw"
+      />
+    </div>
   </section>
 
   <!-- 4. Coaching, always dark -->
@@ -195,17 +195,19 @@ const others = studies.filter((s) => s !== featured);
     padding-block-start: var(--section-gap);
   }
 
-  .hero :global(.hero__headshot) {
-    inline-size: var(--size-headshot);
-    block-size: var(--size-headshot);
-    border-radius: var(--radius-pill);
+  /* Portrait, chest up, 4:5, with the site's one curve. */
+  .hero :global(.hero__portrait) {
+    display: block;
+    inline-size: min(100%, var(--size-portrait));
+    block-size: auto;
+    aspect-ratio: 4 / 5;
+    border-radius: var(--radius-section);
     object-fit: cover;
-    object-position: 50% 30%;
     transition: transform var(--duration-reveal) var(--ease-standard);
   }
 
   /* Small lift on hover. --lift-headshot is 0 with reduced motion. */
-  .hero :global(.hero__headshot:hover) {
+  .hero :global(.hero__portrait:hover) {
     transform: translateY(calc(-1 * var(--lift-headshot)));
   }
 
@@ -224,17 +226,40 @@ const others = studies.filter((s) => s !== featured);
     color: var(--color-ink-muted);
   }
 
+  @media (max-width: 47.99rem) {
+    .hero :global(.hero__portrait) {
+      inline-size: 70%;
+    }
+  }
+
   @media (min-width: 48rem) {
     .hero {
-      grid-template-columns: auto 1fr;
+      grid-template-columns: var(--size-portrait) 1fr;
       gap: var(--space-8);
     }
   }
 
-  /* 2. BRIDGEGOOD apprenticeship */
-  .band__inner {
+  /* 3. BRIDGEGOOD and KRON4: one panel, text left and video right. Stacks text first. */
+  .apprenticeship {
     display: grid;
-    gap: var(--space-8);
+    gap: var(--space-7);
+    align-items: center;
+  }
+
+  .apprenticeship > * {
+    min-width: 0;
+  }
+
+  .apprenticeship__text {
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  @media (min-width: 64rem) {
+    .apprenticeship {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
+    }
   }
 
   .recent {
@@ -273,33 +298,16 @@ const others = studies.filter((s) => s !== featured);
     line-height: var(--leading-snug);
   }
 
-  .split {
-    display: grid;
-    gap: var(--space-6);
-    align-items: center;
-  }
-
-  .split > * {
-    min-width: 0;
-  }
-
   .split__text {
     display: grid;
-    gap: var(--space-5);
+    gap: var(--space-4);
   }
 
   .split__title {
-    font-size: var(--step-3);
+    font-size: var(--step-2);
   }
 
-  @media (min-width: 56rem) {
-    .split--media {
-      grid-template-columns: 7fr 5fr;
-      gap: var(--space-8);
-    }
-  }
-
-  /* 3. Selected work */
+  /* 2. Selected work */
   .work {
     display: grid;
     gap: var(--space-6);

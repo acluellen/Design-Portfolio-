@@ -11,7 +11,7 @@ const logo = Object.values(files)[0]?.default;
 
 {
   logo ? (
-    <Image src={logo} alt="" class="logo" width={96} height={96} />
+    <Image src={logo} alt="" class="logo" width={96} height={96} loading="eager" />
   ) : (
     <span class="logo logo--text" aria-hidden="true">AL</span>
   )

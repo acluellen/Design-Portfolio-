@@ -99,11 +99,14 @@ const onCaseStudy = path.startsWith("/work/");
     font-size: var(--step--1);
   }
 
+  /* 44px tall tap targets. */
   .site-header__nav a,
   .site-header__pending {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--control-height);
     color: var(--color-ink);
     text-decoration: none;
-    padding-block: var(--space-1);
   }
 
   .site-header__nav a:hover,

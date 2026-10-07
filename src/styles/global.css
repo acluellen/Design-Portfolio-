@@ -127,7 +127,7 @@ a:hover {
 }
 
 :focus-visible {
-  outline: var(--focus-ring);
+  outline: var(--focus-width) solid var(--color-focus);
   outline-offset: var(--focus-offset);
 }
 

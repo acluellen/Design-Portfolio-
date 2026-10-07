@@ -7,7 +7,6 @@ export type PhotoKey =
   | "work-athenascribe"
   | "work-klima"
   | "work-craft-education"
-  | "work-mentorship-app"
   | "coaching-1"
   | "coaching-2"
   | "coaching-3"
@@ -16,7 +15,7 @@ export type PhotoKey =
 
 export const photos: Record<PhotoKey, { alt: string; approved: boolean }> = {
   headshot: {
-    alt: "Aaron smiling at the camera in a brown henley shirt.",
+    alt: "Aaron smiling broadly at the camera in a brown henley shirt.",
     approved: false,
   },
   "work-athenascribe": {
@@ -28,7 +27,6 @@ export const photos: Record<PhotoKey, { alt: string; approved: boolean }> = {
     approved: false,
   },
   "work-craft-education": { alt: "", approved: false },
-  "work-mentorship-app": { alt: "", approved: false },
   "coaching-1": {
     alt: "Black and white photo of Aaron watching a group class at a martial arts gym, hands behind his back, while students drill on pads.",
     approved: true,
@@ -45,6 +43,9 @@ export const photos: Record<PhotoKey, { alt: string; approved: boolean }> = {
     alt: "The BRIDGEGOOD cohort smiling together on the steps outside Google San Francisco.",
     approved: true,
   },
-  // Decorative: the play button already says "Play video: Purpose to Pixels: BRIDGEGOOD on KRON4".
-  "kron4-cover": { alt: "", approved: true },
+  // Read together with the play button's label, "Play video: Purpose to Pixels: BRIDGEGOOD on KRON4".
+  "kron4-cover": {
+    alt: "KRON4 thumbnail: four people on the studio couch beside the Purpose to Pixels title.",
+    approved: false,
+  },
 };

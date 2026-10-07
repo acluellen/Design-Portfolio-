@@ -22,8 +22,8 @@ const hasResume = fs.existsSync(path.join(process.cwd(), "public", site.resumePa
           )
         }
       </li>
+      {/* Hidden until public/resume.pdf exists. */}
       {hasResume && <li><a href={site.resumePath}>Resume</a></li>}
-      <li><a href="#top">Back to top</a></li>
     </ul>
   </div>
 </footer>
@@ -63,7 +63,11 @@ const hasResume = fs.existsSync(path.join(process.cwd(), "public", site.resumePa
     list-style: none;
   }
 
-  .site-footer__links a {
+  .site-footer__links a,
+  .site-footer__pending {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--control-height);
     color: var(--color-ink);
   }
 
@@ -73,5 +77,11 @@ const hasResume = fs.existsSync(path.join(process.cwd(), "public", site.resumePa
 
   .site-footer__pending {
     color: var(--color-ink-muted);
+  }
+
+  .site-footer__email {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--control-height);
   }
 </style>

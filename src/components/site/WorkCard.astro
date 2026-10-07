@@ -37,7 +37,6 @@ const sizes = featured
           cover={4 / 3}
           placeholderLabel={title}
           class="work-card__image"
-          loading={featured ? "eager" : "lazy"}
         />
       ) : (
         <div class="work-card__fallback" aria-hidden="true">{title}</div>
@@ -78,14 +77,27 @@ const sizes = featured
     border-radius: var(--radius-media);
   }
 
-  .work-card--linked {
+  /* Hover: every project card lifts a little and its image zooms in slightly.
+     Both are zero with reduced motion (see tokens). Only linked cards darken the border. */
+  .work-card {
     transition:
-      transform var(--duration-fast) var(--ease-standard),
+      transform var(--duration-hover) var(--ease-standard),
       border-color var(--duration-fast) var(--ease-standard);
   }
 
-  .work-card--linked:hover {
+  .work-card:hover {
     transform: translateY(calc(-1 * var(--card-lift)));
+  }
+
+  .work-card__media :global(img) {
+    transition: transform var(--duration-hover) var(--ease-standard);
+  }
+
+  .work-card:hover .work-card__media :global(img) {
+    transform: scale(var(--card-image-zoom));
+  }
+
+  .work-card--linked:hover {
     border-color: var(--color-ink);
   }
 
@@ -175,7 +187,7 @@ const sizes = featured
   }
 
   .work-card__title a:focus-visible::after {
-    outline: var(--focus-ring);
+    outline: var(--focus-width) solid var(--color-focus);
     outline-offset: var(--focus-offset);
   }
 

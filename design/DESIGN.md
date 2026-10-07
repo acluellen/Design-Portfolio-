@@ -12,7 +12,7 @@ Calm, warm, and photo led. Real photos carry the story. Everything around them s
 - "Hi, I'm Aaron" is the largest text on the page (`--step-5`). Section headings are smaller; the apprenticeship heading is about half its size (`--step-3`).
 - Button labels in sentence case: "View my work", "About me". Button text uses `--tracking-button` (-0.01em).
 - Sentence case for every heading. Proper names keep their capitals (BRIDGEGOOD UX Design Apprenticeship, Purpose to Pixels).
-- One smooth scroll: every home section sits in a single stack with the same gap (`--section-gap`, 32px on phones up to 64px). The apprenticeship section is a white rounded panel, coaching and closing are dark rounded panels, and the hero and Selected work sit on the page background. No full width bands.
+- Home section order: hero, Selected work, BRIDGEGOOD and KRON4, coaching (About), closing. One smooth scroll: every home section sits in a single stack with the same gap (`--section-gap`, 32px on phones up to 64px). The apprenticeship section is a white rounded panel, coaching and closing are dark rounded panels, and the hero and Selected work sit on the page background. No full width bands.
 - No drop shadows and no gradients. Thin rules and the band separate content.
 - Two panels are dark in both themes: coaching and closing. They use `#181715`, never pure black.
 
@@ -51,7 +51,7 @@ Wrap dark panels in `.surface-always-dark`. It remaps ink, muted ink, rules, acc
 ## Shape
 
 - One large curve, `--radius-section` (24px), on every section panel, card, photo, video, and card image. `--radius-media` points to it.
-- Headshot: a full circle. Round icon buttons (theme toggle, video play) stay round.
+- Hero portrait: 4:5, chest up, `--size-portrait` wide (up to 26rem), with `--radius-section`. Round icon buttons (theme toggle, video play) stay round.
 - Buttons: fully round (pill), `--radius-control`, 44px tall (`--control-height`).
   - Primary: AL logo blue (`--color-brand`) with white text, in every theme and inside always dark sections. Hover goes to `--color-brand-hover`.
   - Secondary: transparent fill, ink outline, ink text.
@@ -77,7 +77,7 @@ Wrap dark panels in `.surface-always-dark`. It remaps ink, muted ink, rules, acc
 
 ## Photos
 
-- Stored in `src/assets/photos/` and optimized at build time by Astro: AVIF and WebP at quality 80, with a JPEG fallback.
+- Stored in `src/assets/photos/` and optimized at build time by Astro: AVIF and WebP at quality 60 (AVIF 60 looks like JPEG 80), with a JPEG fallback. Only the hero portrait and logo load at once; every other photo loads as it nears the screen.
 - Pre-crop each source to the shape it is shown in (square headshot, 4:5 gym portraits, 16:9 workshop). A file cropped by `object-fit: cover` in the browser is zoomed in, so it looks softer than its width suggests.
 - Crop rule in `Photo.astro`: pass `cover` (the box's width ÷ height) for any photo shown with `object-fit: cover`. When the file is wider than the box, Photo multiplies both the srcset widths and the `sizes` lengths by that zoom, and warns at build time to pre-crop the source.
 - Closing section: inside its rounded panel, the group photo runs edge to edge at its own shape (2000 by 1150, Aaron's framing), with no overlay and nothing laid over it. The credit sits under the photo on the right. The headline, text, and button follow below in the always dark band. Nothing crops at any width, so `sizes` is simply 100vw.
@@ -95,7 +95,9 @@ Wrap dark panels in `.surface-always-dark`. It remaps ink, muted ink, rules, acc
 - Every email link uses the subject "Interested in working together" (`mailto` in `src/site.config.ts`).
 - Links that open a new tab say so to screen readers.
 - Spell BRIDGEGOOD in capitals everywhere. The word links to bridgegood.org in the apprenticeship heading.
-- Footer: email, LinkedIn, Resume (only when `public/resume.pdf` exists), and Back to top.
+- Footer: email and LinkedIn only. A Resume link appears only when `public/resume.pdf` exists.
+- Tap targets: header links, footer links, and buttons are at least 44px tall.
+- Keyboard focus: a 3px outline (`--focus-width`) in `--color-focus`, read where it is used, so it is blue on light and light blue (`#60A5FA`) on dark panels.
 
 ## Link preview
 
@@ -106,6 +108,7 @@ Wrap dark panels in `.surface-always-dark`. It remaps ink, muted ink, rules, acc
 
 - Minimal. Color transitions at `--duration-fast`. Smooth scroll for in page links.
 - Sections marked `data-reveal` fade in and slide up `--reveal-distance` (14px) over `--duration-reveal` as they enter the screen. The hero never animates. Anything on screen at load shows at once.
-- The headshot lifts `--lift-headshot` (4px) on hover.
+- The hero portrait lifts `--lift-headshot` (4px) on hover.
+- Project cards lift `--card-lift` (3px) and their image zooms to `--card-image-zoom` (1.03) on hover, over `--duration-hover` (200ms). All three are zero with reduced motion.
 - Everything shows fully with JavaScript off. With reduced motion on, the reveal distance, lift, and durations are all zero, so nothing moves or hides.
 - Respect `prefers-reduced-motion`.

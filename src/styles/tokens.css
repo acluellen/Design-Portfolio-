@@ -92,10 +92,11 @@
 
   /* Selected work cards */
   --gap-card-media: 1.25rem; /* 20px between card image and text */
-  --card-lift: 2px; /* hover rise */
+  --card-lift: 3px; /* hover rise */
+  --card-image-zoom: 1.03; /* hover zoom on card images */
 
   /* Media and controls */
-  --size-headshot: clamp(9rem, 6rem + 10vw, 14rem);
+  --size-portrait: clamp(16rem, 4rem + 20vw, 26rem); /* hero portrait width from 48rem up */
   --size-logo: 3rem;
   --control-height: 2.75rem; /* 44px */
   --control-height-small: 2.25rem; /* 36px, the button look inside a card (the card itself is the link) */
@@ -115,13 +116,15 @@
   --underline-offset: 0.2em;
   --underline-thickness: 1px;
 
-  /* Focus */
-  --focus-ring: 2px solid var(--color-focus);
+  /* Focus: a clear outline for keyboard users. The color is read where it is used, so it
+     follows the theme and dark panels. */
+  --focus-width: 3px;
   --focus-offset: 3px;
 
   /* Motion */
   --duration-fast: 150ms;
   --duration-reveal: 600ms;
+  --duration-hover: 200ms;
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
   --reveal-distance: 14px; /* sections slide up this far as they fade in */
   --lift-headshot: 4px;
@@ -178,6 +181,7 @@
 
 /* Always dark surface: remaps the core tokens so components inside read correctly. */
 .surface-always-dark {
+  --color-focus: var(--color-always-dark-accent);
   --color-paper: var(--color-always-dark);
   --color-accent-subtle: var(--color-dark-label-bg);
   --color-label-ink: var(--color-always-dark-accent);
@@ -201,5 +205,8 @@
     --duration-reveal: 0ms;
     --reveal-distance: 0px;
     --lift-headshot: 0px;
+    --card-lift: 0px;
+    --card-image-zoom: 1;
+    --duration-hover: 0ms;
   }
 }
