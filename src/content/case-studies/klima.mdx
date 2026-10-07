@@ -23,6 +23,14 @@ order: 2
 status: "draft"
 ---
 
+import journeyMap from "../../assets/case-studies/klima/journey-map.png";
+import crazyCalculation from "../../assets/case-studies/klima/crazy-8s-calculation.png";
+import crazyIntro from "../../assets/case-studies/klima/crazy-8s-intro.png";
+import beforeHome from "../../assets/case-studies/klima/before-home.png";
+import afterHome from "../../assets/case-studies/klima/after-home.png";
+import beforeMultiply from "../../assets/case-studies/klima/before-multiply.png";
+import afterImpactHub from "../../assets/case-studies/klima/after-impact-hub.png";
+
 <Callout label="About this project">This was an independent General Assembly redesign exercise using Klima, an existing product. Klima did not commission it and was not involved with the team.</Callout>
 
 <Contribution>
@@ -52,7 +60,13 @@ What we found is that action starts with trust. That finding shaped the whole re
 
 The team mapped the existing journey screen by screen, from calculating a carbon footprint to subscribing. Confusion clustered around three moments: the numbers at the top of the calculator, the step where people choose projects to fund, and a sign up wall that made people hesitate.
 
-{/* TODO: FigJam export of the journey map and the affinity map. */}
+<Figure
+  src={journeyMap}
+  alt="Retrospective journey map of the existing Klima app: the current flow of screens across the top, then rows for stages, user problems, feelings and thoughts, pain points and opportunities"
+  caption="The retrospective journey map, from calculating a footprint to subscribing."
+/>
+
+{/* TODO: FigJam export of the affinity map. */}
 
 ### Competitive analysis
 
@@ -86,13 +100,35 @@ We planned to read it through user satisfaction in interviews and the System Usa
 
 We wrote How Might We questions for each problem. For example: how might we offer rewards that fit our audience? Then we sketched Crazy 8s and sorted every idea by client need, user need and feasibility, using MoSCoW to pick what to build.
 
-{/* TODO: Crazy 8s photos and the prioritization table from FigJam. */}
+<Figure
+  src={crazyCalculation}
+  alt="Crazy 8s sketch sheet on paper: a guided carbon calculation with a guide character, an AI help step and a chart of different emissions"
+  caption="Crazy 8s: ideas for making the carbon calculation easier to follow."
+/>
+
+<Figure
+  src={crazyIntro}
+  alt="Crazy 8s sketch sheet on paper: an introduction to Klima's value, certified projects with their impact, a live follow up on a globe, and a person who feels anxious before Klima and better after"
+  caption="Crazy 8s: ideas for introducing Klima and showing the impact of its projects."
+/>
+
+{/* TODO: the full prioritization table from FigJam. */}
 
 The work split into three stages of the app:
 
 1. **Onboarding:** an introduction and a guided carbon calculation. Led by Isabel.
 2. **Exploration:** browsing projects and understanding them. Led by Maya.
 3. **After joining:** motivation through game design. Led by me.
+
+<Compare
+  before={beforeHome}
+  beforeAlt="Klima's original home screen: a greeting, the footprint in tons, a Start offsetting button and a row of project cards"
+  beforeLabel="Before: Klima home"
+  after={afterHome}
+  afterAlt="Redesigned home screen: the same greeting and Start Offsetting button, followed by a plain explanation of carbon neutrality and a Real Solutions in Action section"
+  afterLabel="After: Maya's exploration redesign"
+  caption="Exploration, led by Maya: key information moves up front so offsetting is easier to understand."
+/>
 
 ## My focus: motivation after joining
 
@@ -106,8 +142,17 @@ I designed an Impact Hub, a home for daily action that rewards consistency and t
 - **Garden:** a virtual garden that grows as you act, so impact becomes something you can see.
 - **Community:** Discord built into Klima's existing Multiply feature, to turn a passive community into active participation and lay the groundwork for a fully gamified experience.
 
-{/* TODO: before (the old Multiply screen) and after screens from the design file.
-    TODO: once the gamification screens are refreshed, add this note under them:
+<Compare
+  before={beforeMultiply}
+  beforeAlt="Klima's original Multiply tab: a dark globe with the line Isabel, start your own climate movement today, and tabs for Offset, Reduce and Multiply"
+  beforeLabel="Before: Klima's Multiply tab"
+  after={afterImpactHub}
+  afterAlt="The Impact Hub from the team project: Welcome to Your Impact Hub, with cards for Challenges, How it Works, Join the Community and My Garden, and a Klima Dashboard button"
+  afterLabel="After: the Impact Hub, 2025"
+  caption="My gamification work: the Multiply tab becomes a hub for daily action, progress and community."
+/>
+
+{/* TODO: once the gamification screens are refreshed, add this note under them:
     "2026 visual refinement: I revisited the original gamification concept after the project to improve
     its visual hierarchy, interaction patterns and accessibility. The research findings, product strategy
     and feature decisions remain grounded in the original team project." */}

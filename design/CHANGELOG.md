@@ -8,7 +8,9 @@ Newest first. Every design or structure decision goes here.
 - Case study draft at `/work/klima/` (hidden from the live site), written from the team's 34 slide General Assembly deck and Aaron's answers. Aaron's role is the gamification redesign plus the competitive analysis, feature inventory, feature analysis and pluses and deltas; the research process is credited to the team. Isabel led onboarding and Maya led exploration.
 - An "About this project" note says it was an independent General Assembly exercise, not commissioned by Klima.
 - Following Aaron's rules: the System Usability Scale result (40 to 90) is held until verified; engagement, retention and conversion are described as goals the design supported, not measured outcomes; persona and testing lines are written as synthesis, not quotes; the deck's "not X, it's Y" opening and closing lines are rewritten; dashes, hyphens and typos fixed.
-- TODO before publishing: project duration, FigJam and design file images, the refreshed 2026 gamification screens with their disclosure note, and a prototype link if there is one.
+- Images from the deck PDF (text and question bubbles left out, transparency flattened onto white): the retrospective journey map, two Crazy 8s sheets, Klima's original home and Maya's exploration redesign, and Klima's original Multiply tab next to Aaron's 2025 Impact Hub. New `Compare` component shows a before and after side by side.
+- Timeline: 6 weeks, March to April 2025.
+- TODO before publishing: FigJam images (affinity map, competitive analysis, prioritization table), the refreshed 2026 gamification screens with their disclosure note, and a prototype link if there is one.
 
 ## 2026-10-07 · AthenaScribe case study published
 
