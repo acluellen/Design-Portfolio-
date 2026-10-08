@@ -2,6 +2,11 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-08 · Craft Education card image
+
+- Added Aaron's laptop and phone mockup of the Craft Education site as the card image. The source was 3:2, so it was extended at the top and bottom with its own background to 4:3 (1448 by 1086, like the other cards) instead of cropping the devices.
+- Draft alt text written from the image, waiting on Aaron's approval.
+
 ## 2026-10-08 · Klima prototype link verified
 
 - Aaron confirmed the prototype plays in a private window without signing in. The link now opens on the Impact Hub with the flows sidebar hidden, so visitors start on Aaron's part and do not see the list of team flows.

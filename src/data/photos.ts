@@ -27,7 +27,10 @@ export const photos: Record<PhotoKey, { alt: string; approved: boolean }> = {
     alt: "Two Klima phone screens: a home screen with a row of potted plants, and a Challenge Complete screen.",
     approved: false,
   },
-  "work-craft-education": { alt: "", approved: false },
+  "work-craft-education": {
+    alt: "Craft Education's site on a laptop and a phone: Stronger support for every learner, with cards for families, educators and providers and a Talk to us on WhatsApp button.",
+    approved: false,
+  },
   "coaching-1": {
     alt: "Black and white photo of Aaron watching a group class at a martial arts gym, hands behind his back, while students drill on pads.",
     approved: true,
