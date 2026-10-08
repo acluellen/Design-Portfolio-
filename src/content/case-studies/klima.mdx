@@ -29,6 +29,7 @@ import crazyIntro from "../../assets/case-studies/klima/crazy-8s-intro.png";
 import beforeHome from "../../assets/case-studies/klima/before-home.png";
 import afterHome from "../../assets/case-studies/klima/after-home.png";
 import beforeMultiply from "../../assets/case-studies/klima/before-multiply.png";
+import beforeMultiplyFeatures from "../../assets/case-studies/klima/before-multiply-features.png";
 import afterImpactHub from "../../assets/case-studies/klima/after-impact-hub.png";
 import screenDailyChallenges from "../../assets/case-studies/klima/screen-daily-challenges.png";
 import screenChallengeSelected from "../../assets/case-studies/klima/screen-challenge-selected.png";
@@ -168,6 +169,14 @@ The work split into three stages of the app:
 
 Our feature analysis showed that Klima had no structure for building habits and no incentive to act again. People did not feel their actions were making an impact, and they needed motivation to stay consistent.
 
+Klima's community lived in its Multiply tab. Everything there was a one time action: invite a friend, write to a representative, watch a video. Nothing brought people back the next day.
+
+<Figure
+  src={beforeMultiplyFeatures}
+  alt="Five screens from Klima's original Multiply tab: a Write your representative card and a Coming soon list, a referral screen offering 10 extra trees for a friend with a code to share, a Get political page, a hero reading Isabel, start your own climate movement today, and a Your Movement page with a video and an Invite your friends button"
+  caption="Before: Klima's Multiply tab, built around referrals and advocacy."
+/>
+
 I designed an Impact Hub, a home for daily action that rewards consistency and turns climate impact into visible progress:
 
 - **Challenges:** daily actions that reduce emissions and build momentum.
@@ -204,6 +213,21 @@ Inside the hub, the loop is short: pick a challenge, log it, see what it saved, 
   ]}
   caption="The challenge loop from the 2025 team project."
 />
+
+### How the garden grows
+
+Seven challenges on a seven day streak earn a badge. Each badge grows the garden, and the How It Works screen lays out the path:
+
+{/* From the final How It Works frame in the prototype file (read Oct 8 2026). */}
+
+| Challenges completed | Badges earned | Garden stage |
+| --- | --- | --- |
+| 7 | 1 | Seed Patch: your climate journey begins |
+| 21 | 3 | Sprouting Garden: plants appear and the garden starts to form |
+| 35 | 5 | Forest Stage: trees grow, and bees and small animals arrive |
+| 49+ | 7+ | Thriving Ecosystem: animals, trees, rare plants and a Klima shoutout |
+
+Joining the community on Discord earns an exclusive garden badge.
 
 {/* TODO (Aaron to review): the board has a badge tier table. 3, 5, 7 and 10 badges unlock Bronze, Silver,
     Gold and Legendary, with a Klima match bonus of 0.02, 0.04, 0.06 and 0.1. Add it here only after

@@ -2,6 +2,13 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-08 · Klima garden stages and the original Multiply tab
+
+- Read Aaron's final prototype file through the Figma connector. The How It Works frame confirms the garden path: 7 challenges on a 7 day streak earn a badge, and badges move the garden through Seed Patch, Sprouting Garden, Forest Stage and Thriving Ecosystem. Added as a table under the challenge loop.
+- Added Aaron's screenshots of Klima's original Multiply tab (five screens) as the before picture for the gamification work.
+- Noted for the 2026 refresh: on the How It Works screen the Garden stage column runs off the right edge.
+- The Figma connector only renders frames at 1x and downloads from figma.com are blocked by the network policy, so the chat images stay. At the sizes they show on the page they are sharp enough.
+
 ## 2026-10-08 · Klima challenge loop screens and answers
 
 - Aaron's answers: the competitor is Planet Wild (not My Planet 8), the teammate is May (not Maya), and the 14 interviews stand (the board was not updated). The badge tier table stays out until Aaron reviews it.
