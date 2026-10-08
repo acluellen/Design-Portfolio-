@@ -1,10 +1,11 @@
 ---
-import "@fontsource-variable/inter";
+import "@fontsource-variable/geist";
+import "@fontsource-variable/atkinson-hyperlegible-mono";
 import "@fontsource-variable/atkinson-hyperlegible-next";
 import "../styles/tokens.css";
 import "../styles/global.css";
 // Font files, so the head can ask for them before the CSS that uses them has loaded.
-import interFont from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
+import geistFont from "@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url";
 import atkinsonFont from "@fontsource-variable/atkinson-hyperlegible-next/files/atkinson-hyperlegible-next-latin-wght-normal.woff2?url";
 import tokensCss from "../styles/tokens.css?raw";
 
@@ -42,7 +43,7 @@ const themeDark = paperIn(tokensCss.slice(tokensCss.indexOf(':root[data-theme="d
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content={themeLight} media="(prefers-color-scheme: light)" data-theme-color="light" />
     <meta name="theme-color" content={themeDark} media="(prefers-color-scheme: dark)" data-theme-color="dark" />
-    <link rel="preload" href={interFont} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={geistFont} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={atkinsonFont} as="font" type="font/woff2" crossorigin />
     <script is:inline>
       // Apply the saved theme before first paint, so the wrong theme never flashes.

@@ -1,54 +1,63 @@
 /*
  * Design tokens. Every visual value in the site lives here.
- * Direction: warm off white, rounded panels, one blue accent. See design/DESIGN.md.
+ * Direction (October 9, 2026): warm graph paper, deep navy ink, blue for links only, square corners.
+ * See design/DESIGN.md.
  * Never pure black (#000000) anywhere.
  */
 
 :root {
-  /* Color: light (warm off white) */
-  --color-paper: #faf9f5;
-  --color-paper-raised: #ffffff; /* cards */
+  /* Color: light (warm graph paper) */
+  --color-paper: #f6f3ed;
+  --color-paper-raised: #ffffff; /* cards and poster mats */
   --color-band: #ffffff; /* light panels use the card color */
-  --color-panel: #faf9f5; /* soft backdrop behind card images */
-  --color-ink: #141413;
-  --color-ink-muted: #5d5b54;
-  --color-rule: #e8e6df; /* card borders, thin lines */
-  --color-rule-strong: #d3d0c7;
+  --color-panel: #efebe3; /* soft backdrop behind media */
+  --color-ink: #201f1d; /* body text: 14.9:1 on paper */
+  --color-heading: #1b2a3a; /* deep navy for headings: 13.2:1 on paper */
+  --color-ink-muted: #524e49; /* 7.5:1 on paper */
+  --color-rule: #dcd7cd; /* card borders, thin lines */
+  --color-rule-strong: #c4beb2;
+  --color-grid: rgb(32 31 29 / 0.06); /* faint graph paper lines on the page, decoration only */
+  --size-grid: 3rem; /* graph paper square */
 
-  /* Accent: the AL logo blue, the only accent. Buttons, links, and labels. 6.4:1 on page, 6.7:1 on cards. */
+  /* Links: the AL blue, now used for links and small accents only. 6.1:1 on paper. */
   --color-accent: #1d4ed8;
   --color-accent-hover: #1e40af;
-  --color-accent-subtle: #dbeafe; /* behind small labels */
-  --color-label-ink: #1d4ed8; /* label text on --color-accent-subtle: 5.5:1 */
+  --color-accent-subtle: #e4e8f0; /* behind small labels and text selection */
+  --color-label-ink: var(--color-ink-muted); /* small mono labels: 7.5:1 */
   --color-focus: var(--color-accent);
   --color-selection: var(--color-accent-subtle);
 
-  /* Primary buttons: the same blue with white text in every theme. White on blue 6.7:1, hover 8.7:1. */
-  --color-brand: #1d4ed8;
-  --color-brand-hover: #1e40af;
-  --color-brand-ink: #ffffff;
+  /* Logo: navy mark with paper lines. Flips to light on the dark page so it never disappears. */
+  --color-logo: #1b2a3a;
+  --color-logo-ink: #f6f3ed;
 
-  /* Dark panels: the coaching and closing sections in both themes, and the dark mode page. */
-  --color-always-dark: #181715;
+  /* Primary buttons: deep navy with paper text. 13.2:1. */
+  --color-brand: #1b2a3a;
+  --color-brand-hover: #111c28;
+  --color-brand-ink: #f6f3ed;
+
+  /* Dark panels: the closing (and, for now, coaching) sections in both themes. Deep navy. */
+  --color-always-dark: #1b2a3a;
   /* Background of the dark panels. Same as --color-always-dark on the light page; one step
      lighter on the dark page (see the dark blocks) so the panels don't blend into it. */
   --color-always-dark-surface: var(--color-always-dark);
-  --color-always-dark-ink: #f5f4ef;
-  --color-always-dark-muted: #b5b3ad;
-  --color-always-dark-rule: #34312c;
-  --color-always-dark-raised: #252320;
-  --color-always-dark-rule-strong: #4a4640;
-  --color-always-dark-accent: #60a5fa;
-  --color-always-dark-accent-hover: #93c5fd;
-  --color-dark-label-bg: #1e2a44; /* small labels on dark: #60a5fa text, 5.6:1 */
+  --color-always-dark-ink: #f3f1ec; /* 12.9:1 on navy */
+  --color-always-dark-muted: #b9c1ce; /* 8.0:1 on navy */
+  --color-always-dark-rule: #2e3f53;
+  --color-always-dark-raised: #233447;
+  --color-always-dark-rule-strong: #41556d;
+  --color-always-dark-accent: #9cbcff; /* links on navy: 7.7:1 */
+  --color-always-dark-accent-hover: #c2d5ff;
+  --color-dark-label-bg: #26384d;
   /* Edge for dark panels. Invisible on the light page, a thin line on the dark page. */
   --color-dark-panel-edge: transparent;
 
   /* Type families (open fonts, self hosted via Fontsource).
-     Body, buttons, and menu: Atkinson Hyperlegible Next, built for legibility. Headings: Inter. */
+     Body, buttons, and menu: Atkinson Hyperlegible Next, built for legibility. Headings: Geist.
+     Labels and metadata: Atkinson Hyperlegible Mono, the mono sibling of the body font. */
   --font-text: "Atkinson Hyperlegible Next Variable", "Atkinson Hyperlegible Next", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-display: "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --font-display: "Geist Variable", "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Atkinson Hyperlegible Mono Variable", "Atkinson Hyperlegible Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
   /* Type scale (fluid, roughly 1.25 ratio) */
   --step--1: clamp(0.833rem, 0.81rem + 0.1vw, 0.889rem);
@@ -69,8 +78,8 @@
   --leading-tight: 1.12;
   --leading-snug: 1.3;
   --leading-body: 1.65;
-  --tracking-tight: -0.025em;
-  --tracking-label: 0.08em;
+  --tracking-tight: -0.035em;
+  --tracking-label: 0.03em; /* mono labels need less spacing than sans caps */
   --tracking-button: -0.01em;
 
   /* Space (4px base) */
@@ -116,11 +125,12 @@
   /* Rules and radii */
   --rule-thin: 1px;
   --rule-thick: 2px;
-  --radius-small: 6px;
-  --radius-section: 24px; /* the one large curve: sections, photos, video, cards */
-  --radius-media: var(--radius-section);
-  --radius-pill: 999px; /* buttons, round icon buttons, tags */
-  --radius-control: var(--radius-pill); /* buttons: fully round */
+  /* Square corners everywhere. Only round icon buttons (theme toggle, play) stay circles. */
+  --radius-small: 0;
+  --radius-section: 0;
+  --radius-media: 0;
+  --radius-pill: 999px; /* round icon buttons only, never labels, tags, or text buttons */
+  --radius-control: 0; /* buttons: square */
 
   /* Underlines */
   --underline-offset: 0.2em;
@@ -152,42 +162,54 @@
   }
 }
 
-/* Color: dark. Follows the device unless the header toggle sets data-theme. */
+/* Color: dark. Follows the device unless the header toggle sets data-theme. Navy night, not black. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --color-paper: #181715;
-    --color-paper-raised: #252320;
-    --color-band: #252320;
-    --color-panel: #181715;
-    --color-ink: #f5f4ef;
-    --color-ink-muted: #b5b3ad;
-    --color-rule: #34312c;
-    --color-rule-strong: #4a4640;
-    --color-accent: #60a5fa;
-    --color-accent-hover: #93c5fd;
-    --color-accent-subtle: #1e2a44;
-    --color-label-ink: #60a5fa;
-    --color-dark-panel-edge: #34312c;
-    --color-always-dark-surface: #201e1b;
+    --color-paper: #12161c;
+    --color-paper-raised: #1a2029;
+    --color-band: #1a2029;
+    --color-panel: #161c25;
+    --color-ink: #e9ecf1;
+    --color-heading: #f1f3f7;
+    --color-ink-muted: #a3abb7;
+    --color-rule: #283039;
+    --color-rule-strong: #3a4452;
+    --color-grid: rgb(233 236 241 / 0.04);
+    --color-accent: #8db4ff;
+    --color-accent-hover: #b3ccff;
+    --color-accent-subtle: #222b38;
+    --color-logo: #e9ecf1;
+    --color-logo-ink: #12161c;
+    --color-brand: #e9ecf1;
+    --color-brand-hover: #ffffff;
+    --color-brand-ink: #12161c;
+    --color-dark-panel-edge: #283039;
+    --color-always-dark-surface: #1c2633;
     color-scheme: dark;
   }
 }
 
 :root[data-theme="dark"] {
-  --color-paper: #181715;
-  --color-paper-raised: #252320;
-  --color-band: #252320;
-  --color-panel: #181715;
-  --color-ink: #f5f4ef;
-  --color-ink-muted: #b5b3ad;
-  --color-rule: #34312c;
-  --color-rule-strong: #4a4640;
-  --color-accent: #60a5fa;
-  --color-accent-hover: #93c5fd;
-  --color-accent-subtle: #1e2a44;
-  --color-label-ink: #60a5fa;
-  --color-dark-panel-edge: #34312c;
-  --color-always-dark-surface: #201e1b;
+  --color-paper: #12161c;
+  --color-paper-raised: #1a2029;
+  --color-band: #1a2029;
+  --color-panel: #161c25;
+  --color-ink: #e9ecf1;
+  --color-heading: #f1f3f7;
+  --color-ink-muted: #a3abb7;
+  --color-rule: #283039;
+  --color-rule-strong: #3a4452;
+  --color-grid: rgb(233 236 241 / 0.04);
+  --color-accent: #8db4ff;
+  --color-accent-hover: #b3ccff;
+  --color-accent-subtle: #222b38;
+  --color-logo: #e9ecf1;
+  --color-logo-ink: #12161c;
+  --color-brand: #e9ecf1;
+  --color-brand-hover: #ffffff;
+  --color-brand-ink: #12161c;
+  --color-dark-panel-edge: #283039;
+  --color-always-dark-surface: #1c2633;
   color-scheme: dark;
 }
 
@@ -196,13 +218,18 @@
   --color-focus: var(--color-always-dark-accent);
   --color-paper: var(--color-always-dark-surface);
   --color-accent-subtle: var(--color-dark-label-bg);
-  --color-label-ink: var(--color-always-dark-accent);
+  --color-label-ink: var(--color-always-dark-muted);
+  --color-brand: var(--color-always-dark-ink); /* paper buttons on navy */
+  --color-brand-hover: #ffffff;
+  --color-brand-ink: #1b2a3a;
   --color-paper-raised: var(--color-always-dark-raised);
   --color-band: var(--color-always-dark-raised);
   --color-panel: var(--color-always-dark-raised);
   --color-rule-strong: var(--color-always-dark-rule-strong);
   --color-ink: var(--color-always-dark-ink);
   --color-ink-muted: var(--color-always-dark-muted);
+  --color-heading: var(--color-always-dark-ink);
+  --color-grid: transparent;
   --color-rule: var(--color-always-dark-rule);
   --color-accent: var(--color-always-dark-accent);
   --color-accent-hover: var(--color-always-dark-accent-hover);

@@ -2,6 +2,19 @@
 
 Newest first. Every design or structure decision goes here.
 
+
+## 2026-10-09 · New direction, step 1: colors, fonts, square corners
+
+Aaron picked the direction from the reference review and the picker page: warm paper with graph lines (Zeel), deep navy for headings, buttons, the logo, and the closing block, the AL blue for links only, Grotesk and mono type, square corners.
+
+- Tokens: new paper `#F6F3ED`, navy headings `#1B2A3A` (new `--color-heading`), warm body ink `#201F1D`, muted `#524E49`, faint graph lines (`--color-grid`, `--size-grid`). Dark mode is a navy night (`#12161C`).
+- Links stay `#1D4ED8`. Buttons and the logo go navy. Small labels are muted mono instead of blue.
+- Navy panels replace the near black ones (`--color-always-dark` is `#1B2A3A`). Inside them buttons flip to paper with navy text.
+- Type: Geist replaces Inter for headings. Atkinson Hyperlegible Mono is the new label font. Atkinson Hyperlegible Next stays for body text. Fonts self hosted via Fontsource; Geist is preloaded.
+- Shape: every radius is 0. Buttons are square. Round icon buttons stay round. No pills anywhere.
+- Logo: inlined so it follows the theme (navy on light, light on dark). `logo.svg` and `favicon.svg` recolored to navy with paper lines. The share image (`og-image.png`) is still blue; to update with the next pass.
+- Page order, the hero, and the cards are unchanged in this step. Next: step 2, the home layout.
+
 ## 2026-10-08 · Craft Education case study draft
 
 - Draft at `/work/craft-education/`, written from the team's final deck (36 slides and speaker notes), the client brief, the kickoff meeting notes, the research and usability notes, and Aaron's answers. Uses the AthenaScribe blocks: panels, method cards, stats, the three heuristic problems with the original screens, participant quotes, the journey map, affinity map and personas, a before and after comparison, the parent path as four screens, the provider path, testing, the roadmap handed to Craft, and a reflection.

@@ -1,40 +1,41 @@
 # Visual rules
 
-Current direction from October 7, 2026: warm off white, one clean sans, soft corners. The previous home page is saved on the `saved/home-v1` branch.
+Current direction from October 9, 2026: warm graph paper, deep navy ink, blue for links only, square corners. Picked by Aaron from the reference review (Micah Hoang, Zeel Shah, Angelina Cao, Narin Kim, Rachel Chen, Tee Hodgson). The October 7 direction is in git history (commit 1ff9146).
 
 ## Direction
 
-Calm, warm, and photo led. Real photos carry the story. Everything around them stays quiet.
+Calm and exact. The work and the photos carry the color. Everything around them stays quiet.
 
-- Warm off white page, near black ink, white cards with a thin warm border, and dark rounded panels.
-- One accent blue (`#1D4ED8`, `#60A5FA` on dark). Use it for primary buttons, links, focus rings, and small labels. Never for large fills or backgrounds.
-- Body text, buttons, and the menu: Atkinson Hyperlegible Next (`--font-text`), chosen for legibility. Headings: Inter (`--font-display`), semibold with tight tracking. No serif.
-- "Hi, I'm Aaron" is the largest text on the page (`--step-5`). Section headings are smaller; the apprenticeship heading is about half its size (`--step-3`).
-- Button labels in sentence case: "View my work", "About me". Button text uses `--tracking-button` (-0.01em).
+- Warm paper page with faint graph lines (Zeel). Deep navy for headings, primary buttons, the logo, and the closing block (Micah). The AL blue is for links only.
+- Headings: Geist (`--font-display`), semibold, tight tracking. Body, buttons, and the menu: Atkinson Hyperlegible Next (`--font-text`), for legibility. Labels and metadata: Atkinson Hyperlegible Mono (`--font-mono`), small caps style uppercase.
+- Square corners on everything: panels, cards, photos, video, buttons. Only round icon buttons (theme toggle, play) stay circles. No pill shapes anywhere.
 - Sentence case for every heading. Proper names keep their capitals (BRIDGEGOOD UX Design Apprenticeship, Purpose to Pixels).
-- Home section order: hero, BRIDGEGOOD and KRON4, Selected work, coaching (About), closing. One smooth scroll: every home section sits in a single stack with the same gap (`--section-gap`, 32px on phones up to 64px). The apprenticeship section is a white rounded panel, coaching and closing are dark rounded panels, and the hero and Selected work sit on the page background. No full width bands.
-- No drop shadows and no gradients. Thin rules and the band separate content.
-- Two panels are dark in both themes: coaching and closing. They use `#181715`, never pure black.
+- No drop shadows and no gradients. Thin rules separate content.
+- Navy panels: the closing section (and coaching, until step 2 of the October 9 plan moves About onto the paper). Never pure black.
 
 ## Color
 
 Never pure black (`#000000`) anywhere.
 
-| Role | Light | Dark (and coaching and closing panels in both modes) |
+| Role | Light | Dark |
 |---|---|---|
-| Page | `#FAF9F5` | `#181715` |
-| Cards and light panels | `#FFFFFF`, border `#E8E6DF` | `#252320` |
-| Main text | `#141413` | `#F5F4EF` |
-| Secondary text | `#5D5B54` | `#B5B3AD` |
-| Accent (links, labels) | `#1D4ED8` | `#60A5FA` |
-| Small label | `#1D4ED8` on `#DBEAFE` | `#60A5FA` on `#1E2A44` |
-| Primary button | `#1D4ED8`, white text, both modes | same |
+| Page | `#F6F3ED` with graph lines `rgb(32 31 29 / 0.06)` | `#12161C`, lines at 4% |
+| Cards and light panels | `#FFFFFF`, border `#DCD7CD` | `#1A2029` |
+| Media backdrop | `#EFEBE3` | `#161C25` |
+| Headings | `#1B2A3A` navy | `#F1F3F7` |
+| Body text | `#201F1D` | `#E9ECF1` |
+| Secondary text and labels | `#524E49` | `#A3ABB7` |
+| Links | `#1D4ED8` | `#8DB4FF` |
+| Primary button | `#1B2A3A`, paper text | `#E9ECF1`, navy text |
+| Logo | navy mark, paper lines | light mark, navy lines |
+| Navy panels (both modes) | `#1B2A3A`, text `#F3F1EC`, secondary `#B9C1CE`, links `#9CBCFF` | `#1C2633` |
 
 Contrast, all WCAG AA or better:
-- Light: main text 17.5:1, secondary 6.5:1 on page and 6.8:1 on cards, accent 6.4:1 on page and 6.7:1 on cards, label 5.5:1, white on button 6.7:1 (8.7:1 on hover `#1E40AF`).
-- Dark: main text 16.3:1 on page and 14.2:1 on cards, secondary 8.5:1 and 7.5:1, accent 7.1:1 and 6.2:1, label 5.6:1.
+- Light: body 14.9:1, headings 13.2:1, secondary 7.5:1, links 6.1:1, button text 13.2:1.
+- Dark: body 15.3:1, secondary 7.8:1, links 8.7:1.
+- Navy panels: text 12.9:1, secondary 8.0:1, links 7.7:1.
 
-Wrap dark panels in `.surface-always-dark`. It remaps ink, muted ink, rules, accent, and label colors, so everything inside reads correctly. On the dark page, dark panels get a thin `--color-dark-panel-edge` so they still read as panels.
+Wrap navy panels in `.surface-always-dark`. It remaps ink, headings, muted ink, rules, links, labels, and buttons (paper buttons with navy text), and turns the graph lines off.
 
 ## Theme
 
@@ -44,18 +45,17 @@ Wrap dark panels in `.surface-always-dark`. It remaps ink, muted ink, rules, acc
 
 ## Type
 
-- Headlines: `--font-display` (the same Inter as body), `--weight-heading` (600), `--tracking-tight`, tight leading, balanced wrapping.
+- Headlines: `--font-display` (Geist), `--weight-heading` (600), `--tracking-tight` (-0.035em), tight leading, balanced wrapping, navy (`--color-heading`).
 - Body: `--font-text` at `--step-0`, leading `--leading-body`.
-- Labels and metadata: `--step--1`. Uppercase tracking only for small labels.
+- Labels and metadata: `--font-mono` at `--step--1`, uppercase, `--tracking-label` (0.03em), muted.
 
 ## Shape
 
-- One large curve, `--radius-section` (24px), on every section panel, card, photo, video, and card image. `--radius-media` points to it.
-- Hero portrait: 4:5, chest up, `--size-portrait` wide (up to 26rem), with `--radius-section`. Round icon buttons (theme toggle, video play) stay round.
-- Buttons: fully round (pill), `--radius-control`, 44px tall (`--control-height`).
-  - Primary: AL logo blue (`--color-brand`) with white text, in every theme and inside always dark sections. Hover goes to `--color-brand-hover`.
+- Square corners: `--radius-section`, `--radius-media`, `--radius-small`, and `--radius-control` are all 0.
+- `--radius-pill` is kept for round icon buttons only (theme toggle, video play). Never for labels, tags, or text buttons.
+- Buttons are square, 44px tall (`--control-height`).
+  - Primary: navy (`--color-brand`) with paper text. On the dark page and inside navy panels it flips to a light button with navy text.
   - Secondary: transparent fill, ink outline, ink text.
-  - Inside always dark sections the secondary button's tokens flip to a light outline.
 
 ## Layout
 

@@ -64,7 +64,12 @@ html {
 
 body {
   min-height: 100vh;
-  background: var(--color-paper);
+  background-color: var(--color-paper);
+  /* Faint graph paper. Decoration only; panels and cards cover it with their own fill. */
+  background-image:
+    linear-gradient(var(--color-grid) var(--rule-thin), transparent var(--rule-thin)),
+    linear-gradient(90deg, var(--color-grid) var(--rule-thin), transparent var(--rule-thin));
+  background-size: var(--size-grid) var(--size-grid);
   color: var(--color-ink);
   font-family: var(--font-text);
   font-size: var(--step-0);
@@ -84,6 +89,7 @@ h3,
 h4 {
   font-family: var(--font-display);
   font-weight: var(--weight-heading);
+  color: var(--color-heading);
   line-height: var(--leading-tight);
   letter-spacing: var(--tracking-tight);
   text-wrap: balance;
@@ -185,6 +191,7 @@ small {
 }
 
 .label {
+  font-family: var(--font-mono);
   font-size: var(--step--1);
   font-weight: var(--weight-medium);
   letter-spacing: var(--tracking-label);
