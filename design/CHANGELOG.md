@@ -2,6 +2,11 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-08 · Klima SUS baseline
+
+- Added the System Usability Scale scores for Klima's original app from the usability test on the team FigJam: 85, 72.5 and 42.5 from three participants, an average of about 67.
+- The deck's 40 to 90 result could not be traced on the board, so it stays off the page.
+
 ## 2026-10-08 · Klima structure locked, UI refresh required
 
 - Badge tier note deleted (Aaron): the garden stages replace the Bronze to Legendary tiers.
