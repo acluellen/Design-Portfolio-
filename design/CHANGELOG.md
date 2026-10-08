@@ -2,6 +2,10 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-08 · Klima prototype link removed
+
+- The prototype player asks visitors to sign in to Figma, so the link is off the page. A TODO in the file lists the two ways back: Aaron's own public copy of the file, or a screen recording.
+
 ## 2026-10-08 · Klima prototype link
 
 - Aaron confirmed the prototype file opens in a private window without signing in. Added a link under the garden table to the 2025 team prototype, starting on the Impact Hub so visitors land on Aaron's part.
