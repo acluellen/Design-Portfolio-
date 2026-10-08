@@ -1,5 +1,7 @@
 ---
 import PageLayout from "./PageLayout.astro";
+import Photo from "../components/site/Photo.astro";
+import type { PhotoKey } from "../data/photos";
 import type { CaseStudy } from "../lib/case-studies";
 
 interface Props {
@@ -9,19 +11,49 @@ interface Props {
 }
 
 const { study, prev, next } = Astro.props;
-const { title, summary, headline, role, team, timeline, program, tools, cover, status } = study.data;
+const { title, summary, headline, role, team, timeline, program, tools, cover, status, heroMedia } =
+  study.data;
 ---
 
 <PageLayout title={title} description={summary}>
   <article>
     <header class="container hero">
-      <p class="label hero__eyebrow">
-        Case study
-        {status === "draft" && <span class="hero__draft">Draft</span>}
-      </p>
-      <h1 translate="no">{title}</h1>
-      {headline && <p class="hero__headline">{headline}</p>}
-      <p class="hero__summary">{summary}</p>
+      <div class:list={["hero__top", { "hero__top--media": heroMedia }]}>
+        <div class="hero__intro">
+          <p class="label hero__eyebrow">
+            Case study
+            {status === "draft" && <span class="hero__draft">Draft</span>}
+          </p>
+          <h1 translate="no">{title}</h1>
+          {headline && <p class="hero__headline">{headline}</p>}
+          <p class="hero__summary">{summary}</p>
+        </div>
+        {
+          heroMedia && (
+            <figure class="hero__media">
+              <a class="hero__video" href={heroMedia.href} target="_blank" rel="noopener">
+                <Photo
+                  name={heroMedia.photo as PhotoKey}
+                  widths={[480, 720, 960]}
+                  sizes="(min-width: 56rem) 34rem, 92vw"
+                  ratio="4 / 3"
+                  cover={4 / 3}
+                />
+                <span class="hero__play" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+                </span>
+                <span class="visually-hidden">{heroMedia.label} (opens in a new tab)</span>
+              </a>
+              <figcaption class="hero__caption">
+                {heroMedia.caption}{" "}
+                <a href={heroMedia.href} target="_blank" rel="noopener">
+                  {heroMedia.linkText}<span class="visually-hidden"> (opens in a new tab)</span>
+                </a>
+              </figcaption>
+            </figure>
+          )
+        }
+      </div>
 
       <dl class="hero__facts">
         <div>
@@ -70,7 +102,7 @@ const { title, summary, headline, role, team, timeline, program, tools, cover, s
     </header>
 
     <div class="container">
-      <div class="reading flow body">
+      <div class="flow body">
         <slot />
       </div>
     </div>
@@ -101,6 +133,67 @@ const { title, summary, headline, role, team, timeline, program, tools, cover, s
     display: grid;
     gap: var(--space-5);
     padding-block: var(--space-9) var(--space-7);
+  }
+
+  .hero__top {
+    display: grid;
+    gap: var(--space-6);
+    align-items: center;
+  }
+
+  @media (min-width: 56rem) {
+    .hero__top--media {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: var(--space-8);
+    }
+  }
+
+  .hero__intro {
+    display: grid;
+    gap: var(--space-5);
+    align-content: start;
+  }
+
+  .hero__media {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .hero__video {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border: var(--rule-thin) solid var(--color-rule);
+    border-radius: var(--radius-media);
+  }
+
+  .hero__video :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .hero__play {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    display: grid;
+    place-items: center;
+    inline-size: var(--size-play);
+    block-size: var(--size-play);
+    translate: -50% -50%;
+    border-radius: 50%;
+    background: var(--color-overlay);
+    color: var(--color-always-dark-ink);
+    transition: background var(--duration-hover) var(--ease-standard);
+  }
+
+  .hero__video:hover .hero__play {
+    background: var(--color-brand);
+  }
+
+  .hero__caption {
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
   }
 
   .hero__eyebrow {
@@ -169,6 +262,18 @@ const { title, summary, headline, role, team, timeline, program, tools, cover, s
     padding-block-start: var(--space-4);
   }
 
+  /* Text keeps a reading measure. Blocks marked .is-wide (card grids, comparisons, panels)
+     use the full container width. */
+  .body > :global(*),
+  .body :global(.section__inner > *) {
+    max-width: var(--measure-reading);
+  }
+
+  .body > :global(.is-wide),
+  .body :global(.section__inner > .is-wide) {
+    max-width: none;
+  }
+
   /* Tables written in Markdown: comparisons and targets. Scroll sideways inside their own box
      on narrow screens instead of widening the page. */
   .body :global(table) {
@@ -193,7 +298,9 @@ const { title, summary, headline, role, team, timeline, program, tools, cover, s
     border-bottom-color: var(--color-rule-strong);
   }
 
-  .body :global(h3) {
+  /* Headings in the running text only. Headings inside cards and comparisons set their own space. */
+  .body > :global(h3),
+  .body :global(.section__inner > h3) {
     margin-block-start: var(--space-7);
   }
 
@@ -202,8 +309,21 @@ const { title, summary, headline, role, team, timeline, program, tools, cover, s
     margin-block-start: var(--space-8);
   }
 
-  .body > :global(p.label + h2) {
+  .body > :global(p.label + h2),
+  .body :global(.section__inner > p.label + h2) {
     margin-block-start: var(--space-2);
+  }
+
+  /* Each part of the story starts well clear of the one before. */
+  .body > :global(.section) {
+    margin-block-start: var(--space-8);
+  }
+
+  /* A small note under a block: method details, baselines. */
+  .body :global(.note) {
+    font-size: var(--step--1);
+    line-height: var(--leading-snug);
+    color: var(--color-ink-muted);
   }
 
   .pager {

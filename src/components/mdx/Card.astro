@@ -1,0 +1,64 @@
+---
+// One card in a CardGrid. All parts are optional: a small label, a title, a short verdict
+// shown as a tag, and the body in the slot.
+import Tag from "./Tag.astro";
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  verdict?: string;
+}
+
+const { eyebrow, title, verdict } = Astro.props;
+---
+
+<div class="card">
+  {eyebrow && <p class="label card__eyebrow">{eyebrow}</p>}
+  {title && <h3 class="card__title">{title}</h3>}
+  {verdict && <p class="card__verdict"><Tag>{verdict}</Tag></p>}
+  <div class="card__body">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    min-width: 0;
+    padding: var(--space-5);
+    background: var(--color-paper-raised);
+    border: var(--rule-thin) solid var(--color-rule);
+    border-radius: var(--radius-small);
+  }
+
+  /* On a light panel, cards take the page color so they still read as cards. */
+  :global(.section--panel) .card {
+    background: var(--color-paper);
+  }
+
+  .card__title {
+    margin: 0;
+    font-size: var(--step-1);
+    line-height: var(--leading-snug);
+    text-wrap: balance;
+  }
+
+  .card__verdict {
+    margin: 0;
+  }
+
+  .card__body > :global(* + *) {
+    margin-block-start: var(--space-3);
+  }
+
+  .card__body :global(strong:first-child) {
+    display: block;
+    font-size: var(--step--1);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+</style>

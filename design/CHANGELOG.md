@@ -2,6 +2,19 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-08 · AthenaScribe restructured to match the Claude Design board
+
+- Aaron asked for the AthenaScribe page to follow the structure of his Claude Design board (AthenaScribe Case Study, Main board). The words stay the same; the layout now follows the board:
+  - Hero: title, headline and summary on the left, the KRON4 segment on the right as a thumbnail with a play button that opens YouTube in a new tab.
+  - The story alternates plain parts and rounded light panels, like the board's white and gray bands. Panels reuse the home page panel look.
+  - The design target is a dark bar. Research methods are three cards with a "Why" label. The original idea and the district platform are two cards with an arrow and numbered finding markers. Each finding sits beside what the team did, with change tags and sources.
+  - Testing: the phone and laptop screens side by side with the Scan, Translate, Right person flow; the two research questions as cards with a verdict tag; the administrator quote beside the next version fixes.
+  - Redesign: a numbered step line and four refinement cards.
+- Case study body is now container wide. Text keeps the 68ch reading measure; blocks marked `is-wide` use the full width. Klima looks the same.
+- New blocks: Section, CardGrid, Card, Tag, Badge, Shift, Finding, ScreenPair, Steps, Split, Fixes; Callout gets a `strong` variant; frontmatter gets `heroMedia`. Documented in content/CONTENT.md.
+- New tokens: `--card-grid-min`, `--card-grid-min-small`, `--size-badge`, `--size-play`, `--color-overlay`.
+- Kept from the site system instead of the board: Inter and Atkinson type, the site colors, square cornered tags instead of pill tags (no pill shapes), and no closing "Email me" block, since the footer already has the email. Still TODO from the board: the live prototype link, the FigJam link and the walkthrough video.
+
 ## 2026-10-08 · Craft Education card image
 
 - Added Aaron's laptop and phone mockup of the Craft Education site as the card image. The source was 3:2, so it was extended at the top and bottom with its own background to 4:3 (1448 by 1086, like the other cards) instead of cropping the devices.

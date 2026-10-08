@@ -1,0 +1,144 @@
+---
+// Two cards side by side: what the project started as, and what research turned it into.
+// Each row compares one attribute. A row's `finding` number ties the change to a Finding below.
+import Badge from "./Badge.astro";
+
+interface Side {
+  label: string;
+  title: string;
+}
+
+interface Row {
+  label: string;
+  before: string;
+  after: string;
+  finding?: number;
+}
+
+interface Props {
+  before: Side;
+  after: Side;
+  rows: Row[];
+}
+
+const { before, after, rows } = Astro.props;
+---
+
+<div class="shift is-wide">
+  <div class="shift__card shift__card--before">
+    <p class="label">{before.label}</p>
+    <h3 class="shift__title">{before.title}</h3>
+    <dl class="shift__rows">
+      {rows.map((row) => (
+        <div class="shift__row">
+          <dt class="label">{row.label}</dt>
+          <dd>{row.before}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+
+  <div class="shift__arrow" aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+  </div>
+
+  <div class="shift__card shift__card--after">
+    <p class="label shift__after-label">{after.label}</p>
+    <h3 class="shift__title">{after.title}</h3>
+    <dl class="shift__rows">
+      {rows.map((row) => (
+        <div class="shift__row">
+          <dt class="label">{row.label}</dt>
+          <dd class="shift__after">
+            <span>{row.after}</span>
+            {row.finding && <Badge n={row.finding} label="Finding" />}
+          </dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</div>
+
+<style>
+  .shift {
+    display: grid;
+    gap: var(--space-4);
+    align-items: center;
+  }
+
+  @media (min-width: 48rem) {
+    .shift {
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    }
+  }
+
+  .shift__card {
+    display: grid;
+    gap: var(--space-3);
+    align-self: stretch;
+    padding: var(--space-5);
+    border: var(--rule-thin) solid var(--color-rule);
+    border-radius: var(--radius-small);
+  }
+
+  .shift__card--before {
+    color: var(--color-ink-muted);
+    background: transparent;
+    border-style: dashed;
+  }
+
+  .shift__card--after {
+    background: var(--color-paper-raised);
+    border-color: var(--color-rule-strong);
+  }
+
+  :global(.section--panel) .shift__card--after {
+    background: var(--color-paper);
+  }
+
+  .shift__after-label {
+    color: var(--color-accent);
+  }
+
+  .shift__title {
+    margin: 0;
+    font-size: var(--step-2);
+    color: var(--color-ink);
+  }
+
+  .shift__rows {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+  }
+
+  .shift__row {
+    display: grid;
+    gap: var(--space-1);
+    padding-block-start: var(--space-3);
+    border-top: var(--rule-thin) solid var(--color-rule);
+  }
+
+  .shift__row dd {
+    margin: 0;
+  }
+
+  .shift__after {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .shift__arrow {
+    justify-self: center;
+    color: var(--color-ink-muted);
+  }
+
+  /* Stacked: the arrow points down. */
+  @media (max-width: 47.99rem) {
+    .shift__arrow svg {
+      rotate: 90deg;
+    }
+  }
+</style>

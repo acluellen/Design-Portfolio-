@@ -1,0 +1,87 @@
+---
+// A phone screen and a laptop screen side by side, each with its own caption.
+// Optional `steps` show a short flow under the phone screen. Stacks on narrow screens.
+import type { ImageMetadata } from "astro";
+import { Picture } from "astro:assets";
+import Steps from "./Steps.astro";
+
+interface Props {
+  label?: string;
+  small: ImageMetadata;
+  smallAlt: string;
+  smallCaption: string;
+  large: ImageMetadata;
+  largeAlt: string;
+  largeCaption: string;
+  steps?: string[];
+}
+
+const { label, small, smallAlt, smallCaption, large, largeAlt, largeCaption, steps } = Astro.props;
+
+const widths = (img: ImageMetadata, list: number[]) =>
+  [...new Set([...list, img.width])].filter((w) => w <= img.width).sort((a, b) => a - b);
+---
+
+<figure class="pair is-wide">
+  {label && <p class="label">{label}</p>}
+  <div class="pair__row">
+    <div class="pair__item pair__item--small">
+      <Picture src={small} alt={smallAlt} widths={widths(small, [320, 480, 640])} sizes="(min-width: 48rem) 18rem, 70vw" formats={["avif", "webp"]} fallbackFormat="jpg" quality={70} loading="lazy" decoding="async" />
+      {steps && <Steps steps={steps} variant="inline" label="The flow, in order" />}
+      <p class="pair__caption">{smallCaption}</p>
+    </div>
+    <div class="pair__item">
+      <Picture src={large} alt={largeAlt} widths={widths(large, [640, 960, 1280])} sizes="(min-width: 76rem) 46rem, (min-width: 48rem) 60vw, 92vw" formats={["avif", "webp"]} fallbackFormat="jpg" quality={70} loading="lazy" decoding="async" />
+      <p class="pair__caption">{largeCaption}</p>
+    </div>
+  </div>
+</figure>
+
+<style>
+  .pair {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .pair__row {
+    display: grid;
+    gap: var(--space-6);
+    align-items: start;
+  }
+
+  @media (min-width: 48rem) {
+    .pair__row {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr);
+    }
+  }
+
+  .pair__item {
+    display: grid;
+    gap: var(--space-3);
+    min-width: 0;
+  }
+
+  .pair__item--small {
+    justify-items: start;
+  }
+
+  @media (max-width: 47.99rem) {
+    .pair__item--small :global(picture) {
+      inline-size: min(70%, 20rem);
+    }
+  }
+
+  .pair__item :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: var(--rule-thin) solid var(--color-rule);
+    border-radius: var(--radius-small);
+  }
+
+  .pair__caption {
+    margin: 0;
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
+  }
+</style>

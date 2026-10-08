@@ -1,0 +1,105 @@
+---
+// A research finding, an arrow, and what the team did about it. `changes` are the rows of the
+// Shift above that this finding changed. The slot holds what the team did.
+import Badge from "./Badge.astro";
+import Tag from "./Tag.astro";
+import Sources from "./Sources.astro";
+
+interface Props {
+  n: number;
+  finding: string;
+  changes?: string[];
+  sources?: string;
+}
+
+const { n, finding, changes = [], sources } = Astro.props;
+---
+
+<div class="finding is-wide">
+  <div class="finding__side">
+    <p class="finding__head"><Badge n={n} /><span class="label">Finding</span></p>
+    <p class="finding__text">{finding}</p>
+  </div>
+
+  <div class="finding__arrow" aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+  </div>
+
+  <div class="finding__side">
+    <p class="finding__head"><Badge n={n} /><span class="label">What the team did</span></p>
+    <div class="finding__body"><slot /></div>
+    {
+      changes.length > 0 && (
+        <p class="finding__changes">
+          <span class="label">Changes</span>
+          {changes.map((change) => <Tag>{change}</Tag>)}
+        </p>
+      )
+    }
+    {sources && <Sources>{sources}</Sources>}
+  </div>
+</div>
+
+<style>
+  .finding {
+    display: grid;
+    gap: var(--space-4);
+    padding-block-start: var(--space-5);
+    border-top: var(--rule-thin) solid var(--color-rule-strong);
+  }
+
+  @media (min-width: 48rem) {
+    .finding {
+      grid-template-columns: minmax(0, 5fr) auto minmax(0, 6fr);
+      gap: var(--space-6);
+    }
+  }
+
+  .finding__side {
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
+  }
+
+  .finding__head {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+    margin: 0;
+  }
+
+  .finding__text {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    line-height: var(--leading-snug);
+    color: var(--color-ink);
+  }
+
+  .finding__body > :global(* + *) {
+    margin-block-start: var(--space-3);
+  }
+
+  .finding__changes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: center;
+    margin: 0;
+  }
+
+  .finding__arrow {
+    color: var(--color-ink-muted);
+    padding-block-start: var(--space-6);
+  }
+
+  @media (max-width: 47.99rem) {
+    .finding__arrow {
+      padding-block-start: 0;
+    }
+
+    .finding__arrow svg {
+      rotate: 90deg;
+    }
+  }
+</style>

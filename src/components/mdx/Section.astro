@@ -1,0 +1,27 @@
+---
+// A part of the story. `panel` sets it on a rounded light panel, like the home page sections,
+// so panels and plain parts alternate down the page. Text inside keeps the reading measure.
+interface Props {
+  tone?: "plain" | "panel";
+}
+
+const { tone = "plain" } = Astro.props;
+---
+
+<section class:list={["section", "is-wide", `section--${tone}`]}>
+  <div class="section__inner flow">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .section--panel {
+    padding: var(--panel-padding);
+    background: var(--color-band);
+    border-radius: var(--radius-section);
+  }
+
+  .section__inner > :global(:first-child) {
+    margin-block-start: 0;
+  }
+</style>

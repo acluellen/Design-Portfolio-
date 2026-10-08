@@ -98,6 +98,13 @@
   --card-lift: 3px; /* hover rise */
   --card-image-zoom: 1.03; /* hover zoom on card images */
 
+  /* Case study blocks */
+  --card-grid-min: 15rem; /* narrowest card in a case study card grid before it wraps */
+  --card-grid-min-small: 11rem; /* the same for short cards, like four refinements in a row */
+  --size-badge: 1.5rem; /* numbered circles: findings and steps */
+  --size-play: 4.5rem; /* play button over a video thumbnail */
+  --color-overlay: rgb(24 23 21 / 0.82); /* behind the play icon, readable on any frame */
+
   /* Media and controls */
   --size-portrait: clamp(16rem, 4rem + 20vw, 26rem); /* hero portrait width from 48rem up */
   --size-logo: 3rem;

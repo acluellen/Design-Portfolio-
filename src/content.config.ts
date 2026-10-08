@@ -26,6 +26,16 @@ const caseStudies = defineCollection({
     program: z.string().optional(),
     tools: z.array(z.string()).default([]),
     cover: z.object({ src: z.string(), alt: z.string() }).optional(),
+    /** A video beside the hero text: a photo slot from src/data/photos.ts, linked to the video. */
+    heroMedia: z
+      .object({
+        photo: z.string(),
+        href: z.string().url(),
+        label: z.string(),
+        caption: z.string(),
+        linkText: z.string(),
+      })
+      .optional(),
     order: z.number(),
     status: z.enum(["draft", "published"]).default("draft"),
     tags: z.array(z.string()).default([]),

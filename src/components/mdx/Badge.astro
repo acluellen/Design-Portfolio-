@@ -1,0 +1,28 @@
+---
+// A numbered circle that ties a row to a finding or marks a step. Screen readers hear the label
+// and the number, for example "Finding 1".
+interface Props {
+  n: number | string;
+  label?: string;
+}
+
+const { n, label } = Astro.props;
+---
+
+<span class="badge">{label && <span class="visually-hidden">{label} </span>}{n}</span>
+
+<style>
+  .badge {
+    display: inline-grid;
+    flex-shrink: 0;
+    place-items: center;
+    inline-size: var(--size-badge);
+    block-size: var(--size-badge);
+    font-size: var(--step--1);
+    font-weight: var(--weight-semibold);
+    line-height: 1;
+    color: var(--color-paper);
+    background: var(--color-ink);
+    border-radius: 50%;
+  }
+</style>

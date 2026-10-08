@@ -11,7 +11,17 @@ import Team from "./Team.astro";
 import Sources from "./Sources.astro";
 import Compare from "./Compare.astro";
 import Screens from "./Screens.astro";
+import Section from "./Section.astro";
+import CardGrid from "./CardGrid.astro";
+import Card from "./Card.astro";
+import Tag from "./Tag.astro";
+import Shift from "./Shift.astro";
+import Finding from "./Finding.astro";
+import ScreenPair from "./ScreenPair.astro";
+import Steps from "./Steps.astro";
+import Split from "./Split.astro";
+import Fixes from "./Fixes.astro";
 
-export const mdxComponents = { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team, Sources, Compare, Screens };
+export const mdxComponents = { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team, Sources, Compare, Screens, Section, CardGrid, Card, Tag, Shift, Finding, ScreenPair, Steps, Split, Fixes };
 
-export { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team, Sources, Compare, Screens };
+export { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team, Sources, Compare, Screens, Section, CardGrid, Card, Tag, Shift, Finding, ScreenPair, Steps, Split, Fixes };

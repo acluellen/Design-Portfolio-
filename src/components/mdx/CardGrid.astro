@@ -1,0 +1,26 @@
+---
+// Cards side by side, wrapping to fewer columns on narrow screens.
+// `small` fits more short cards in a row, like four refinements.
+interface Props {
+  size?: "regular" | "small";
+}
+
+const { size = "regular" } = Astro.props;
+---
+
+<div class:list={["card-grid", "is-wide", { "card-grid--small": size === "small" }]}>
+  <slot />
+</div>
+
+<style>
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-grid-min)), 1fr));
+    gap: var(--space-5);
+    align-items: stretch;
+  }
+
+  .card-grid--small {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-grid-min-small)), 1fr));
+  }
+</style>

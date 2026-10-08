@@ -47,6 +47,21 @@ Available in every case study with no imports.
 - A missing `source` on `<Quote>` or `<Stat>` fails the build. `source="TODO"` builds but renders "Source needed" in the accent color, so it stands out in review.
 - `<Callout>` for one key point per section at most.
 - `<Contribution>` with `<Mine>` and `<Team>` inside, to split ownership honestly.
+- `<Callout variant="strong">` for the one design target a section builds to: a dark bar.
+
+Story structure blocks (built for AthenaScribe, usable anywhere). Text keeps the reading measure; these blocks use the full width.
+
+- `<Section tone="panel">` wraps one part of the story on a rounded light panel. Plain `<Section>` adds the same space above without a panel. Alternate them down the page.
+- `<CardGrid>` with `<Card eyebrow title verdict>` inside, for methods, research questions or refinements side by side. Start a card's text with `**Why**` to show a small label. `<CardGrid size="small">` fits four short cards in a row.
+- `<Shift before={{ label, title }} after={{ label, title }} rows={[{ label, before, after, finding }]} />` for "the original idea" next to "what research led to". `finding` is the number of the `<Finding>` that changed that row.
+- `<Finding n finding changes sources>What the team did</Finding>` for one finding, an arrow, and the team's response.
+- `<ScreenPair label small smallAlt smallCaption large largeAlt largeCaption steps />` for a phone screen next to a laptop screen. `steps` shows a short flow under the phone.
+- `<Steps steps={[...]} label />` for a numbered flow down a line.
+- `<Split>` puts two blocks side by side, such as a `<Quote>` next to `<Fixes>`.
+- `<Fixes label items={[{ severity, text }]} />` for planned changes with severity tags.
+- `<Tag>` for a small square tag inside text.
+- `heroMedia` in the frontmatter puts a video thumbnail beside the hero text: `photo` (a key from `src/data/photos.ts`), `href`, `label` (for screen readers), `caption`, `linkText`.
+- `<p class="note">` for a small muted line, such as method details under a test.
 
 ## 4. Writing rules
 

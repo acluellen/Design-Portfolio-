@@ -1,12 +1,14 @@
 ---
 interface Props {
   label?: string;
+  /** `strong`: a dark bar that stands out, for the one target or claim the section builds to. */
+  variant?: "line" | "strong";
 }
 
-const { label = "Key point" } = Astro.props;
+const { label = "Key point", variant = "line" } = Astro.props;
 ---
 
-<aside class="callout">
+<aside class:list={["callout", { "callout--strong surface-always-dark": variant === "strong" }]}>
   <p class="label callout__label">{label}</p>
   <div class="callout__body">
     <slot />
@@ -20,6 +22,14 @@ const { label = "Key point" } = Astro.props;
     padding-block: var(--space-5);
     border-block: var(--rule-thin) solid var(--color-rule);
     border-block-start: var(--rule-thick) solid var(--color-accent);
+  }
+
+  .callout--strong {
+    padding: var(--space-5) var(--space-6);
+    background: var(--color-paper);
+    color: var(--color-ink);
+    border: var(--rule-thin) solid var(--color-dark-panel-edge);
+    border-radius: var(--radius-small);
   }
 
   .callout__label {

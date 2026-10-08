@@ -1,0 +1,79 @@
+---
+// Numbered steps in order. `vertical` (default) lists them down a line with numbered circles;
+// `inline` runs short steps across with arrows, like "Scan, Translate, Right person".
+import Badge from "./Badge.astro";
+
+interface Props {
+  steps: string[];
+  variant?: "vertical" | "inline";
+  /** Read by screen readers before the list. */
+  label?: string;
+}
+
+const { steps, variant = "vertical", label } = Astro.props;
+---
+
+<ol class:list={["steps", `steps--${variant}`]} aria-label={label}>
+  {
+    steps.map((step, i) => (
+      <li class="steps__item">
+        {variant === "vertical" ? <Badge n={i + 1} /> : i > 0 && <span class="steps__arrow" aria-hidden="true">→</span>}
+        <span class="steps__text">{step}</span>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .steps--vertical {
+    position: relative;
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  /* The line that joins the circles. */
+  .steps--vertical::before {
+    content: "";
+    position: absolute;
+    inset-block: calc(var(--size-badge) / 2);
+    inset-inline-start: calc(var(--size-badge) / 2 - var(--rule-thin) / 2);
+    border-inline-start: var(--rule-thin) solid var(--color-rule-strong);
+  }
+
+  .steps--vertical .steps__item {
+    position: relative;
+    display: flex;
+    gap: var(--space-3);
+    align-items: center;
+  }
+
+  .steps--inline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    align-items: center;
+    font-size: var(--step--1);
+  }
+
+  .steps--inline .steps__item {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+  }
+
+  .steps--inline .steps__text {
+    padding: var(--space-1) var(--space-2);
+    border: var(--rule-thin) solid var(--color-rule-strong);
+    border-radius: var(--radius-small);
+  }
+
+  .steps__arrow {
+    color: var(--color-ink-muted);
+  }
+</style>

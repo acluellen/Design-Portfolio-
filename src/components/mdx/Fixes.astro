@@ -1,0 +1,49 @@
+---
+// A short list of planned changes, each with a severity tag. `items` pairs a severity with the change.
+import Tag from "./Tag.astro";
+
+interface Props {
+  label?: string;
+  items: { severity: number; text: string }[];
+}
+
+const { label, items } = Astro.props;
+---
+
+<div class="fixes">
+  {label && <p class="label">{label}</p>}
+  <ul class="fixes__list">
+    {
+      items.map((item) => (
+        <li class="fixes__item">
+          <Tag>Severity {item.severity}</Tag>
+          <span>{item.text}</span>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .fixes {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .fixes__list {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .fixes__item {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    gap: var(--space-3);
+    align-items: baseline;
+    padding-block-start: var(--space-3);
+    border-top: var(--rule-thin) solid var(--color-rule);
+  }
+</style>

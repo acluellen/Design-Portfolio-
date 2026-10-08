@@ -1,0 +1,18 @@
+---
+// A small neutral tag: a verdict, a severity, or what a finding changed. Square corners, not a pill.
+---
+
+<span class="tag"><slot /></span>
+
+<style>
+  .tag {
+    display: inline-block;
+    padding: var(--space-1) var(--space-2);
+    font-size: var(--step--1);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-snug);
+    color: var(--color-ink);
+    background: var(--color-rule);
+    border-radius: var(--radius-small);
+  }
+</style>
