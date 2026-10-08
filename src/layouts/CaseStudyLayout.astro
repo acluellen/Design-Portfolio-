@@ -12,7 +12,7 @@ interface Props {
 }
 
 const { study, prev, next } = Astro.props;
-const { title, summary, headline, role, team, timeline, program, tools, cover, status, heroMedia, prototype } =
+const { title, summary, headline, role, team, timeline, client, program, tools, cover, status, heroMedia, prototype } =
   study.data;
 ---
 
@@ -87,6 +87,14 @@ const { title, summary, headline, role, team, timeline, program, tools, cover, s
                   ))}
                 </ul>
               </dd>
+            </div>
+          )
+        }
+        {
+          client && (
+            <div>
+              <dt class="label">Client</dt>
+              <dd>{client}</dd>
             </div>
           )
         }

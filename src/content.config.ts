@@ -22,6 +22,8 @@ const caseStudies = defineCollection({
     role: z.string(),
     team: z.array(z.object({ name: z.string(), role: z.string() })),
     timeline: z.string(),
+    /** The client, for client projects. */
+    client: z.string().optional(),
     /** The program the work was part of, such as an apprenticeship. */
     program: z.string().optional(),
     tools: z.array(z.string()).default([]),

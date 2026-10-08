@@ -1,17 +1,259 @@
 ---
-# Draft stub so the home page card has an order value. Every TODO needs Aaron's facts.
+# Draft from the team's final presentation (36 slides and speaker notes), the client brief, the kickoff
+# meeting notes, the research and usability notes, and Aaron's answers, Oct 8 2026.
+# Participants appear by role only. The project brief and research notes hold their names and contacts;
+# never publish those.
 title: "Craft Education"
-summary: "TODO"
+headline: "Clear paths to care, for parents and providers."
+summary: "Craft Education brings behavioral therapy for autism and developmental delays to families across Africa, with assessments and support through WhatsApp. I led a two person team that found why its website wasn't turning visitors into sign ups, then redesigned it around clear paths for parents and providers."
 card:
-  label: "Client project · General Assembly"
-  description: "Redesigned an award winning teletherapy service so parents trust it enough to start, and stay."
-  detail: "African Union innovation award winner · Full case study coming soon"
-inProgress: true
-role: "TODO"
-team: []
-timeline: "TODO"
+  label: "Team lead · Client project, General Assembly"
+  description: "Researched why Craft Education's website wasn't turning visitors into sign ups, then redesigned it around clear paths for parents and providers."
+  detail: "Client won an African Union education innovation award · 10 research participants · 25 heuristic issues"
+role: "Team lead, UX research and product design"
+team:
+  - name: "D. Brandt"
+    role: "UX research and design"
+timeline: "6 weeks, April to June 2025"
+client: "Craft Education, Accra, Ghana"
+program: "General Assembly"
+tools: ["FigJam", "Figma"]
+prototype: "TODO" # Aaron to send a public prototype link.
 order: 3
 status: "draft"
 ---
 
-TODO
+import beforeHome from "../../assets/case-studies/craft-education/before-home.png";
+import beforeWhatsapp from "../../assets/case-studies/craft-education/before-whatsapp.png";
+import beforeChat from "../../assets/case-studies/craft-education/before-chat.png";
+import beforeReferral from "../../assets/case-studies/craft-education/before-referral.png";
+import journeyParent from "../../assets/case-studies/craft-education/journey-parent.png";
+import affinityMap from "../../assets/case-studies/craft-education/affinity-map.png";
+import personaAyisha from "../../assets/case-studies/craft-education/persona-ayisha.png";
+import personaPiesie from "../../assets/case-studies/craft-education/persona-piesie.png";
+import afterHome from "../../assets/case-studies/craft-education/after-home.png";
+import afterParents from "../../assets/case-studies/craft-education/after-parents.png";
+import afterLearning from "../../assets/case-studies/craft-education/after-learning.png";
+import afterAboutTools from "../../assets/case-studies/craft-education/after-about-tools.png";
+import afterProvider from "../../assets/case-studies/craft-education/after-provider.png";
+import afterReferral from "../../assets/case-studies/craft-education/after-referral.png";
+import afterLearningAudio from "../../assets/case-studies/craft-education/after-learning-audio.png";
+
+<Callout label="About this project">A General Assembly client project for Craft Education, based in Accra, Ghana. In 2021 Craft won an African Union education innovation award, and in 2023 HundrED named it one of 100 education innovations to watch. This page shows the redesign the team proposed and tested. It does not report launch results.</Callout>
+
+{/* Award: African Union, Innovating Education in Africa, RewirEd Summit 2021, a $100,000 grant (AU press
+    release). HundrED: the banner on Craft's own site, captured in the deck. */}
+
+<Contribution>
+  <Mine label="What I led">
+    - I was the team lead, named by our General Assembly program manager as I took on more of the project.
+    - The heuristic evaluation, stakeholder and user research, synthesis, information architecture, the parent and provider journeys, and which usability problems to fix first.
+    - Client communication, and usability testing.
+  </Mine>
+  <Team label="What we did together">
+    - David and I built the affinity map, the personas, the problem statements, ideation and priorities together.
+    - David also ran research and moderated testing sessions.
+  </Team>
+</Contribution>
+
+<Section tone="panel">
+
+## People found Craft, then couldn't tell what to do next.
+
+Craft runs assessments and treatment plans through Hubeta, an AI assistant on WhatsApp, and supports therapists with Hunu, its care platform. The website is the front door to both. Referrals weren't growing beyond Ghana, and Craft's own brief named the reason:
+
+<Quote source="Craft Education project brief">"Users are unable to understand the impact of our product and do not know where the CTA is to know what to do next."</Quote>
+
+At kickoff, Craft's CEO set the bar plainly: "If we get one signup, we have succeeded."
+
+<Callout label="From the brief" variant="strong">Clear user journeys for each product: who it is for and what it does.</Callout>
+
+</Section>
+
+<Section>
+
+## A heuristic review, a competitor study and 10 people's stories.
+
+<CardGrid>
+  <Card title="Heuristic evaluation">
+    **Why** Craft asked for an audit first. The team checked every page against Nielsen Norman Group's 10 usability heuristics.
+  </Card>
+  <Card title="Competitor task analysis">
+    **Why** To see how Elemy, MySkills and Hi Rasmus guide parents and providers to the right place, and how they earn trust before asking for anything.
+  </Card>
+  <Card title="Interviews and usability tests">
+    **Why** To hear from the people the site serves: parents in North America, and providers, mostly in Ghana, plus a social worker and a speech pathologist in the US.
+  </Card>
+</CardGrid>
+
+<div class="is-wide">
+<StatGroup>
+  <Stat value="25" label="usability issues across the site" source="Team heuristic evaluation" />
+  <Stat value="10" label="parents and providers interviewed and tested" source="Team research" />
+  <Stat value="3" label="competitors studied task by task" source="Team competitor analysis" />
+</StatGroup>
+</div>
+
+</Section>
+
+<Section tone="panel">
+
+## Three problems blocked every path.
+
+<CardGrid>
+  <Card eyebrow="Heuristic" title="Match between system and the real world">
+    The most common problem. Product names like Hunu and Hubeta meant nothing to a first time visitor.
+  </Card>
+  <Card eyebrow="Heuristic" title="Recognition rather than recall">
+    People had to remember where they came from to understand where they were. Picking a role led back to the same general content.
+  </Card>
+  <Card eyebrow="Heuristic" title="Visibility of system status">
+    No clear next step. Get Started sent people to WhatsApp with no warning, and the chat opened with no instructions.
+  </Card>
+</CardGrid>
+
+<Screens
+  screens={[
+    { src: beforeHome, label: "Home", alt: "Craft's original mobile homepage: Better Care, In African Homes, with a photo of a father reading with his child and a Get Started button" },
+    { src: beforeWhatsapp, label: "Sign up", alt: "The original sign up step: a Hunu Behavior Therapy screen with a Continue to Chat button that opens WhatsApp" },
+    { src: beforeChat, label: "Chat", alt: "The original Hubeta chat window on the site: a logo and an empty text field with no instructions" },
+    { src: beforeReferral, label: "Referral", alt: "The original referral form, Kindly fill this form to get started, with fields for a single patient" },
+  ]}
+  caption="The original site, as participants met it."
+/>
+
+</Section>
+
+<Section>
+
+## Every participant hit a wall.
+
+The team asked people to say what the site was for, find what Craft offers, work out what Hunu and Hubeta are, and sign up. Not one participant completed a key task. No parent found the chat button without a prompt, and once shown it, parents took it for site help, not the assessment.
+
+<Split>
+  <Quote source="A parent, usability testing">"I'm lost. I don't know what I'm doing."</Quote>
+  <Quote source="A provider, usability testing">"It feels like a ghost site. I don't know who I'm sending this to."</Quote>
+</Split>
+
+<Figure
+  src={journeyParent}
+  alt="Journey map of a parent's visit to the original site: screens across the top, then his actions, a line of feelings that drops after he is sent to WhatsApp, his quotes, the heuristic issues and possible solutions"
+  caption="A parent's journey through the original site. He arrived hopeful, was sent to WhatsApp without warning, and left still asking who Craft was."
+/>
+
+Providers needed proof before they would refer anyone: "I wouldn't refer a patient without knowing what this platform really does." Parents needed a guide. They described years of figuring things out alone:
+
+<Quote source="A parent, interview">"There really is no roadmap… you're on your own"</Quote>
+
+The competitors showed the fix. Each one says plainly who every path is for, keeps reassuring people along the way, and shows partners, numbers and expert voices before asking for any personal information.
+
+</Section>
+
+<Section tone="panel">
+
+## Two personas, and what each one needed.
+
+<Figure
+  src={affinityMap}
+  alt="Affinity map in FigJam: the Diagnosis and Early Interventions board, with interview quotes on sticky notes grouped by need and pain point"
+  caption="The affinity map, built from interview and testing notes."
+/>
+
+<Compare
+  before={personaAyisha}
+  beforeAlt="Persona card for Ayisha, the overwhelmed mother: a mother of three in Accra whose middle child is not talking yet, with her behaviors, needs, pain points, technology and languages"
+  beforeLabel="Ayisha, a parent"
+  after={personaPiesie}
+  afterAlt="Persona card for Piesie, the dedicated therapist: a clinician in Accra who juggles a caseload and needs tools she can trust, with her behaviors, needs, pain points and technology"
+  afterLabel="Piesie, a provider"
+  caption="Composite personas built from the research."
+/>
+
+- **For Ayisha:** how might we guide her step by step through signing up, show what happens after Get Started, and explain autism and therapy without jargon?
+- **For Piesie:** how might we explain what Craft, Hunu and Hubeta each do, and show trust signals, like staff, partners and professional standards, right where she refers or signs up?
+
+</Section>
+
+<Section>
+
+<p class="label">Redesign</p>
+
+## One path for each person, and a reason to trust it.
+
+<Shift
+  before={{ label: "The original site", title: "One door for everyone" }}
+  after={{ label: "The redesign", title: "A path for each role" }}
+  rows={[
+    { label: "Sign up", before: "Sends people to WhatsApp with no warning", after: "Hubeta starts on the parents page, steps shown first" },
+    { label: "Who it is for", before: "Role buttons lead back to the same content", after: "Each role gets its own page and next step" },
+    { label: "Hunu and Hubeta", before: "Product names with no explanation", after: "The About page explains each tool" },
+    { label: "Trust", before: "Impact claims everywhere, no team shown", after: "Mission, team and partners up front" },
+    { label: "Referrals", before: "One patient per form", after: "Refer more than one patient at once" },
+  ]}
+/>
+
+### The parent path
+
+Ayisha lands on a homepage that says who Craft is for, with her role first. The parents page explains what happens next, then Hubeta starts right on the page. In about ten minutes she has begun her assessment and learned how Hubeta works by using it. When she finishes, Hubeta sends her to the Learning Center, so she can prepare for the call from Craft's team.
+
+<Screens
+  screens={[
+    { src: afterHome, label: "1. Home", alt: "Redesigned homepage: Affordable Therapy Support for African Families, with buttons for parents, educators and providers, then Getting Started in three steps" },
+    { src: afterParents, label: "2. Parents", alt: "Redesigned parents page: Our Approach in four numbered steps, then Let's Begin, where Hubeta, the online therapy assistant, starts the assessment in a form on the page" },
+    { src: afterLearning, label: "3. Learn", alt: "The Learning Center: What is Autism, with booklets to download, audio to listen to, short videos and frequently asked questions" },
+    { src: afterAboutTools, label: "4. About", alt: "The About page tools section: Hunu, for care teams, and Hubeta, the assessment assistant on WhatsApp, each with a short list of what it does" },
+  ]}
+  caption="The parent path: understand, meet Hubeta, begin the assessment, learn while waiting."
+/>
+
+<Figure
+  src={afterLearningAudio}
+  narrow
+  alt="Learning Center detail: What is Autism, with a booklet to download in English and audio to listen to in English, Hausa and Twi"
+  caption="Booklets to download and audio in local languages, so families can share what they learn."
+/>
+
+### The provider path
+
+Piesie sees what Craft offers care teams, reads who runs it, and can ask to partner in one form. Referring a patient moved to a button at the top, apart from the sign up forms, and one referral can now cover more than one patient.
+
+<Compare
+  before={afterProvider}
+  beforeAlt="Redesigned provider page: accessible assistance for health providers, four cards for case management, evidence based guidance, team building and family support, a clinician's quote, and a Partner With Us form"
+  beforeLabel="Provider page"
+  after={afterReferral}
+  afterAlt="Redesigned referral form with sections for the provider's information and for each patient being referred"
+  afterLabel="Referral form"
+  caption="The provider path: understand Craft, then partner or refer."
+/>
+
+</Section>
+
+<Section tone="panel">
+
+## Testing the redesign
+
+The team tested the mid fidelity prototype with returning participants from the first round, including a therapist. They completed the parent and provider tasks that had stopped everyone before. The therapist's concerns led to one more change: the About page now shows Hubeta in use on a phone, so the tools are easier to tell apart.
+
+{/* TODO: the number of people who tested the redesign. The deck documents 2; Aaron says there were 3
+    more without notes in the drive. Add a count only once it is confirmed. */}
+
+<p class="label">The handoff: a roadmap for Craft</p>
+
+<CardGrid size="small">
+  <Card title="Right away">Homepage clarity, a path for each role, and basic trust signals.</Card>
+  <Card title="In 3 months">Full trust content and onboarding for professionals.</Card>
+  <Card title="In 6 months">Personalization, and content shaped for local languages and culture.</Card>
+</CardGrid>
+
+The redesign was built to help people sign up with confidence. Craft had not launched it by the end of the project, so sign ups were not measured.
+
+</Section>
+
+<Section>
+
+## Reflection
+
+Craft's product was already helping families on WhatsApp. The website's job was to get people there with enough trust to start, and that came down to plain answers: who this is for, who is behind it, and what happens next. The parents the team interviewed lived in North America. Next, I would test the parent path with families in Ghana, on their phones, since that is how most of Craft's users reach it.
+
+</Section>

@@ -2,6 +2,15 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-08 · Craft Education case study draft
+
+- Draft at `/work/craft-education/`, written from the team's final deck (36 slides and speaker notes), the client brief, the kickoff meeting notes, the research and usability notes, and Aaron's answers. Uses the AthenaScribe blocks: panels, method cards, stats, the three heuristic problems with the original screens, participant quotes, the journey map, affinity map and personas, a before and after comparison, the parent path as four screens, the provider path, testing, the roadmap handed to Craft, and a reflection.
+- Role: team lead, UX research and product design (named lead by the General Assembly program manager), with David Brandt credited for shared work and session moderation. Timeline: 6 weeks, April to June 2025 (kickoff April 23, presentation June 7). Client: Craft Education, Accra, Ghana. New optional `client` field shows in the hero facts.
+- Facts checked: the African Union award is the 2021 Innovating Education in Africa grant at the RewirEd Summit (AU press release); HundrED's 100 innovations to watch, 2023, from Craft's own site banner in the deck.
+- Participants appear by role only. Real names from the research notes (including the two journey map titles) and the contact list in the brief are never published. Quotes are verbatim from the deck and the kickoff notes.
+- Left out on purpose: "Every recommendation proven by competitor success" and "zero sign ups to competitive conversion rates", since neither was measured. The number of people who tested the redesign stays out until confirmed (the deck documents 2; Aaron recalls 3 more).
+- Card: new label, description and detail line, and the ChatGPT mockup is replaced with three real screens from the redesign on a light teal field. Prototype link is a placeholder.
+
 ## 2026-10-08 · AthenaScribe placeholders for the missing links and video
 
 - Built the three missing pieces from the board with placeholders, so Aaron can drop in the real ones: "View live prototype" under the hero summary and again beside the redesign steps, "View the affinity map in FigJam" under the research, and a phone shaped walkthrough video beside the redesign steps (the board's two column layout).

@@ -63,6 +63,7 @@ Story structure blocks (built for AthenaScribe, usable anywhere). Text keeps the
 - `heroMedia` in the frontmatter puts a video thumbnail beside the hero text: `photo` (a key from `src/data/photos.ts`), `href`, `label` (for screen readers), `caption`, `linkText`.
 - `<p class="note">` for a small muted line, such as method details under a test.
 - `<ActionLink label href variant />` for a button that links out (prototype, FigJam). `<VideoSlot src label caption />` for a phone screen recording from `public/video/`. Without `href` or `src` both show a dashed "Placeholder" in dev and review previews and nothing in production, so a missing link never reaches visitors.
+- `client` in the frontmatter shows a Client fact in the hero, for client projects.
 - `prototype` in the frontmatter adds "View live prototype" under the hero summary. `prototype: "TODO"` shows the placeholder.
 
 ## 4. Writing rules

@@ -28,7 +28,7 @@ export const photos: Record<PhotoKey, { alt: string; approved: boolean }> = {
     approved: false,
   },
   "work-craft-education": {
-    alt: "Craft Education's site on a laptop and a phone: Stronger support for every learner, with cards for families, educators and providers and a Talk to us on WhatsApp button.",
+    alt: "Three screens from the Craft Education redesign: the homepage with paths for parents, educators and providers, the parents page where Hubeta starts the assessment, and the Learning Center.",
     approved: false,
   },
   "coaching-1": {
