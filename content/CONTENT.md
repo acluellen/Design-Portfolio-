@@ -39,6 +39,7 @@ Available in every case study with no imports.
 - `<Figure src alt caption />` for images. `alt` is required. Import the image at the top of the file (`import shot from "../../assets/case-studies/<slug>/shot.webp"`, then `src={shot}`) so it is optimized. Add `narrow` for tall phone screens.
 - `<Sources>` for a short list of sources under a finding, separated by " · ".
 - `<Compare before beforeAlt after afterAlt beforeLabel afterLabel caption />` for a before and after pair of imported images, side by side.
+- `<Screens screens={[{ src, alt, label }]} caption />` for a short flow of imported phone screens in order, each with a step label.
 - Markdown tables work for comparisons and targets.
 - `<Quote source>` for participant or stakeholder quotes. `source` is required. Participants are anonymous by role.
 - `<Stat value label source />` for numbers. `source` is required. Use `source="untraceable"` when the number cannot be traced; it renders "Source not traceable."

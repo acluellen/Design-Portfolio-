@@ -2,6 +2,12 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-08 · Klima challenge loop screens and answers
+
+- Aaron's answers: the competitor is Planet Wild (not My Planet 8), the teammate is May (not Maya), and the 14 interviews stand (the board was not updated). The badge tier table stays out until Aaron reviews it.
+- New `Screens` component: phone screens in order with a small step label each, four across on wide screens and two across on phones.
+- Klima draft gets a "One challenge a day" section with four of Aaron's 2025 gamification screens (choose, log, track, earn), cropped to one phone screen each. They came through chat, so they are about 380 pixels wide; swap in full size exports later.
+
 ## 2026-10-08 · Klima research rebuilt as tables from the FigJam board
 
 - Read the team FigJam directly through the Figma connector, so no PNG exports were needed. Research artifacts are rebuilt as Markdown tables instead of screenshots: they stay sharp, read on phones (they scroll sideways inside the table) and work with screen readers.

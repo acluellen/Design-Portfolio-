@@ -10,7 +10,8 @@ import Mine from "./Mine.astro";
 import Team from "./Team.astro";
 import Sources from "./Sources.astro";
 import Compare from "./Compare.astro";
+import Screens from "./Screens.astro";
 
-export const mdxComponents = { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team, Sources, Compare };
+export const mdxComponents = { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team, Sources, Compare, Screens };
 
-export { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team, Sources, Compare };
+export { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team, Sources, Compare, Screens };

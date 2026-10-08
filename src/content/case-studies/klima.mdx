@@ -14,7 +14,7 @@ role: "Product designer, gamification lead"
 team:
   - name: "Isabel"
     role: "Onboarding"
-  - name: "Maya"
+  - name: "May"
     role: "Exploration"
 timeline: "6 weeks, March to April 2025"
 program: "General Assembly"
@@ -30,6 +30,10 @@ import beforeHome from "../../assets/case-studies/klima/before-home.png";
 import afterHome from "../../assets/case-studies/klima/after-home.png";
 import beforeMultiply from "../../assets/case-studies/klima/before-multiply.png";
 import afterImpactHub from "../../assets/case-studies/klima/after-impact-hub.png";
+import screenDailyChallenges from "../../assets/case-studies/klima/screen-daily-challenges.png";
+import screenChallengeSelected from "../../assets/case-studies/klima/screen-challenge-selected.png";
+import screenStreakTracker from "../../assets/case-studies/klima/screen-streak-tracker.png";
+import screenBadgeDetails from "../../assets/case-studies/klima/screen-badge-details.png";
 
 <Callout label="About this project">This was an independent General Assembly redesign exercise using Klima, an existing product. Klima did not commission it and was not involved with the team.</Callout>
 
@@ -41,7 +45,7 @@ import afterImpactHub from "../../assets/case-studies/klima/after-impact-hub.png
   <Team label="What the team did together">
     - User interviews and usability tests, split across the team.
     - Affinity mapping, synthesis, personas, problem statements, How Might We questions, Crazy 8s, feature prioritization, ideation and testing.
-    - Isabel led onboarding. Maya led project exploration.
+    - Isabel led onboarding. May led project exploration.
   </Team>
 </Contribution>
 
@@ -70,7 +74,7 @@ The team mapped the existing journey screen by screen, from calculating a carbon
 
 ### Competitive analysis
 
-I compared Klima with direct, indirect and lateral products: Yayzy, Pawprint, My Planet 8, Garmin and GoFundMe.
+I compared Klima with direct, indirect and lateral products: Yayzy, Pawprint, Planet Wild, Garmin and GoFundMe.
 
 - **What worked:** emotional imagery is great for people new to climate action.
 - **What was missing:** no game system to build habits, and no reason to come back and act again.
@@ -147,7 +151,7 @@ The team scored 36 feature ideas. These are the Must haves, grouped by the need 
 The work split into three stages of the app:
 
 1. **Onboarding:** an introduction and a guided carbon calculation. Led by Isabel.
-2. **Exploration:** browsing projects and understanding them. Led by Maya.
+2. **Exploration:** browsing projects and understanding them. Led by May.
 3. **After joining:** motivation through game design. Led by me.
 
 <Compare
@@ -156,8 +160,8 @@ The work split into three stages of the app:
   beforeLabel="Before: Klima home"
   after={afterHome}
   afterAlt="Redesigned home screen: the same greeting and Start Offsetting button, followed by a plain explanation of carbon neutrality and a Real Solutions in Action section"
-  afterLabel="After: Maya's exploration redesign"
-  caption="Exploration, led by Maya: key information moves up front so offsetting is easier to understand."
+  afterLabel="After: May's exploration redesign"
+  caption="Exploration, led by May: key information moves up front so offsetting is easier to understand."
 />
 
 ## My focus: motivation after joining
@@ -181,6 +185,29 @@ I designed an Impact Hub, a home for daily action that rewards consistency and t
   afterLabel="After: the Impact Hub, 2025"
   caption="My gamification work: the Multiply tab becomes a hub for daily action, progress and community."
 />
+
+### One challenge a day
+
+Inside the hub, the loop is short: pick a challenge, log it, see what it saved, and keep the streak going.
+
+1. **Choose a challenge.** Layla gets picks recommended for her, plus themed sets like Stop Waste and Earth Day. Each card shows how much CO₂ the action saves.
+2. **Log it.** Each challenge is tied to the UN Sustainable Development Goals it supports: Responsible Consumption and Production, and Climate Action.
+3. **See today's impact.** The saving is put in everyday terms, like driving 2 miles in a gas powered car, and a streak tracker shows the week so far.
+4. **Earn a badge.** Seven days in a row unlocks the first badge, Starter Seed.
+
+<Screens
+  screens={[
+    { src: screenDailyChallenges, label: "1. Choose", alt: "Daily Challenges screen: Choose One, with Layla's Choice, actions recommended just for you, and a card for buying vegetables and fruit loose that saves 620 grams, tagged with UN goals 12 and 13" },
+    { src: screenChallengeSelected, label: "2. Log", alt: "Daily Challenge screen with the selected challenge card, and a line saying that completing it contributes to the United Nations Sustainable Development Goals" },
+    { src: screenStreakTracker, label: "3. Track", alt: "Today's Impact screen: a streak tracker reading 6 days in a row, one more to earn your next badge, the locked Starter Seed badge, and a week row with Monday checked" },
+    { src: screenBadgeDetails, label: "4. Earn", alt: "Badge Details screen for Starter Seed, locked: complete one challenge a day for 7 days in a row to unlock your first badge. Current streak 1 of 7 days" },
+  ]}
+  caption="The challenge loop from the 2025 team project."
+/>
+
+{/* TODO (Aaron to review): the board has a badge tier table. 3, 5, 7 and 10 badges unlock Bronze, Silver,
+    Gold and Legendary, with a Klima match bonus of 0.02, 0.04, 0.06 and 0.1. Add it here only after
+    Aaron confirms it is his design and what the bonus numbers mean. */}
 
 {/* TODO: once the gamification screens are refreshed, add this note under them:
     "2026 visual refinement: I revisited the original gamification concept after the project to improve
