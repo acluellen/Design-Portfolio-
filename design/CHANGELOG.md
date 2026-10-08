@@ -2,6 +2,13 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-08 · Klima research rebuilt as tables from the FigJam board
+
+- Read the team FigJam directly through the Figma connector, so no PNG exports were needed. Research artifacts are rebuilt as Markdown tables instead of screenshots: they stay sharp, read on phones (they scroll sideways inside the table) and work with screen readers.
+- Three tables added to the Klima draft: the feature inventory (Klima against Yayzy, Pawprint, Planet Wild, Garmin and GoFundMe), the Must have features from the prioritization grouped by need, and the usability test summary of the mid fidelity wireframes.
+- Cells use words (Yes, Missing, N/A), not color, so meaning never depends on color alone.
+- Open questions for Aaron: Planet Wild or My Planet 8 in the competitor list; May or Maya; the badge tier and Klima match bonus table; 13 participant profiles on the board against 14 interviews on the page.
+
 ## 2026-10-07 · Klima card and case study draft
 
 - Home card: label "Gamification design · General Assembly", new description about making sustainable action easier to understand and more engaging. The old line about single use plastic is gone; the research never mentions it.
