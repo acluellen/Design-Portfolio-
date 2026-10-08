@@ -2,6 +2,10 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-08 · Klima prototype link verified
+
+- Aaron confirmed the prototype plays in a private window without signing in. The link now opens on the Impact Hub with the flows sidebar hidden, so visitors start on Aaron's part and do not see the list of team flows.
+
 ## 2026-10-08 · Klima card links on the preview
 
 - Review previews (`SHOW_DRAFTS=true`) now link a draft's card when the draft is not marked in progress. Production builds still link only published studies.
