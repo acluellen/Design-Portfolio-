@@ -2,6 +2,10 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-08 · Klima prototype link
+
+- Aaron confirmed the prototype file opens in a private window without signing in. Added a link under the garden table to the 2025 team prototype, starting on the Impact Hub so visitors land on Aaron's part.
+
 ## 2026-10-08 · Klima SUS baseline
 
 - Added the System Usability Scale scores for Klima's original app from the usability test on the team FigJam: 85, 72.5 and 42.5 from three participants, an average of about 67.
