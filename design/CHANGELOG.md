@@ -2,6 +2,12 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-08 · Klima card links on the preview
+
+- Review previews (`SHOW_DRAFTS=true`) now link a draft's card when the draft is not marked in progress. Production builds still link only published studies.
+- Klima is no longer marked in progress: on the preview its card opens the case study and says "View case study". In a production build Klima stays a draft, so its card shows "Case study coming soon" and does not link.
+- New Klima card detail line: "14 user interviews · 6 usability tests · Gamification lead on a team of three".
+
 ## 2026-10-08 · Klima prototype link back, preview v23
 
 - Aaron sent a new prototype link. It is back on the page under the garden table, unverified: Aaron to check it plays in a private window without signing in. Figma is blocked from this environment, so it could not be tested here.
