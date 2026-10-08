@@ -2,6 +2,11 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-08 · Klima prototype link back, preview v23
+
+- Aaron sent a new prototype link. It is back on the page under the garden table, unverified: Aaron to check it plays in a private window without signing in. Figma is blocked from this environment, so it could not be tested here.
+- Preview updated to v23 with the Klima draft, linked from the footer.
+
 ## 2026-10-08 · Klima prototype link removed
 
 - The prototype player asks visitors to sign in to Figma, so the link is off the page. A TODO in the file lists the two ways back: Aaron's own public copy of the file, or a screen recording.
