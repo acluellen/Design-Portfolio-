@@ -2,6 +2,14 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-08 · Klima structure locked, UI refresh required
+
+- Badge tier note deleted (Aaron): the garden stages replace the Bronze to Legendary tiers.
+- The Track step now uses the final Today's Impact frame from the prototype file, read through the Figma connector.
+- Affinity map placeholder replaced with the three themes from the board: the sustainability journey, measuring impact, and offsetting, money and trust.
+- The 2026 gamification refresh is required before Klima publishes (Aaron). The page structure is done; only the UI images change.
+- The System Usability Scale result stays off the page until Aaron confirms the details.
+
 ## 2026-10-08 · Klima garden stages and the original Multiply tab
 
 - Read Aaron's final prototype file through the Figma connector. The How It Works frame confirms the garden path: 7 challenges on a 7 day streak earn a badge, and badges move the garden through Seed Patch, Sprouting Garden, Forest Stage and Thriving Ecosystem. Added as a table under the challenge loop.
