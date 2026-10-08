@@ -6,6 +6,9 @@ export type CaseStudy = CollectionEntry<"case-studies">;
 // `SHOW_DRAFTS=true npm run build` keeps them, for private review previews only.
 const showDrafts = !import.meta.env.PROD || import.meta.env.SHOW_DRAFTS === "true";
 
+/** Placeholders for missing links and media show in dev and review previews, never in production. */
+export const showPlaceholders = showDrafts;
+
 export async function getCaseStudies(): Promise<CaseStudy[]> {
   const entries = await getCollection(
     "case-studies",

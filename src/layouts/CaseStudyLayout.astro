@@ -1,6 +1,7 @@
 ---
 import PageLayout from "./PageLayout.astro";
 import Photo from "../components/site/Photo.astro";
+import ActionLink from "../components/mdx/ActionLink.astro";
 import type { PhotoKey } from "../data/photos";
 import type { CaseStudy } from "../lib/case-studies";
 
@@ -11,7 +12,7 @@ interface Props {
 }
 
 const { study, prev, next } = Astro.props;
-const { title, summary, headline, role, team, timeline, program, tools, cover, status, heroMedia } =
+const { title, summary, headline, role, team, timeline, program, tools, cover, status, heroMedia, prototype } =
   study.data;
 ---
 
@@ -27,6 +28,15 @@ const { title, summary, headline, role, team, timeline, program, tools, cover, s
           <h1 translate="no">{title}</h1>
           {headline && <p class="hero__headline">{headline}</p>}
           <p class="hero__summary">{summary}</p>
+          {
+            prototype && (
+              <ActionLink
+                label="View live prototype"
+                href={prototype === "TODO" ? undefined : prototype}
+                variant="primary"
+              />
+            )
+          }
         </div>
         {
           heroMedia && (

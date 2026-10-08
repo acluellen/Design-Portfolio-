@@ -26,6 +26,8 @@ const caseStudies = defineCollection({
     program: z.string().optional(),
     tools: z.array(z.string()).default([]),
     cover: z.object({ src: z.string(), alt: z.string() }).optional(),
+    /** "View live prototype" button under the summary. "TODO" shows a placeholder in previews. */
+    prototype: z.union([z.string().url(), z.literal("TODO")]).optional(),
     /** A video beside the hero text: a photo slot from src/data/photos.ts, linked to the video. */
     heroMedia: z
       .object({

@@ -22,6 +22,7 @@ team:
 timeline: "4 week design sprint"
 program: "BRIDGEGOOD UX Design Apprenticeship"
 tools: ["FigJam"]
+prototype: "TODO" # Aaron to send the live prototype URL.
 heroMedia:
   photo: "kron4-still-color"
   href: "https://www.youtube.com/watch?v=r4l9IsyDUD4"
@@ -34,8 +35,6 @@ status: "published"
 
 import uploadScreen from "../../assets/case-studies/athenascribe/round-one-upload.webp";
 import adminQueue from "../../assets/case-studies/athenascribe/round-one-admin-queue.webp";
-
-{/* TODO: "View live prototype" link under the summary. The draft has "#"; Aaron to send the prototype URL. */}
 
 <Contribution>
   <Mine label="My contribution">Research framing, workflow audit, risk synthesis, product pivot, core reviewer flow.</Mine>
@@ -80,7 +79,8 @@ The product lead ran outreach across 63 contacts. I led the interviews and synth
 
 I synthesized the 12 interviews into 15 affinity clusters in FigJam.
 
-{/* TODO: "View the affinity map in FigJam" link. The draft has "#". */}
+{/* TODO: add href once Aaron sends the FigJam link. */}
+<ActionLink label="View the affinity map in FigJam" />
 
 </Section>
 
@@ -174,15 +174,20 @@ The two findings above put a person in charge of approving vital documents. We g
 
 Staff upload a document. AI translates it and flags the vital ones. A person approves before it sends.
 
-<Steps
-  label="How a document moves through AthenaScribe"
-  steps={["Staff upload", "Language from school records", "Sorted by document type", "Sent to the right reviewer", "Family reads and signs"]}
-/>
-
-{/* TODO: "View live prototype" link (draft has "#").
-    TODO: prototype walkthrough video (phone screen recording) beside the steps. The draft has a placeholder with this caption:
-    "A walkthrough of the redesign, from scan to the buckets each admin sees: assistant principal,
-    counselor and district translator. Designed after round one." */}
+{/* TODO: the prototype href and the walkthrough video (an mp4 in public/video/) once Aaron sends them. */}
+<Split>
+  <div class="flow">
+    <Steps
+      label="How a document moves through AthenaScribe"
+      steps={["Staff upload", "Language from school records", "Sorted by document type", "Sent to the right reviewer", "Family reads and signs"]}
+    />
+    <ActionLink label="View live prototype" variant="primary" />
+  </div>
+  <VideoSlot
+    label="Prototype walkthrough video (phone)"
+    caption="A walkthrough of the redesign, from scan to the buckets each admin sees: assistant principal, counselor and district translator. Designed after round one."
+  />
+</Split>
 
 <p class="label">Refinements from testing</p>
 

@@ -2,6 +2,12 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-08 · AthenaScribe placeholders for the missing links and video
+
+- Built the three missing pieces from the board with placeholders, so Aaron can drop in the real ones: "View live prototype" under the hero summary and again beside the redesign steps, "View the affinity map in FigJam" under the research, and a phone shaped walkthrough video beside the redesign steps (the board's two column layout).
+- Placeholders are dashed and labeled "Placeholder". They show only in dev and review previews; a production build leaves them out, so a missing link never reaches visitors.
+- New: `ActionLink`, `VideoSlot`, and a `prototype` frontmatter field.
+
 ## 2026-10-08 · AthenaScribe restructured to match the Claude Design board
 
 - Aaron asked for the AthenaScribe page to follow the structure of his Claude Design board (AthenaScribe Case Study, Main board). The words stay the same; the layout now follows the board:

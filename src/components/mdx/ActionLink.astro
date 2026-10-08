@@ -1,0 +1,45 @@
+---
+// A button that links out, such as "View the affinity map in FigJam". Without `href` it shows a
+// dashed placeholder in dev and review previews, and nothing in production.
+import Button from "../site/Button.astro";
+import { showPlaceholders } from "../../lib/case-studies";
+
+interface Props {
+  label: string;
+  href?: string;
+  variant?: "primary" | "secondary";
+}
+
+const { label, href, variant = "secondary" } = Astro.props;
+---
+
+{
+  href ? (
+    <p class="action">
+      <Button href={href} variant={variant} external>
+        {label}
+        <span class="visually-hidden"> (opens in a new tab)</span>
+      </Button>
+    </p>
+  ) : (
+    showPlaceholders && (
+      <p class="action">
+        <span class="placeholder-chip">Placeholder · {label}</span>
+      </p>
+    )
+  )
+}
+
+<style>
+  .placeholder-chip {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--control-height);
+    padding-inline: var(--control-padding);
+    font-size: var(--step--1);
+    font-weight: var(--weight-semibold);
+    color: var(--color-accent);
+    border: var(--rule-thick) dashed var(--color-accent);
+    border-radius: var(--radius-control);
+  }
+</style>

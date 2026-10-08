@@ -21,7 +21,9 @@ import ScreenPair from "./ScreenPair.astro";
 import Steps from "./Steps.astro";
 import Split from "./Split.astro";
 import Fixes from "./Fixes.astro";
+import ActionLink from "./ActionLink.astro";
+import VideoSlot from "./VideoSlot.astro";
 
-export const mdxComponents = { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team, Sources, Compare, Screens, Section, CardGrid, Card, Tag, Shift, Finding, ScreenPair, Steps, Split, Fixes };
+export const mdxComponents = { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team, Sources, Compare, Screens, Section, CardGrid, Card, Tag, Shift, Finding, ScreenPair, Steps, Split, Fixes, ActionLink, VideoSlot };
 
-export { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team, Sources, Compare, Screens, Section, CardGrid, Card, Tag, Shift, Finding, ScreenPair, Steps, Split, Fixes };
+export { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team, Sources, Compare, Screens, Section, CardGrid, Card, Tag, Shift, Finding, ScreenPair, Steps, Split, Fixes, ActionLink, VideoSlot };
