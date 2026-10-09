@@ -162,10 +162,20 @@ const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.u
     color: var(--color-ink);
   }
 
-  /* Sections after the name open with a thin rule, like a page in a notebook. */
+  /* Sections after the name open with a thin rule that runs the full width of the window, edge to
+     edge like the header line (Micah Hoang). The rule is drawn outside the content column. */
   .work,
   .about {
+    position: relative;
     padding-block-start: var(--space-6);
+  }
+
+  .work::before,
+  .about::before {
+    content: "";
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: calc(50% - 50vw);
     border-block-start: var(--rule-thin) solid var(--color-rule);
   }
 

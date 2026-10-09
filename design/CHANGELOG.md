@@ -20,6 +20,11 @@ Newest first. Every design or structure decision goes here.
 
 
 
+
+## 2026-10-09 · Full width section lines
+
+- The thin lines above Selected work and About now run the full width of the window, edge to edge like the header line (Micah Hoang). Drawn outside the content column with a pseudo element; `body` uses `overflow-x: clip` so they never add a sideways scroll, and sticky elements keep working.
+
 ## 2026-10-09 · Home About, centered (Impeccable critique, Zeel Shah's feel)
 
 An Impeccable critique (two separate agents: design and copy review, and the detector in a browser) scored About through the closing section 16 of 24: three heavy pictures in a row and the same facts repeated (BRIDGEGOOD five times, AthenaScribe and Demo Day repeating card 01, "associate product design" twice in the closing). Aaron picked: centered statement, his story order, the clip in color, and my call on the Google photo.

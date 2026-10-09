@@ -64,6 +64,9 @@ html {
 
 body {
   min-height: 100vh;
+  /* Full width rules are drawn 50vw out from the center; clip keeps them from adding a sideways
+     scroll where the window has a scrollbar. Clip, not hidden, so sticky elements still work. */
+  overflow-x: clip;
   background-color: var(--color-paper);
   /* Faint graph paper. Decoration only; panels and cards cover it with their own fill. */
   background-image:
