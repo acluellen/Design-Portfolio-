@@ -19,7 +19,7 @@ Order: name, Selected work, BRIDGEGOOD and KRON4, About, closing. Every section 
 
 - Header (Micah Hoang): AL logo, "Product designer" and "Oakland, CA" in mono across the middle (hidden on phones), Work and About in mono, theme toggle.
 - Name: "Aaron Luellen" at `--step-6`, the largest text on the site, then "Research led product designer." in navy, then a mono meta line "2 years · EdTech · Health · Climate", then a mono links row: LinkedIn, Resume, Email (plain text until linked). No photo and no buttons.
-- About (`#about`), one story after the work: label, "I recently finished the BRIDGEGOOD UX Design Apprenticeship.", one line of context, then the KRON4 clip at the full content width (`--size-clip`, opens on scroll) with one mono caption row (On air with KRON4, Watch on YouTube, Pause), then "From coaching systems to product design." with two sentences and "Read more about me" beside the coaching media (the knee strike photo until Aaron's clip of holding pads).
+- About (`#about`), one story after the work: label, "I completed the BRIDGEGOOD UX Design Apprenticeship.", one line of context, then the KRON4 clip at the full content width (`--size-clip`, opens on scroll) with one mono caption row (On air with KRON4, Watch on YouTube, Pause), then "From coaching systems to product design." with two sentences and "Read more about me" beside the coaching media (the knee strike photo until Aaron's clip of holding pads).
 - The closing banner with the BRIDGEGOOD group photo at Google stays right under About until Aaron says otherwise.
 
 ## Case study index

@@ -15,6 +15,11 @@ Newest first. Every design or structure decision goes here.
 
 
 
+
+## 2026-10-09 · About heading wording
+
+- "I recently finished the BRIDGEGOOD UX Design Apprenticeship." is now "I completed the BRIDGEGOOD UX Design Apprenticeship." (Aaron: "recently" read wrong).
+
 ## 2026-10-09 · More About facts
 
 - General Assembly certificate program: 2024 to 2025.
