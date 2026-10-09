@@ -11,7 +11,7 @@ Newest first. Every design or structure decision goes here.
 - New card fields: `highlight` (the blue word, must appear in the headline) and `outcome` (one result taken from the detail line). AthenaScribe: "translation", "12 stakeholder interviews". Klima: "trust", "14 user interviews · 6 usability tests". Craft Education: "care", "10 research participants · 25 heuristic issues".
 - Covers: featured 21:9, half width 4:3 so both covers in a row match, stacked on phones with a 16:9 image slot.
 - Draft project pictures switched off at Aaron's request (`showImages = false`); the files stay. Review previews label the empty slot "Project media"; production shows a plain panel.
-- KRON4 clip: Aaron sent the full size clip (1080 by 610). New 6 second loop of the segment with his name on screen, cropped to 16:9 (752 by 423) to leave out the news ticker, the name bar, and a reposter's watermark. 241 KB MP4, 186 KB WebM, no audio. New still from the same crop. `--size-clip` is now 47rem. AthenaScribe's hero still is 16:9 to match.
+- KRON4 clip: Aaron sent the full size clip (1080 by 610). At his call, the loop shows all three guests at full width with his name bar ("Aaron Luellen, UX Design Apprentice") and the KRON4 bug, cropped just above the weather ticker (1080 by 548). 4 seconds (4.3s to 8.3s of the clip), ending with his mouth closed, before he looks up. 332 KB MP4, 273 KB WebM, no audio. New still from the last frame. `--size-clip` is now 67.5rem. The reposter's Instagram handle stays visible on the left guest; Aaron can ask to cover it.
 - About photos: no credit line (Aaron: no credit needed). The closing banner keeps "Photos: BRIDGEGOOD".
 - New `content/NEEDED.md`: the running list of what Aaron still needs to send.
 

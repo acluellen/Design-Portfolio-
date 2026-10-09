@@ -18,9 +18,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   <div class="clip__frame">
     <Photo
       name="kron4-still-color"
-      widths={[520, 752]}
-      sizes="(min-width: 52rem) 47rem, 92vw"
-      ratio="16 / 9"
+      widths={[540, 800, 1080]}
+      sizes="(min-width: 76rem) 67.5rem, 92vw"
+      ratio="270 / 137"
       class="clip__still"
     />
     <video
@@ -111,7 +111,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   .clip__frame {
     position: relative;
     inline-size: 100%;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 270 / 137; /* the clip file: 1080 by 548 */
     overflow: hidden;
     border-radius: var(--radius-media);
     background: var(--color-panel);

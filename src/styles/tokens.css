@@ -117,8 +117,8 @@
   --size-play: 4.5rem; /* play button over a video thumbnail */
   --color-overlay: rgb(24 23 21 / 0.82); /* behind the play icon, readable on any frame */
 
-  /* KRON4 clip that opens on scroll (Zeel). The source is 752px wide, so it opens to that width. */
-  --size-clip: 47rem; /* fully open width */
+  /* KRON4 clip that opens on scroll (Zeel). The source is 1080px wide, so it opens to that width. */
+  --size-clip: 67.5rem; /* fully open width */
   --clip-closed: 16% 26%; /* the starting crop: top and bottom, then left and right */
 
   /* About photo row: the tall photos are 4:5, the wide one 7:5, so equal heights need these widths. */
