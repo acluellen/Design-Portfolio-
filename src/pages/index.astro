@@ -91,7 +91,8 @@ const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.u
     document.documentElement.classList.add("rules-ready");
     const observer = new IntersectionObserver(
       (entries) => entries.forEach((e) => e.target.classList.toggle("is-drawn", e.isIntersecting)),
-      { rootMargin: "0px 0px -10% 0px" },
+      // Starts once the line is a quarter of the way up the screen, where the eye is.
+      { rootMargin: "0px 0px -25% 0px" },
     );
     ruled.forEach((el) => observer.observe(el));
   }
@@ -192,7 +193,7 @@ const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.u
     position: absolute;
     inset-block-start: 0;
     inset-inline: 0;
-    border-block-start: var(--rule-thin) solid var(--color-rule);
+    border-block-start: var(--rule-thin) solid var(--color-rule-section);
     transform-origin: left center;
   }
 

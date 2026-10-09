@@ -23,6 +23,13 @@ Newest first. Every design or structure decision goes here.
 
 
 
+## 2026-10-09 · Section lines easier to see
+
+- Aaron opened the preview in Safari and in the Claude viewer and saw no moving lines. In Chromium the draw and replay work, so the likely cause is that the line was too faint to notice (`--color-rule` is very light on paper) and the About line drew at the very bottom of the screen.
+- New token `--color-rule-section` (#9d978c on paper, #5b6574 in dark mode) for the two drawn lines only. Other rules stay light.
+- The draw now starts once the section is a quarter of the way up the screen (`rootMargin` bottom -25%), where the eye is.
+- With Reduce Motion on in macOS, the lines show without drawing. That is on purpose.
+
 ## 2026-10-09 · Section lines replay
 
 - Aaron: replay. The lines above Selected work and About now draw left to right every time their section comes back into view, like Micah Hoang's. A small observer adds `is-drawn` on the way in and removes it once the section leaves the screen. Reduced motion, or no IntersectionObserver: the lines simply show.

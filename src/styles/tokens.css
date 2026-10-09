@@ -17,6 +17,7 @@
   --color-rule: #dcd7cd; /* card borders, thin lines */
   --color-rule-strong: #c4beb2;
   --color-grid: rgb(32 31 29 / 0.06); /* faint graph paper lines on the page, decoration only */
+  --color-rule-section: #9d978c; /* the drawn lines above home sections, darker so the draw is seen */
   --size-grid: 3rem; /* graph paper square */
 
   /* Links: the AL blue, now used for links and small accents only. 6.1:1 on paper. */
@@ -193,6 +194,8 @@
     --color-rule: #283039;
     --color-rule-strong: #3a4452;
     --color-grid: rgb(233 236 241 / 0.04);
+  --color-rule-section: #5b6574;
+    --color-rule-section: #5b6574;
     --color-accent: #8db4ff;
     --color-accent-hover: #b3ccff;
     --color-accent-subtle: #222b38;
