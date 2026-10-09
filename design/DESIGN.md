@@ -15,7 +15,7 @@ Calm and exact. The work and the photos carry the color. Everything around them 
 
 ## Home page
 
-Order: name, Selected work, About, closing. Selected work and About open with a thin rule that runs the full width of the window, like the header line.
+Order: name, Selected work, About, closing. Selected work and About open with a thin rule across the content column that draws left to right as the section comes into view (Micah Hoang); with reduced motion it simply shows.
 
 - Header (Micah Hoang): AL logo, "Product designer" and "Oakland, CA" in mono across the middle (hidden on phones), Work and About in mono, theme toggle.
 - Name: "Aaron Luellen" at `--step-6`, the largest text on the site, then "Research led product designer." in navy, then a mono meta line "2 years · EdTech · Health · Climate", then a mono links row: LinkedIn, Resume, Email (plain text until linked). No photo and no buttons.

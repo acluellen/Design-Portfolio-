@@ -21,6 +21,12 @@ Newest first. Every design or structure decision goes here.
 
 
 
+
+## 2026-10-09 · Section lines draw left to right (replaces the full width lines)
+
+- Aaron's screen recording of Micah Hoang's site showed what he meant: the line above a section draws itself from left to right as the section comes into view. The full width version from earlier today is undone; the lines are back at the content width.
+- The lines above Selected work and About now draw left to right over 1.1s (`--duration-rule-draw`, `--ease-roll`) when the section is revealed, including on load. With reduced motion, or without JavaScript, they simply show. The `body` `overflow-x: clip` added for the full width lines is removed.
+
 ## 2026-10-09 · Full width section lines
 
 - The thin lines above Selected work and About now run the full width of the window, edge to edge like the header line (Micah Hoang). Drawn outside the content column with a pseudo element; `body` uses `overflow-x: clip` so they never add a sideways scroll, and sticky elements keep working.

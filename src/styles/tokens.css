@@ -113,6 +113,7 @@
   --card-image-zoom: 1.02; /* hover zoom on card images */
   --duration-roll: 420ms; /* card title rolls to "View case study" (Micah Hoang's card) */
   --ease-roll: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-rule-draw: 1100ms; /* section lines draw left to right as they scroll in (Micah Hoang) */
 
   /* Case study blocks */
   --card-grid-min: 15rem; /* narrowest card in a case study card grid before it wraps */
@@ -269,5 +270,6 @@
     --card-image-zoom: 1;
     --duration-hover: 0ms;
     --duration-roll: 0ms;
+    --duration-rule-draw: 0ms;
   }
 }
