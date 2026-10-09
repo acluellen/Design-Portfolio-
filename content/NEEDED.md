@@ -19,8 +19,8 @@ Last updated October 9, 2026. Claude keeps this list current. Placeholders show 
 
 ## About page tables
 
-- [ ] General Assembly: the year it ended, if the row should show a range.
-- [ ] Hackathons: names and years, if they should get a row.
+- [ ] Hackathon years: Lovable, and BRIDGEGOOD Design for Social Good.
+- [ ] Later: the job seeking app for junior and mid level designers, as a new card once there is work to show.
 - [ ] The gym where you ran the fight team, and the years.
 - [ ] KRON4 segment date.
 - [ ] Education: school, program, years.

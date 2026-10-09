@@ -30,8 +30,11 @@ export const experience: AboutRow[] = [
     when: "June to August 2026",
     note: "Launched by Google.org and the Golden State Warriors, with mentors from Google, Meta, and YouTube. The team built AthenaScribe, a translation tool with human review for Oakland Unified families, and presented it at Demo Day at Block HQ.",
   },
-  // Aaron: started the General Assembly certificate program in 2024. Klima and Craft Education ran in 2025.
-  { place: "General Assembly", what: "Certificate program", when: "2024" },
+  // Aaron: General Assembly certificate program, 2024 to 2025 (Klima and Craft Education ran in 2025).
+  { place: "General Assembly", what: "Certificate program", when: "2024 to 2025" },
+  // Hackathons Aaron named. Years to add.
+  { place: "Lovable", what: "Hackathon" },
+  { place: "BRIDGEGOOD", what: "Design for Social Good hackathon" },
   // From Aaron's About text: "I ran the fight team." Gym name and years to add.
   { what: "Ran the fight team, coach" },
 ];

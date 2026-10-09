@@ -14,6 +14,14 @@ Newest first. Every design or structure decision goes here.
 
 
 
+
+## 2026-10-09 · More About facts
+
+- General Assembly certificate program: 2024 to 2025.
+- Two hackathon rows from Aaron: Lovable, and BRIDGEGOOD Design for Social Good. Years to add.
+- The hero meta line stays "2 years" (Aaron said no to "since 2024").
+- Next project, not on the site yet: a job seeking app for junior and mid level designers.
+
 ## 2026-10-09 · About facts from Aaron
 
 - BRIDGEGOOD UX Design Apprentice: June to August 2026.
