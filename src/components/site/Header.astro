@@ -3,10 +3,11 @@ import Logo from "./Logo.astro";
 import ThemeToggle from "./ThemeToggle.astro";
 import { site } from "../../site.config";
 
-// Work and About are sections on the home page. On a case study page, Work is current.
-// On the home page, a small script marks the section in view (see below).
+// Work is a section on the home page; About is its own page. On a case study page, Work is current.
+// On the home page, a small script marks Work while that section is on screen (see below).
 const path = Astro.url.pathname;
 const onCaseStudy = path.startsWith("/work/");
+const onAbout = path.startsWith("/about");
 ---
 
 <header class="site-header">
@@ -19,7 +20,7 @@ const onCaseStudy = path.startsWith("/work/");
         <li>
           <a href="/#work" data-nav-section="work" aria-current={onCaseStudy ? "page" : undefined}>Work</a>
         </li>
-        <li><a href="/#about" data-nav-section="about">About</a></li>
+        <li><a href="/about/" aria-current={onAbout ? "page" : undefined}>About</a></li>
         {/* Hidden until site.linkedin has Aaron's link. */}
         {
           site.linkedin && (
@@ -47,7 +48,7 @@ const onCaseStudy = path.startsWith("/work/");
     window.addEventListener("resize", check);
   }
 
-  // On the home page, mark Work or About as current while that section is on screen.
+  // On the home page, mark Work as current while that section is on screen.
   const links = [...document.querySelectorAll<HTMLAnchorElement>("[data-nav-section]")];
   const sections = links
     .map((link) => document.getElementById(link.dataset.navSection ?? ""))

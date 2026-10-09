@@ -9,6 +9,16 @@ Newest first. Every design or structure decision goes here.
 
 
 
+
+## 2026-10-09 · About page, Micah style
+
+Aaron sent a screen recording of Micah Hoang's site: a short About on the home page that opens a full About page.
+
+- Home About: just the words. Label, heading, the intro paragraph, and "Read more about me". The coaching story and the gym photos moved to the About page. The Google group photo banner stays right under it, until further notice (Aaron).
+- New About page (`/about/`): "Hey, I'm Aaron.", the intro and the coaching story, the smiling portrait on the left that stays in view, then mono tables (Experience, Press, Education, What people say), then the three gym photos.
+- Table content lives in `src/data/about.ts`. Filled in only with what is confirmed: BRIDGEGOOD, UX Design Apprentice (KRON4's name bar); General Assembly, 2025 (Klima and Craft dates); "Ran the fight team, coach" (his About text); KRON4, Purpose to Pixels. Every gap shows as "To add" in previews so Aaron can see the layout, and is left out live.
+- The header's About link now opens the About page. The old `/about` redirect to `/#about` is removed.
+
 ## 2026-10-09 · Aaron's final KRON4 cut, and pages that really open at the top
 
 - KRON4 loop: Aaron's own trim of his YouTube recording ("final_cut"), used as is and cut at 3.5 seconds so it ends with his mouth closed (it also starts closed, so the loop joins cleanly). Same crop as before: above the ticker, past the black edge, 1440 by 716. 469 KB MP4, 394 KB WebM. New still from the last frame.

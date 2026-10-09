@@ -72,48 +72,16 @@ const others = studies.filter((s) => s !== featured);
     </div>
   </section>
 
-  <!-- 4. About: the intro that used to sit at the top, the coaching story, and the gym photos. The portrait is out for now. -->
+  <!-- 4. About, short (Micah Hoang's pattern): just the words, then a link to the full About page. -->
   <section id="about" class="about" aria-labelledby="about-heading" data-reveal>
-    <div class="about__top">
-      <div class="about__text">
-        <p class="label">About</p>
-        <h2 id="about-heading">From coaching systems to product design.</h2>
-        <p class="about__lede">
-          I’m a product designer with a background in Muay Thai, bringing a human centered mindset from the gym
-          to the products I design. I focus on understanding people, solving real problems, and helping
-          users reach their goals.
-        </p>
-        <div class="about__body">
-          <p>
-            My approach to teamwork was built through years of competing and coaching in martial arts. In
-            my last role, I ran the fight team: recruiting fighters out of group classes, planning their
-            camps and weight cuts, and getting them ready to compete.
-          </p>
-          <p>
-            Competing taught me that close fights come down to the basics. Coaching taught me that every
-            fighter uses those basics differently.
-          </p>
-          <p>
-            On a design team, that means knowing the fundamentals cold and finding what each person does
-            best. On your team, I will learn how everyone works and put my effort where it moves the whole
-            group forward.
-          </p>
-        </div>
-      </div>
-    </div>
-    <figure class="about__figure">
-      <div class="about__row">
-        <div class="about__cell about__cell--tall">
-          <Photo name="about-watch" widths={[400, 600, 800]} sizes="(min-width: 76rem) 20rem, (min-width: 48rem) 26vw, 46vw" ratio="4 / 5" class="about__photo about__photo--tall" />
-        </div>
-        <div class="about__cell about__cell--wide">
-          <Photo name="about-pads" widths={[600, 900, 1280]} sizes="(min-width: 76rem) 35rem, (min-width: 48rem) 46vw, 92vw" ratio="7 / 5" class="about__photo about__photo--wide" />
-        </div>
-        <div class="about__cell about__cell--tall">
-          <Photo name="about-camera" widths={[400, 600, 800]} sizes="(min-width: 76rem) 20rem, (min-width: 48rem) 26vw, 46vw" ratio="4 / 5" class="about__photo about__photo--tall" />
-        </div>
-      </div>
-    </figure>
+    <p class="label">About</p>
+    <h2 id="about-heading">From coaching systems to product design.</h2>
+    <p class="about__lede">
+      I’m a product designer with a background in Muay Thai, bringing a human centered mindset from the gym
+      to the products I design. I focus on understanding people, solving real problems, and helping
+      users reach their goals.
+    </p>
+    <a class="about__more" href="/about/">Read more about me</a>
   </section>
 
   <!-- 5. Closing banner, navy in both themes: the whole group photo, then the invitation below it -->
@@ -281,28 +249,14 @@ const others = studies.filter((s) => s !== featured);
     font-size: var(--step-2);
   }
 
-  /* 4. About: text, then one row of gym photos at equal heights. */
+  /* 4. About, short: label, heading, one paragraph, and a link to the About page. */
   .about {
     display: grid;
-    gap: var(--space-8);
-  }
-
-  .about__top {
-    display: grid;
-    gap: var(--space-7);
-    align-items: start;
-  }
-
-  .about__top > * {
-    min-width: 0;
-  }
-
-  .about__text {
-    display: grid;
     gap: var(--space-5);
+    justify-items: start;
   }
 
-  .about__text h2 {
+  .about h2 {
     font-size: var(--step-4);
   }
 
@@ -312,56 +266,14 @@ const others = studies.filter((s) => s !== featured);
     line-height: var(--leading-snug);
   }
 
-  .about__body {
-    display: grid;
-    gap: var(--space-4);
-    max-width: var(--measure-reading);
-    color: var(--color-ink-muted);
-  }
-
-  .about__figure {
-    display: grid;
-    gap: var(--space-3);
-  }
-
-  .about__row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-3);
-  }
-
-  .about__row :global(.about__photo) {
-    display: block;
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    border-radius: var(--radius-media);
-  }
-
-  .about__row :global(.about__photo--tall) {
-    aspect-ratio: 4 / 5;
-  }
-
-  .about__row :global(.about__photo--wide) {
-    aspect-ratio: 7 / 5;
-  }
-
-  .about__cell {
-    min-width: 0;
-  }
-
-  /* Phones and small tablets: the wide photo on top, the two tall ones below. */
-  @media (max-width: 47.99rem) {
-    .about__cell--wide {
-      grid-column: 1 / -1;
-      order: -1;
-    }
-  }
-
-  @media (min-width: 48rem) {
-    .about__row {
-      grid-template-columns: var(--about-row);
-    }
+  .about__more {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--control-height);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
   }
 
   .credit {

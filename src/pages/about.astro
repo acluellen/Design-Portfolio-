@@ -1,0 +1,322 @@
+---
+// About page (Micah Hoang's pattern): the portrait stays beside the text while the page scrolls,
+// then mono tables over thin rules, then the gym photos. The home page shows only a short About
+// with a link here. Missing facts show as "To add" in review previews and are left out live.
+import PageLayout from "../layouts/PageLayout.astro";
+import Photo from "../components/site/Photo.astro";
+import { showPlaceholders } from "../lib/case-studies";
+import { education, experience, press, quotes, type AboutRow } from "../data/about";
+
+const tables: { id: string; title: string; rows: AboutRow[] }[] = [
+  { id: "experience", title: "Experience", rows: experience },
+  { id: "press", title: "Press", rows: press },
+  { id: "education", title: "Education", rows: education },
+];
+// A row shows live only once it has a place or a role. Previews show every row.
+const visible = (rows: AboutRow[]) => rows.filter((r) => showPlaceholders || r.place || r.what);
+---
+
+<PageLayout title="About" description="Aaron Luellen, product designer in Oakland, with a background in Muay Thai coaching.">
+  <div class="container about-page">
+    <figure class="about-page__portrait">
+      <Photo
+        name="headshot"
+        widths={[320, 480, 720]}
+        sizes="(min-width: 64rem) 22rem, 70vw"
+        cover={4 / 5}
+        ratio="4 / 5"
+        loading="eager"
+        class="about-page__photo"
+      />
+    </figure>
+
+    <div class="about-page__content">
+      <h1>Hey, I’m Aaron.</h1>
+      <div class="about-page__text">
+        <p class="about-page__lede">
+          I’m a product designer with a background in Muay Thai, bringing a human centered mindset from the gym
+          to the products I design. I focus on understanding people, solving real problems, and helping
+          users reach their goals.
+        </p>
+        <p>
+          My approach to teamwork was built through years of competing and coaching in martial arts. In
+          my last role, I ran the fight team: recruiting fighters out of group classes, planning their
+          camps and weight cuts, and getting them ready to compete.
+        </p>
+        <p>
+          Competing taught me that close fights come down to the basics. Coaching taught me that every
+          fighter uses those basics differently.
+        </p>
+        <p>
+          On a design team, that means knowing the fundamentals cold and finding what each person does
+          best. On your team, I will learn how everyone works and put my effort where it moves the whole
+          group forward.
+        </p>
+      </div>
+
+      {
+        tables.map(({ id, title, rows }) =>
+          visible(rows).length > 0 && (
+            <section class="ledger" aria-labelledby={`${id}-heading`}>
+              <h2 id={`${id}-heading`} class="ledger__title">/ {title}</h2>
+              <ul class="ledger__rows">
+                {visible(rows).map((row) => (
+                  <li class="ledger__row">
+                    <span class="ledger__place" translate="no">
+                      {row.place ?? (showPlaceholders && <span class="todo">To add: where</span>)}
+                    </span>
+                    <span class="ledger__what">
+                      {row.what ? (
+                        row.href ? <a href={row.href} target="_blank" rel="noopener noreferrer">{row.what}<span class="visually-hidden"> (opens in a new tab)</span></a> : row.what
+                      ) : (
+                        showPlaceholders && <span class="todo">To add: role</span>
+                      )}
+                    </span>
+                    <span class="ledger__when">{row.when ?? (showPlaceholders && <span class="todo">To add: year</span>)}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ),
+        )
+      }
+
+      {
+        (quotes.length > 0 || showPlaceholders) && (
+          <section class="ledger" aria-labelledby="quotes-heading">
+            <h2 id="quotes-heading" class="ledger__title">/ What people say</h2>
+            {quotes.length > 0 ? (
+              quotes.map((q) => (
+                <figure class="quote">
+                  <blockquote>“{q.quote}”</blockquote>
+                  <figcaption>{q.name}, {q.role}</figcaption>
+                </figure>
+              ))
+            ) : (
+              <p class="todo todo--block">To add: one or two real, named quotes from a mentor or teammate, with their permission.</p>
+            )}
+          </section>
+        )
+      }
+    </div>
+
+    <div class="about-page__gallery">
+      <div class="about-page__cell about-page__cell--tall">
+        <Photo name="about-watch" widths={[400, 600, 800]} sizes="(min-width: 76rem) 20rem, (min-width: 48rem) 26vw, 46vw" ratio="4 / 5" class="about-page__gym" />
+      </div>
+      <div class="about-page__cell about-page__cell--wide">
+        <Photo name="about-pads" widths={[600, 900, 1280]} sizes="(min-width: 76rem) 35rem, (min-width: 48rem) 46vw, 92vw" ratio="7 / 5" class="about-page__gym" />
+      </div>
+      <div class="about-page__cell about-page__cell--tall">
+        <Photo name="about-camera" widths={[400, 600, 800]} sizes="(min-width: 76rem) 20rem, (min-width: 48rem) 26vw, 46vw" ratio="4 / 5" class="about-page__gym" />
+      </div>
+    </div>
+  </div>
+</PageLayout>
+
+<style>
+  .about-page {
+    display: grid;
+    gap: var(--space-8);
+    padding-block-start: var(--space-8);
+  }
+
+  .about-page > * {
+    min-width: 0;
+  }
+
+  /* From 64rem: portrait left (it stays in view while the text scrolls), text right. */
+  @media (min-width: 64rem) {
+    .about-page {
+      grid-template-columns: var(--size-portrait) 1fr;
+      column-gap: var(--space-9);
+      align-items: start;
+    }
+
+    .about-page__portrait {
+      position: sticky;
+      top: calc(var(--header-height) + var(--space-6));
+    }
+
+    .about-page__gallery {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .about-page__portrait {
+    margin: 0;
+  }
+
+  .about-page__portrait :global(.about-page__photo) {
+    display: block;
+    inline-size: min(70%, var(--size-portrait));
+    block-size: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--radius-media);
+  }
+
+  @media (min-width: 64rem) {
+    .about-page__portrait :global(.about-page__photo) {
+      inline-size: 100%;
+    }
+  }
+
+  .about-page__content {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .about-page__content h1 {
+    font-size: var(--step-5);
+  }
+
+  .about-page__text {
+    display: grid;
+    gap: var(--space-4);
+    max-width: var(--measure-reading);
+    color: var(--color-ink-muted);
+  }
+
+  .about-page__lede {
+    font-size: var(--step-1);
+    line-height: var(--leading-snug);
+    color: var(--color-ink);
+  }
+
+  /* Tables: a mono "/ Title", then rows over thin rules. Place, what, when. */
+  .ledger {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .ledger__title {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+
+  .ledger__rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-block-start: var(--rule-thin) solid var(--color-rule-strong);
+  }
+
+  .ledger__row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-1) var(--space-5);
+    padding-block: var(--space-3);
+    border-block-end: var(--rule-thin) solid var(--color-rule);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    line-height: var(--leading-snug);
+  }
+
+  .ledger__place {
+    color: var(--color-heading);
+  }
+
+  .ledger__what {
+    grid-row: 2;
+    color: var(--color-ink-muted);
+  }
+
+  .ledger__when {
+    grid-row: 1 / span 2;
+    grid-column: 2;
+    color: var(--color-ink-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (min-width: 40rem) {
+    .ledger__row {
+      grid-template-columns: 1fr 1.4fr auto;
+    }
+
+    .ledger__what {
+      grid-row: auto;
+    }
+
+    .ledger__when {
+      grid-row: auto;
+      grid-column: auto;
+      text-align: end;
+    }
+  }
+
+  .quote {
+    margin: 0;
+    padding-block: var(--space-4);
+    border-block-end: var(--rule-thin) solid var(--color-rule);
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .quote figcaption {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+
+  /* Review previews only: what is still missing. */
+  .todo {
+    color: var(--color-ink-muted);
+    border-block-end: var(--rule-thin) dashed var(--color-rule-strong);
+  }
+
+  .todo--block {
+    display: block;
+    padding: var(--space-4);
+    border: var(--rule-thin) dashed var(--color-rule-strong);
+    font-size: var(--step--1);
+  }
+
+  /* Gym photos: tall, wide, tall at equal heights. Phones: the wide one on top. */
+  .about-page__gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+  }
+
+  .about-page__cell {
+    min-width: 0;
+  }
+
+  .about-page__gallery :global(.about-page__gym) {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: var(--radius-media);
+  }
+
+  .about-page__cell--tall :global(.about-page__gym) {
+    aspect-ratio: 4 / 5;
+  }
+
+  .about-page__cell--wide :global(.about-page__gym) {
+    aspect-ratio: 7 / 5;
+  }
+
+  @media (max-width: 47.99rem) {
+    .about-page__cell--wide {
+      grid-column: 1 / -1;
+      order: -1;
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .about-page__gallery {
+      grid-template-columns: var(--about-row);
+    }
+  }
+</style>

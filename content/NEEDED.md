@@ -17,6 +17,15 @@ Last updated October 9, 2026. Claude keeps this list current. Placeholders show 
 - [ ] One image or a short screen recording (4 to 6 seconds) per project for the poster covers. Ideas: an AthenaScribe notice translating line by line, the Klima garden growing, the Craft parent path clicked through. The draft pictures are switched off until then (`showImages` in `src/components/site/WorkCard.astro`).
 - [ ] Optional: a 3 to 5 second clip of Aaron holding pads (phone, sideways, daylight) for About or after KRON4.
 
+## About page tables
+
+- [ ] BRIDGEGOOD: years.
+- [ ] General Assembly: program name (role column).
+- [ ] The gym where you ran the fight team, and the years.
+- [ ] KRON4 segment date.
+- [ ] Education: school, program, years.
+- [ ] One or two real, named quotes from a mentor or teammate, with permission.
+
 ## Answers
 
 - [ ] Craft Education: is "5 redesign testers" exact?

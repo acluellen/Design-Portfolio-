@@ -19,7 +19,15 @@ Order: name, Selected work, BRIDGEGOOD and KRON4, About, closing. Every section 
 
 - Name: "Aaron Luellen" at `--step-6`, the largest text on the site, then one line in Geist, muted: "Product designer, research led, Oakland". No photo and no buttons; the menu has Work and About, and the work starts right below.
 - BRIDGEGOOD and KRON4: on the paper, no panel. Two text columns from 64rem, then the KRON4 clip below at the full content width (`--size-clip`). The loop is 4 seconds from Aaron's screen recording of the YouTube segment: all three guests and his name bar.
-- About (`#about`): label, heading, the intro that used to sit at the top, and the coaching story. The portrait is out for now. Below, one row of gym photos at equal heights: tall, wide, tall (`--about-row`). On phones the wide one goes on top and the two tall ones sit below.
+- About (`#about`), short, Micah Hoang's pattern: label, heading, the intro paragraph, and a mono "Read more about me" link to the About page. No photo.
+- The closing banner with the BRIDGEGOOD group photo at Google stays right under the short About until Aaron says otherwise.
+
+## About page (`/about/`)
+
+- "Hey, I'm Aaron." then the intro and the coaching story. The portrait (4:5) sits on the left from 64rem and stays in view while the text scrolls.
+- Mono tables over thin rules (`src/data/about.ts`): Experience, Press, Education, What people say. Each row: where, what, when. Only confirmed facts go in. Missing fields show as dashed "To add" notes in review previews; the live site leaves them out, and drops a table or the quotes section until it has content.
+- Then the three gym photos, tall, wide, tall at equal heights (wide one on top on phones).
+- The header's About link opens this page and is marked current there. Below, one row of gym photos at equal heights: tall, wide, tall (`--about-row`). On phones the wide one goes on top and the two tall ones sit below.
 
 ## Color
 

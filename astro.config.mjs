@@ -7,8 +7,4 @@ export default defineConfig({
   // get absolute image and page URLs.
   // site: "https://example.com",
   integrations: [mdx()],
-  // The About page moved into the home page. Old links still land on that section.
-  redirects: {
-    "/about": "/#about",
-  },
 });
