@@ -25,6 +25,7 @@ Order: name, Selected work, BRIDGEGOOD and KRON4, About, closing. Every section 
 ## Case study pages
 
 - Top: mono index row ("01 / AthenaScribe", "Draft" for drafts) over a thin rule, the headline as the h1, the summary, the prototype link, then the facts: "At a glance" (the card detail) full width first, then Role, Timeline, Team, Client, Program, Tools.
+- End of each case study: Previous and Next, and "Back to top ↑" on the right (under Next, or in its place on the last study).
 - Chapters open with a thin rule. No white panels, no rounded boxes, no round dots: cards are ruled columns, numbers are small square mono badges, tags are outlined mono, before and after uses a thin rule (before) and a heavier navy rule (after).
 
 ## Case study index

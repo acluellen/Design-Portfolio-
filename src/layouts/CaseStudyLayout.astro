@@ -176,20 +176,34 @@ const indexItems = [
 
   {
     (prev || next) && (
-      <nav class="container pager" aria-label="More case studies">
+      <nav class="container pager" aria-label="End of case study">
         {prev && (
           <a class="pager__link" href={`/work/${prev.id}/`} rel="prev">
             <span class="label">Previous</span>
             <span class="pager__title">{prev.data.title}</span>
           </a>
         )}
-        {next && (
+        {next ? (
           <a class="pager__link pager__link--next" href={`/work/${next.id}/`} rel="next">
             <span class="label">Next</span>
             <span class="pager__title">{next.data.title}</span>
           </a>
+        ) : (
+          /* The last case study: Back to top takes the empty Next spot. */
+          <a class="pager__link pager__link--next pager__top" href="#top">
+            <span class="label">Back to top <span aria-hidden="true">↑</span></span>
+          </a>
         )}
       </nav>
+    )
+  }
+  {
+    /* Back to top (Micah Hoang's "Scroll to top"): always on the right, so it is in the same place
+       on every case study. Under Next when there is one. */
+    next && (
+      <div class="container pager__toprow">
+        <a class="pager__toplink" href="#top">Back to top <span aria-hidden="true">↑</span></a>
+      </div>
     )
   }
 </PageLayout>
@@ -436,6 +450,46 @@ const indexItems = [
     border-top: var(--rule-thin) solid var(--color-rule-strong);
     color: inherit;
     text-decoration: none;
+  }
+
+  /* Back to top in the Next spot: the same rule and spacing as the other pager links. */
+  .pager__top {
+    justify-items: end;
+    text-align: end;
+  }
+
+  .pager__top .label {
+    display: inline-flex;
+    gap: 0.6ch;
+    color: var(--color-heading);
+  }
+
+  .pager__top:hover .label {
+    text-decoration: underline;
+    text-underline-offset: var(--underline-offset);
+  }
+
+  .pager__toprow {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .pager__toplink {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--control-height);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    gap: 0.6ch;
+    color: var(--color-heading);
+    text-decoration: none;
+  }
+
+  .pager__toplink:hover {
+    text-decoration: underline;
+    text-underline-offset: var(--underline-offset);
   }
 
   .pager__title {

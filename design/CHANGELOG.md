@@ -17,6 +17,12 @@ Newest first. Every design or structure decision goes here.
 
 
 
+
+## 2026-10-09 · Back to top on case studies
+
+- Micah Hoang's "Scroll to top", named "Back to top ↑" (plainer, and what most sites call it). Always on the right so it is in the same place on every case study: under Next on AthenaScribe and Klima, and in the empty Next spot on Craft Education, the last one (Aaron's ask). Mono, navy, 44px target, underline on hover. It jumps to the top of the page (smooth, or instant with reduced motion).
+- The pager's label for screen readers is now "End of case study".
+
 ## 2026-10-09 · Case study pass: the case studies match the home page
 
 - Header of each case study: a mono index row over a thin rule ("01 / AthenaScribe", the same number as its home card, with "Draft" at the end for drafts). The headline is now the page's h1; the study's name sits in the index row. An "At a glance" line with the card's detail (the key numbers) opens the facts, full width, before Role, Timeline, Team, and the rest.
