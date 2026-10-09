@@ -16,6 +16,7 @@ const onAbout = path.startsWith("/about");
       <Logo />
     </a>
     <p class="site-header__meta"><span>Product designer</span><span>Bay Area, CA</span></p>
+    <div class="site-header__end">
     <nav aria-label="Main">
       <ul class="site-header__nav">
         <li>
@@ -35,6 +36,7 @@ const onAbout = path.startsWith("/about");
       </ul>
     </nav>
     <ThemeToggle />
+    </div>
   </div>
 </header>
 
@@ -101,12 +103,16 @@ const onAbout = path.startsWith("/about");
     border-radius: var(--radius-media);
   }
 
-  /* Micah Hoang's header: role and place spread across the middle, in mono. Hidden on phones,
-     where the name block at the top of the home page says the same. */
+  .site-header__end {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2) var(--space-5);
+  }
+
+  /* Micah Hoang's header: role and place in mono, each starting on a quarter of the content width,
+     so they line up with the page grid. Hidden on phones, where the top of the home page says it. */
   .site-header__meta {
     display: none;
-    flex: 1;
-    justify-content: space-evenly;
     gap: var(--space-5);
     font-family: var(--font-mono);
     font-size: var(--step--1);
@@ -116,8 +122,24 @@ const onAbout = path.startsWith("/about");
   }
 
   @media (min-width: 48rem) {
+    .site-header__inner {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .site-header__home {
+      justify-self: start;
+    }
+
     .site-header__meta {
-      display: flex;
+      display: grid;
+      grid-column: 2 / 4;
+      grid-template-columns: 1fr 1fr;
+      margin: 0;
+    }
+
+    .site-header__end {
+      justify-self: end;
     }
   }
 

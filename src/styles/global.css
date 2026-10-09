@@ -226,3 +226,11 @@ small {
       transform var(--duration-reveal) var(--ease-standard);
   }
 }
+
+/* Print shows every section, even ones that have not scrolled into view yet. */
+@media print {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

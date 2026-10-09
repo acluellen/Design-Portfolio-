@@ -39,7 +39,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     ></video>
   </div>
   <!-- The loop runs past five seconds, so it needs a way to stop it (WCAG 2.2.2). -->
-  <button class="clip__toggle" type="button" data-clip-toggle hidden>Pause clip</button>
+  <!-- Optional caption from the page, with the Pause control at the end of the same row. -->
+  <div class="clip__bar">
+    <slot />
+    <button class="clip__toggle" type="button" data-clip-toggle hidden>Pause clip</button>
+  </div>
 </div>
 
 <script>
@@ -172,16 +176,31 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     }
   }
 
-  /* A small text link under the clip. */
+  /* One mono row under the clip: the page's caption, then Pause. */
+  .clip__bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 var(--space-5);
+    inline-size: 100%;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+
   .clip__toggle {
     display: inline-flex;
     align-items: center;
     min-block-size: var(--control-height);
+    margin-inline-start: auto;
     padding: 0;
     border: 0;
     background: none;
     font: inherit;
-    font-size: var(--step--1);
+    letter-spacing: inherit;
+    text-transform: inherit;
     color: var(--color-ink-muted);
     text-decoration: underline;
     text-underline-offset: var(--underline-offset);

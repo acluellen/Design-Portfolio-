@@ -68,7 +68,7 @@ const sizes = featured ? "(min-width: 76rem) 38rem, 50vw" : "(min-width: 76rem) 
       </p>
       {card?.outcome && <p class="work-card__outcome">{card.outcome}</p>}
     </div>
-    <div class="work-card__shot">
+    <div class:list={["work-card__shot", { "work-card__shot--empty": !photo }]}>
       {
         photo ? (
           <Photo
@@ -245,6 +245,13 @@ const sizes = featured ? "(min-width: 76rem) 38rem, 50vw" : "(min-width: 76rem) 
 
   .work-card--linked:hover .work-card__shot :global(img) {
     transform: scale(var(--card-image-zoom));
+  }
+
+  /* No image yet: on narrow cards (stacked), skip the empty slot instead of a tall blank box. */
+  @container (max-width: 29.99rem) {
+    .work-card__shot--empty {
+      display: none;
+    }
   }
 
   /* Review previews only: names the empty slot. Production shows a plain panel. */

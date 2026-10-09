@@ -226,6 +226,12 @@ const visible = (rows: AboutRow[]) => rows.filter((r) => showPlaceholders || r.p
     line-height: var(--leading-snug);
   }
 
+  /* Linked rows: a taller tap target. */
+  .ledger__what a {
+    display: inline-block;
+    padding-block: var(--space-2);
+  }
+
   .ledger__place {
     color: var(--color-heading);
   }
@@ -244,7 +250,7 @@ const visible = (rows: AboutRow[]) => rows.filter((r) => showPlaceholders || r.p
 
   @media (min-width: 40rem) {
     .ledger__row {
-      grid-template-columns: 1fr 1.4fr auto;
+      grid-template-columns: 1fr 1.4fr 10ch; /* fixed year column, so every row lines up */
     }
 
     .ledger__what {
@@ -262,7 +268,7 @@ const visible = (rows: AboutRow[]) => rows.filter((r) => showPlaceholders || r.p
     grid-column: 1 / -1;
     max-width: var(--measure-reading);
     font-family: var(--font-text);
-    font-size: var(--step--1);
+    font-size: var(--step-0);
     letter-spacing: normal;
     text-transform: none;
     line-height: var(--leading-body);

@@ -11,6 +11,20 @@ Newest first. Every design or structure decision goes here.
 
 
 
+
+## 2026-10-09 · Fixes from the design review agent
+
+A review agent checked home and About at 1440 and 390, light and dark, keyboard, and reduced motion. All five asks passed except KRON4 on phones. Fixed:
+
+- KRON4: the caption and "Pause clip" now share one mono row (KronClip takes the caption as a slot; Pause sits at the end). On phones the words shorten (KRON4, BRIDGEGOOD, YouTube) so the row stays one line.
+- About tables: fixed 10ch year column so every row lines up. Row notes at body size. Linked rows get a taller tap target.
+- Skip link: square, no pill.
+- Hero: removed the extra space above the links row and trimmed the space below the hero.
+- Header: on wider screens it is a four column grid, so "Product designer" and "Bay Area, CA" start on the quarter lines of the page.
+- Work cards: on phones, an empty image slot is skipped instead of showing a tall blank box.
+- Print shows every section, including ones not yet revealed on scroll.
+- Not changed, for Aaron to decide: the home About paragraph is the same text as the About page intro.
+
 ## 2026-10-09 · One voice type, Micah header, hero subtext, one line KRON4
 
 Aaron's answers: "One voice, mono labels kept"; the header with the AL logo then the text; the KRON4 section as the clip plus one caption line. Meta line from his facts: design since 2024 (2 years), spaces EdTech (AthenaScribe), Health (Craft Education, a therapy service), Climate (Klima).
