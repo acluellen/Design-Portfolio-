@@ -13,9 +13,10 @@ export async function getStaticPaths() {
 }
 
 const { study, prev, next } = Astro.props;
-const { Content } = await render(study);
+const { Content, headings } = await render(study);
+const sections = headings.filter((h) => h.depth === 2);
 ---
 
-<CaseStudyLayout study={study} prev={prev} next={next}>
+<CaseStudyLayout study={study} prev={prev} next={next} sections={sections}>
   <Content components={mdxComponents} />
 </CaseStudyLayout>

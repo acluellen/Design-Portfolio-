@@ -23,6 +23,8 @@ const caseStudies = defineCollection({
         outcome: z.string().optional(),
       })
       .optional(),
+    // Short names for the case study index, one per ## section, in order. Falls back to the heading.
+    index: z.array(z.string()).optional(),
     // The one large card at the top of Selected work.
     featured: z.boolean().default(false),
     // Shows a small "In progress" label on the home page card. The card never links while true.

@@ -9,16 +9,25 @@ interface Props {
   study: CaseStudy;
   prev?: CaseStudy;
   next?: CaseStudy;
+  /** The study's ## headings, for the section index. */
+  sections?: { slug: string; text: string }[];
 }
 
-const { study, prev, next } = Astro.props;
+const { study, prev, next, sections = [] } = Astro.props;
 const { title, summary, headline, role, team, timeline, client, program, tools, cover, status, heroMedia, prototype } =
   study.data;
+
+// Section index (Tee Hodgson's strip and Angelina Cao's numbered index): Overview, then one line
+// per ## section, named by the study's `index` list or, failing that, by the heading itself.
+const indexItems = [
+  { id: "overview", label: "Overview" },
+  ...sections.map((s, i) => ({ id: s.slug, label: study.data.index?.[i] ?? s.text })),
+].map((item, i) => ({ ...item, number: String(i + 1).padStart(2, "0") }));
 ---
 
 <PageLayout title={title} description={summary}>
   <article>
-    <header class="container hero">
+    <header class="container hero" id="overview">
       <div class:list={["hero__top", { "hero__top--media": heroMedia }]}>
         <div class="hero__intro">
           <p class="label hero__eyebrow">
@@ -119,7 +128,35 @@ const { title, summary, headline, role, team, timeline, client, program, tools, 
       {cover && <img class="hero__cover" src={cover.src} alt={cover.alt} />}
     </header>
 
-    <div class="container">
+    <!-- Phones and tablets: a thin bar under the header names the current section and opens the list. -->
+    {
+      indexItems.length > 2 && (
+        <details class="case-bar" data-case-bar>
+          <summary>
+            <span class="case-bar__current" data-case-current>{indexItems[0].number} / {indexItems[0].label}</span>
+            <span class="case-bar__hint">Sections</span>
+          </summary>
+          <ol class="case-bar__list">
+            {indexItems.map((item) => (
+              <li><a href={`#${item.id}`} data-case-link={item.id}><span>{item.number}</span><span>{item.label}</span></a></li>
+            ))}
+          </ol>
+        </details>
+      )
+    }
+
+    <div class:list={["container", { "case-grid": indexItems.length > 2 }]}>
+      {
+        indexItems.length > 2 && (
+          <nav class="case-index" aria-label="Sections">
+            <ol>
+              {indexItems.map((item) => (
+                <li><a href={`#${item.id}`} data-case-link={item.id}><span>{item.number}</span><span>{item.label}</span></a></li>
+              ))}
+            </ol>
+          </nav>
+        )
+      }
       <div class="flow body">
         <slot />
       </div>
@@ -378,4 +415,177 @@ const { title, summary, headline, role, team, timeline, client, program, tools, 
   .pager__link:hover .pager__title {
     color: var(--color-accent-hover);
   }
+
+  /* Section index. Wide screens: a numbered list beside the body that stays in view and marks the
+     section on screen. Narrower: a thin bar under the header (details) with the current section. */
+  .case-grid {
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  .case-grid > * {
+    min-width: 0;
+  }
+
+  .case-index {
+    display: none;
+  }
+
+  .case-index ol,
+  .case-bar__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .case-index a,
+  .case-bar__list a {
+    display: grid;
+    grid-template-columns: 2.5ch 1fr;
+    gap: var(--space-3);
+    align-items: center;
+    min-block-size: var(--control-height);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+    text-decoration: none;
+    border-block-end: var(--rule-thin) solid var(--color-rule);
+    transition: color var(--duration-fast) var(--ease-standard);
+  }
+
+  .case-index a:hover,
+  .case-bar__list a:hover {
+    color: var(--color-ink);
+  }
+
+  /* Current section: ink color and a short bar on the left. */
+  .case-index a[aria-current],
+  .case-bar__list a[aria-current] {
+    color: var(--color-heading);
+    box-shadow: inset var(--rule-thick) 0 0 var(--color-heading);
+    padding-inline-start: var(--space-3);
+  }
+
+  .case-index li:first-child a,
+  .case-bar__list li:first-child a {
+    border-block-start: var(--rule-thin) solid var(--color-rule-strong);
+  }
+
+  @media (min-width: 72rem) {
+    .case-grid {
+      grid-template-columns: var(--size-case-index) minmax(0, 1fr);
+      column-gap: var(--space-8);
+      align-items: start;
+    }
+
+    .case-index {
+      display: block;
+      position: sticky;
+      top: calc(var(--header-height) + var(--space-6));
+    }
+
+    .case-bar {
+      display: none;
+    }
+  }
+
+  .case-bar {
+    position: sticky;
+    top: var(--header-height);
+    z-index: 15;
+    background: var(--color-paper);
+    border-block-end: var(--rule-thin) solid var(--color-rule);
+    padding-inline: var(--gutter);
+    margin-block-end: var(--space-6);
+  }
+
+  .case-bar summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+    min-block-size: var(--control-height);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-heading);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .case-bar summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .case-bar__hint {
+    color: var(--color-ink-muted);
+  }
+
+  .case-bar__hint::after {
+    content: " +";
+  }
+
+  .case-bar[open] .case-bar__hint::after {
+    content: " ×";
+  }
+
+  .case-bar__list {
+    padding-block-end: var(--space-3);
+  }
+
+  /* Where the header stops sticking (very narrow or very large text), the bar sits at the top. */
+  @media (max-width: 24rem) {
+    .case-bar {
+      top: 0;
+    }
+  }
+
+  /* Jump links land below the header and the bar. */
+  @media (max-width: 71.99rem) {
+    :global(html:has(.case-bar)) {
+      scroll-padding-top: calc(var(--header-height) + var(--control-height) + var(--space-4));
+    }
+  }
 </style>
+
+<script>
+  // Marks the section on screen in both the side index and the bar, and closes the bar after a jump.
+  const links = [...document.querySelectorAll<HTMLAnchorElement>("[data-case-link]")];
+  const current = document.querySelector<HTMLElement>("[data-case-current]");
+  const bar = document.querySelector<HTMLDetailsElement>("[data-case-bar]");
+  const ids = [...new Set(links.map((a) => a.dataset.caseLink!))];
+  const targets = ids.map((id) => document.getElementById(id)).filter((el): el is HTMLElement => el !== null);
+
+  const mark = (id: string) => {
+    links.forEach((a) => {
+      if (a.dataset.caseLink === id) a.setAttribute("aria-current", "location");
+      else a.removeAttribute("aria-current");
+    });
+    const link = links.find((a) => a.dataset.caseLink === id);
+    if (current && link) current.textContent = [...link.querySelectorAll("span")].map((s) => s.textContent).join(" / ");
+  };
+
+  if (targets.length > 0) {
+    // The last section whose top has passed the upper third of the screen is current.
+    let queued = false;
+    const update = () => {
+      queued = false;
+      const line = window.innerHeight * 0.33;
+      let active = targets[0].id;
+      for (const t of targets) if (t.getBoundingClientRect().top <= line) active = t.id;
+      mark(active);
+    };
+    addEventListener("scroll", () => {
+      if (!queued) {
+        queued = true;
+        requestAnimationFrame(update);
+      }
+    }, { passive: true });
+    update();
+  }
+
+  links.forEach((a) => a.addEventListener("click", () => bar && (bar.open = false)));
+</script>

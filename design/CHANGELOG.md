@@ -12,6 +12,14 @@ Newest first. Every design or structure decision goes here.
 
 
 
+
+## 2026-10-09 · Case study index, home About as one story, Oakland
+
+- Header: "Oakland, CA" (Aaron).
+- Case study section index (Tee Hodgson's strip, Angelina Cao's numbered list): from 72rem a numbered list beside the body (Overview, then one line per section) that stays in view and marks the section on screen. Under 72rem a thin bar under the header shows the current section ("03 / Research") and opens the full list. Real links, keyboard reachable, closes after a jump; jump links land below the header and the bar. Short names come from a new `index` list in each case study's frontmatter.
+- Home About rebuilt as one story after the work (Aaron's flow): "I recently finished the BRIDGEGOOD UX Design Apprenticeship.", one line on Google.org, the Warriors, the mentors, AthenaScribe, and Demo Day; then the KRON4 clip with its caption row; then "From coaching systems to product design." with two sentences from his coaching story, "Read more about me", and the knee strike gym photo as a stand in for his coaching clip (tagged as a placeholder in previews only). The home About no longer repeats the About page intro word for word.
+- Fixed: words lost their spaces next to inline names, and inside the caption row (flex items trim spaces; now inline blocks).
+
 ## 2026-10-09 · Fixes from the design review agent
 
 A review agent checked home and About at 1440 and 390, light and dark, keyboard, and reduced motion. All five asks passed except KRON4 on phones. Fixed:
