@@ -71,7 +71,7 @@ export const photos: Record<PhotoKey, { alt: string; approved: boolean }> = {
   },
   // Cover frame of the KRON4 loop. Also the only image shown with reduced motion.
   "kron4-still-color": {
-    alt: "Aaron on the KRON4 set, speaking, in glasses and a navy Design shirt.",
+    alt: "Aaron on the KRON4 set in glasses and a navy Design With BRIDGEGOOD shirt, beside a fellow apprentice.",
     approved: false,
   },
 };

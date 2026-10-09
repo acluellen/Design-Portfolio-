@@ -106,7 +106,9 @@
   /* Selected work cards */
   --gap-card-media: 1.25rem; /* 20px between card image and text */
   --card-lift: 3px; /* hover rise */
-  --card-image-zoom: 1.03; /* hover zoom on card images */
+  --card-image-zoom: 1.02; /* hover zoom on card images */
+  --duration-roll: 420ms; /* card title rolls to "View case study" (Micah Hoang's card) */
+  --ease-roll: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Case study blocks */
   --card-grid-min: 15rem; /* narrowest card in a case study card grid before it wraps */
@@ -115,8 +117,8 @@
   --size-play: 4.5rem; /* play button over a video thumbnail */
   --color-overlay: rgb(24 23 21 / 0.82); /* behind the play icon, readable on any frame */
 
-  /* KRON4 clip that opens on scroll (Zeel). The source is 520px wide, so it opens to a modest size. */
-  --size-clip: 40rem; /* fully open width */
+  /* KRON4 clip that opens on scroll (Zeel). The source is 752px wide, so it opens to that width. */
+  --size-clip: 47rem; /* fully open width */
   --clip-closed: 16% 26%; /* the starting crop: top and bottom, then left and right */
 
   /* About photo row: the tall photos are 4:5, the wide one 7:5, so equal heights need these widths. */
@@ -255,5 +257,6 @@
     --card-lift: 0px;
     --card-image-zoom: 1;
     --duration-hover: 0ms;
+    --duration-roll: 0ms;
   }
 }

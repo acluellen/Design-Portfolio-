@@ -219,8 +219,8 @@ const sections = [
       <h3 class="sg__sub">WorkCard, featured and small</h3>
       <p class="sg__note">The featured card is shown linked so its hover state can be reviewed. On the home page, cards link only to published case studies.</p>
       <div class="sg__cards">
-        {featuredSample && <WorkCard study={featuredSample} href="#site" featured />}
-        {cardSample && <WorkCard study={cardSample} />}
+        {featuredSample && <WorkCard study={featuredSample} href="#site" featured index={1} />}
+        {cardSample && <WorkCard study={cardSample} index={2} />}
       </div>
 
       <h3 class="sg__sub">VideoEmbed, no link yet</h3>

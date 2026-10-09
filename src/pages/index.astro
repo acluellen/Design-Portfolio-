@@ -26,12 +26,12 @@ const others = studies.filter((s) => s !== featured);
   <!-- 2. Selected work, right after the name: one featured card, then smaller cards. Cards link only when published. -->
   <section id="work" class="work" aria-labelledby="work-heading" data-reveal>
     <h2 id="work-heading">Selected work</h2>
-    {featured && <WorkCard study={featured} href={caseStudyHref(featured)} featured />}
+    {featured && <WorkCard study={featured} href={caseStudyHref(featured)} featured index={1} />}
     {
       others.length > 0 && (
         <div class="work__grid">
-          {others.map((study) => (
-            <WorkCard study={study} href={caseStudyHref(study)} />
+          {others.map((study, i) => (
+            <WorkCard study={study} href={caseStudyHref(study)} index={i + (featured ? 2 : 1)} />
           ))}
         </div>
       )
@@ -121,7 +121,6 @@ const others = studies.filter((s) => s !== featured);
           <Photo name="about-camera" widths={[400, 600, 800]} sizes="(min-width: 76rem) 20rem, (min-width: 48rem) 26vw, 46vw" ratio="4 / 5" class="about__photo about__photo--tall" />
         </div>
       </div>
-      <figcaption class="credit">Photos: BRIDGEGOOD</figcaption>
     </figure>
   </section>
 

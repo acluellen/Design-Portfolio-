@@ -74,15 +74,14 @@ Wrap navy panels in `.surface-always-dark`. It remaps ink, headings, muted ink, 
 
 ## Selected work
 
-- One large featured card on top (`featured: true` in the case study), then the other cards in two columns from 48rem, one column on phones. Order comes from each case study's `order` value.
-- Every card: 4:3 image on a soft panel, a small blue label, the title, one description, and one detail line at the bottom above a thin rule. No tags.
-- Cards marked `inProgress: true` show a small outlined "In progress" tag beside the label, never link, and have no button.
-- A published case study's card shows "View case study" as a small outlined button (`--control-height-small`). The whole card is the one link.
-- Featured card: image and text side by side from 56rem (7 to 5), bigger title and description.
-- Card text lives in each case study's frontmatter under `card` (`label`, `description`, `detail`).
-- A card links to its case study only when that case study is published. The whole card is then the link, with a visible focus ring, a lift, and an image zoom on hover. Unpublished cards have no link and no hover.
-- Card labels are plain small uppercase text, never pills: what Aaron did, then where. "In progress" sits next to the label in the label blue.
-- With no image, the panel shows the project name.
+- One featured card on top (`featured: true`), then the others in two columns from 48rem, one column on phones. Order comes from each case study's `order`.
+- Every card, top to bottom:
+  1. Index row: mono "01 / Title" over a thin rule. On hover or keyboard focus the title rolls up to "View case study" in the link blue (`--duration-roll`, `--ease-roll`, zero with reduced motion).
+  2. Poster cover on white with a thin border: the role label (mono, muted), the case study headline as the claim with one word in blue (`card.highlight`), and one real result (`card.outcome`), beside the project image slot. Featured 21:9, half width 4:3, stacked on phones with a 16:9 image slot.
+  3. The description, muted.
+- The whole card is one link, with a visible focus ring. Hover darkens the cover border; images zoom to `--card-image-zoom`.
+- Project images are off for now (`showImages` in `WorkCard.astro`). Review previews label the empty slot "Project media"; production shows a plain panel.
+- Unpublished cards have no link, no roll, and say "Case study coming soon". Cards marked `inProgress` show "In progress" at the end of the index row.
 
 ## Photos
 

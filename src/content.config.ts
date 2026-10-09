@@ -12,8 +12,16 @@ const caseStudies = defineCollection({
     /** One line that states the project, shown large under the title. */
     headline: z.string().optional(),
     // Home page card: a small label, one description, and one detail line.
+    // The cover poster uses the headline as its claim: `highlight` is the one word shown in blue,
+    // and `outcome` is one real result (taken from the detail line, never invented).
     card: z
-      .object({ label: z.string(), description: z.string(), detail: z.string() })
+      .object({
+        label: z.string(),
+        description: z.string(),
+        detail: z.string(),
+        highlight: z.string().optional(),
+        outcome: z.string().optional(),
+      })
       .optional(),
     // The one large card at the top of Selected work.
     featured: z.boolean().default(false),

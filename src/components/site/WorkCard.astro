@@ -1,176 +1,129 @@
 ---
-// A Selected work card: image, small label, title, one description, one detail line.
-// `featured` makes the large card: image and text side by side from 56rem up.
+// A Selected work card (October 9 direction):
+// 1. Index row: "01 / AthenaScribe" in mono over a thin rule. On hover or focus the title rolls up
+//    to "View case study" (Micah Hoang's card). Only cards that open a page roll.
+// 2. Poster cover (Zeel Shah's card): the role label, the headline with one word in blue, and one
+//    real outcome, beside the project image slot.
+// 3. One description line under the cover.
+// `featured` makes the cover wider. Project images are switched off for now (see showImages).
 import Photo from "./Photo.astro";
 import { photos, type PhotoKey } from "../../data/photos";
-import type { CaseStudy } from "../../lib/case-studies";
+import { showPlaceholders, type CaseStudy } from "../../lib/case-studies";
 
 interface Props {
   study: CaseStudy;
   /** Case study URL. Without it the card does not link. */
   href?: string;
   featured?: boolean;
+  /** Position in Selected work, shown as 01, 02, 03. */
+  index: number;
 }
 
-const { study, href, featured = false } = Astro.props;
-const { title, card, inProgress } = study.data;
-const photoKey = `work-${study.id}`;
-const photo = (photoKey in photos ? photoKey : undefined) as PhotoKey | undefined;
+// Aaron asked to judge the layout without the draft project pictures. Set to true to bring them back;
+// the files stay in src/assets/photos/.
+const showImages = false;
 
-// The image area is 4:3. Featured images take about 7/12 of the wide column, small ones half.
-const sizes = featured
-  ? "(min-width: 76rem) 38rem, (min-width: 56rem) 52vw, 92vw"
-  : "(min-width: 76rem) 31rem, (min-width: 48rem) 44vw, 92vw";
+const { study, href, featured = false, index } = Astro.props;
+const { title, card, inProgress, headline } = study.data;
+const photoKey = `work-${study.id}`;
+const photo = (showImages && photoKey in photos ? photoKey : undefined) as PhotoKey | undefined;
+const number = String(index).padStart(2, "0");
+
+// The claim is the case study headline. The highlight word, when it is in the headline, turns blue.
+const claim = headline ?? title;
+const at = card?.highlight ? claim.indexOf(card.highlight) : -1;
+const claimParts =
+  at >= 0 ? [claim.slice(0, at), card!.highlight!, claim.slice(at + card!.highlight!.length)] : [claim, "", ""];
+
+const sizes = featured ? "(min-width: 76rem) 38rem, 50vw" : "(min-width: 76rem) 19rem, (min-width: 48rem) 23vw, 92vw";
 ---
 
 <article
   class:list={["work-card", { "work-card--featured": featured, "work-card--linked": href }]}
 >
-  <div class="work-card__media">
-    {
-      photo ? (
-        <Photo
-          name={photo}
-          widths={featured ? [600, 900, 1200, 1448] : [400, 600, 800, 1000, 1200]}
-          sizes={sizes}
-          ratio="4 / 3"
-          cover={4 / 3}
-          placeholderLabel={title}
-          class="work-card__image"
-        />
-      ) : (
-        <div class="work-card__fallback" aria-hidden="true">{title}</div>
-      )
-    }
+  <div class="work-card__row">
+    <span class="work-card__number" aria-hidden="true">{number} /</span>
+    <h3 class="work-card__title" translate="no">
+      {
+        href ? (
+          <a href={href}>
+            <span class="work-card__roll">
+              <span>{title}</span>
+              <span aria-hidden="true">View case study</span>
+            </span>
+          </a>
+        ) : (
+          title
+        )
+      }
+    </h3>
+    {inProgress && <span class="work-card__status">In progress</span>}
   </div>
 
-  <div class="work-card__text">
-    <div class="work-card__top">
+  <div class="work-card__cover">
+    <div class="work-card__poster">
       {card?.label && <p class="work-card__label">{card.label}</p>}
-      {inProgress && <p class="work-card__status">In progress</p>}
+      <p class="work-card__claim">
+        {claimParts[0]}{claimParts[1] && <em>{claimParts[1]}</em>}{claimParts[2]}
+      </p>
+      {card?.outcome && <p class="work-card__outcome">{card.outcome}</p>}
     </div>
-    <h3 class="work-card__title" translate="no">
-      {href ? <a href={href}>{title}</a> : title}
-    </h3>
-    {card?.description && <p class="work-card__description">{card.description}</p>}
-    {card?.detail && <p class="work-card__detail">{card.detail}</p>}
-    {/* A finished study without its page yet. In progress cards already say so in their own words. */}
-    {!href && !inProgress && <p class="work-card__soon">Case study coming soon</p>}
-    {
-      href && (
-        <span class="work-card__cta" aria-hidden="true">
-          View case study
-        </span>
-      )
-    }
+    <div class="work-card__shot">
+      {
+        photo ? (
+          <Photo
+            name={photo}
+            widths={featured ? [600, 900, 1200] : [400, 600, 800]}
+            sizes={sizes}
+            ratio="4 / 3"
+            cover={4 / 3}
+            placeholderLabel={title}
+            class="work-card__image"
+          />
+        ) : (
+          showPlaceholders && <span class="work-card__slot">Project media</span>
+        )
+      }
+    </div>
   </div>
+
+  {card?.description && <p class="work-card__description">{card.description}</p>}
+  {/* A finished study without its page yet. In progress cards already say so. */}
+  {!href && !inProgress && <p class="work-card__soon">Case study coming soon</p>}
 </article>
 
 <style>
   .work-card {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-card-media);
-    height: 100%;
-    padding: var(--space-5);
-    background: var(--color-paper-raised);
-    border: var(--rule-thin) solid var(--color-rule);
-    border-radius: var(--radius-media);
-  }
-
-  /* Hover: only cards that open a page lift, zoom their image a little, and darken the border.
-     Lift and zoom are zero with reduced motion (see tokens). Cards without a page stay still. */
-  .work-card {
-    transition:
-      transform var(--duration-hover) var(--ease-standard),
-      border-color var(--duration-fast) var(--ease-standard);
-  }
-
-  .work-card--linked:hover {
-    transform: translateY(calc(-1 * var(--card-lift)));
-  }
-
-  .work-card__media :global(img) {
-    transition: transform var(--duration-hover) var(--ease-standard);
-  }
-
-  .work-card--linked:hover .work-card__media :global(img) {
-    transform: scale(var(--card-image-zoom));
-  }
-
-  .work-card--linked:hover {
-    border-color: var(--color-ink);
-  }
-
-  /* Image area: 4:3 on a soft panel. */
-  .work-card__media {
-    aspect-ratio: 4 / 3;
-    overflow: hidden;
-    background: var(--color-panel);
-    border-radius: var(--radius-media);
-  }
-
-  .work-card__media :global(picture),
-  .work-card__media :global(img) {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-
-  .work-card__media :global(img) {
-    object-fit: cover;
-  }
-
-  .work-card__media :global(.photo-placeholder),
-  .work-card__fallback {
-    width: 100%;
-    height: 100%;
-  }
-
-  .work-card__fallback {
     display: grid;
-    place-items: center;
-    padding: var(--space-5);
-    font-size: var(--step-2);
-    font-weight: var(--weight-heading);
-    letter-spacing: var(--tracking-tight);
-    color: var(--color-ink-muted);
-    text-align: center;
+    gap: var(--space-4);
+    align-content: start;
+    container-type: inline-size;
   }
 
-  .work-card__text {
+  /* 1. Index row */
+  .work-card__row {
     display: flex;
-    flex: 1;
-    flex-direction: column;
+    align-items: baseline;
     gap: var(--space-3);
-    min-width: 0;
-  }
-
-  .work-card__top {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-2) var(--space-4);
-  }
-
-  /* Small labels: plain uppercase text, no pill. What I did, then where. */
-  .work-card__label,
-  .work-card__status {
+    padding-block-start: var(--space-3);
+    border-block-start: var(--rule-thin) solid var(--color-rule-strong);
+    font-family: var(--font-mono);
     font-size: var(--step--1);
-    font-weight: var(--weight-medium);
     letter-spacing: var(--tracking-label);
-    line-height: var(--leading-snug);
     text-transform: uppercase;
-    color: var(--color-ink-muted);
+    line-height: var(--leading-snug);
   }
 
-  .work-card__status {
-    color: var(--color-label-ink);
+  .work-card__number {
+    color: var(--color-ink-muted);
   }
 
   .work-card__title {
-    font-size: var(--step-2);
+    font: inherit;
+    letter-spacing: inherit;
+    color: var(--color-heading);
+    min-width: 0;
   }
 
   .work-card__title a {
@@ -183,7 +136,6 @@ const sizes = featured
     content: "";
     position: absolute;
     inset: 0;
-    border-radius: var(--radius-media);
   }
 
   .work-card__title a:focus-visible {
@@ -195,78 +147,157 @@ const sizes = featured
     outline-offset: var(--focus-offset);
   }
 
-  .work-card__description {
-    line-height: var(--leading-body);
+  /* The roll: two lines stacked in a one line window. */
+  .work-card__roll {
+    display: block;
+    block-size: calc(1em * var(--leading-snug));
+    overflow: hidden;
   }
 
-  /* Detail line sits at the bottom so cards in a row line up. */
-  .work-card__detail {
-    margin-block-start: auto;
-    padding-block-start: var(--space-4);
-    border-top: var(--rule-thin) solid var(--color-rule);
+  .work-card__roll > span {
+    display: block;
+    transition: transform var(--duration-roll) var(--ease-roll);
+  }
+
+  .work-card--linked:hover .work-card__roll > span,
+  .work-card__title a:focus-visible .work-card__roll > span {
+    transform: translateY(-100%);
+  }
+
+  .work-card__roll > span + span {
+    color: var(--color-accent);
+  }
+
+  .work-card__status {
+    margin-inline-start: auto;
+    color: var(--color-ink-muted);
+  }
+
+  /* 2. Poster cover: text left, project image right. Stacks on narrow cards. */
+  .work-card__cover {
+    display: grid;
+    grid-template-columns: 1fr;
+    background: var(--color-paper-raised);
+    border: var(--rule-thin) solid var(--color-rule);
+    transition: border-color var(--duration-fast) var(--ease-standard);
+  }
+
+  .work-card--linked:hover .work-card__cover {
+    border-color: var(--color-ink);
+  }
+
+  .work-card__poster {
+    display: grid;
+    align-content: space-between;
+    gap: var(--space-5);
+    padding: var(--space-5);
+    min-width: 0;
+  }
+
+  .work-card__label {
+    font-family: var(--font-mono);
     font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    line-height: var(--leading-snug);
+    color: var(--color-ink-muted);
+  }
+
+  .work-card__claim {
+    font-family: var(--font-display);
+    font-weight: var(--weight-heading);
+    font-size: var(--step-2);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-heading);
+    text-wrap: balance;
+  }
+
+  .work-card__claim em {
+    font-style: normal;
+    color: var(--color-accent);
+  }
+
+  .work-card__outcome {
+    font-weight: var(--weight-semibold);
+    font-size: var(--step--1);
+    line-height: var(--leading-snug);
+  }
+
+  .work-card__shot {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--color-panel);
+  }
+
+  .work-card__shot :global(picture),
+  .work-card__shot :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .work-card__shot :global(img) {
+    object-fit: cover;
+    transition: transform var(--duration-hover) var(--ease-standard);
+  }
+
+  .work-card--linked:hover .work-card__shot :global(img) {
+    transform: scale(var(--card-image-zoom));
+  }
+
+  /* Review previews only: names the empty slot. Production shows a plain panel. */
+  .work-card__slot {
+    position: absolute;
+    inset: auto auto var(--space-3) var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+
+  /* Wide enough: poster text and image side by side. Half width cards are 4:3 so the longest
+     claim fits and the two covers in a row match; the featured card is wider (below). */
+  @container (min-width: 30rem) {
+    .work-card__cover {
+      grid-template-columns: 1fr 1fr;
+      aspect-ratio: 4 / 3;
+    }
+
+    .work-card__shot {
+      aspect-ratio: auto;
+    }
+
+    .work-card__poster {
+      padding: clamp(var(--space-5), 5cqi, var(--space-7));
+    }
+  }
+
+  /* The featured cover is wider, so its claim can be bigger. */
+  @container (min-width: 48rem) {
+    .work-card--featured .work-card__cover {
+      aspect-ratio: 21 / 9;
+    }
+
+    .work-card--featured .work-card__claim {
+      font-size: var(--step-4);
+    }
+
+    .work-card--featured .work-card__outcome {
+      font-size: var(--step-0);
+    }
+  }
+
+  /* 3. Description */
+  .work-card__description {
+    max-width: var(--measure-reading);
     color: var(--color-ink-muted);
   }
 
   .work-card__soon {
     font-size: var(--step--1);
     color: var(--color-ink-muted);
-  }
-
-  /* Looks like a small secondary button. The whole card is the actual link. */
-  .work-card__cta {
-    align-self: flex-start;
-    display: inline-flex;
-    align-items: center;
-    min-block-size: var(--control-height-small);
-    padding-inline: var(--space-4);
-    border: var(--rule-thin) solid var(--color-ink);
-    border-radius: var(--radius-control);
-    font-size: var(--step--1);
-    font-weight: var(--weight-semibold);
-    letter-spacing: var(--tracking-button);
-    color: var(--color-ink);
-    transition:
-      background-color var(--duration-fast) var(--ease-standard),
-      color var(--duration-fast) var(--ease-standard);
-  }
-
-  .work-card--linked:hover .work-card__cta {
-    background: var(--color-ink);
-    color: var(--color-paper-raised);
-  }
-
-  /* Featured: larger type, image and text side by side on wide screens. */
-  .work-card--featured .work-card__title {
-    font-size: var(--step-4);
-  }
-
-  .work-card--featured .work-card__description {
-    font-size: var(--step-1);
-  }
-
-  @media (min-width: 56rem) {
-    .work-card--featured {
-      display: grid;
-      grid-template-columns: 7fr 5fr;
-      align-items: stretch;
-      gap: var(--space-7);
-      padding: var(--space-6);
-    }
-
-    /* The image keeps its 4:3 size and centers beside the text. Stretched to a taller text
-       column, its shape would make it wider than its column. */
-    .work-card--featured .work-card__media {
-      align-self: center;
-    }
-
-    .work-card--featured .work-card__text {
-      justify-content: center;
-      padding-block: var(--space-5);
-    }
-
-    .work-card--featured .work-card__detail {
-      margin-block-start: var(--space-5);
-    }
   }
 </style>
