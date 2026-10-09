@@ -23,6 +23,12 @@ Newest first. Every design or structure decision goes here.
 
 
 
+## 2026-10-09 · Top section line draws and replays
+
+- Aaron: the About line moved, the Selected work line did not. Two causes. At load the line drew while its section was still fading in, so the draw was hidden. And the replay watched the whole section, which is tall, so the line only reset after the whole Selected work section left the screen.
+- The script now follows the line itself (the section's top edge). It draws once the line is in the top three quarters of the screen and resets once the line leaves the screen, above or below. A line already on screen at load waits for the page to load and its section to finish fading in (`--duration-reveal`).
+- Layout unchanged.
+
 ## 2026-10-09 · Section lines easier to see
 
 - Aaron opened the preview in Safari and in the Claude viewer and saw no moving lines. In Chromium the draw and replay work, so the likely cause is that the line was too faint to notice (`--color-rule` is very light on paper) and the About line drew at the very bottom of the screen.

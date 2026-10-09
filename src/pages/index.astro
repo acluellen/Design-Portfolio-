@@ -83,18 +83,44 @@ const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.u
 </PageLayout>
 
 <script>
-  // Section lines draw left to right each time their section comes into view. Without motion
-  // (reduced motion setting, or no IntersectionObserver) the lines simply show.
+  // Section lines draw left to right each time the line itself comes into view, and reset once it
+  // leaves the screen, so they replay on every pass. Without motion (reduced motion setting) the
+  // lines simply show.
   const motion = window.matchMedia("(prefers-reduced-motion: no-preference)");
   const ruled = [...document.querySelectorAll<HTMLElement>(".work, .about")];
-  if (motion.matches && "IntersectionObserver" in window && ruled.length > 0) {
+  if (motion.matches && ruled.length > 0) {
     document.documentElement.classList.add("rules-ready");
-    const observer = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.target.classList.toggle("is-drawn", e.isIntersecting)),
-      // Starts once the line is a quarter of the way up the screen, where the eye is.
-      { rootMargin: "0px 0px -25% 0px" },
-    );
-    ruled.forEach((el) => observer.observe(el));
+    let queued = false;
+    const check = () => {
+      queued = false;
+      const height = window.innerHeight;
+      for (const el of ruled) {
+        // The line sits on the section's top edge.
+        const top = el.getBoundingClientRect().top;
+        // Draws once the line is a quarter of the way up the screen, where the eye is.
+        if (top >= 0 && top <= height * 0.75) el.classList.add("is-drawn");
+        else if (top < 0 || top > height) el.classList.remove("is-drawn");
+      }
+    };
+    const queue = () => {
+      if (!queued) {
+        queued = true;
+        requestAnimationFrame(check);
+      }
+    };
+    // A line already on screen at load waits for the page to load and its section to finish
+    // fading in, so the draw is seen.
+    // The build may write the token in seconds (".6s") or milliseconds.
+    const token = getComputedStyle(document.documentElement).getPropertyValue("--duration-reveal").trim();
+    const reveal = (parseFloat(token) || 0) * (token.endsWith("ms") ? 1 : 1000);
+    const start = () =>
+      window.setTimeout(() => {
+        check();
+        window.addEventListener("scroll", queue, { passive: true });
+        window.addEventListener("resize", queue, { passive: true });
+      }, reveal);
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
   }
 </script>
 
@@ -198,7 +224,7 @@ const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.u
   }
 
   /* The draw replays every time the section comes back into view (Micah Hoang). The script below
-     adds .is-drawn on the way in and removes it once the section has left the screen. */
+     adds .is-drawn on the way in and removes it once the line has left the screen. */
   @media (prefers-reduced-motion: no-preference) {
     :global(.rules-ready) .work:not(.is-drawn)::before,
     :global(.rules-ready) .about:not(.is-drawn)::before {
