@@ -19,6 +19,16 @@ Newest first. Every design or structure decision goes here.
 
 
 
+
+## 2026-10-09 · Home About, centered (Impeccable critique, Zeel Shah's feel)
+
+An Impeccable critique (two separate agents: design and copy review, and the detector in a browser) scored About through the closing section 16 of 24: three heavy pictures in a row and the same facts repeated (BRIDGEGOOD five times, AthenaScribe and Demo Day repeating card 01, "associate product design" twice in the closing). Aaron picked: centered statement, his story order, the clip in color, and my call on the Google photo.
+
+- About is centered on the graph paper: "About", then "I completed the BRIDGEGOOD UX Design Apprenticeship." with "Apprenticeship" in a blue highlighter (new `--color-highlight` and `--color-highlight-ink`, 6.1:1; light blue with dark text in dark mode), one line ("A summer program launched by Google.org and the Golden State Warriors, with mentors from Google, Meta, and YouTube."), a mono date (June to August 2026), the KRON4 clip centered at `--size-clip` (now 44rem) with "On KRON4 · Watch on YouTube · Pause clip" under it (full words on phones too), then "Before design, I ran a Muay Thai fight team." and "Read more about me".
+- Removed from home: the AthenaScribe and Demo Day line (card 01 says it), the gym photo (it lives on the About page), and the coaching heading.
+- Closing: the Google group photo is centered at the clip's width inside the navy panel, with its credit; the line under the question is now "I want to join a team building for schools, families, or people short on time." The question is smaller on phones so it does not wrap to four lines.
+- Detector on the changed files: clean. Copy check: clean.
+
 ## 2026-10-09 · Fixes from the case study review agent
 
 A review agent checked all three case studies at 1440 and 390, light and dark, keyboard, contrast, and the index. Fixed:

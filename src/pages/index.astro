@@ -6,7 +6,7 @@ import KronClip from "../components/site/KronClip.astro";
 import { mailto, site } from "../site.config";
 import fs from "node:fs";
 import WorkCard from "../components/site/WorkCard.astro";
-import { caseStudyHref, getAllCaseStudies, showPlaceholders } from "../lib/case-studies";
+import { caseStudyHref, getAllCaseStudies } from "../lib/case-studies";
 
 // Selected work: the featured case study as one large card, the rest below by `order`.
 const studies = (await getAllCaseStudies()).filter((s) => s.data.card);
@@ -46,52 +46,36 @@ const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.u
     }
   </section>
 
-  <!-- 3. About, told in order: the apprenticeship he just finished, then him on air, then coaching.
-       Reads as one story after the work. The full story is on the About page. -->
+  <!-- 3. About, centered (Zeel Shah's hero feel), in Aaron's order: the apprenticeship, him on air,
+       then coaching in one line. One image. Each fact is said once; the full story is on /about/. -->
   <section id="about" class="about" aria-labelledby="about-heading" data-reveal>
     <p class="label">About</p>
-    <h2 id="about-heading">I completed the <span translate="no">BRIDGEGOOD</span> UX Design Apprenticeship.</h2>
+    <h2 id="about-heading">I completed the <span translate="no">BRIDGEGOOD</span> UX Design <mark class="highlight">Apprenticeship</mark>.</h2>
     <p class="about__lede">
-      Launched by <span translate="no">Google.org</span> and the <span translate="no">Golden State Warriors</span>, with mentors from <span translate="no">Google</span>, <span translate="no">Meta</span>, and <span translate="no">YouTube</span>.
-      The team built <span translate="no">AthenaScribe</span> and presented it at Demo Day at <span translate="no">Block HQ</span>.
+      A summer program launched by <span translate="no">Google.org</span> and the <span translate="no">Golden State Warriors</span>, with mentors from <span translate="no">Google</span>, <span translate="no">Meta</span>, and <span translate="no">YouTube</span>.
     </p>
+    <p class="about__meta">June to August 2026</p>
 
     <div class="about__clip">
       <KronClip opens>
-        <span><span class="kron__long">On air with </span>KRON4</span>
-        {site.kron4Video && <a href={site.kron4Video} target="_blank" rel="noopener noreferrer"><span class="kron__long">Watch on </span>YouTube<span class="visually-hidden"> (opens in a new tab)</span></a>}
+        <span>On <span translate="no">KRON4</span></span>
+        {site.kron4Video && <a href={site.kron4Video} target="_blank" rel="noopener noreferrer">Watch on YouTube<span class="visually-hidden"> (opens in a new tab)</span></a>}
       </KronClip>
     </div>
 
-    <div class="about__coach">
-      <div class="about__coach-text">
-        <h3>From coaching systems to product design.</h3>
-        <p>
-          Competing taught me that close fights come down to the basics. Coaching taught me that every
-          fighter uses those basics differently.
-        </p>
-        <a class="about__more" href="/about/">Read more about me</a>
-      </div>
-      <!-- Stand in until Aaron's clip of holding pads or teaching. -->
-      <figure class="about__coach-media">
-        <Photo name="about-pads" widths={[600, 900, 1280]} sizes="(min-width: 64rem) 36rem, 92vw" ratio="7 / 5" class="about__coach-photo" />
-        {showPlaceholders && <figcaption class="about__coach-tag">Placeholder · coaching clip to come</figcaption>}
-      </figure>
-    </div>
+    <p class="about__coach">Before design, I ran a Muay Thai fight team.</p>
+    <a class="about__more" href="/about/">Read more about me</a>
   </section>
 
-  <!-- 4. Closing banner, navy in both themes: the whole group photo, then the invitation below it -->
-  <section class="panel panel--dark panel--flush surface-always-dark banner" aria-labelledby="banner-heading" data-reveal>
+  <!-- 4. Closing banner, navy in both themes: the group photo centered at the clip width, then the invitation. -->
+  <section class="panel panel--dark surface-always-dark banner" aria-labelledby="banner-heading" data-reveal>
     <figure class="banner__figure">
-      <Photo name="group" widths={[800, 1280, 1920, 2560]} sizes="(min-width: 76rem) 72rem, 94vw" ratio="2000 / 1150" class="banner__photo" />
+      <Photo name="group" widths={[700, 1100, 1400]} sizes="(min-width: 48rem) 44rem, 88vw" ratio="2000 / 1150" class="banner__photo" />
       <figcaption class="credit banner__credit">Photos: BRIDGEGOOD</figcaption>
     </figure>
     <div class="banner__content">
       <h2 id="banner-heading">Hiring an associate product designer?</h2>
-      <p>
-        I’m open to associate product design roles, especially on teams building for schools, families, or
-        people short on time.
-      </p>
+      <p>I want to join a team building for schools, families, or people short on time.</p>
       <ContactEmail class="banner__email" />
     </div>
   </section>
@@ -207,12 +191,59 @@ const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.u
     }
   }
 
-  /* 3. About, in order: apprenticeship, the KRON4 clip, coaching. Phones get the short caption words
-     so the row under the clip stays on one line. */
-  @media (max-width: 47.99rem) {
-    .kron__long {
-      display: none;
-    }
+  /* 3. About, centered: label, heading with one highlighted word, one line, a mono date, the clip,
+     then coaching in one line and the link to the About page. */
+  .about {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-5);
+    text-align: center;
+  }
+
+  .about h2 {
+    max-width: 18ch;
+    font-size: var(--step-5);
+    line-height: var(--leading-tight);
+  }
+
+  .highlight {
+    padding-inline: 0.08em;
+    background: var(--color-highlight);
+    color: var(--color-highlight-ink);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .about__lede {
+    max-width: 36rem;
+    font-size: var(--step-1);
+    line-height: var(--leading-snug);
+  }
+
+  .about__meta,
+  .about__more {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+  }
+
+  .about__meta {
+    color: var(--color-ink-muted);
+  }
+
+  .about__clip {
+    inline-size: min(100%, var(--size-clip));
+    margin-block: var(--space-5) var(--space-3);
+  }
+
+  /* Caption row under the clip, centered with the rest. */
+  .about :global(.clip__bar) {
+    justify-content: center;
+  }
+
+  .about :global(.clip__toggle) {
+    margin-inline-start: 0;
   }
 
   /* Inline block, not flex, so the spaces inside the words survive. Padding keeps a 44px target. */
@@ -222,93 +253,17 @@ const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.u
     padding-block: calc((var(--control-height) - 1lh) / 2);
   }
 
-  .about {
-    display: grid;
-    gap: var(--space-5);
-  }
-
-  .about h2 {
-    font-size: var(--step-4);
-    max-width: 22ch;
-  }
-
-  .about__lede {
-    max-width: var(--measure-reading);
+  .about__coach {
+    max-width: 36rem;
     font-size: var(--step-1);
     line-height: var(--leading-snug);
-  }
-
-  .about__clip {
-    margin-block: var(--space-5);
-  }
-
-  .about__coach {
-    display: grid;
-    gap: var(--space-6);
-    align-items: center;
-  }
-
-  .about__coach > * {
-    min-width: 0;
-  }
-
-  @media (min-width: 64rem) {
-    .about__coach {
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-8);
-    }
-  }
-
-  .about__coach-text {
-    display: grid;
-    gap: var(--space-4);
-    justify-items: start;
-  }
-
-  .about__coach-text h3 {
-    font-size: var(--step-3);
-  }
-
-  .about__coach-text p {
-    max-width: var(--measure-reading);
-    color: var(--color-ink-muted);
+    color: var(--color-heading);
   }
 
   .about__more {
     display: inline-flex;
     align-items: center;
     min-block-size: var(--control-height);
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    letter-spacing: var(--tracking-label);
-    text-transform: uppercase;
-  }
-
-  .about__coach-media {
-    position: relative;
-    margin: 0;
-  }
-
-  .about__coach-media :global(.about__coach-photo) {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 7 / 5;
-    object-fit: cover;
-    border-radius: var(--radius-media);
-  }
-
-  /* Review previews only. */
-  .about__coach-tag {
-    position: absolute;
-    inset: auto auto var(--space-3) var(--space-3);
-    padding: var(--space-1) var(--space-2);
-    background: var(--color-paper);
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    letter-spacing: var(--tracking-label);
-    text-transform: uppercase;
-    color: var(--color-ink-muted);
   }
 
   .credit {
@@ -316,15 +271,17 @@ const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.u
     color: var(--color-ink-muted);
   }
 
-  /* 5. Closing banner: the photo shows whole, with nothing laid over it. */
+  /* 4. Closing banner: the group photo centered at the clip width with its credit, then the
+     invitation. The banner keeps its panel padding all around. */
+  .banner {
+    padding: var(--panel-padding);
+  }
+
   .banner__figure {
     display: grid;
     gap: var(--space-3);
-  }
-
-  /* Credit and text keep the panel padding; only the photo runs edge to edge. */
-  .banner__credit {
-    padding-inline: var(--panel-padding);
+    inline-size: min(100%, var(--size-clip));
+    margin-inline: auto;
   }
 
   .banner :global(.banner__photo) {
@@ -341,12 +298,20 @@ const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.u
     display: grid;
     justify-items: center;
     gap: var(--space-5);
-    padding: var(--space-6) var(--panel-padding) var(--panel-padding);
+    padding-block-start: var(--space-7);
     text-align: center;
   }
 
+  /* Smaller on phones so the question does not wrap to four lines. */
   .banner__content h2 {
-    font-size: var(--step-4);
+    max-width: 20ch;
+    font-size: var(--step-3);
+  }
+
+  @media (min-width: 48rem) {
+    .banner__content h2 {
+      font-size: var(--step-4);
+    }
   }
 
   .banner__content p {

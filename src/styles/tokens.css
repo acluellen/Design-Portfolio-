@@ -27,6 +27,10 @@
   --color-focus: var(--color-accent);
   --color-selection: var(--color-accent-subtle);
 
+  /* Highlighter (Zeel Shah): the link blue behind one word of a heading, with paper text. 6.1:1. */
+  --color-highlight: #1d4ed8;
+  --color-highlight-ink: #f6f3ed;
+
   /* Logo: navy mark with paper lines. Flips to light on the dark page so it never disappears. */
   --color-logo: #1b2a3a;
   --color-logo-ink: #f6f3ed;
@@ -117,9 +121,8 @@
   --size-play: 4.5rem; /* play button over a video thumbnail */
   --color-overlay: rgb(24 23 21 / 0.82); /* behind the play icon, readable on any frame */
 
-  /* KRON4 clip that opens on scroll (Zeel). Cut from Aaron's screen recording of the YouTube segment,
-     1440px wide, so it opens to the full content width. */
-  --size-clip: 100%; /* fully open width */
+  /* KRON4 clip that opens on scroll (Zeel), centered in About. Also the width of the closing photo. */
+  --size-clip: 44rem; /* fully open width */
   --clip-closed: 16% 26%; /* the starting crop: top and bottom, then left and right */
 
   /* Case study section index: width of the numbered list beside the body (from 72rem). */
@@ -194,6 +197,8 @@
     --color-accent-subtle: #222b38;
     --color-logo: #e9ecf1;
     --color-logo-ink: #12161c;
+    --color-highlight: #8db4ff;
+    --color-highlight-ink: #12161c;
     --color-brand: #e9ecf1;
     --color-brand-hover: #ffffff;
     --color-brand-ink: #12161c;
@@ -219,6 +224,8 @@
   --color-accent-subtle: #222b38;
   --color-logo: #e9ecf1;
   --color-logo-ink: #12161c;
+  --color-highlight: #8db4ff;
+  --color-highlight-ink: #12161c;
   --color-brand: #e9ecf1;
   --color-brand-hover: #ffffff;
   --color-brand-ink: #12161c;
