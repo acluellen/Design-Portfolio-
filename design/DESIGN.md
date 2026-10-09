@@ -18,8 +18,8 @@ Calm and exact. The work and the photos carry the color. Everything around them 
 Order: name, Selected work, BRIDGEGOOD and KRON4, About, closing. Every section after the name opens with a thin rule.
 
 - Name: "Aaron Luellen" at `--step-6`, the largest text on the site, then one line in Geist, muted: "Product designer, research led, Oakland". No photo and no buttons; the menu has Work and About, and the work starts right below.
-- BRIDGEGOOD and KRON4: on the paper, no panel. Two text columns from 64rem, then the KRON4 clip centered below at up to `--size-clip` (40rem; the current file is 520px wide). It will be replaced by a 4 second loop from Aaron's screen recording of the YouTube segment.
-- About (`#about`): label, heading, the intro that used to sit at the top, the coaching story, and the portrait (4:5) beside the text. Below, one row of gym photos at equal heights: tall, wide, tall (`--about-row`). On phones the wide one goes on top and the two tall ones sit below.
+- BRIDGEGOOD and KRON4: on the paper, no panel. Two text columns from 64rem, then the KRON4 clip below at the full content width (`--size-clip`). The loop is 4 seconds from Aaron's screen recording of the YouTube segment: all three guests and his name bar.
+- About (`#about`): label, heading, the intro that used to sit at the top, and the coaching story. The portrait is out for now. Below, one row of gym photos at equal heights: tall, wide, tall (`--about-row`). On phones the wide one goes on top and the two tall ones sit below.
 
 ## Color
 
@@ -48,7 +48,7 @@ Wrap navy panels in `.surface-always-dark`. It remaps ink, headings, muted ink, 
 ## Theme
 
 - Follows the visitor's device setting by default.
-- A small toggle in the header switches light and dark. The choice is saved in the browser.
+- A small toggle in the header switches light and dark. The choice is saved in the browser and stays across pages (localStorage, with `window.name` as a fallback when storage is blocked).
 - An inline script in the head sets the theme before first paint, so the wrong theme never flashes.
 
 ## Type
