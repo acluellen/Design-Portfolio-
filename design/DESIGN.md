@@ -113,7 +113,7 @@ Wrap navy panels in `.surface-always-dark`. It remaps ink, headings, muted ink, 
 
 ## Link preview
 
-- `public/og-image.png` (1200 by 630): AL logo, "Aaron Luellen", "Product designer" on the warm off white page color, with a logo blue bar at the bottom. The source is `design/share/og-image.html`. Regenerate with `node scripts/make-og-image.cjs`.
+- `public/og-image.png` (1200 by 630): the navy AL logo, "Aaron Luellen" in Geist, and "Product designer, research led, Oakland" on the graph paper, with a navy bar at the bottom. The source is `design/share/og-image.html`. Regenerate with `node scripts/make-og-image.cjs`.
 - Open Graph and Twitter tags live in `BaseLayout.astro`. They need `site` set in `astro.config.mjs` to output absolute URLs.
 
 ## Motion

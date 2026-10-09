@@ -6,6 +6,12 @@ Newest first. Every design or structure decision goes here.
 
 
 
+
+## 2026-10-09 · New direction, step 4: checks and the link preview
+
+- Checked home, AthenaScribe, Klima, Craft Education, and the styleguide at 1440 and 390, light and dark: no sideways scroll anywhere, copy check clean.
+- Link preview image redone in the new look: graph paper, navy logo and name in Geist, the one line under it, navy bar.
+
 ## 2026-10-09 · KRON4 loop back to the earlier file
 
 - Aaron: the loop must come only from a screen recording of the KRON4 segment on YouTube, never from the Instagram repost he sent. The two loops cut from the repost today are removed. The page uses the earlier color loop again (520 by 390, 4:3, `--size-clip` 40rem) until his recording arrives. Then: cut 4 seconds from the moment with his name bar, all three guests, ending with his mouth closed, full width.
