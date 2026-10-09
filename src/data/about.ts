@@ -23,14 +23,15 @@ export interface AboutQuote {
 }
 
 export const experience: AboutRow[] = [
-  // Role title as shown on KRON4's name bar. Years to add.
+  // Role title as shown on KRON4's name bar. Dates from Aaron.
   {
     place: "BRIDGEGOOD",
     what: "UX Design Apprentice",
+    when: "June to August 2026",
     note: "Launched by Google.org and the Golden State Warriors, with mentors from Google, Meta, and YouTube. The team built AthenaScribe, a translation tool with human review for Oakland Unified families, and presented it at Demo Day at Block HQ.",
   },
-  // Klima and Craft Education ran in 2025. Program name to add.
-  { place: "General Assembly", when: "2025" },
+  // Aaron: started the General Assembly certificate program in 2024. Klima and Craft Education ran in 2025.
+  { place: "General Assembly", what: "Certificate program", when: "2024" },
   // From Aaron's About text: "I ran the fight team." Gym name and years to add.
   { what: "Ran the fight team, coach" },
 ];

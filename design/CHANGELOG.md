@@ -13,6 +13,13 @@ Newest first. Every design or structure decision goes here.
 
 
 
+
+## 2026-10-09 · About facts from Aaron
+
+- BRIDGEGOOD UX Design Apprentice: June to August 2026.
+- General Assembly: certificate program, started 2024.
+- The KRON4 caption stays without the co-host's name, at Aaron's request.
+
 ## 2026-10-09 · Case study index, home About as one story, Oakland
 
 - Header: "Oakland, CA" (Aaron).
