@@ -1,10 +1,10 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
-import Button from "../components/site/Button.astro";
 import Photo from "../components/site/Photo.astro";
 import ContactEmail from "../components/site/ContactEmail.astro";
 import KronClip from "../components/site/KronClip.astro";
-import { site } from "../site.config";
+import { mailto, site } from "../site.config";
+import fs from "node:fs";
 import WorkCard from "../components/site/WorkCard.astro";
 import { caseStudyHref, getAllCaseStudies } from "../lib/case-studies";
 
@@ -12,15 +12,23 @@ import { caseStudyHref, getAllCaseStudies } from "../lib/case-studies";
 const studies = (await getAllCaseStudies()).filter((s) => s.data.card);
 const featured = studies.find((s) => s.data.featured);
 const others = studies.filter((s) => s !== featured);
+// The Resume link goes live once public/resume.pdf exists; until then it shows as plain text.
+const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.url));
 ---
 
 <PageLayout title="Aaron Luellen" flushBottom footerEmail={false}>
   <!-- Every section sits in one stack with the same gap between them. -->
   <div class="container stack">
-  <!-- 1. Name and one line. No photo and no buttons: the work starts right below. -->
+  <!-- 1. Name, one line, a meta line (Zeel Shah), and a links row (Micah Hoang). No photo, no buttons. -->
   <section class="hero" aria-labelledby="hero-heading">
     <h1 id="hero-heading" translate="no">Aaron Luellen</h1>
-    <p class="hero__role">Product designer, research led, Oakland</p>
+    <p class="hero__role">Research led product designer.</p>
+    <p class="hero__meta">2 years · EdTech · Health · Climate</p>
+    <ul class="hero__links" aria-label="Links">
+      <li>{site.linkedin ? <a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a> : <span>LinkedIn</span>}</li>
+      <li>{hasResume ? <a href={site.resumePath}>Resume</a> : <span>Resume</span>}</li>
+      <li><a href={mailto}>Email</a></li>
+    </ul>
   </section>
 
   <!-- 2. Selected work, right after the name: one featured card, then smaller cards. Cards link only when published. -->
@@ -38,38 +46,16 @@ const others = studies.filter((s) => s !== featured);
     }
   </section>
 
-  <!-- 3. BRIDGEGOOD and KRON4. Text in two columns, then the clip opens as it scrolls in and leads into About. -->
-  <section class="apprenticeship" aria-labelledby="recent-heading" data-reveal>
-    <div class="apprenticeship__text">
-      <div class="recent">
-        <h2 id="recent-heading">
-          <a class="recent__org" href={site.bridgegood} target="_blank" rel="noopener noreferrer" aria-describedby="bridgegood-new-tab" translate="no">BRIDGEGOOD</a> UX Design Apprenticeship
-        </h2>
-        <span id="bridgegood-new-tab" class="visually-hidden">Opens in a new tab</span>
-        <div class="recent__lines">
-          <p>Launched by <span translate="no">Google.org</span> and the <span translate="no">Golden State Warriors</span>, with mentors from <span translate="no">Google</span>, <span translate="no">Meta</span>, and <span translate="no">YouTube</span>.</p>
-          <p>
-            The team built <span translate="no">AthenaScribe</span>, a translation tool with human review for <span translate="no">Oakland Unified</span> families,
-            and presented it at Demo Day at <span translate="no">Block HQ</span>.
-          </p>
-        </div>
-      </div>
-      <div class="split__text">
-        <h3 class="split__title" translate="no">Purpose to Pixels: BRIDGEGOOD on KRON4</h3>
-        <p>
-          Live with <span translate="no">BRIDGEGOOD</span>’s executive director, talking about open communication between Oakland
-          families and their schools, and why design for social good matters.
-        </p>
-        <div class="actions">
-          <Button href={site.kron4Video || undefined} variant="secondary" external>
-            Watch on YouTube
-          </Button>
-        </div>
-      </div>
-    </div>
-    <div class="apprenticeship__video">
-      <KronClip opens />
-    </div>
+  <!-- 3. KRON4: the clip opens on scroll (Zeel Shah), then one caption line, and it leads into About.
+       The BRIDGEGOOD details live in the About page's tables. -->
+  <section class="apprenticeship" aria-labelledby="kron-heading" data-reveal>
+    <h2 id="kron-heading" class="visually-hidden">On air with KRON4</h2>
+    <KronClip opens />
+    <p class="kron__caption">
+      <span>On air with KRON4</span>
+      <a href={site.bridgegood} target="_blank" rel="noopener noreferrer" translate="no">BRIDGEGOOD UX Design Apprenticeship<span class="visually-hidden"> (opens in a new tab)</span></a>
+      {site.kron4Video && <a href={site.kron4Video} target="_blank" rel="noopener noreferrer">Watch on YouTube<span class="visually-hidden"> (opens in a new tab)</span></a>}
+    </p>
   </section>
 
   <!-- 4. About, short (Micah Hoang's pattern): just the words, then a link to the full About page. -->
@@ -146,10 +132,41 @@ const others = studies.filter((s) => s !== featured);
 
   .hero__role {
     font-family: var(--font-display);
-    font-size: var(--step-2);
+    font-size: var(--step-3);
     line-height: var(--leading-snug);
     letter-spacing: var(--tracking-tight);
+    color: var(--color-heading);
+  }
+
+  /* Meta line and links row: mono, like the labels. */
+  .hero__meta,
+  .hero__links {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
     color: var(--color-ink-muted);
+  }
+
+  .hero__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-5);
+    margin: 0;
+    margin-block-start: var(--space-4);
+    padding: 0;
+    list-style: none;
+  }
+
+  .hero__links a,
+  .hero__links span {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--control-height);
+  }
+
+  .hero__links a {
+    color: var(--color-ink);
   }
 
   /* Sections after the name open with a thin rule, like a page in a notebook. */
@@ -182,71 +199,27 @@ const others = studies.filter((s) => s !== featured);
     }
   }
 
-  /* 3. BRIDGEGOOD and KRON4: two text columns, then the clip centered below. */
+  /* 3. KRON4: the clip, then one caption line in mono. */
   .apprenticeship {
     display: grid;
-    gap: var(--space-8);
-  }
-
-  .apprenticeship > * {
-    min-width: 0;
-  }
-
-  .apprenticeship__text {
-    display: grid;
-    gap: var(--space-7);
-  }
-
-  @media (min-width: 64rem) {
-    .apprenticeship__text {
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-8);
-    }
-  }
-
-  .apprenticeship__video {
-    justify-self: center;
-    inline-size: min(100%, var(--size-clip));
-  }
-
-  .recent {
-    display: grid;
-    gap: var(--space-5);
-    align-content: start;
-  }
-
-  .recent h2 {
-    font-size: var(--step-3);
-  }
-
-  .recent__org {
-    color: inherit;
-    text-decoration-line: underline;
-    text-decoration-color: var(--color-accent);
-    text-decoration-thickness: var(--rule-thick);
-    text-underline-offset: var(--underline-offset);
-  }
-
-  .recent__org:hover {
-    color: var(--color-accent);
-  }
-
-  .recent__lines {
-    display: grid;
     gap: var(--space-3);
-    max-width: var(--measure-reading);
-    font-size: var(--step-1);
-    line-height: var(--leading-snug);
   }
 
-  .split__text {
-    display: grid;
-    gap: var(--space-4);
-    align-content: start;
+  .kron__caption {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-5);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
   }
 
-  .split__title {
-    font-size: var(--step-2);
+  .kron__caption > * {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--control-height);
   }
 
   /* 4. About, short: label, heading, one paragraph, and a link to the About page. */

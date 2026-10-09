@@ -10,6 +10,18 @@ Newest first. Every design or structure decision goes here.
 
 
 
+
+## 2026-10-09 · One voice type, Micah header, hero subtext, one line KRON4
+
+Aaron's answers: "One voice, mono labels kept"; the header with the AL logo then the text; the KRON4 section as the clip plus one caption line. Meta line from his facts: design since 2024 (2 years), spaces EdTech (AthenaScribe), Health (Craft Education, a therapy service), Climate (Klima).
+
+- Type: One voice. Atkinson Hyperlegible Next for headings and body, headings at 500 with -0.02em tracking; size sets the order. Mono labels stay (Atkinson Hyperlegible Mono). Geist removed; the mono font is preloaded instead. Share image redone in Atkinson.
+- Header (Micah Hoang): AL logo, then "Product designer" and "Bay Area, CA" spread across the middle in mono, then Work and About in mono, then the theme toggle. The middle text hides on phones.
+- Hero: "Aaron Luellen", then "Research led product designer.", then the mono meta line "2 years · EdTech · Health · Climate" (Zeel Shah), then a mono links row: LinkedIn, Resume, Email (Micah). LinkedIn and Resume show as plain text until the URL and the PDF exist; Email is live.
+- KRON4: headings, paragraph, and button removed. The clip opens on scroll, then one mono caption line: "On air with KRON4", "BRIDGEGOOD UX Design Apprenticeship" (link), "Watch on YouTube". It leads straight into the short About.
+- About page: the BRIDGEGOOD details (Google.org, the Warriors, mentors, AthenaScribe, Block HQ) and the KRON4 description moved into notes under their rows. The KRON4 row links to the segment.
+- About page fix: the sticky portrait now stops at the end of the text block ("What people say") instead of sliding over the gym photos. Portrait and text share one block; the gallery sits outside it.
+
 ## 2026-10-09 · About page, Micah style
 
 Aaron sent a screen recording of Micah Hoang's site: a short About on the home page that opens a full About page.

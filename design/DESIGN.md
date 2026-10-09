@@ -7,7 +7,7 @@ Current direction from October 9, 2026: warm graph paper, deep navy ink, blue fo
 Calm and exact. The work and the photos carry the color. Everything around them stays quiet.
 
 - Warm paper page with faint graph lines (Zeel). Deep navy for headings, primary buttons, the logo, and the closing block (Micah). The AL blue is for links only.
-- Headings: Geist (`--font-display`), semibold, tight tracking. Body, buttons, and the menu: Atkinson Hyperlegible Next (`--font-text`), for legibility. Labels and metadata: Atkinson Hyperlegible Mono (`--font-mono`), small caps style uppercase.
+- One voice: Atkinson Hyperlegible Next for headings, body, buttons, and the menu (`--font-text`; `--font-display` points to it). Headings at 500 with slight negative tracking; size sets the order. Labels, metadata, the header, and the menu: Atkinson Hyperlegible Mono (`--font-mono`), uppercase.
 - Square corners on everything: panels, cards, photos, video, buttons. Only round icon buttons (theme toggle, play) stay circles. No pill shapes anywhere.
 - Sentence case for every heading. Proper names keep their capitals (BRIDGEGOOD UX Design Apprenticeship, Purpose to Pixels).
 - No drop shadows and no gradients. Thin rules separate content.
@@ -17,14 +17,15 @@ Calm and exact. The work and the photos carry the color. Everything around them 
 
 Order: name, Selected work, BRIDGEGOOD and KRON4, About, closing. Every section after the name opens with a thin rule.
 
-- Name: "Aaron Luellen" at `--step-6`, the largest text on the site, then one line in Geist, muted: "Product designer, research led, Oakland". No photo and no buttons; the menu has Work and About, and the work starts right below.
-- BRIDGEGOOD and KRON4: on the paper, no panel. Two text columns from 64rem, then the KRON4 clip below at the full content width (`--size-clip`). The loop is 4 seconds from Aaron's screen recording of the YouTube segment: all three guests and his name bar.
+- Header (Micah Hoang): AL logo, "Product designer" and "Bay Area, CA" in mono across the middle (hidden on phones), Work and About in mono, theme toggle.
+- Name: "Aaron Luellen" at `--step-6`, the largest text on the site, then "Research led product designer." in navy, then a mono meta line "2 years · EdTech · Health · Climate", then a mono links row: LinkedIn, Resume, Email (plain text until linked). No photo and no buttons.
+- KRON4: the clip at the full content width (`--size-clip`), opening on scroll, then one mono caption line: On air with KRON4, BRIDGEGOOD UX Design Apprenticeship (link), Watch on YouTube. No headings or paragraph; the BRIDGEGOOD details live on the About page.
 - About (`#about`), short, Micah Hoang's pattern: label, heading, the intro paragraph, and a mono "Read more about me" link to the About page. No photo.
 - The closing banner with the BRIDGEGOOD group photo at Google stays right under the short About until Aaron says otherwise.
 
 ## About page (`/about/`)
 
-- "Hey, I'm Aaron." then the intro and the coaching story. The portrait (4:5) sits on the left from 64rem and stays in view while the text scrolls.
+- "Hey, I'm Aaron." then the intro and the coaching story. The portrait (4:5) sits on the left from 64rem, stays in view while the text scrolls, and stops at the end of the text block, before the gym photos.
 - Mono tables over thin rules (`src/data/about.ts`): Experience, Press, Education, What people say. Each row: where, what, when. Only confirmed facts go in. Missing fields show as dashed "To add" notes in review previews; the live site leaves them out, and drops a table or the quotes section until it has content.
 - Then the three gym photos, tall, wide, tall at equal heights (wide one on top on phones).
 - The header's About link opens this page and is marked current there. Below, one row of gym photos at equal heights: tall, wide, tall (`--about-row`). On phones the wide one goes on top and the two tall ones sit below.
@@ -61,7 +62,7 @@ Wrap navy panels in `.surface-always-dark`. It remaps ink, headings, muted ink, 
 
 ## Type
 
-- Headlines: `--font-display` (Geist), `--weight-heading` (600), `--tracking-tight` (-0.035em), tight leading, balanced wrapping, navy (`--color-heading`).
+- Headlines: `--font-display` (Atkinson Hyperlegible Next, one voice), `--weight-heading` (500), `--tracking-tight` (-0.02em), tight leading, balanced wrapping, navy (`--color-heading`).
 - Body: `--font-text` at `--step-0`, leading `--leading-body`.
 - Labels and metadata: `--font-mono` at `--step--1`, uppercase, `--tracking-label` (0.03em), muted.
 
@@ -121,7 +122,7 @@ Wrap navy panels in `.surface-always-dark`. It remaps ink, headings, muted ink, 
 
 ## Link preview
 
-- `public/og-image.png` (1200 by 630): the navy AL logo, "Aaron Luellen" in Geist, and "Product designer, research led, Oakland" on the graph paper, with a navy bar at the bottom. The source is `design/share/og-image.html`. Regenerate with `node scripts/make-og-image.cjs`.
+- `public/og-image.png` (1200 by 630): the navy AL logo, "Aaron Luellen" in Atkinson Hyperlegible Next, and "Product designer, research led, Oakland" on the graph paper, with a navy bar at the bottom. The source is `design/share/og-image.html`. Regenerate with `node scripts/make-og-image.cjs`.
 - Open Graph and Twitter tags live in `BaseLayout.astro`. They need `site` set in `astro.config.mjs` to output absolute URLs.
 
 ## Motion

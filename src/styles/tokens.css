@@ -53,10 +53,10 @@
   --color-dark-panel-edge: transparent;
 
   /* Type families (open fonts, self hosted via Fontsource).
-     Body, buttons, and menu: Atkinson Hyperlegible Next, built for legibility. Headings: Geist.
-     Labels and metadata: Atkinson Hyperlegible Mono, the mono sibling of the body font. */
+     One voice: Atkinson Hyperlegible Next for headings, body, buttons, and menu, built for legibility.
+     Size sets the order, not a second family. Labels and metadata: Atkinson Hyperlegible Mono. */
   --font-text: "Atkinson Hyperlegible Next Variable", "Atkinson Hyperlegible Next", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-display: "Geist Variable", "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-text);
   --font-mono: "Atkinson Hyperlegible Mono Variable", "Atkinson Hyperlegible Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
   /* Type scale (fluid, roughly 1.25 ratio) */
@@ -73,13 +73,13 @@
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
-  --weight-heading: 600;
+  --weight-heading: 500; /* one voice: headings only a step heavier than body */
 
   /* Leading and tracking */
   --leading-tight: 1.12;
   --leading-snug: 1.3;
   --leading-body: 1.65;
-  --tracking-tight: -0.035em;
+  --tracking-tight: -0.02em;
   --tracking-label: 0.03em; /* mono labels need less spacing than sans caps */
   --tracking-button: -0.01em;
 

@@ -18,6 +18,8 @@ const visible = (rows: AboutRow[]) => rows.filter((r) => showPlaceholders || r.p
 
 <PageLayout title="About" description="Aaron Luellen, product designer in Oakland, with a background in Muay Thai coaching.">
   <div class="container about-page">
+    <!-- Portrait and text share one block, so the sticky portrait stops where the text ends. -->
+    <div class="about-page__main">
     <figure class="about-page__portrait">
       <Photo
         name="headshot"
@@ -73,6 +75,7 @@ const visible = (rows: AboutRow[]) => rows.filter((r) => showPlaceholders || r.p
                       )}
                     </span>
                     <span class="ledger__when">{row.when ?? (showPlaceholders && <span class="todo">To add: year</span>)}</span>
+                    {row.note && <p class="ledger__note">{row.note}</p>}
                   </li>
                 ))}
               </ul>
@@ -99,6 +102,7 @@ const visible = (rows: AboutRow[]) => rows.filter((r) => showPlaceholders || r.p
         )
       }
     </div>
+    </div>
 
     <div class="about-page__gallery">
       <div class="about-page__cell about-page__cell--tall">
@@ -117,17 +121,24 @@ const visible = (rows: AboutRow[]) => rows.filter((r) => showPlaceholders || r.p
 <style>
   .about-page {
     display: grid;
-    gap: var(--space-8);
+    gap: var(--space-9);
     padding-block-start: var(--space-8);
   }
 
-  .about-page > * {
+  .about-page__main {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  .about-page > *,
+  .about-page__main > * {
     min-width: 0;
   }
 
-  /* From 64rem: portrait left (it stays in view while the text scrolls), text right. */
+  /* From 64rem: portrait left, text right. The portrait stays in view while the text scrolls and
+     stops at the end of the text block, before the gym photos. */
   @media (min-width: 64rem) {
-    .about-page {
+    .about-page__main {
       grid-template-columns: var(--size-portrait) 1fr;
       column-gap: var(--space-9);
       align-items: start;
@@ -136,10 +147,6 @@ const visible = (rows: AboutRow[]) => rows.filter((r) => showPlaceholders || r.p
     .about-page__portrait {
       position: sticky;
       top: calc(var(--header-height) + var(--space-6));
-    }
-
-    .about-page__gallery {
-      grid-column: 1 / -1;
     }
   }
 
@@ -249,6 +256,17 @@ const visible = (rows: AboutRow[]) => rows.filter((r) => showPlaceholders || r.p
       grid-column: auto;
       text-align: end;
     }
+  }
+
+  .ledger__note {
+    grid-column: 1 / -1;
+    max-width: var(--measure-reading);
+    font-family: var(--font-text);
+    font-size: var(--step--1);
+    letter-spacing: normal;
+    text-transform: none;
+    line-height: var(--leading-body);
+    color: var(--color-ink-muted);
   }
 
   .quote {
