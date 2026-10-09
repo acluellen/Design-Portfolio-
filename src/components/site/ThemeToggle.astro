@@ -28,13 +28,8 @@
   document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
     button.addEventListener("click", () => {
       const next = current() === "dark" ? "light" : "dark";
-      root.dataset.theme = next;
-      (window as Window & { applyThemeColor?: (theme: string) => void }).applyThemeColor?.(next);
-      try {
-        localStorage.setItem("theme", next);
-      } catch {
-        // Storage can be blocked. The toggle still works for this page view.
-      }
+      // saveTheme (BaseLayout) sets the theme and remembers it for the next page.
+      (window as Window & { saveTheme?: (theme: string) => void }).saveTheme?.(next);
       sync();
     });
   });

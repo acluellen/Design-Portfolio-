@@ -7,6 +7,14 @@ Newest first. Every design or structure decision goes here.
 
 
 
+
+## 2026-10-09 · KRON4 loop from YouTube, About without the portrait, theme and page fixes
+
+- KRON4 loop: cut from Aaron's screen recording of the YouTube segment. The first 4 seconds of it: all three guests, his name bar ("Aaron Luellen, UX Design Apprentice"), and the KRON4 logo, ending with his mouth closed. Cropped above the weather ticker and past a thin black edge, 1440 by 716. 535 KB MP4, 443 KB WebM, no audio. New still from the last frame. The clip now opens to the full content width (`--size-clip: 100%`). AthenaScribe's hero thumbnail is 16:9 from the same still.
+- About: the smiling portrait is out for now (Aaron). About is the text, then the gym photo row.
+- Theme: the light or dark choice now stays when moving between pages. It is kept in localStorage and also in `window.name`, which survives page changes in the same tab when storage is blocked. If a preview host sets its own theme on the page, the visitor's own choice wins (`saveTheme` and a watcher in `BaseLayout.astro`).
+- Page changes: inside a preview frame, each new page scrolls its top into view, so "Next" at the end of a case study lands at the top of the next one. Links to a #section are left alone.
+
 ## 2026-10-09 · New direction, step 4: checks and the link preview
 
 - Checked home, AthenaScribe, Klima, Craft Education, and the styleguide at 1440 and 390, light and dark: no sideways scroll anywhere, copy check clean.

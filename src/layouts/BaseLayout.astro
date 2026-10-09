@@ -55,13 +55,39 @@ const themeDark = paperIn(tokensCss.slice(tokensCss.indexOf(':root[data-theme="d
           if (theme && own !== theme) meta.media = "not all";
         });
       };
+      // The choice is kept in localStorage, and also in window.name, which survives page changes in
+      // the same tab even where storage is blocked (private windows, embedded previews).
+      const root = document.documentElement;
+      const valid = (t) => (t === "light" || t === "dark" ? t : null);
+      let saved = null;
       try {
-        const theme = localStorage.getItem("theme");
-        if (theme === "light" || theme === "dark") {
-          document.documentElement.dataset.theme = theme;
-          window.applyThemeColor(theme);
-        }
+        saved = valid(localStorage.getItem("theme"));
       } catch {}
+      if (!saved) saved = valid((window.name.match(/(?:^|;)theme=(light|dark)/) || [])[1]);
+      window.saveTheme = (theme) => {
+        saved = theme;
+        root.dataset.theme = theme;
+        window.applyThemeColor(theme);
+        try {
+          localStorage.setItem("theme", theme);
+        } catch {}
+        window.name = window.name.replace(/(?:^|;)theme=(light|dark)/, "") + ";theme=" + theme;
+      };
+      if (saved) {
+        root.dataset.theme = saved;
+        window.applyThemeColor(saved);
+        // A page host (like a preview viewer) can set its own theme on the page. The visitor's own
+        // choice wins.
+        new MutationObserver(() => {
+          if (saved && root.dataset.theme !== saved) root.dataset.theme = saved;
+        }).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+      }
+
+      // Each page opens at the top. Inside a preview frame the outer page can keep its scroll
+      // position between pages, so bring the top of this page into view (not on #anchor links).
+      if (window.self !== window.top && !location.hash) {
+        addEventListener("DOMContentLoaded", () => document.body.scrollIntoView({ block: "start" }));
+      }
     </script>
     <title>{fullTitle}</title>
     <meta name="description" content={description} />

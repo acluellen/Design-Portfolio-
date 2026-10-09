@@ -117,9 +117,9 @@
   --size-play: 4.5rem; /* play button over a video thumbnail */
   --color-overlay: rgb(24 23 21 / 0.82); /* behind the play icon, readable on any frame */
 
-  /* KRON4 clip that opens on scroll (Zeel). The current file is 520px wide, so it opens to a modest
-     size. Goes wider once Aaron's screen recording of the YouTube segment replaces it. */
-  --size-clip: 40rem; /* fully open width */
+  /* KRON4 clip that opens on scroll (Zeel). Cut from Aaron's screen recording of the YouTube segment,
+     1440px wide, so it opens to the full content width. */
+  --size-clip: 100%; /* fully open width */
   --clip-closed: 16% 26%; /* the starting crop: top and bottom, then left and right */
 
   /* About photo row: the tall photos are 4:5, the wide one 7:5, so equal heights need these widths. */

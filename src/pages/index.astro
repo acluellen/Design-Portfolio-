@@ -72,7 +72,7 @@ const others = studies.filter((s) => s !== featured);
     </div>
   </section>
 
-  <!-- 4. About: the intro that used to sit at the top, the portrait, the coaching story, and the gym photos. -->
+  <!-- 4. About: the intro that used to sit at the top, the coaching story, and the gym photos. The portrait is out for now. -->
   <section id="about" class="about" aria-labelledby="about-heading" data-reveal>
     <div class="about__top">
       <div class="about__text">
@@ -100,14 +100,6 @@ const others = studies.filter((s) => s !== featured);
           </p>
         </div>
       </div>
-      <Photo
-        name="headshot"
-        widths={[320, 480, 720]}
-        sizes="(min-width: 48rem) 22rem, 70vw"
-        cover={4 / 5}
-        ratio="4 / 5"
-        class="about__portrait"
-      />
     </div>
     <figure class="about__figure">
       <div class="about__row">
@@ -289,7 +281,7 @@ const others = studies.filter((s) => s !== featured);
     font-size: var(--step-2);
   }
 
-  /* 4. About: text and portrait, then one row of gym photos at equal heights. */
+  /* 4. About: text, then one row of gym photos at equal heights. */
   .about {
     display: grid;
     gap: var(--space-8);
@@ -303,13 +295,6 @@ const others = studies.filter((s) => s !== featured);
 
   .about__top > * {
     min-width: 0;
-  }
-
-  @media (min-width: 48rem) {
-    .about__top {
-      grid-template-columns: 1fr var(--size-portrait);
-      gap: var(--space-8);
-    }
   }
 
   .about__text {
@@ -332,21 +317,6 @@ const others = studies.filter((s) => s !== featured);
     gap: var(--space-4);
     max-width: var(--measure-reading);
     color: var(--color-ink-muted);
-  }
-
-  .about :global(.about__portrait) {
-    display: block;
-    inline-size: min(70%, var(--size-portrait));
-    block-size: auto;
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-    border-radius: var(--radius-media);
-  }
-
-  @media (min-width: 48rem) {
-    .about :global(.about__portrait) {
-      inline-size: 100%;
-    }
   }
 
   .about__figure {
