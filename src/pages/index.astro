@@ -17,34 +17,29 @@ const others = studies.filter((s) => s !== featured);
 <PageLayout title="Aaron Luellen" flushBottom footerEmail={false}>
   <!-- Every section sits in one stack with the same gap between them. -->
   <div class="container stack">
-  <!-- 1. Hero -->
-  <section class="hero">
-    <Photo
-      name="headshot"
-      widths={[320, 480, 720, 960]}
-      sizes="(min-width: 80rem) 26rem, (min-width: 48rem) 24vw, 70vw"
-      cover={4 / 5}
-      loading="eager"
-      priority
-      ratio="4 / 5"
-      class="hero__portrait"
-    />
-    <div class="hero__text">
-      <h1>Hi, I’m Aaron</h1>
-      <p class="hero__lede">
-        I’m a product designer with a background in Muay Thai, bringing a human centered mindset from the gym
-        to the products I design. I focus on understanding people, solving real problems, and helping
-        users reach their goals.
-      </p>
-      <div class="actions">
-        <Button href="#work">View my work</Button>
-        <Button href="#about" variant="secondary">About me</Button>
-      </div>
-    </div>
+  <!-- 1. Name and one line. No photo and no buttons: the work starts right below. -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <h1 id="hero-heading" translate="no">Aaron Luellen</h1>
+    <p class="hero__role">Product designer, research led, Oakland</p>
   </section>
 
-  <!-- BRIDGEGOOD and the KRON4 clip, right under the hero: text left, clip right. Phones: text first. -->
-  <section class="panel panel--light apprenticeship" aria-labelledby="recent-heading" data-reveal>
+  <!-- 2. Selected work, right after the name: one featured card, then smaller cards. Cards link only when published. -->
+  <section id="work" class="work" aria-labelledby="work-heading" data-reveal>
+    <h2 id="work-heading">Selected work</h2>
+    {featured && <WorkCard study={featured} href={caseStudyHref(featured)} featured />}
+    {
+      others.length > 0 && (
+        <div class="work__grid">
+          {others.map((study) => (
+            <WorkCard study={study} href={caseStudyHref(study)} />
+          ))}
+        </div>
+      )
+    }
+  </section>
+
+  <!-- 3. BRIDGEGOOD and KRON4. Text in two columns, then the clip opens as it scrolls in and leads into About. -->
+  <section class="apprenticeship" aria-labelledby="recent-heading" data-reveal>
     <div class="apprenticeship__text">
       <div class="recent">
         <h2 id="recent-heading">
@@ -73,31 +68,22 @@ const others = studies.filter((s) => s !== featured);
       </div>
     </div>
     <div class="apprenticeship__video">
-      <KronClip />
+      <KronClip opens />
     </div>
   </section>
 
-  <!-- 2. Selected work: one featured card, then smaller cards. Cards link only when published. -->
-  <section id="work" class="work" aria-labelledby="work-heading" data-reveal>
-    <h2 id="work-heading">Selected work</h2>
-    {featured && <WorkCard study={featured} href={caseStudyHref(featured)} featured />}
-    {
-      others.length > 0 && (
-        <div class="work__grid">
-          {others.map((study) => (
-            <WorkCard study={study} href={caseStudyHref(study)} />
-          ))}
-        </div>
-      )
-    }
-  </section>
-
-  <!-- 4. Coaching, always dark -->
-  <section id="about" class="panel panel--dark surface-always-dark coaching" aria-labelledby="coaching-heading" data-reveal>
-    <div class="coaching__inner">
-      <div class="coaching__text">
-        <h2 id="coaching-heading">From coaching systems to product design.</h2>
-        <div class="coaching__body">
+  <!-- 4. About: the intro that used to sit at the top, the portrait, the coaching story, and the gym photos. -->
+  <section id="about" class="about" aria-labelledby="about-heading" data-reveal>
+    <div class="about__top">
+      <div class="about__text">
+        <p class="label">About</p>
+        <h2 id="about-heading">From coaching systems to product design.</h2>
+        <p class="about__lede">
+          I’m a product designer with a background in Muay Thai, bringing a human centered mindset from the gym
+          to the products I design. I focus on understanding people, solving real problems, and helping
+          users reach their goals.
+        </p>
+        <div class="about__body">
           <p>
             My approach to teamwork was built through years of competing and coaching in martial arts. In
             my last role, I ran the fight team: recruiting fighters out of group classes, planning their
@@ -114,17 +100,32 @@ const others = studies.filter((s) => s !== featured);
           </p>
         </div>
       </div>
-      <figure class="coaching__figure">
-      <div class="coaching__photos">
-        <Photo name="coaching-1" widths={[400, 600, 800]} sizes="(min-width: 64rem) 17rem, (min-width: 30rem) 46vw, 92vw" cover={4 / 5} class="coaching__photo" />
-        <Photo name="coaching-2" widths={[400, 600, 800]} sizes="(min-width: 64rem) 17rem, (min-width: 30rem) 46vw, 92vw" cover={4 / 5} class="coaching__photo" />
-      </div>
-        <figcaption class="credit">Photos: BRIDGEGOOD</figcaption>
-      </figure>
+      <Photo
+        name="headshot"
+        widths={[320, 480, 720]}
+        sizes="(min-width: 48rem) 22rem, 70vw"
+        cover={4 / 5}
+        ratio="4 / 5"
+        class="about__portrait"
+      />
     </div>
+    <figure class="about__figure">
+      <div class="about__row">
+        <div class="about__cell about__cell--tall">
+          <Photo name="about-watch" widths={[400, 600, 800]} sizes="(min-width: 76rem) 20rem, (min-width: 48rem) 26vw, 46vw" ratio="4 / 5" class="about__photo about__photo--tall" />
+        </div>
+        <div class="about__cell about__cell--wide">
+          <Photo name="about-pads" widths={[600, 900, 1280]} sizes="(min-width: 76rem) 35rem, (min-width: 48rem) 46vw, 92vw" ratio="7 / 5" class="about__photo about__photo--wide" />
+        </div>
+        <div class="about__cell about__cell--tall">
+          <Photo name="about-camera" widths={[400, 600, 800]} sizes="(min-width: 76rem) 20rem, (min-width: 48rem) 26vw, 46vw" ratio="4 / 5" class="about__photo about__photo--tall" />
+        </div>
+      </div>
+      <figcaption class="credit">Photos: BRIDGEGOOD</figcaption>
+    </figure>
   </section>
 
-  <!-- 5. Closing banner, always dark: the whole group photo, then the invitation below it -->
+  <!-- 5. Closing banner, navy in both themes: the whole group photo, then the invitation below it -->
   <section class="panel panel--dark panel--flush surface-always-dark banner" aria-labelledby="banner-heading" data-reveal>
     <figure class="banner__figure">
       <Photo name="group" widths={[800, 1280, 1920, 2560]} sizes="(min-width: 76rem) 72rem, 94vw" ratio="2000 / 1150" class="banner__photo" />
@@ -150,22 +151,17 @@ const others = studies.filter((s) => s !== featured);
     padding-block: var(--section-gap);
   }
 
-  /* Rounded section panels on the page background. All share --radius-section. */
+  /* Section panels on the page background (the closing banner). Square, like everything else. */
   .panel {
     border-radius: var(--radius-section);
     padding: var(--panel-padding);
-  }
-
-  .panel--light {
-    background: var(--color-paper-raised);
-    border: var(--rule-thin) solid var(--color-rule);
   }
 
   .panel--dark {
     border: var(--rule-thin) solid var(--color-dark-panel-edge);
   }
 
-  /* Media runs to the panel edges; the curve clips it. */
+  /* Media runs to the panel edges. */
   .panel--flush {
     padding: 0;
     overflow: hidden;
@@ -177,58 +173,60 @@ const others = studies.filter((s) => s !== featured);
     gap: var(--space-3);
   }
 
-  /* 1. Hero */
-  /* Extra air above the hero only; the stack gap handles the space below it. */
+  /* 1. Name and one line. The name is the largest text on the site. */
   .hero {
     display: grid;
-    gap: var(--space-6);
-    align-items: center;
-    padding-block-start: var(--section-gap);
+    gap: var(--space-4);
+    padding-block: var(--space-9) var(--space-6);
   }
 
-  /* Portrait, chest up, 4:5, with the site's one curve. */
-  .hero :global(.hero__portrait) {
-    display: block;
-    inline-size: min(100%, var(--size-portrait));
-    block-size: auto;
-    aspect-ratio: 4 / 5;
-    border-radius: var(--radius-section);
-    object-fit: cover;
+  .hero h1 {
+    font-size: var(--step-6);
+    line-height: 0.95;
   }
 
-  .hero__text {
-    display: grid;
-    gap: var(--space-5);
-    min-width: 0;
-  }
-
-  .hero__text h1 {
-    font-size: var(--step-5);
-  }
-
-  .hero__lede {
-    max-width: var(--measure-reading);
+  .hero__role {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-tight);
     color: var(--color-ink-muted);
   }
 
-  @media (max-width: 47.99rem) {
-    .hero :global(.hero__portrait) {
-      inline-size: 70%;
-    }
+  /* Sections after the name open with a thin rule, like a page in a notebook. */
+  .work,
+  .apprenticeship,
+  .about {
+    padding-block-start: var(--space-6);
+    border-block-start: var(--rule-thin) solid var(--color-rule);
+  }
+
+  /* 2. Selected work */
+  .work {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .work h2 {
+    font-size: var(--step-4);
+    margin-block-end: var(--space-2);
+  }
+
+  .work__grid {
+    display: grid;
+    gap: var(--space-6);
   }
 
   @media (min-width: 48rem) {
-    .hero {
-      grid-template-columns: var(--size-portrait) 1fr;
-      gap: var(--space-8);
+    .work__grid {
+      grid-template-columns: 1fr 1fr;
     }
   }
 
-  /* 3. BRIDGEGOOD and KRON4: one panel, text left and video right. Stacks text first. */
+  /* 3. BRIDGEGOOD and KRON4: two text columns, then the clip centered below. */
   .apprenticeship {
     display: grid;
-    gap: var(--space-7);
-    align-items: center;
+    gap: var(--space-8);
   }
 
   .apprenticeship > * {
@@ -240,34 +238,26 @@ const others = studies.filter((s) => s !== featured);
     gap: var(--space-7);
   }
 
-  /* Stacked (phones and small tablets): the clip comes first, above the text. */
-  @media (max-width: 63.99rem) {
-    .apprenticeship__video {
-      order: -1;
-    }
-  }
-
   @media (min-width: 64rem) {
-    .apprenticeship {
+    .apprenticeship__text {
       grid-template-columns: 1fr 1fr;
       gap: var(--space-8);
     }
   }
 
+  .apprenticeship__video {
+    justify-self: center;
+    inline-size: min(100%, var(--size-clip));
+  }
+
   .recent {
     display: grid;
     gap: var(--space-5);
+    align-content: start;
   }
 
-  /* About half the size of "Hi, I'm Aaron", so the name stays the biggest text on the page. */
   .recent h2 {
-    font-size: var(--step-2);
-  }
-
-  @media (min-width: 48rem) {
-    .recent h2 {
-      font-size: var(--step-3);
-    }
+    font-size: var(--step-3);
   }
 
   .recent__org {
@@ -293,97 +283,121 @@ const others = studies.filter((s) => s !== featured);
   .split__text {
     display: grid;
     gap: var(--space-4);
+    align-content: start;
   }
 
   .split__title {
     font-size: var(--step-2);
   }
 
-  /* 2. Selected work */
-  .work {
-    display: grid;
-    gap: var(--space-6);
-  }
-
-  .work h2 {
-    font-size: var(--step-4);
-    margin-block-end: var(--space-2);
-  }
-
-  .work__grid {
-    display: grid;
-    gap: var(--space-6);
-  }
-
-  @media (min-width: 48rem) {
-    .work__grid {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-
-  /* 4. Coaching */
-  .coaching__inner {
+  /* 4. About: text and portrait, then one row of gym photos at equal heights. */
+  .about {
     display: grid;
     gap: var(--space-8);
   }
 
-  .coaching__text {
+  .about__top {
     display: grid;
     gap: var(--space-7);
-    align-content: start;
+    align-items: start;
+  }
+
+  .about__top > * {
     min-width: 0;
   }
 
-  .coaching__text h2 {
+  @media (min-width: 48rem) {
+    .about__top {
+      grid-template-columns: 1fr var(--size-portrait);
+      gap: var(--space-8);
+    }
+  }
+
+  .about__text {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .about__text h2 {
     font-size: var(--step-4);
   }
 
-  .coaching__body {
+  .about__lede {
+    max-width: var(--measure-reading);
+    font-size: var(--step-1);
+    line-height: var(--leading-snug);
+  }
+
+  .about__body {
     display: grid;
     gap: var(--space-4);
     max-width: var(--measure-reading);
-  }
-
-  .coaching__figure {
-    display: grid;
-    gap: var(--space-3);
-    align-content: start;
-    min-width: 0;
-  }
-
-  .credit {
-    font-size: var(--step--1);
     color: var(--color-ink-muted);
   }
 
-  .coaching__photos {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-3);
-    align-content: start;
-    min-width: 0;
-  }
-
-  /* Two portrait crops side by side. */
-  .coaching__photos :global(.coaching__photo) {
-    width: 100%;
-    height: auto;
+  .about :global(.about__portrait) {
+    display: block;
+    inline-size: min(70%, var(--size-portrait));
+    block-size: auto;
     aspect-ratio: 4 / 5;
     object-fit: cover;
     border-radius: var(--radius-media);
   }
 
-  @media (min-width: 64rem) {
-    .coaching__inner {
-      grid-template-columns: 5fr 6fr;
-      gap: var(--space-8);
+  @media (min-width: 48rem) {
+    .about :global(.about__portrait) {
+      inline-size: 100%;
     }
   }
 
-  @media (max-width: 30rem) {
-    .coaching__photos {
-      grid-template-columns: 1fr;
+  .about__figure {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .about__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+  }
+
+  .about__row :global(.about__photo) {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: var(--radius-media);
+  }
+
+  .about__row :global(.about__photo--tall) {
+    aspect-ratio: 4 / 5;
+  }
+
+  .about__row :global(.about__photo--wide) {
+    aspect-ratio: 7 / 5;
+  }
+
+  .about__cell {
+    min-width: 0;
+  }
+
+  /* Phones and small tablets: the wide photo on top, the two tall ones below. */
+  @media (max-width: 47.99rem) {
+    .about__cell--wide {
+      grid-column: 1 / -1;
+      order: -1;
     }
+  }
+
+  @media (min-width: 48rem) {
+    .about__row {
+      grid-template-columns: var(--about-row);
+    }
+  }
+
+  .credit {
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
   }
 
   /* 5. Closing banner: the photo shows whole, with nothing laid over it. */

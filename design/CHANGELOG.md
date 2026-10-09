@@ -3,6 +3,19 @@
 Newest first. Every design or structure decision goes here.
 
 
+
+## 2026-10-09 · New direction, step 2: home layout
+
+Aaron's calls: name at the top with no photo (like Micah), no buttons, work right after the name, KRON4 under the work with the clip opening on scroll into About, and the portrait moves to About.
+
+- Top: "Aaron Luellen" at the new `--step-6` and one line, "Product designer, research led, Oakland". The v16 top section lock is lifted by Aaron. The portrait and the two buttons are gone from the top.
+- Order: name, Selected work, BRIDGEGOOD and KRON4, About, closing.
+- BRIDGEGOOD and KRON4: off the white panel and onto the paper. Same text. Two columns, then the clip centered below at up to 40rem (`--size-clip`), since the clip file is 520px wide.
+- Clip opens on scroll (`KronClip opens`): center crop to full frame with a slight zoom out, CSS scroll timeline, off with reduced motion, fully open where unsupported.
+- About moves off the dark panel onto the paper. The old top intro paragraph is now its lead, then the coaching story unchanged, the portrait beside the text, and a row of three gym photos Aaron sent (`about-watch`, `about-pads`, `about-camera`, pre-cropped to 4:5, 7:5, 4:5). The old `coaching-1` and `coaching-2` files stay in the folder, unused.
+- Sections after the name open with a thin rule.
+- Still to confirm with Aaron: who took the gym photos (the credit still reads "Photos: BRIDGEGOOD"), that the gym name and students' faces are fine to publish, and the draft alt text for `about-watch` and `about-camera`.
+
 ## 2026-10-09 · New direction, step 1: colors, fonts, square corners
 
 Aaron picked the direction from the reference review and the picker page: warm paper with graph lines (Zeel), deep navy for headings, buttons, the logo, and the closing block, the AL blue for links only, Grotesk and mono type, square corners.

@@ -10,6 +10,9 @@ export type PhotoKey =
   | "coaching-1"
   | "coaching-2"
   | "coaching-3"
+  | "about-watch"
+  | "about-pads"
+  | "about-camera"
   | "group"
   | "kron4-cover"
   | "kron4-still-color";
@@ -42,6 +45,20 @@ export const photos: Record<PhotoKey, { alt: string; approved: boolean }> = {
   "coaching-3": {
     alt: "Black and white photo of a BRIDGEGOOD workshop, with people at laptops facing a speaker at the front of the room.",
     approved: true,
+  },
+  // About row (October 9). Gym photos Aaron sent as layout holders; credit and consent still to confirm.
+  "about-watch": {
+    alt: "Black and white photo of Aaron, hands behind his back, watching two students drill on pads under the gym's R banner.",
+    approved: false,
+  },
+  // The same shot as coaching-2, uncropped, so it keeps Aaron's approved description.
+  "about-pads": {
+    alt: "Black and white photo of Aaron driving a knee into pads held by a partner while the class watches from the mats.",
+    approved: true,
+  },
+  "about-camera": {
+    alt: "Black and white photo of Aaron standing on the mats and glancing at the camera while students drill behind him.",
+    approved: false,
   },
   group: {
     alt: "The BRIDGEGOOD cohort smiling together on the steps outside Google San Francisco.",

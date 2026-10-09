@@ -1,12 +1,20 @@
 ---
 // The KRON4 loop, in color: muted, looping, and playing on its own while on screen.
 // Reduced motion (or no JavaScript): the still image only, and the clip never downloads.
+// `opens`: the frame starts as a small crop and opens to full size as it scrolls into view
+// (modeled on Zeel Shah's portfolio). Pure CSS, only where scroll timelines exist, never with reduced motion.
 import Photo from "./Photo.astro";
+
+interface Props {
+  opens?: boolean;
+}
+
+const { opens = false } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
-<div class="clip" data-clip>
+<div class:list={["clip", { "clip--opens": opens }]} data-clip>
   <div class="clip__frame">
     <Photo
       name="kron4-still-color"
@@ -126,6 +134,42 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
   .clip.is-playing .clip__video {
     opacity: 1;
+  }
+
+  /* Opens on scroll: the crop widens while the footage settles from a slight zoom, so it feels
+     like stepping back from a close up. Browsers without scroll timelines show it fully open. */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .clip--opens .clip__frame {
+        animation: clip-open linear both;
+        animation-timeline: view();
+        animation-range: entry 10% cover 45%;
+      }
+
+      .clip--opens .clip__frame > :global(*) {
+        animation: clip-settle linear both;
+        animation-timeline: view();
+        animation-range: entry 10% cover 45%;
+      }
+    }
+  }
+
+  @keyframes clip-open {
+    from {
+      clip-path: inset(var(--clip-closed));
+    }
+    to {
+      clip-path: inset(0);
+    }
+  }
+
+  @keyframes clip-settle {
+    from {
+      transform: scale(1.18);
+    }
+    to {
+      transform: none;
+    }
   }
 
   /* A small text link under the clip. */

@@ -11,7 +11,15 @@ Calm and exact. The work and the photos carry the color. Everything around them 
 - Square corners on everything: panels, cards, photos, video, buttons. Only round icon buttons (theme toggle, play) stay circles. No pill shapes anywhere.
 - Sentence case for every heading. Proper names keep their capitals (BRIDGEGOOD UX Design Apprenticeship, Purpose to Pixels).
 - No drop shadows and no gradients. Thin rules separate content.
-- Navy panels: the closing section (and coaching, until step 2 of the October 9 plan moves About onto the paper). Never pure black.
+- Navy panels: the closing section only. Never pure black.
+
+## Home page
+
+Order: name, Selected work, BRIDGEGOOD and KRON4, About, closing. Every section after the name opens with a thin rule.
+
+- Name: "Aaron Luellen" at `--step-6`, the largest text on the site, then one line in Geist, muted: "Product designer, research led, Oakland". No photo and no buttons; the menu has Work and About, and the work starts right below.
+- BRIDGEGOOD and KRON4: on the paper, no panel. Two text columns from 64rem, then the KRON4 clip centered below at up to `--size-clip` (40rem). The source is 520px wide, so it does not go wider.
+- About (`#about`): label, heading, the intro that used to sit at the top, the coaching story, and the portrait (4:5) beside the text. Below, one row of gym photos at equal heights: tall, wide, tall (`--about-row`). On phones the wide one goes on top and the two tall ones sit below.
 
 ## Color
 
@@ -78,12 +86,12 @@ Wrap navy panels in `.surface-always-dark`. It remaps ink, headings, muted ink, 
 
 ## Photos
 
-- Stored in `src/assets/photos/` and optimized at build time by Astro: AVIF and WebP at quality 60 (AVIF 60 looks like JPEG 80), with a JPEG fallback. Only the hero portrait and logo load at once; every other photo loads as it nears the screen.
+- Stored in `src/assets/photos/` and optimized at build time by Astro: AVIF and WebP at quality 60 (AVIF 60 looks like JPEG 80), with a JPEG fallback. Only the logo loads at once; every other photo loads as it nears the screen.
 - Pre-crop each source to the shape it is shown in (square headshot, 4:5 gym portraits, 16:9 workshop). A file cropped by `object-fit: cover` in the browser is zoomed in, so it looks softer than its width suggests.
 - Crop rule in `Photo.astro`: pass `cover` (the box's width ÷ height) for any photo shown with `object-fit: cover`. When the file is wider than the box, Photo multiplies both the srcset widths and the `sizes` lengths by that zoom, and warns at build time to pre-crop the source.
 - Closing section: inside its rounded panel, the group photo runs edge to edge at its own shape (2000 by 1150, Aaron's framing), with no overlay and nothing laid over it. The credit sits under the photo on the right. The headline, text, and button follow below in the always dark band. Nothing crops at any width, so `sizes` is simply 100vw.
 - Work card `sizes` are set in `WorkCard.astro` for the featured and small layouts.
-- Photo credits: a small muted "Photos: BRIDGEGOOD" line under the coaching photos and in the banner's lower right.
+- Photo credits: a small muted "Photos: BRIDGEGOOD" line under the About photos and in the banner's lower right.
 - Every photo has alt text approved by Aaron.
 - Missing photos render a neutral placeholder so layout never breaks.
 - Logo: `src/assets/brand/logo.svg` (Aaron's mark, recolored to the accent `#1D4ED8`) in the header and as `public/favicon.svg`.
@@ -91,7 +99,7 @@ Wrap navy panels in `.surface-always-dark`. It remaps ink, headings, muted ink, 
 ## Navigation and links
 
 - The header is sticky with its solid background and thin bottom line. Jump links land below it (`scroll-padding-top`).
-- Work and About are sections on the home page (`#work`, `#about`, the coaching section). On the home page the header marks the section on screen. On a case study page, Work is current.
+- Work and About are sections on the home page (`#work`, `#about`). On the home page the header marks the section on screen. On a case study page, Work is current.
 - `/about` redirects to `/#about`.
 - Every email link uses the subject "Interested in working together" (`mailto` in `src/site.config.ts`).
 - Links that open a new tab say so to screen readers.
@@ -112,9 +120,10 @@ Wrap navy panels in `.surface-always-dark`. It remaps ink, headings, muted ink, 
 ## Motion
 
 - Minimal. Color transitions at `--duration-fast`. Smooth scroll for in page links.
-- Sections marked `data-reveal` fade in and slide up `--reveal-distance` (14px) over `--duration-reveal` as they enter the screen. The hero never animates. Anything on screen at load shows at once.
-- The hero portrait does not move on hover; it is not a link.
+- Sections marked `data-reveal` fade in and slide up `--reveal-distance` (14px) over `--duration-reveal` as they enter the screen. The name never animates. Anything on screen at load shows at once.
+- The About portrait does not move on hover; it is not a link.
 - Linked project cards lift `--card-lift` (3px) and their image zooms to `--card-image-zoom` (1.03) on hover, over `--duration-hover` (200ms). All three are zero with reduced motion.
 - The KRON4 clip is a muted color loop that plays only while on screen, with a "Pause clip" control. Reduced motion shows the still image only and never loads the video.
+- The KRON4 clip opens on scroll (from Zeel Shah's site): it starts as a center crop (`--clip-closed`) and opens to full size while the footage settles from a slight zoom. Pure CSS scroll timeline, only in browsers that support it and never with reduced motion; elsewhere it shows fully open.
 - Everything shows fully with JavaScript off. With reduced motion on, the reveal distance, lift, and durations are all zero, so nothing moves or hides.
 - Respect `prefers-reduced-motion`.

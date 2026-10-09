@@ -67,6 +67,7 @@
   --step-3: clamp(1.953rem, 1.75rem + 1vw, 2.5rem);
   --step-4: clamp(2.441rem, 2.1rem + 1.7vw, 3.5rem);
   --step-5: clamp(3.052rem, 2.5rem + 2.75vw, 4.75rem);
+  --step-6: clamp(3.5rem, 1.6rem + 8vw, 8.5rem); /* the name at the top of the home page, the largest text on the site */
 
   /* Weights */
   --weight-regular: 400;
@@ -114,8 +115,15 @@
   --size-play: 4.5rem; /* play button over a video thumbnail */
   --color-overlay: rgb(24 23 21 / 0.82); /* behind the play icon, readable on any frame */
 
+  /* KRON4 clip that opens on scroll (Zeel). The source is 520px wide, so it opens to a modest size. */
+  --size-clip: 40rem; /* fully open width */
+  --clip-closed: 16% 26%; /* the starting crop: top and bottom, then left and right */
+
+  /* About photo row: the tall photos are 4:5, the wide one 7:5, so equal heights need these widths. */
+  --about-row: 0.8fr 1.4fr 0.8fr;
+
   /* Media and controls */
-  --size-portrait: clamp(16rem, 4rem + 20vw, 26rem); /* hero portrait width from 48rem up */
+  --size-portrait: clamp(14rem, 4rem + 16vw, 22rem); /* About portrait width from 48rem up */
   --size-logo: 3rem;
   --control-height: 2.75rem; /* 44px */
   --control-height-small: 2.25rem; /* 36px, the button look inside a card (the card itself is the link) */
