@@ -8,6 +8,12 @@ Newest first. Every design or structure decision goes here.
 
 
 
+
+## 2026-10-09 · Aaron's final KRON4 cut, and pages that really open at the top
+
+- KRON4 loop: Aaron's own trim of his YouTube recording ("final_cut"), used as is and cut at 3.5 seconds so it ends with his mouth closed (it also starts closed, so the loop joins cleanly). Same crop as before: above the ticker, past the black edge, 1440 by 716. 469 KB MP4, 394 KB WebM. New still from the last frame.
+- Page changes, second fix: Aaron found that case study links still opened at the bottom in the preview. The viewer restores the last page's scroll position after the new page loads. Now, inside a frame, any scroll the visitor did not make in the first two seconds goes back to the top (wheel, touch, keys, or a click on the page count as the visitor's own). Tested in a frame that jumps to the bottom 400ms after load: the page stays at the top. Normal sites are untouched.
+
 ## 2026-10-09 · KRON4 loop from YouTube, About without the portrait, theme and page fixes
 
 - KRON4 loop: cut from Aaron's screen recording of the YouTube segment. The first 4 seconds of it: all three guests, his name bar ("Aaron Luellen, UX Design Apprentice"), and the KRON4 logo, ending with his mouth closed. Cropped above the weather ticker and past a thin black edge, 1440 by 716. 535 KB MP4, 443 KB WebM, no audio. New still from the last frame. The clip now opens to the full content width (`--size-clip: 100%`). AthenaScribe's hero thumbnail is 16:9 from the same still.

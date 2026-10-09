@@ -83,10 +83,23 @@ const themeDark = paperIn(tokensCss.slice(tokensCss.indexOf(':root[data-theme="d
         }).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
       }
 
-      // Each page opens at the top. Inside a preview frame the outer page can keep its scroll
-      // position between pages, so bring the top of this page into view (not on #anchor links).
+      // Each page opens at the top. A preview viewer can restore the last page's scroll position
+      // after this page loads, which leaves the visitor stuck at the bottom. Inside a frame, for the
+      // first two seconds, any scroll the visitor did not make goes back to the top.
+      // Links to a #section are left alone.
       if (window.self !== window.top && !location.hash) {
-        addEventListener("DOMContentLoaded", () => document.body.scrollIntoView({ block: "start" }));
+        let moved = false;
+        const mark = () => (moved = true);
+        ["wheel", "touchstart", "keydown", "pointerdown"].forEach((type) =>
+          addEventListener(type, mark, { capture: true, passive: true }),
+        );
+        const toTop = () => {
+          if (!moved && window.scrollY > 0) window.scrollTo({ top: 0, behavior: "instant" });
+        };
+        addEventListener("scroll", toTop, { passive: true });
+        addEventListener("DOMContentLoaded", toTop);
+        addEventListener("load", toTop);
+        setTimeout(() => removeEventListener("scroll", toTop), 2000);
       }
     </script>
     <title>{fullTitle}</title>
