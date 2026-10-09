@@ -18,6 +18,19 @@ Newest first. Every design or structure decision goes here.
 
 
 
+
+## 2026-10-09 · Fixes from the case study review agent
+
+A review agent checked all three case studies at 1440 and 390, light and dark, keyboard, contrast, and the index. Fixed:
+
+- Side index: stays fully in view to the end of the page. Previous, Next, and Back to top now sit inside the case study grid (body column), so the index's sticky area runs down to them. On short screens the list scrolls inside itself.
+- One right edge: in the case study body, wide blocks now stop at the reading measure too, so callouts, quotes, figures, cards, and rules end on the same line.
+- Phone bar: the open list lays over the page instead of pushing it down.
+- Tables that scroll sideways on phones show a soft edge on the side with more to see.
+- Stat groups: one column on phones, so three numbers never land as two plus one.
+
+Left for later passes: Klima has no `Section` chapters yet (Klima pass); before and after rows can drift out of line when one side wraps; the AthenaScribe phone mockup has a white background that shows in dark mode; the "Scan, Translate, Right person" chips wrap on wide screens.
+
 ## 2026-10-09 · Back to top on case studies
 
 - Micah Hoang's "Scroll to top", named "Back to top ↑" (plainer, and what most sites call it). Always on the right so it is in the same place on every case study: under Next on AthenaScribe and Klima, and in the empty Next spot on Craft Education, the last one (Aaron's ask). Mono, navy, 44px target, underline on hover. It jumps to the top of the page (smooth, or instant with reduced motion).

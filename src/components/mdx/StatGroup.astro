@@ -7,9 +7,15 @@
 </div>
 
 <style>
+  /* One column on phones, so three stats never land as two plus one. Side by side from 40rem. */
   .stat-group {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
     gap: var(--space-5);
+  }
+
+  @media (min-width: 40rem) {
+    .stat-group {
+      grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    }
   }
 </style>
