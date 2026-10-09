@@ -82,6 +82,21 @@ const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.u
   </div>
 </PageLayout>
 
+<script>
+  // Section lines draw left to right each time their section comes into view. Without motion
+  // (reduced motion setting, or no IntersectionObserver) the lines simply show.
+  const motion = window.matchMedia("(prefers-reduced-motion: no-preference)");
+  const ruled = [...document.querySelectorAll<HTMLElement>(".work, .about")];
+  if (motion.matches && "IntersectionObserver" in window && ruled.length > 0) {
+    document.documentElement.classList.add("rules-ready");
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.target.classList.toggle("is-drawn", e.isIntersecting)),
+      { rootMargin: "0px 0px -10% 0px" },
+    );
+    ruled.forEach((el) => observer.observe(el));
+  }
+</script>
+
 <style>
   /* One stack: the same gap between every section, and before the footer. */
   .stack {
@@ -181,15 +196,16 @@ const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.u
     transform-origin: left center;
   }
 
-  /* The draw runs when the section is revealed, including sections already on screen at load. */
+  /* The draw replays every time the section comes back into view (Micah Hoang). The script below
+     adds .is-drawn on the way in and removes it once the section has left the screen. */
   @media (prefers-reduced-motion: no-preference) {
-    :global(.reveal-ready) .work:not(:global(.is-revealed))::before,
-    :global(.reveal-ready) .about:not(:global(.is-revealed))::before {
+    :global(.rules-ready) .work:not(.is-drawn)::before,
+    :global(.rules-ready) .about:not(.is-drawn)::before {
       transform: scaleX(0);
     }
 
-    .work:global(.is-revealed)::before,
-    .about:global(.is-revealed)::before {
+    .work.is-drawn::before,
+    .about.is-drawn::before {
       animation: rule-draw var(--duration-rule-draw) var(--ease-roll) both;
     }
   }
