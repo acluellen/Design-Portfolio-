@@ -14,8 +14,10 @@ interface Props {
 }
 
 const { study, prev, next, sections = [] } = Astro.props;
-const { title, summary, headline, role, team, timeline, client, program, tools, cover, status, heroMedia, prototype } =
+const { title, summary, headline, role, team, timeline, client, program, tools, cover, status, heroMedia, prototype, card, order } =
   study.data;
+// The same number the study has on the home page cards.
+const number = String(order).padStart(2, "0");
 
 // Section index (Tee Hodgson's strip and Angelina Cao's numbered index): Overview, then one line
 // per ## section, named by the study's `index` list or, failing that, by the heading itself.
@@ -30,12 +32,13 @@ const indexItems = [
     <header class="container hero" id="overview">
       <div class:list={["hero__top", { "hero__top--media": heroMedia }]}>
         <div class="hero__intro">
-          <p class="label hero__eyebrow">
-            Case study
+          <!-- Index row, like the home page cards: number and name in mono over a thin rule. -->
+          <p class="hero__index">
+            <span class="hero__number">{number} /</span>
+            <span translate="no">{title}</span>
             {status === "draft" && <span class="hero__draft">Draft</span>}
           </p>
-          <h1 translate="no">{title}</h1>
-          {headline && <p class="hero__headline">{headline}</p>}
+          <h1>{headline ?? title}</h1>
           <p class="hero__summary">{summary}</p>
           {
             prototype && (
@@ -75,6 +78,14 @@ const indexItems = [
       </div>
 
       <dl class="hero__facts">
+        {
+          card?.detail && (
+            <div class="hero__glance">
+              <dt class="label">At a glance</dt>
+              <dd>{card.detail}</dd>
+            </div>
+          )
+        }
         <div>
           <dt class="label">Role</dt>
           <dd>{role}</dd>
@@ -251,23 +262,32 @@ const indexItems = [
     color: var(--color-ink-muted);
   }
 
-  .hero__eyebrow {
+  .hero__index {
     display: flex;
-    gap: var(--space-4);
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-3);
+    padding-block-start: var(--space-3);
+    border-block-start: var(--rule-thin) solid var(--color-rule-strong);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-heading);
+  }
+
+  .hero__number {
+    color: var(--color-ink-muted);
   }
 
   .hero__draft {
-    color: var(--color-accent);
+    margin-inline-start: auto;
+    color: var(--color-ink-muted);
   }
 
-  .hero__headline {
-    max-width: 24ch;
-    font-family: var(--font-display);
-    font-size: var(--step-4);
-    font-weight: var(--weight-heading);
-    line-height: var(--leading-tight);
-    letter-spacing: var(--tracking-tight);
-    text-wrap: balance;
+  /* The headline is the page's h1; the study's name sits in the index row above it. */
+  .hero__intro h1 {
+    max-width: 22ch;
+    font-size: var(--step-5);
   }
 
   .hero__summary {
@@ -284,6 +304,17 @@ const indexItems = [
     margin-block-start: var(--space-5);
     padding-block-start: var(--space-5);
     border-top: var(--rule-thin) solid var(--color-rule);
+  }
+
+  /* At a glance: the study's key numbers, full width, first. */
+  .hero__glance {
+    grid-column: 1 / -1;
+  }
+
+  .hero__glance dd {
+    font-size: var(--step-1);
+    line-height: var(--leading-snug);
+    color: var(--color-heading);
   }
 
   .hero__facts > div {

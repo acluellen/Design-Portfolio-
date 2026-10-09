@@ -1,5 +1,5 @@
 ---
-// A small neutral tag: a verdict, a severity, or what a finding changed. Square corners, not a pill.
+// A small neutral tag in mono: a verdict, a severity, or what a finding changed. Square, never a pill.
 ---
 
 <span class="tag"><slot /></span>
@@ -8,11 +8,14 @@
   .tag {
     display: inline-block;
     padding: var(--space-1) var(--space-2);
+    font-family: var(--font-mono);
     font-size: var(--step--1);
     font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
     line-height: var(--leading-snug);
     color: var(--color-ink);
-    background: var(--color-rule);
+    border: var(--rule-thin) solid var(--color-rule-strong);
     border-radius: var(--radius-small);
   }
 </style>

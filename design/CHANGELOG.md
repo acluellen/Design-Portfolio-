@@ -16,6 +16,18 @@ Newest first. Every design or structure decision goes here.
 
 
 
+
+## 2026-10-09 · Case study pass: the case studies match the home page
+
+- Header of each case study: a mono index row over a thin rule ("01 / AthenaScribe", the same number as its home card, with "Draft" at the end for drafts). The headline is now the page's h1; the study's name sits in the index row. An "At a glance" line with the card's detail (the key numbers) opens the facts, full width, before Role, Timeline, Team, and the rest.
+- Sections (`Section`): no white rounded panels. Every chapter opens with a thin rule; `tone="panel"` only makes the rule stronger.
+- Cards (`Card`): ruled columns, no box. Their small bold lead labels are mono.
+- Number badges (`Badge`): square, mono, outlined in the heading color, instead of filled round dots.
+- Tags (`Tag`): mono, uppercase, outlined, square.
+- Callouts: the top rule and label use the navy heading color, not the link blue.
+- Before and after (`Shift`): no dashed box and no white box. Before is muted under a thin rule; after sits under a heavier navy rule.
+- `Mine` rule in navy. Placeholders (dashed, blue) are unchanged; they show only in review previews.
+
 ## 2026-10-09 · About heading wording
 
 - "I recently finished the BRIDGEGOOD UX Design Apprenticeship." is now "I completed the BRIDGEGOOD UX Design Apprenticeship." (Aaron: "recently" read wrong).

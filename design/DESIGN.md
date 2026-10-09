@@ -22,6 +22,11 @@ Order: name, Selected work, BRIDGEGOOD and KRON4, About, closing. Every section 
 - About (`#about`), one story after the work: label, "I completed the BRIDGEGOOD UX Design Apprenticeship.", one line of context, then the KRON4 clip at the full content width (`--size-clip`, opens on scroll) with one mono caption row (On air with KRON4, Watch on YouTube, Pause), then "From coaching systems to product design." with two sentences and "Read more about me" beside the coaching media (the knee strike photo until Aaron's clip of holding pads).
 - The closing banner with the BRIDGEGOOD group photo at Google stays right under About until Aaron says otherwise.
 
+## Case study pages
+
+- Top: mono index row ("01 / AthenaScribe", "Draft" for drafts) over a thin rule, the headline as the h1, the summary, the prototype link, then the facts: "At a glance" (the card detail) full width first, then Role, Timeline, Team, Client, Program, Tools.
+- Chapters open with a thin rule. No white panels, no rounded boxes, no round dots: cards are ruled columns, numbers are small square mono badges, tags are outlined mono, before and after uses a thin rule (before) and a heavier navy rule (after).
+
 ## Case study index
 
 - From 72rem: a numbered list beside the body (`--size-case-index`), Overview then one line per `##` section, staying in view; the section on screen gets ink color and a short bar.

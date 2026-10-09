@@ -76,28 +76,21 @@ const { before, after, rows } = Astro.props;
     display: grid;
     gap: var(--space-3);
     align-self: stretch;
-    padding: var(--space-5);
-    border: var(--rule-thin) solid var(--color-rule);
-    border-radius: var(--radius-small);
+    padding-block-start: var(--space-4);
+    border-block-start: var(--rule-thin) solid var(--color-rule-strong);
   }
 
+  /* Before: muted, thin rule. After: ink, a heavier rule in the heading color. */
   .shift__card--before {
     color: var(--color-ink-muted);
-    background: transparent;
-    border-style: dashed;
   }
 
   .shift__card--after {
-    background: var(--color-paper-raised);
-    border-color: var(--color-rule-strong);
-  }
-
-  :global(.section--panel) .shift__card--after {
-    background: var(--color-paper);
+    border-block-start: var(--rule-thick) solid var(--color-heading);
   }
 
   .shift__after-label {
-    color: var(--color-accent);
+    color: var(--color-heading);
   }
 
   .shift__title {

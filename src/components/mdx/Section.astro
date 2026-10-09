@@ -1,6 +1,6 @@
 ---
-// A part of the story. `panel` sets it on a rounded light panel, like the home page sections,
-// so panels and plain parts alternate down the page. Text inside keeps the reading measure.
+// A part of the story: a chapter that opens with a thin rule (October 9 direction, no white panels).
+// `panel` is kept for older content and now only adds a stronger rule. Text keeps the reading measure.
 interface Props {
   tone?: "plain" | "panel";
 }
@@ -15,10 +15,13 @@ const { tone = "plain" } = Astro.props;
 </section>
 
 <style>
+  .section {
+    padding-block-start: var(--space-6);
+    border-block-start: var(--rule-thin) solid var(--color-rule);
+  }
+
   .section--panel {
-    padding: var(--panel-padding);
-    background: var(--color-band);
-    border-radius: var(--radius-section);
+    border-block-start-color: var(--color-rule-strong);
   }
 
   .section__inner > :global(:first-child) {

@@ -27,15 +27,8 @@ const { eyebrow, title, verdict } = Astro.props;
     flex-direction: column;
     gap: var(--space-3);
     min-width: 0;
-    padding: var(--space-5);
-    background: var(--color-paper-raised);
-    border: var(--rule-thin) solid var(--color-rule);
-    border-radius: var(--radius-small);
-  }
-
-  /* On a light panel, cards take the page color so they still read as cards. */
-  :global(.section--panel) .card {
-    background: var(--color-paper);
+    padding-block-start: var(--space-4);
+    border-block-start: var(--rule-thin) solid var(--color-rule-strong);
   }
 
   .card__title {
@@ -55,6 +48,7 @@ const { eyebrow, title, verdict } = Astro.props;
 
   .card__body :global(strong:first-child) {
     display: block;
+    font-family: var(--font-mono);
     font-size: var(--step--1);
     font-weight: var(--weight-medium);
     letter-spacing: var(--tracking-label);
