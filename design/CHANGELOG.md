@@ -5,6 +5,11 @@ Newest first. Every design or structure decision goes here.
 
 
 
+
+## 2026-10-09 · KRON4 loop back to the earlier file
+
+- Aaron: the loop must come only from a screen recording of the KRON4 segment on YouTube, never from the Instagram repost he sent. The two loops cut from the repost today are removed. The page uses the earlier color loop again (520 by 390, 4:3, `--size-clip` 40rem) until his recording arrives. Then: cut 4 seconds from the moment with his name bar, all three guests, ending with his mouth closed, full width.
+
 ## 2026-10-09 · New direction, step 3: work cards, and the full size KRON4 clip
 
 - Work cards rebuilt (`WorkCard.astro`): a mono index row ("01 / AthenaScribe") over a thin rule, where the title rolls up to "View case study" on hover or keyboard focus (Micah Hoang, 420ms, off with reduced motion); then a poster cover (Zeel Shah): the role label, the case study headline with one word in blue, and one real outcome, beside the project image slot; then the description. The whole card stays one link.

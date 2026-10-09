@@ -18,7 +18,7 @@ Calm and exact. The work and the photos carry the color. Everything around them 
 Order: name, Selected work, BRIDGEGOOD and KRON4, About, closing. Every section after the name opens with a thin rule.
 
 - Name: "Aaron Luellen" at `--step-6`, the largest text on the site, then one line in Geist, muted: "Product designer, research led, Oakland". No photo and no buttons; the menu has Work and About, and the work starts right below.
-- BRIDGEGOOD and KRON4: on the paper, no panel. Two text columns from 64rem, then the KRON4 clip centered below at up to `--size-clip` (67.5rem, the clip file's 1080px width). The loop is 4 seconds, all three guests, with Aaron's name bar.
+- BRIDGEGOOD and KRON4: on the paper, no panel. Two text columns from 64rem, then the KRON4 clip centered below at up to `--size-clip` (40rem; the current file is 520px wide). It will be replaced by a 4 second loop from Aaron's screen recording of the YouTube segment.
 - About (`#about`): label, heading, the intro that used to sit at the top, the coaching story, and the portrait (4:5) beside the text. Below, one row of gym photos at equal heights: tall, wide, tall (`--about-row`). On phones the wide one goes on top and the two tall ones sit below.
 
 ## Color

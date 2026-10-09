@@ -4,7 +4,7 @@ Last updated October 9, 2026. Claude keeps this list current. Placeholders show 
 
 ## Links and files
 
-- [ ] The downloaded file Aaron said he'd grab later (which file: to confirm).
+- [ ] A screen recording of the KRON4 segment from YouTube (https://www.youtube.com/watch?v=r4l9IsyDUD4), not the Instagram repost. Record the moment with your name bar on screen, plus a few seconds before and after. Player in full screen at 1080p, captions off, pointer moved away. Claude cuts the 4 second loop: all three of you, ending with your mouth closed.
 - [ ] AthenaScribe: the public `.lovable.app` prototype link. Never the editor link with `magic_link`.
 - [ ] AthenaScribe: the FigJam link for the affinity map.
 - [ ] AthenaScribe: the prototype walkthrough video.
@@ -26,7 +26,6 @@ Last updated October 9, 2026. Claude keeps this list current. Placeholders show 
 
 ## Done
 
-- [x] Full size KRON4 clip (October 9).
 - [x] Gym photos: no credit needed, OK to show the gym and students for now (October 9).
 
 ## Settings
