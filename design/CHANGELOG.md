@@ -23,6 +23,11 @@ Newest first. Every design or structure decision goes here.
 
 
 
+## 2026-10-10 · Read more, smaller About text
+
+- The home About link now reads "Read more". Screen readers hear "Read more about Aaron", so the link still makes sense on its own.
+- The About blurb drops one step, from `--step-3` to `--step-2`: Aaron found it too big next to Micah Hoang's. It keeps the light weight; the hero subtitle stays at `--step-3`.
+
 ## 2026-10-10 · Home About layout, scroll to top, tag style
 
 - Home About now opens with "About Aaron" at the same size and light weight as "Selected work".

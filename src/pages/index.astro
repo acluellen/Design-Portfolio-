@@ -61,7 +61,7 @@ const year = new Date().getFullYear();
           I’m a product designer focused on clarity. I use research to understand how people work, then
           design around what they need.
         </p>
-        <a class="about__more" href="/about/">Read more about me</a>
+        <a class="about__more" href="/about/">Read more<span class="visually-hidden"> about Aaron</span></a>
       </div>
     </div>
   </section>
@@ -295,13 +295,14 @@ const year = new Date().getFullYear();
     gap: var(--space-5);
   }
 
-  /* Same size and weight as the hero subtitle. The first line sits level with the photo's top. */
+  /* Light like the hero subtitle, one step smaller (Micah Hoang's scale). The first line sits level
+     with the photo's top. */
   .about__blurb {
-    max-width: 30ch;
+    max-width: 34ch;
     margin-block-start: calc((1lh - 1cap) / -2);
     font-family: var(--font-display);
     font-weight: var(--weight-light);
-    font-size: var(--step-3);
+    font-size: var(--step-2);
     line-height: var(--leading-snug);
     letter-spacing: var(--tracking-tight);
     color: var(--color-heading);
