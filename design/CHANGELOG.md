@@ -23,6 +23,12 @@ Newest first. Every design or structure decision goes here.
 
 
 
+## 2026-10-10 · Name as a wordmark, lighter subtitle
+
+- The name on the home page is set like a wordmark: weight 800 (`--weight-wordmark`) and letter spacing -0.045em (`--tracking-wordmark`).
+- "Product designer focused on clarity." and "Selected work" drop to weight 300 (`--weight-light`) for contrast with the name.
+- Font candidates for the name and headings, shown only in the review preview through a switcher at the bottom of the home page: Inter Tight, Hanken Grotesk, Bricolage Grotesque. Nothing installed in the site until Aaron picks one.
+
 ## 2026-10-10 · Hero row and tile labels
 
 - Hero: the name now sits closer under the header (`--space-6` above it, was `--space-10`). LinkedIn, Resume, Email moved to their own row under "Product designer focused on clarity.", left aligned, with "©2026" (the build year) at the right end. The hero pulls the next section up so that row sits one `--space-4` above the Selected work line.

@@ -124,12 +124,18 @@ const year = new Date().getFullYear();
     margin-block-end: calc(var(--space-4) - var(--section-gap));
   }
 
+  /* The name, set like a wordmark: the heaviest weight, tight letter spacing. */
   .hero h1 {
     font-size: var(--step-6);
+    font-weight: var(--weight-wordmark);
+    letter-spacing: var(--tracking-wordmark);
     line-height: 0.95;
   }
 
+  /* Light, so the name carries the weight. */
   .hero__role {
+    font-family: var(--font-display);
+    font-weight: var(--weight-light);
     font-size: var(--step-3);
     line-height: var(--leading-snug);
     letter-spacing: var(--tracking-tight);
@@ -221,6 +227,7 @@ const year = new Date().getFullYear();
 
   .work h2 {
     font-size: var(--step-4);
+    font-weight: var(--weight-light);
   }
 
   .work__grid {
