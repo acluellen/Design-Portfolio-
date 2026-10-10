@@ -7,7 +7,7 @@ Current direction from October 9, 2026: warm graph paper, deep navy ink, blue fo
 Calm and exact. The work and the photos carry the color. Everything around them stays quiet.
 
 - Warm paper page with faint graph lines (Zeel). Deep navy for headings, primary buttons, the logo, and the closing block (Micah). The AL blue is for links only.
-- One voice: Atkinson Hyperlegible Next for headings, body, buttons, and the menu (`--font-text`; `--font-display` points to it). Headings at 500 with slight negative tracking; size sets the order. Labels, metadata, the header, and the menu: Atkinson Hyperlegible Mono (`--font-mono`), uppercase.
+- Display: Hanken Grotesk (`--font-display`) for the name, every heading, and large display text (subtitles, the About blurb, the contact block) on every page. Body text, buttons, and the menu: Atkinson Hyperlegible Next (`--font-text`), chosen for reading. Headings at 500 with slight negative tracking; page section titles ("Selected work", "A few things that shaped me") and subtitles at 300; the name at 800. Labels, metadata, the header, and the menu: Atkinson Hyperlegible Mono (`--font-mono`), uppercase.
 - Square corners on everything: panels, cards, photos, video, buttons. Only round icon buttons (theme toggle, play) stay circles. No pill shapes, except the small outline tags under the Selected work tiles (`--radius-tag`, Aaron's call on Oct 10).
 - Sentence case for every heading. Proper names keep their capitals (BRIDGEGOOD UX Design Apprenticeship, Purpose to Pixels).
 - No drop shadows and no gradients. Thin rules separate content.
@@ -75,7 +75,7 @@ Wrap navy panels in `.surface-always-dark`. It remaps ink, headings, muted ink, 
 
 ## Type
 
-- Headlines: `--font-display` (Atkinson Hyperlegible Next, one voice), `--weight-heading` (500), `--tracking-tight` (-0.02em), tight leading, balanced wrapping, navy (`--color-heading`).
+- Headlines: `--font-display` (Hanken Grotesk), `--weight-heading` (500), `--tracking-tight` (-0.02em), tight leading, balanced wrapping, navy (`--color-heading`).
 - Body: `--font-text` at `--step-0`, leading `--leading-body`.
 - Labels and metadata: `--font-mono` at `--step--1`, uppercase, `--tracking-label` (0.03em), muted.
 

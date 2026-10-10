@@ -62,7 +62,8 @@
      One voice: Atkinson Hyperlegible Next for headings, body, buttons, and menu, built for legibility.
      Size sets the order, not a second family. Labels and metadata: Atkinson Hyperlegible Mono. */
   --font-text: "Atkinson Hyperlegible Next Variable", "Atkinson Hyperlegible Next", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-display: var(--font-text);
+  /* Hanken Grotesk (Aaron, Oct 10): the name, headings, and display text on every page. */
+  --font-display: "Hanken Grotesk Variable", "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "Atkinson Hyperlegible Mono Variable", "Atkinson Hyperlegible Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
   /* Type scale (fluid, roughly 1.25 ratio) */
@@ -79,9 +80,9 @@
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
-  --weight-heading: 500; /* one voice: headings only a step heavier than body */
+  --weight-heading: 500; /* headings a step heavier than body */
   --weight-wordmark: 800; /* the name on the home page, set like a wordmark */
-  --weight-light: 300; /* the home subtitle and "Selected work", for contrast with the name */
+  --weight-light: 300; /* subtitles and page section titles, for contrast with the name */
 
   /* Leading and tracking */
   --leading-tight: 1.12;

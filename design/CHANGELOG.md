@@ -23,6 +23,13 @@ Newest first. Every design or structure decision goes here.
 
 
 
+## 2026-10-10 · Hanken Grotesk on every page
+
+- Aaron picked Hanken Grotesk from the preview switcher. It is now `--font-display` across the whole site: the name, every heading on the home, About, and case study pages, and large display text (the About blurb, the contact block). Installed as `@fontsource-variable/hanken-grotesk` and preloaded.
+- Body text, buttons, and the menu stay Atkinson Hyperlegible Next for reading. Labels stay Atkinson Hyperlegible Mono.
+- Page section titles now match: "A few things that shaped me" uses the same light weight as "Selected work". The contact line is light too.
+- The preview font switcher is removed.
+
 ## 2026-10-10 · Name as a wordmark, lighter subtitle
 
 - The name on the home page is set like a wordmark: weight 800 (`--weight-wordmark`) and letter spacing -0.045em (`--tracking-wordmark`).

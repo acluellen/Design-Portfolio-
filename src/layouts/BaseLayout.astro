@@ -1,11 +1,13 @@
 ---
 import "@fontsource-variable/atkinson-hyperlegible-mono";
 import "@fontsource-variable/atkinson-hyperlegible-next";
+import "@fontsource-variable/hanken-grotesk";
 import "../styles/tokens.css";
 import "../styles/global.css";
 // Font files, so the head can ask for them before the CSS that uses them has loaded.
 import monoFont from "@fontsource-variable/atkinson-hyperlegible-mono/files/atkinson-hyperlegible-mono-latin-wght-normal.woff2?url";
 import atkinsonFont from "@fontsource-variable/atkinson-hyperlegible-next/files/atkinson-hyperlegible-next-latin-wght-normal.woff2?url";
+import displayFont from "@fontsource-variable/hanken-grotesk/files/hanken-grotesk-latin-wght-normal.woff2?url";
 import tokensCss from "../styles/tokens.css?raw";
 
 interface Props {
@@ -44,6 +46,7 @@ const themeDark = paperIn(tokensCss.slice(tokensCss.indexOf(':root[data-theme="d
     <meta name="theme-color" content={themeDark} media="(prefers-color-scheme: dark)" data-theme-color="dark" />
     <link rel="preload" href={monoFont} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={atkinsonFont} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin />
     <script is:inline>
       // Apply the saved theme before first paint, so the wrong theme never flashes.
       // A saved choice also sets the browser bar color, whatever the device setting is.
