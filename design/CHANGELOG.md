@@ -23,6 +23,11 @@ Newest first. Every design or structure decision goes here.
 
 
 
+## 2026-10-10 · Hero row and tile labels
+
+- Hero: the name now sits closer under the header (`--space-6` above it, was `--space-10`). LinkedIn, Resume, Email moved to their own row under "Product designer focused on clarity.", left aligned, with "©2026" (the build year) at the right end. The hero pulls the next section up so that row sits one `--space-4` above the Selected work line.
+- Selected work tiles: "01 / ATHENASCRIBE" in small mono capitals above each image (the name still rolls to "View case study"). The tags moved below the image as small rounded outline pills, Aaron's call. New token `--radius-tag`; the no pill rule in DESIGN.md now names this one exception.
+
 ## 2026-10-10 · Home and About rebuild from Aaron's prompt
 
 Aaron's prompt (Oct 9 doc, "Portfolio Update Prompt for Claude Code"), built as written.

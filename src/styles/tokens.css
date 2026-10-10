@@ -153,7 +153,8 @@
   --radius-small: 0;
   --radius-section: 0;
   --radius-media: 0;
-  --radius-pill: 999px; /* round icon buttons only, never labels, tags, or text buttons */
+  --radius-pill: 999px; /* round icon buttons only, never labels or text buttons */
+  --radius-tag: 999px; /* Selected work tags only: small rounded outline pills (Aaron, Oct 10) */
   --radius-control: 0; /* buttons: square */
 
   /* Underlines */

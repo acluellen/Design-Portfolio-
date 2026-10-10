@@ -8,7 +8,7 @@ Calm and exact. The work and the photos carry the color. Everything around them 
 
 - Warm paper page with faint graph lines (Zeel). Deep navy for headings, primary buttons, the logo, and the closing block (Micah). The AL blue is for links only.
 - One voice: Atkinson Hyperlegible Next for headings, body, buttons, and the menu (`--font-text`; `--font-display` points to it). Headings at 500 with slight negative tracking; size sets the order. Labels, metadata, the header, and the menu: Atkinson Hyperlegible Mono (`--font-mono`), uppercase.
-- Square corners on everything: panels, cards, photos, video, buttons. Only round icon buttons (theme toggle, play) stay circles. No pill shapes anywhere.
+- Square corners on everything: panels, cards, photos, video, buttons. Only round icon buttons (theme toggle, play) stay circles. No pill shapes, except the small outline tags under the Selected work tiles (`--radius-tag`, Aaron's call on Oct 10).
 - Sentence case for every heading. Proper names keep their capitals (BRIDGEGOOD UX Design Apprenticeship, Purpose to Pixels).
 - No drop shadows and no gradients. Thin rules separate content.
 - Navy: the contact block that ends the home and About pages. Never pure black.
@@ -18,8 +18,8 @@ Calm and exact. The work and the photos carry the color. Everything around them 
 Order: name, Selected work, About, contact block. Selected work and About open with a thin rule across the content column that draws left to right each time the section comes into view (Micah Hoang); with reduced motion it simply shows.
 
 - Header (Micah Hoang): AL logo, "Product designer" and "Oakland, CA" in mono across the middle (hidden on phones), Work and About in mono, theme toggle.
-- Name: "Aaron Luellen" at `--step-6`, the largest text on the site. Under it one row: "Product designer focused on clarity." on the left, the mono links row (LinkedIn, Resume, Email; plain text until linked) on the right from 48rem. Nothing else. No photo and no buttons.
-- Selected work: large image tiles (`WorkTile.astro`), the featured study wide on top (`--ratio-tile-wide`), two below (`--ratio-tile`). Under each image: the number, the name (rolls to "View case study" on hover), and two or three square mono tags (`card.tags`), then the one line description. Gray placeholders (`--color-placeholder`) until the project media is ready.
+- Name: "Aaron Luellen" at `--step-6`, the largest text on the site, close under the header. Then "Product designer focused on clarity." Then one mono row just above the Selected work line: LinkedIn, Resume, Email on the left (plain text until linked), "©2026" on the right. No photo and no buttons.
+- Selected work: large image tiles (`WorkTile.astro`), the featured study wide on top (`--ratio-tile-wide`), two below (`--ratio-tile`). Above each image: "01 / ATHENASCRIBE" in small mono capitals (the name rolls to "View case study" on hover). Below it: two or three small rounded outline tags (`card.tags`, `--radius-tag`), then the one line description. Gray placeholders (`--color-placeholder`) until the project media is ready.
 - About (`#about`): an image or video on the left (gray placeholder for now, 4:5 from 48rem, 4:3 on phones), on the right a mono "About" label, the blurb, and "Read more about me". The apprenticeship, the KRON4 clip, and the gym photos live on the About page.
 - Contact block (`ContactBlock.astro`, also on the About page): full width navy band. "Get in touch" in mono, one line, then the email, LinkedIn, and Resume in large type (plain text until linked), then the copyright line.
 
@@ -82,7 +82,7 @@ Wrap navy panels in `.surface-always-dark`. It remaps ink, headings, muted ink, 
 ## Shape
 
 - Square corners: `--radius-section`, `--radius-media`, `--radius-small`, and `--radius-control` are all 0.
-- `--radius-pill` is kept for round icon buttons only (theme toggle, video play). Never for labels, tags, or text buttons.
+- `--radius-pill` is kept for round icon buttons only (theme toggle, video play). Never for labels or text buttons. `--radius-tag` rounds the Selected work tags only.
 - Buttons are square, 44px tall (`--control-height`).
   - Primary: navy (`--color-brand`) with paper text. On the dark page and inside navy panels it flips to a light button with navy text.
   - Secondary: transparent fill, ink outline, ink text.

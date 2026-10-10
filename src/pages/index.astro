@@ -11,6 +11,7 @@ const featured = studies.find((s) => s.data.featured);
 const others = studies.filter((s) => s !== featured);
 // The Resume link goes live once public/resume.pdf exists; until then it shows as plain text.
 const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.url));
+const year = new Date().getFullYear();
 ---
 
 <PageLayout title="Aaron Luellen" flushBottom contact>
@@ -19,13 +20,15 @@ const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.u
   <!-- 1. Name, one line, and a links row. Nothing else, so it reads like a simple editorial page. -->
   <section class="hero" aria-labelledby="hero-heading">
     <h1 id="hero-heading" translate="no">Aaron Luellen</h1>
-    <div class="hero__foot">
-      <p class="hero__role">Product designer focused on clarity.</p>
+    <p class="hero__role">Product designer focused on clarity.</p>
+    <!-- Links on the left, the year on the right, just above the Selected work line. -->
+    <div class="hero__row">
       <ul class="hero__links" aria-label="Links">
         <li>{site.linkedin ? <a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a> : <span>LinkedIn</span>}</li>
         <li>{hasResume ? <a href={site.resumePath}>Resume</a> : <span>Resume</span>}</li>
         <li><a href={mailto}>Email</a></li>
       </ul>
+      <p class="hero__year">©{year}</p>
     </div>
   </section>
 
@@ -112,30 +115,18 @@ const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.u
     padding-block: var(--section-gap);
   }
 
-  /* 1. Name, then the line and the links on one row: the line on the left, the links on the
-     right from 48rem. Stacks on phones. */
+  /* 1. Name and one line close under the header, then the links row with the year at its right
+     end. The hero pulls the next section up so that row sits just above the Selected work line. */
   .hero {
     display: grid;
-    gap: var(--space-6);
-    padding-block: var(--space-10) var(--space-7);
+    gap: var(--space-5);
+    padding-block-start: var(--space-6);
+    margin-block-end: calc(var(--space-4) - var(--section-gap));
   }
 
   .hero h1 {
     font-size: var(--step-6);
     line-height: 0.95;
-  }
-
-  .hero__foot {
-    display: grid;
-    gap: var(--space-4);
-  }
-
-  @media (min-width: 48rem) {
-    .hero__foot {
-      grid-template-columns: 1fr auto;
-      align-items: baseline;
-      column-gap: var(--space-7);
-    }
   }
 
   .hero__role {
@@ -145,7 +136,21 @@ const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.u
     color: var(--color-heading);
   }
 
-  /* Links row: mono, like the labels. */
+  /* Links left, year right. Mono, like the labels. */
+  .hero__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0 var(--space-5);
+    margin-block-start: var(--space-6);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+
   .hero__links {
     display: flex;
     flex-wrap: wrap;
@@ -153,11 +158,6 @@ const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.u
     margin: 0;
     padding: 0;
     list-style: none;
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    letter-spacing: var(--tracking-label);
-    text-transform: uppercase;
-    color: var(--color-ink-muted);
   }
 
   .hero__links a,

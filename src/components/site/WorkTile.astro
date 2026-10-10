@@ -1,7 +1,7 @@
 ---
-// A Selected work tile (October 10 direction): a large image, then a row with the number, the
-// project name, and two or three tags, then the one line description. The image is a gray
-// placeholder until the project media is ready. `wide` is the full width tile on top.
+// A Selected work tile (October 10 direction): "01 / ATHENASCRIBE" in small mono capitals, then a
+// large image, then two or three small rounded outline tags, then the one line description. The
+// image is a gray placeholder until the project media is ready. `wide` is the full width tile on top.
 // The whole tile is one link; on hover or focus the name rolls up to "View case study".
 import type { CaseStudy } from "../../lib/case-studies";
 
@@ -20,12 +20,8 @@ const number = String(index).padStart(2, "0");
 ---
 
 <article class:list={["tile", { "tile--wide": wide, "tile--linked": href }]}>
-  <div class="tile__media" aria-hidden="true">
-    <span class="tile__slot">Project media</span>
-  </div>
-
   <div class="tile__row">
-    <span class="tile__number" aria-hidden="true">{number}</span>
+    <span class="tile__number" aria-hidden="true">{number} /</span>
     <h3 class="tile__title" translate="no">
       {
         href ? (
@@ -40,14 +36,19 @@ const number = String(index).padStart(2, "0");
         )
       }
     </h3>
-    {
-      card?.tags && (
-        <ul class="tile__tags" aria-label="Tags">
-          {card.tags.map((tag) => <li>{tag}</li>)}
-        </ul>
-      )
-    }
   </div>
+
+  <div class="tile__media" aria-hidden="true">
+    <span class="tile__slot">Project media</span>
+  </div>
+
+  {
+    card?.tags && (
+      <ul class="tile__tags" aria-label="Tags">
+        {card.tags.map((tag) => <li>{tag}</li>)}
+      </ul>
+    )
+  }
 
   {card?.description && <p class="tile__description">{card.description}</p>}
   {inProgress && <p class="tile__status">In progress</p>}
@@ -89,25 +90,25 @@ const number = String(index).padStart(2, "0");
     color: var(--color-ink-muted);
   }
 
-  /* Number, name, tags on one line. Tags wrap under on narrow tiles. */
+  /* "01 / ATHENASCRIBE": small mono capitals above the image. */
   .tile__row {
     display: flex;
-    flex-wrap: wrap;
     align-items: baseline;
-    gap: var(--space-2) var(--space-3);
-    padding-block-start: var(--space-2);
-  }
-
-  .tile__number {
+    gap: var(--space-2);
     font-family: var(--font-mono);
     font-size: var(--step--1);
     letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    line-height: var(--leading-snug);
+  }
+
+  .tile__number {
     color: var(--color-ink-muted);
   }
 
   .tile__title {
-    font-size: var(--step-2);
-    line-height: var(--leading-snug);
+    font: inherit;
+    letter-spacing: inherit;
     color: var(--color-heading);
     min-width: 0;
   }
@@ -154,23 +155,21 @@ const number = String(index).padStart(2, "0");
     color: var(--color-accent);
   }
 
-  /* Small square mono tags, pushed to the end of the row. */
+  /* Small rounded outline tags under the image (Aaron's call: the one place pills are used). */
   .tile__tags {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-2);
-    margin: 0 0 0 auto;
+    margin: 0;
     padding: 0;
     list-style: none;
   }
 
   .tile__tags li {
-    padding: var(--space-1) var(--space-2);
+    padding: var(--space-1) var(--space-3);
     border: var(--rule-thin) solid var(--color-rule-strong);
-    font-family: var(--font-mono);
+    border-radius: var(--radius-tag);
     font-size: var(--step--1);
-    letter-spacing: var(--tracking-label);
-    text-transform: uppercase;
     line-height: var(--leading-snug);
     color: var(--color-ink-muted);
   }
