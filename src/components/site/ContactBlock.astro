@@ -11,6 +11,11 @@ const hasResume = fs.existsSync(path.join(process.cwd(), "public", site.resumePa
 const year = new Date().getFullYear();
 ---
 
+<!-- Scroll to top, on the paper above the navy block (like "Back to top" on the case studies). -->
+<div class="container to-top">
+  <a class="to-top__link" href="#top">Scroll to top <span aria-hidden="true">↑</span></a>
+</div>
+
 <footer id="contact" class="contact surface-always-dark" aria-labelledby="contact-heading">
   <div class="container contact__inner">
     <h2 id="contact-heading" class="contact__title">Get in touch</h2>
@@ -35,6 +40,30 @@ const year = new Date().getFullYear();
 </footer>
 
 <style>
+  .to-top {
+    display: flex;
+    justify-content: flex-end;
+    padding-block-end: var(--space-5);
+  }
+
+  .to-top__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6ch;
+    min-block-size: var(--control-height);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  .to-top__link:hover {
+    text-decoration: underline;
+    text-underline-offset: var(--underline-offset);
+  }
+
   .contact {
     background: var(--color-paper);
     color: var(--color-ink);

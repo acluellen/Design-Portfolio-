@@ -141,7 +141,8 @@
   /* Media and controls */
   --ratio-tile-wide: 16 / 9; /* the wide Selected work tile */
   --ratio-tile: 4 / 3; /* the two smaller tiles, and gallery placeholders */
-  --ratio-about-media: 4 / 5; /* the home About image or video */
+  --ratio-about-media: 4 / 5; /* the home About photo */
+  --size-about-photo-phone: 10rem; /* the home About photo on phones, above the text */
   --size-quote-slot: 10rem; /* height of the empty "What people say" box in previews */
   --size-portrait: clamp(14rem, 4rem + 16vw, 22rem); /* About portrait width from 48rem up */
   --size-logo: 3rem;

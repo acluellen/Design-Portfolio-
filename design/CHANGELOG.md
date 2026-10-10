@@ -23,6 +23,14 @@ Newest first. Every design or structure decision goes here.
 
 
 
+## 2026-10-10 · Home About layout, scroll to top, tag style
+
+- Home About now opens with "About Aaron" at the same size and light weight as "Selected work".
+- Below it: a small 4:5 photo placeholder at a quarter of the content width, the blurb beside it. The blurb is now the hero subtitle's size and light weight, and its first line sits level with the top of the photo. Phones: the photo (10rem, `--size-about-photo-phone`) above the text.
+- "Read more about me": plain small mono capitals in the main text color. No blue, no underline; it underlines on hover so it still reads as a link.
+- New "Scroll to top ↑" in small mono capitals, right aligned, just above the navy contact block. It is part of `ContactBlock.astro`, so it shows on the home and About pages alike. The case studies keep their "Back to top ↑".
+- Selected work tags: uppercase mono inside the outline pills.
+
 ## 2026-10-10 · Hanken Grotesk on every page
 
 - Aaron picked Hanken Grotesk from the preview switcher. It is now `--font-display` across the whole site: the name, every heading on the home, About, and case study pages, and large display text (the About blurb, the contact block). Installed as `@fontsource-variable/hanken-grotesk` and preloaded.
