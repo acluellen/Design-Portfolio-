@@ -23,6 +23,20 @@ Newest first. Every design or structure decision goes here.
 
 
 
+## 2026-10-10 · Home and About rebuild from Aaron's prompt
+
+Aaron's prompt (Oct 9 doc, "Portfolio Update Prompt for Claude Code"), built as written.
+
+- Curly apostrophes everywhere: the new copy, plus every straight apostrophe in the case study text, photo alt text, and the styleguide.
+- Hero: name, then "Product designer focused on clarity." with the links row on the same line from 48rem. The "2 years · EdTech · Health · Climate" row is gone.
+- Selected work: large image tiles (new `WorkTile.astro`), one wide on top and two below, gray placeholders for now. Under each: number, name, two or three tags, the one line description. Tags are a new `card.tags` field, drawn from facts already in each case study: AthenaScribe (EdTech, Research, Translation), Klima (Climate, Gamification, Mobile app), Craft Education (Health, Website redesign, Client project). Aaron can change them in the frontmatter.
+- Home About: media placeholder left, Aaron's blurb right, then "Read more about me". The BRIDGEGOOD heading, program line, date, KRON4 clip, and Muay Thai line are off the home page.
+- The closing banner (group photo, "Hiring an associate product designer?") is replaced by a navy contact block (new `ContactBlock.astro`): "Get in touch", Aaron's line, then email, LinkedIn, Resume in large type. Used on the home and About pages through `contact` on `PageLayout`.
+- About page: Aaron's new four paragraphs. The Experience, Press, and Education tables become one short list (year, place, role). The BRIDGEGOOD Design for Social Good hackathon row and the notes are dropped, since Aaron's list leaves them out. "What people say" follows with a gray placeholder box in previews.
+- New "A few things that shaped me": 01 the BRIDGEGOOD cohort photo, 02 the KRON4 clip, 03 to 05 the gym photos, then placeholders for fighting, travel, family, Demo Day, and the AI hackathon (previews only).
+- New tokens: `--color-placeholder`, `--ratio-tile-wide`, `--ratio-tile`, `--ratio-about-media`, `--size-quote-slot`.
+- `WorkCard.astro` stays for the styleguide only.
+
 ## 2026-10-09 · Top section line draws and replays
 
 - Aaron: the About line moved, the Selected work line did not. Two causes. At load the line drew while its section was still fading in, so the draw was hidden. And the replay watched the whole section, which is tall, so the line only reset after the whole Selected work section left the screen.

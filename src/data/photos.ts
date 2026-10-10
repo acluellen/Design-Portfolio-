@@ -48,10 +48,10 @@ export const photos: Record<PhotoKey, { alt: string; approved: boolean }> = {
   },
   // About row (October 9). Gym photos Aaron sent as layout holders; credit and consent still to confirm.
   "about-watch": {
-    alt: "Black and white photo of Aaron, hands behind his back, watching two students drill on pads under the gym's R banner.",
+    alt: "Black and white photo of Aaron, hands behind his back, watching two students drill on pads under the gym’s R banner.",
     approved: false,
   },
-  // The same shot as coaching-2, uncropped, so it keeps Aaron's approved description.
+  // The same shot as coaching-2, uncropped, so it keeps Aaron’s approved description.
   "about-pads": {
     alt: "Black and white photo of Aaron driving a knee into pads held by a partner while the class watches from the mats.",
     approved: true,
@@ -64,7 +64,7 @@ export const photos: Record<PhotoKey, { alt: string; approved: boolean }> = {
     alt: "The BRIDGEGOOD cohort smiling together on the steps outside Google San Francisco.",
     approved: true,
   },
-  // Read together with the play button's label, "Play video: Purpose to Pixels: BRIDGEGOOD on KRON4".
+  // Read together with the play button’s label, "Play video: Purpose to Pixels: BRIDGEGOOD on KRON4".
   "kron4-cover": {
     alt: "KRON4 thumbnail: four people on the studio couch beside the Purpose to Pixels title.",
     approved: false,

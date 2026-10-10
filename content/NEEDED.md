@@ -14,17 +14,20 @@ Last updated October 9, 2026. Claude keeps this list current. Placeholders show 
 
 ## Media for the new home page
 
-- [ ] One image or a short screen recording (4 to 6 seconds) per project for the poster covers. Ideas: an AthenaScribe notice translating line by line, the Klima garden growing, the Craft parent path clicked through. The draft pictures are switched off until then (`showImages` in `src/components/site/WorkCard.astro`).
-- [ ] Optional: a 3 to 5 second clip of Aaron holding pads (phone, sideways, daylight) for About or after KRON4.
+- [ ] One large image per project for the Selected work tiles (wide 16:9 for AthenaScribe, 4:3 for Klima and Craft Education). Generated visuals are parked: Midjourney, Higgsfield, or Figma Weave.
+- [ ] One photo or short video for the home About (4:5, beside the blurb).
+- [ ] Check the tile tags: AthenaScribe (EdTech, Research, Translation), Klima (Climate, Gamification, Mobile app), Craft Education (Health, Website redesign, Client project).
+- [ ] "A few things that shaped me": photos or videos of fighting, travel, family, Demo Day, and the AI hackathon.
+- [ ] Optional: a 3 to 5 second clip of Aaron holding pads (phone, sideways, daylight).
 
-## About page tables
+## About page list
 
-- [ ] Hackathon years: Lovable, and BRIDGEGOOD Design for Social Good.
+- [ ] Years for the Lovable hackathon and the fight team, plus the gym name.
+- [ ] Decide with Tyler whether the KRON4 clip goes under AthenaScribe.
 - [ ] Later: the job seeking app for junior and mid level designers, as a new card once there is work to show.
-- [ ] The gym where you ran the fight team, and the years.
 - [ ] KRON4 segment date.
 - [ ] Education: school, program, years.
-- [ ] One or two real, named quotes from a mentor or teammate, with permission.
+- [ ] One or two real, named quotes for "What people say", with permission. Without them the section stays off the live site.
 
 ## Answers
 

@@ -2,6 +2,7 @@
 import BaseLayout from "./BaseLayout.astro";
 import Header from "../components/site/Header.astro";
 import Footer from "../components/site/Footer.astro";
+import ContactBlock from "../components/site/ContactBlock.astro";
 
 interface Props {
   title: string;
@@ -11,9 +12,11 @@ interface Props {
   flushBottom?: boolean;
   /** Show the email in the footer. The home page shows it in its closing section instead. */
   footerEmail?: boolean;
+  /** End the page with the navy contact block instead of the plain footer (home and About). */
+  contact?: boolean;
 }
 
-const { title, description, noindex, flushBottom = false, footerEmail = true } = Astro.props;
+const { title, description, noindex, flushBottom = false, footerEmail = true, contact = false } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description} noindex={noindex}>
@@ -22,7 +25,7 @@ const { title, description, noindex, flushBottom = false, footerEmail = true } =
   <main id="main" class:list={{ "main--padded": !flushBottom }}>
     <slot />
   </main>
-  <Footer showEmail={footerEmail} />
+  {contact ? <ContactBlock /> : <Footer showEmail={footerEmail} />}
 </BaseLayout>
 
 <script>

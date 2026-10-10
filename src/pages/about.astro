@@ -1,22 +1,22 @@
 ---
-// About page (Micah Hoang's pattern): the portrait stays beside the text while the page scrolls,
-// then mono tables over thin rules, then the gym photos. The home page shows only a short About
-// with a link here. Missing facts show as "To add" in review previews and are left out live.
+// About page (October 10 direction): the portrait stays beside the text while the page scrolls,
+// then one short resume list and the quotes. Below, "A few things that shaped me": numbered photo
+// tiles with captions. The page ends with the same navy contact block as the home page.
+// Placeholders (quotes, photos still to come) show in review previews only.
 import PageLayout from "../layouts/PageLayout.astro";
 import Photo from "../components/site/Photo.astro";
+import KronClip from "../components/site/KronClip.astro";
 import { showPlaceholders } from "../lib/case-studies";
-import { education, experience, press, quotes, type AboutRow } from "../data/about";
+import { quotes, resume, shaped } from "../data/about";
+import { site } from "../site.config";
 
-const tables: { id: string; title: string; rows: AboutRow[] }[] = [
-  { id: "experience", title: "Experience", rows: experience },
-  { id: "press", title: "Press", rows: press },
-  { id: "education", title: "Education", rows: education },
-];
-// A row shows live only once it has a place or a role. Previews show every row.
-const visible = (rows: AboutRow[]) => rows.filter((r) => showPlaceholders || r.place || r.what);
+// A tile row with no photo and no clip is a placeholder row: previews only.
+const rows = shaped.filter((row) => showPlaceholders || row.some((t) => t.photo || t.clip));
+let count = 0;
+const numbered = rows.map((row) => row.map((tile) => ({ ...tile, number: String(++count).padStart(2, "0") })));
 ---
 
-<PageLayout title="About" description="Aaron Luellen, product designer in Oakland, with a background in Muay Thai coaching.">
+<PageLayout title="About" description="Aaron Luellen, a product designer in Oakland focused on clarity." flushBottom contact>
   <div class="container about-page">
     <!-- Portrait and text share one block, so the sticky portrait stops where the text ends. -->
     <div class="about-page__main">
@@ -36,53 +36,38 @@ const visible = (rows: AboutRow[]) => rows.filter((r) => showPlaceholders || r.p
       <h1>Hey, I’m Aaron.</h1>
       <div class="about-page__text">
         <p class="about-page__lede">
-          I’m a product designer with a background in Muay Thai, bringing a human centered mindset from the gym
-          to the products I design. I focus on understanding people, solving real problems, and helping
-          users reach their goals.
+          I’m a product designer focused on clarity. I like learning how people already work, where
+          things get confusing, and what would make the experience easier.
         </p>
-        <p>
-          My approach to teamwork was built through years of competing and coaching in martial arts. In
-          my last role, I ran the fight team: recruiting fighters out of group classes, planning their
-          camps and weight cuts, and getting them ready to compete.
-        </p>
-        <p>
-          Competing taught me that close fights come down to the basics. Coaching taught me that every
-          fighter uses those basics differently.
-        </p>
-        <p>
-          On a design team, that means knowing the fundamentals cold and finding what each person does
-          best. On your team, I will learn how everyone works and put my effort where it moves the whole
-          group forward.
-        </p>
+        <p>I’m drawn to honest conversations, messy problems, and a high bar for craft.</p>
+        <p>Outside of design, you’ll find me training, reading, or out with friends.</p>
+        <p>Open to associate product design roles. <a href="#contact">Let’s talk.</a></p>
       </div>
 
-      {
-        tables.map(({ id, title, rows }) =>
-          visible(rows).length > 0 && (
-            <section class="ledger" aria-labelledby={`${id}-heading`}>
-              <h2 id={`${id}-heading`} class="ledger__title">/ {title}</h2>
-              <ul class="ledger__rows">
-                {visible(rows).map((row) => (
-                  <li class="ledger__row">
-                    <span class="ledger__place" translate="no">
-                      {row.place ?? (showPlaceholders && <span class="todo">To add: where</span>)}
-                    </span>
-                    <span class="ledger__what">
-                      {row.what ? (
-                        row.href ? <a href={row.href} target="_blank" rel="noopener noreferrer">{row.what}<span class="visually-hidden"> (opens in a new tab)</span></a> : row.what
-                      ) : (
-                        showPlaceholders && <span class="todo">To add: role</span>
-                      )}
-                    </span>
-                    <span class="ledger__when">{row.when ?? (showPlaceholders && <span class="todo">To add: year</span>)}</span>
-                    {row.note && <p class="ledger__note">{row.note}</p>}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ),
-        )
-      }
+      <!-- One short list, one line each: year, place, role. No year until Aaron gives one. -->
+      <section class="ledger" aria-labelledby="experience-heading">
+        <h2 id="experience-heading" class="ledger__title">/ Experience</h2>
+        <ul class="ledger__rows">
+          {
+            resume.map((row) => (
+              <li class="ledger__row">
+                <span class="ledger__when">{row.when}</span>
+                <span class="ledger__place" translate="no">{row.place}</span>
+                <span class="ledger__what">
+                  {row.href ? (
+                    <a href={row.href} target="_blank" rel="noopener noreferrer">
+                      {row.what}
+                      <span class="visually-hidden"> (opens in a new tab)</span>
+                    </a>
+                  ) : (
+                    row.what
+                  )}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
 
       {
         (quotes.length > 0 || showPlaceholders) && (
@@ -96,7 +81,7 @@ const visible = (rows: AboutRow[]) => rows.filter((r) => showPlaceholders || r.p
                 </figure>
               ))
             ) : (
-              <p class="todo todo--block">To add: one or two real, named quotes from a mentor or teammate, with their permission.</p>
+              <p class="quote-slot">Quotes from mentors and teammates go here.</p>
             )}
           </section>
         )
@@ -104,17 +89,43 @@ const visible = (rows: AboutRow[]) => rows.filter((r) => showPlaceholders || r.p
     </div>
     </div>
 
-    <div class="about-page__gallery">
-      <div class="about-page__cell about-page__cell--tall">
-        <Photo name="about-watch" widths={[400, 600, 800]} sizes="(min-width: 76rem) 20rem, (min-width: 48rem) 26vw, 46vw" ratio="4 / 5" class="about-page__gym" />
-      </div>
-      <div class="about-page__cell about-page__cell--wide">
-        <Photo name="about-pads" widths={[600, 900, 1280]} sizes="(min-width: 76rem) 35rem, (min-width: 48rem) 46vw, 92vw" ratio="7 / 5" class="about-page__gym" />
-      </div>
-      <div class="about-page__cell about-page__cell--tall">
-        <Photo name="about-camera" widths={[400, 600, 800]} sizes="(min-width: 76rem) 20rem, (min-width: 48rem) 26vw, 46vw" ratio="4 / 5" class="about-page__gym" />
-      </div>
-    </div>
+    <!-- Numbered tiles with short captions. Each row ends at one height. -->
+    <section class="shaped" aria-labelledby="shaped-heading">
+      <h2 id="shaped-heading">A few things that shaped me</h2>
+      {
+        numbered.map((row) => (
+          <ul class="shaped__row">
+            {row.map((tile) => (
+              <li class:list={["shaped__tile", { "shaped__tile--wide": tile.ratio >= 1.4 }]} style={`--ratio: ${tile.ratio}`}>
+                {tile.clip ? (
+                  <KronClip>
+                    {site.kron4Video && (
+                      <a href={site.kron4Video} target="_blank" rel="noopener noreferrer">
+                        Watch on YouTube<span class="visually-hidden"> (opens in a new tab)</span>
+                      </a>
+                    )}
+                  </KronClip>
+                ) : tile.photo ? (
+                  <Photo
+                    name={tile.photo}
+                    widths={[400, 700, 1000]}
+                    sizes={tile.ratio >= 1.4 ? "(min-width: 76rem) 36rem, (min-width: 48rem) 48vw, 92vw" : "(min-width: 76rem) 24rem, (min-width: 48rem) 30vw, 46vw"}
+                    ratio={`${tile.ratio}`}
+                    class="shaped__photo"
+                  />
+                ) : (
+                  <div class="shaped__slot" aria-hidden="true">Photo to add</div>
+                )}
+                <p class="shaped__caption">
+                  <span class="shaped__number" aria-hidden="true">{tile.number}</span>
+                  <span>{tile.caption}</span>
+                </p>
+              </li>
+            ))}
+          </ul>
+        ))
+      }
+    </section>
   </div>
 </PageLayout>
 
@@ -191,7 +202,7 @@ const visible = (rows: AboutRow[]) => rows.filter((r) => showPlaceholders || r.p
     color: var(--color-ink);
   }
 
-  /* Tables: a mono "/ Title", then rows over thin rules. Place, what, when. */
+  /* The resume list: a mono "/ Title", then one line per row over thin rules: year, place, role. */
   .ledger {
     display: grid;
     gap: var(--space-3);
@@ -213,6 +224,7 @@ const visible = (rows: AboutRow[]) => rows.filter((r) => showPlaceholders || r.p
     border-block-start: var(--rule-thin) solid var(--color-rule-strong);
   }
 
+  /* Phones: place and role stacked, year on the right. From 40rem: one line, year first. */
   .ledger__row {
     display: grid;
     grid-template-columns: 1fr auto;
@@ -226,53 +238,35 @@ const visible = (rows: AboutRow[]) => rows.filter((r) => showPlaceholders || r.p
     line-height: var(--leading-snug);
   }
 
-  /* Linked rows: a taller tap target. */
-  .ledger__what a {
-    display: inline-block;
-    padding-block: var(--space-2);
-  }
-
-  .ledger__place {
-    color: var(--color-heading);
-  }
-
-  .ledger__what {
-    grid-row: 2;
-    color: var(--color-ink-muted);
-  }
-
   .ledger__when {
-    grid-row: 1 / span 2;
     grid-column: 2;
+    grid-row: 1;
     color: var(--color-ink-muted);
     font-variant-numeric: tabular-nums;
   }
 
-  @media (min-width: 40rem) {
-    .ledger__row {
-      grid-template-columns: 1fr 1.4fr 10ch; /* fixed year column, so every row lines up */
-    }
-
-    .ledger__what {
-      grid-row: auto;
-    }
-
-    .ledger__when {
-      grid-row: auto;
-      grid-column: auto;
-      text-align: end;
-    }
+  .ledger__place {
+    grid-column: 1;
+    grid-row: 1;
+    color: var(--color-heading);
   }
 
-  .ledger__note {
-    grid-column: 1 / -1;
-    max-width: var(--measure-reading);
-    font-family: var(--font-text);
-    font-size: var(--step-0);
-    letter-spacing: normal;
-    text-transform: none;
-    line-height: var(--leading-body);
+  .ledger__what {
+    grid-column: 1;
     color: var(--color-ink-muted);
+  }
+
+  @media (min-width: 40rem) {
+    .ledger__row {
+      grid-template-columns: 13ch 1fr 1fr; /* fixed year column, so every row lines up */
+    }
+
+    .ledger__when,
+    .ledger__place,
+    .ledger__what {
+      grid-column: auto;
+      grid-row: auto;
+    }
   }
 
   .quote {
@@ -291,56 +285,97 @@ const visible = (rows: AboutRow[]) => rows.filter((r) => showPlaceholders || r.p
     color: var(--color-ink-muted);
   }
 
-  /* Review previews only: what is still missing. */
-  .todo {
-    color: var(--color-ink-muted);
-    border-block-end: var(--rule-thin) dashed var(--color-rule-strong);
-  }
-
-  .todo--block {
-    display: block;
-    padding: var(--space-4);
-    border: var(--rule-thin) dashed var(--color-rule-strong);
-    font-size: var(--step--1);
-  }
-
-  /* Gym photos: tall, wide, tall at equal heights. Phones: the wide one on top. */
-  .about-page__gallery {
+  /* Review previews only: the spot the quotes will fill. */
+  .quote-slot {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-3);
+    place-items: center;
+    min-block-size: var(--size-quote-slot);
+    padding: var(--space-5);
+    background: var(--color-placeholder);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--color-ink-muted);
   }
 
-  .about-page__cell {
+  /* A few things that shaped me. Phones: wide tiles full width and first in their row, the rest
+     two across.
+     From 48rem: each row on one line, tiles sized by their shape so a row ends at one height. */
+  .shaped {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .shaped h2 {
+    font-size: var(--step-4);
+  }
+
+  .shaped__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5) var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .shaped__tile {
+    flex: 1 1 calc(50% - var(--space-3));
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
     min-width: 0;
   }
 
-  .about-page__gallery :global(.about-page__gym) {
+  .shaped__tile--wide {
+    flex-basis: 100%;
+    order: -1;
+  }
+
+  @media (min-width: 48rem) {
+    .shaped__row {
+      flex-wrap: nowrap;
+    }
+
+    .shaped__tile {
+      flex: var(--ratio) 1 0;
+      order: 0;
+    }
+  }
+
+  .shaped__tile :global(.shaped__photo) {
     display: block;
     width: 100%;
     height: auto;
+    aspect-ratio: var(--ratio);
     object-fit: cover;
     border-radius: var(--radius-media);
   }
 
-  .about-page__cell--tall :global(.about-page__gym) {
-    aspect-ratio: 4 / 5;
+  .shaped__slot {
+    display: grid;
+    place-items: center;
+    aspect-ratio: var(--ratio);
+    background: var(--color-placeholder);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
   }
 
-  .about-page__cell--wide :global(.about-page__gym) {
-    aspect-ratio: 7 / 5;
+  .shaped__caption {
+    display: flex;
+    gap: var(--space-3);
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
   }
 
-  @media (max-width: 47.99rem) {
-    .about-page__cell--wide {
-      grid-column: 1 / -1;
-      order: -1;
-    }
-  }
-
-  @media (min-width: 48rem) {
-    .about-page__gallery {
-      grid-template-columns: var(--about-row);
-    }
+  .shaped__number {
+    font-family: var(--font-mono);
+    letter-spacing: var(--tracking-label);
+    color: var(--color-heading);
   }
 </style>

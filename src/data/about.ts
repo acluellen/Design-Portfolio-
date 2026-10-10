@@ -1,19 +1,17 @@
 import { site } from "../site.config";
+import type { PhotoKey } from "./photos";
 
-// About page tables (Micah Hoang's pattern: mono labels over thin rules).
-// Only facts Aaron has confirmed go here. A missing field is left undefined: review previews show
-// a "To add" placeholder in its place, and the live site leaves it out.
+// About page data (October 10 direction): one short resume list (Rachel Chen’s pattern), the quotes,
+// and the "A few things that shaped me" gallery. Only facts Aaron has confirmed go here.
 
-export interface AboutRow {
-  /** Where: the company, program, or outlet. */
-  place?: string;
-  /** What: the role or the piece. */
-  what?: string;
-  /** When: a year or a range. */
+export interface ResumeRow {
+  /** A year or a range. Left out until Aaron gives one; the row then shows no year. */
   when?: string;
+  /** The company, program, outlet, or team. */
+  place: string;
+  /** The role or the piece. */
+  what: string;
   href?: string;
-  /** One or two sentences under the row. */
-  note?: string;
 }
 
 export interface AboutQuote {
@@ -22,33 +20,48 @@ export interface AboutQuote {
   role: string;
 }
 
-export const experience: AboutRow[] = [
-  // Role title as shown on KRON4's name bar. Dates from Aaron.
-  {
-    place: "BRIDGEGOOD",
-    what: "UX Design Apprentice",
-    when: "June to August 2026",
-    note: "Launched by Google.org and the Golden State Warriors, with mentors from Google, Meta, and YouTube. The team built AthenaScribe, a translation tool with human review for Oakland Unified families, and presented it at Demo Day at Block HQ.",
-  },
-  // Aaron: General Assembly certificate program, 2024 to 2025 (Klima and Craft Education ran in 2025).
-  { place: "General Assembly", what: "Certificate program", when: "2024 to 2025" },
-  // Hackathons Aaron named. Years to add.
+/** One tile in "A few things that shaped me". Without a photo or the clip it is a placeholder. */
+export interface ShapedTile {
+  caption: string;
+  photo?: PhotoKey;
+  /** The KRON4 loop instead of a photo. */
+  clip?: boolean;
+  /** Width over height of the media, so every tile in a row ends at the same height. */
+  ratio: number;
+}
+
+// Aaron’s list, Oct 10 2026. Years only where he gave them.
+export const resume: ResumeRow[] = [
+  { when: "2026", place: "BRIDGEGOOD", what: "UX Design Apprentice" },
+  { when: "2026", place: "KRON4", what: "Feature", href: site.kron4Video },
+  { when: "2024 to 2025", place: "General Assembly", what: "UX certificate" },
   { place: "Lovable", what: "Hackathon" },
-  { place: "BRIDGEGOOD", what: "Design for Social Good hackathon" },
-  // From Aaron's About text: "I ran the fight team." Gym name and years to add.
-  { what: "Ran the fight team, coach" },
+  // Gym name and years to add.
+  { place: "Fight team", what: "Coach" },
 ];
-
-export const press: AboutRow[] = [
-  {
-    place: "KRON4",
-    what: "Purpose to Pixels: BRIDGEGOOD on KRON4",
-    href: site.kron4Video,
-    note: "Live with BRIDGEGOOD’s executive director, talking about open communication between Oakland families and their schools, and why design for social good matters.",
-  },
-];
-
-export const education: AboutRow[] = [{}];
 
 // Real, named quotes only, with permission. Empty until Aaron sends them.
 export const quotes: AboutQuote[] = [];
+
+// Rows of tiles. Rows with no photo and no clip are placeholders and show in review previews only.
+export const shaped: ShapedTile[][] = [
+  [
+    { caption: "BRIDGEGOOD apprenticeship cohort, 2026", photo: "group", ratio: 2000 / 1150 },
+    { caption: "On KRON4 with BRIDGEGOOD, 2026", clip: true, ratio: 360 / 179 },
+  ],
+  [
+    { caption: "Coaching a group class", photo: "about-watch", ratio: 4 / 5 },
+    { caption: "On the pads", photo: "about-pads", ratio: 7 / 5 },
+    { caption: "On the mats", photo: "about-camera", ratio: 4 / 5 },
+  ],
+  // Placeholders for the photos Aaron still has to send (content/NEEDED.md).
+  [
+    { caption: "Fighting", ratio: 4 / 3 },
+    { caption: "Travel", ratio: 4 / 3 },
+    { caption: "Family", ratio: 4 / 3 },
+  ],
+  [
+    { caption: "Demo Day", ratio: 16 / 9 },
+    { caption: "AI hackathon", ratio: 16 / 9 },
+  ],
+];

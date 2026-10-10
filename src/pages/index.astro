@@ -1,14 +1,11 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
-import Photo from "../components/site/Photo.astro";
-import ContactEmail from "../components/site/ContactEmail.astro";
-import KronClip from "../components/site/KronClip.astro";
 import { mailto, site } from "../site.config";
 import fs from "node:fs";
-import WorkCard from "../components/site/WorkCard.astro";
+import WorkTile from "../components/site/WorkTile.astro";
 import { caseStudyHref, getAllCaseStudies } from "../lib/case-studies";
 
-// Selected work: the featured case study as one large card, the rest below by `order`.
+// Selected work: the featured case study as one wide tile, the next two below it, by `order`.
 const studies = (await getAllCaseStudies()).filter((s) => s.data.card);
 const featured = studies.find((s) => s.data.featured);
 const others = studies.filter((s) => s !== featured);
@@ -16,67 +13,50 @@ const others = studies.filter((s) => s !== featured);
 const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.url));
 ---
 
-<PageLayout title="Aaron Luellen" flushBottom footerEmail={false}>
+<PageLayout title="Aaron Luellen" flushBottom contact>
   <!-- Every section sits in one stack with the same gap between them. -->
   <div class="container stack">
-  <!-- 1. Name, one line, a meta line (Zeel Shah), and a links row (Micah Hoang). No photo, no buttons. -->
+  <!-- 1. Name, one line, and a links row. Nothing else, so it reads like a simple editorial page. -->
   <section class="hero" aria-labelledby="hero-heading">
     <h1 id="hero-heading" translate="no">Aaron Luellen</h1>
-    <p class="hero__role">Research led product designer.</p>
-    <p class="hero__meta">2 years · EdTech · Health · Climate</p>
-    <ul class="hero__links" aria-label="Links">
-      <li>{site.linkedin ? <a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a> : <span>LinkedIn</span>}</li>
-      <li>{hasResume ? <a href={site.resumePath}>Resume</a> : <span>Resume</span>}</li>
-      <li><a href={mailto}>Email</a></li>
-    </ul>
+    <div class="hero__foot">
+      <p class="hero__role">Product designer focused on clarity.</p>
+      <ul class="hero__links" aria-label="Links">
+        <li>{site.linkedin ? <a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a> : <span>LinkedIn</span>}</li>
+        <li>{hasResume ? <a href={site.resumePath}>Resume</a> : <span>Resume</span>}</li>
+        <li><a href={mailto}>Email</a></li>
+      </ul>
+    </div>
   </section>
 
-  <!-- 2. Selected work, right after the name: one featured card, then smaller cards. Cards link only when published. -->
+  <!-- 2. Selected work as large image tiles: one wide on top, two below. Tiles link only when published. -->
   <section id="work" class="work" aria-labelledby="work-heading" data-reveal>
     <h2 id="work-heading">Selected work</h2>
-    {featured && <WorkCard study={featured} href={caseStudyHref(featured)} featured index={1} />}
+    {featured && <WorkTile study={featured} href={caseStudyHref(featured)} wide index={1} />}
     {
       others.length > 0 && (
         <div class="work__grid">
           {others.map((study, i) => (
-            <WorkCard study={study} href={caseStudyHref(study)} index={i + (featured ? 2 : 1)} />
+            <WorkTile study={study} href={caseStudyHref(study)} index={i + (featured ? 2 : 1)} />
           ))}
         </div>
       )
     }
   </section>
 
-  <!-- 3. About, centered (Zeel Shah's hero feel), in Aaron's order: the apprenticeship, him on air,
-       then coaching in one line. One image. Each fact is said once; the full story is on /about/. -->
+  <!-- 3. About: an image or video on the left (placeholder for now), the short blurb on the right.
+       The apprenticeship, the KRON4 clip, and the gym photos live on the About page. -->
   <section id="about" class="about" aria-labelledby="about-heading" data-reveal>
-    <p class="label">About</p>
-    <h2 id="about-heading">I completed the <span translate="no">BRIDGEGOOD</span> UX Design <mark class="highlight">Apprenticeship</mark>.</h2>
-    <p class="about__lede">
-      A summer program launched by <span translate="no">Google.org</span> and the <span translate="no">Golden State Warriors</span>, with mentors from <span translate="no">Google</span>, <span translate="no">Meta</span>, and <span translate="no">YouTube</span>.
-    </p>
-    <p class="about__meta">June to August 2026</p>
-
-    <div class="about__clip">
-      <KronClip opens>
-        <span>On <span translate="no">KRON4</span></span>
-        {site.kron4Video && <a href={site.kron4Video} target="_blank" rel="noopener noreferrer">Watch on YouTube<span class="visually-hidden"> (opens in a new tab)</span></a>}
-      </KronClip>
+    <div class="about__media" aria-hidden="true">
+      <span>Photo or video</span>
     </div>
-
-    <p class="about__coach">Before design, I ran a Muay Thai fight team.</p>
-    <a class="about__more" href="/about/">Read more about me</a>
-  </section>
-
-  <!-- 4. Closing banner, navy in both themes: the group photo centered at the clip width, then the invitation. -->
-  <section class="panel panel--dark surface-always-dark banner" aria-labelledby="banner-heading" data-reveal>
-    <figure class="banner__figure">
-      <Photo name="group" widths={[700, 1100, 1400]} sizes="(min-width: 48rem) 44rem, 88vw" ratio="2000 / 1150" class="banner__photo" />
-      <figcaption class="credit banner__credit">Photos: BRIDGEGOOD</figcaption>
-    </figure>
-    <div class="banner__content">
-      <h2 id="banner-heading">Hiring an associate product designer?</h2>
-      <p>I want to join a team building for schools, families, or people short on time.</p>
-      <ContactEmail class="banner__email" />
+    <div class="about__text">
+      <h2 id="about-heading" class="about__label">About</h2>
+      <p class="about__blurb">
+        I’m a product designer focused on clarity. I use research to understand how people work, then
+        design around what they need.
+      </p>
+      <a class="about__more" href="/about/">Read more about me</a>
     </div>
   </section>
   </div>
@@ -132,33 +112,12 @@ const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.u
     padding-block: var(--section-gap);
   }
 
-  /* Section panels on the page background (the closing banner). Square, like everything else. */
-  .panel {
-    border-radius: var(--radius-section);
-    padding: var(--panel-padding);
-  }
-
-  .panel--dark {
-    border: var(--rule-thin) solid var(--color-dark-panel-edge);
-  }
-
-  /* Media runs to the panel edges. */
-  .panel--flush {
-    padding: 0;
-    overflow: hidden;
-  }
-
-  .actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-  }
-
-  /* 1. Name and one line. The name is the largest text on the site. */
+  /* 1. Name, then the line and the links on one row: the line on the left, the links on the
+     right from 48rem. Stacks on phones. */
   .hero {
     display: grid;
-    gap: var(--space-4);
-    padding-block: var(--space-9) var(--space-5);
+    gap: var(--space-6);
+    padding-block: var(--space-10) var(--space-7);
   }
 
   .hero h1 {
@@ -166,24 +125,27 @@ const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.u
     line-height: 0.95;
   }
 
+  .hero__foot {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 48rem) {
+    .hero__foot {
+      grid-template-columns: 1fr auto;
+      align-items: baseline;
+      column-gap: var(--space-7);
+    }
+  }
+
   .hero__role {
-    font-family: var(--font-display);
     font-size: var(--step-3);
     line-height: var(--leading-snug);
     letter-spacing: var(--tracking-tight);
     color: var(--color-heading);
   }
 
-  /* Meta line and links row: mono, like the labels. */
-  .hero__meta,
-  .hero__links {
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    letter-spacing: var(--tracking-label);
-    text-transform: uppercase;
-    color: var(--color-ink-muted);
-  }
-
+  /* Links row: mono, like the labels. */
   .hero__links {
     display: flex;
     flex-wrap: wrap;
@@ -191,6 +153,11 @@ const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.u
     margin: 0;
     padding: 0;
     list-style: none;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
   }
 
   .hero__links a,
@@ -204,9 +171,9 @@ const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.u
     color: var(--color-ink);
   }
 
-  /* Sections after the name open with a thin rule across the content column. As the section
-     scrolls into view the rule draws from left to right (Micah Hoang). With reduced motion, or
-     before the reveal script runs, it simply shows. */
+  /* Sections after the name open with a thin rule across the content column. As the line scrolls
+     into view it draws from left to right (Micah Hoang). With reduced motion, or before the script
+     runs, it simply shows. */
   .work,
   .about {
     position: relative;
@@ -223,7 +190,7 @@ const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.u
     transform-origin: left center;
   }
 
-  /* The draw replays every time the section comes back into view (Micah Hoang). The script below
+  /* The draw replays every time the line comes back into view (Micah Hoang). The script above
      adds .is-drawn on the way in and removes it once the line has left the screen. */
   @media (prefers-reduced-motion: no-preference) {
     :global(.rules-ready) .work:not(.is-drawn)::before,
@@ -246,20 +213,19 @@ const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.u
     }
   }
 
-  /* 2. Selected work */
+  /* 2. Selected work: the wide tile, then two side by side from 48rem. */
   .work {
     display: grid;
-    gap: var(--space-6);
+    gap: var(--space-8);
   }
 
   .work h2 {
     font-size: var(--step-4);
-    margin-block-end: var(--space-2);
   }
 
   .work__grid {
     display: grid;
-    gap: var(--space-6);
+    gap: var(--space-8) var(--space-6);
   }
 
   @media (min-width: 48rem) {
@@ -268,135 +234,70 @@ const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.u
     }
   }
 
-  /* 3. About, centered: label, heading with one highlighted word, one line, a mono date, the clip,
-     then coaching in one line and the link to the About page. */
+  /* 3. About: media left, text right from 48rem. Stacks on phones, media first. */
   .about {
     display: grid;
-    justify-items: center;
-    gap: var(--space-5);
-    text-align: center;
+    gap: var(--space-6);
   }
 
-  .about h2 {
-    max-width: 18ch;
-    font-size: var(--step-5);
-    line-height: var(--leading-tight);
+  @media (min-width: 48rem) {
+    .about {
+      grid-template-columns: 5fr 7fr;
+      column-gap: var(--space-8);
+      align-items: center;
+    }
   }
 
-  .highlight {
-    padding-inline: 0.08em;
-    background: var(--color-highlight);
-    color: var(--color-highlight-ink);
-    -webkit-box-decoration-break: clone;
-    box-decoration-break: clone;
-  }
-
-  .about__lede {
-    max-width: 36rem;
-    font-size: var(--step-1);
-    line-height: var(--leading-snug);
-  }
-
-  .about__meta,
-  .about__more {
+  .about__media {
+    display: grid;
+    place-items: center;
+    aspect-ratio: var(--ratio-tile); /* shorter on phones; portrait from 48rem */
+    background: var(--color-placeholder);
+    border-radius: var(--radius-media);
     font-family: var(--font-mono);
     font-size: var(--step--1);
     letter-spacing: var(--tracking-label);
     text-transform: uppercase;
-  }
-
-  .about__meta {
     color: var(--color-ink-muted);
   }
 
-  .about__clip {
-    inline-size: min(100%, var(--size-clip));
-    margin-block: var(--space-5) var(--space-3);
+  @media (min-width: 48rem) {
+    .about__media {
+      aspect-ratio: var(--ratio-about-media);
+    }
   }
 
-  /* Caption row under the clip, centered with the rest. */
-  .about :global(.clip__bar) {
-    justify-content: center;
+  .about__text {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-5);
   }
 
-  .about :global(.clip__toggle) {
-    margin-inline-start: 0;
+  .about__label,
+  .about__more {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
   }
 
-  /* Inline block, not flex, so the spaces inside the words survive. Padding keeps a 44px target. */
-  .about :global(.clip__bar > a),
-  .about :global(.clip__bar > span) {
-    display: inline-block;
-    padding-block: calc((var(--control-height) - 1lh) / 2);
+  .about__label {
+    color: var(--color-ink-muted);
   }
 
-  .about__coach {
-    max-width: 36rem;
-    font-size: var(--step-1);
+  .about__blurb {
+    max-width: 26ch;
+    font-size: var(--step-3);
     line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-tight);
     color: var(--color-heading);
+    text-wrap: pretty;
   }
 
   .about__more {
     display: inline-flex;
     align-items: center;
     min-block-size: var(--control-height);
-  }
-
-  .credit {
-    font-size: var(--step--1);
-    color: var(--color-ink-muted);
-  }
-
-  /* 4. Closing banner: the group photo centered at the clip width with its credit, then the
-     invitation. The banner keeps its panel padding all around. */
-  .banner {
-    padding: var(--panel-padding);
-  }
-
-  .banner__figure {
-    display: grid;
-    gap: var(--space-3);
-    inline-size: min(100%, var(--size-clip));
-    margin-inline: auto;
-  }
-
-  .banner :global(.banner__photo) {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-
-  .banner__credit {
-    text-align: end;
-  }
-
-  .banner__content {
-    display: grid;
-    justify-items: center;
-    gap: var(--space-5);
-    padding-block-start: var(--space-7);
-    text-align: center;
-  }
-
-  /* Smaller on phones so the question does not wrap to four lines. */
-  .banner__content h2 {
-    max-width: 20ch;
-    font-size: var(--step-3);
-  }
-
-  @media (min-width: 48rem) {
-    .banner__content h2 {
-      font-size: var(--step-4);
-    }
-  }
-
-  .banner__content p {
-    max-width: var(--measure-reading);
-  }
-
-  .banner__content :global(.banner__email) {
-    justify-content: center;
-    margin-block-start: var(--space-2);
   }
 </style>

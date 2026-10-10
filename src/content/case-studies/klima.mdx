@@ -1,5 +1,5 @@
 ---
-# Draft from the team's General Assembly presentation (34 slides) and Aaron's answers, Oct 7 2026.
+# Draft from the team’s General Assembly presentation (34 slides) and Aaron’s answers, Oct 7 2026.
 # Still needed before this publishes: the 2026 gamification screens (required).
 # The structure is in place; only the UI images change.
 title: "Klima"
@@ -11,6 +11,7 @@ card:
   detail: "14 user interviews · 6 usability tests · Gamification lead on a team of three"
   highlight: "trust"
   outcome: "14 user interviews · 6 usability tests"
+  tags: ["Climate", "Gamification", "Mobile app"]
 role: "Product designer, gamification lead"
 team:
   - name: "Isabel"
@@ -70,7 +71,7 @@ The team mapped the existing journey screen by screen, from calculating a carbon
 Three of the people who tested the original app also filled in the System Usability Scale. Their scores were 85, 72.5 and 42.5, an average of about 67: easy for some people and hard for others.
 
 {/* SUS scores from the P.S, A.S and Mirna sections of the usability test on the team FigJam (read Oct 8 2026).
-    These are for Klima's original app. */}
+    These are for Klima’s original app. */}
 
 <Figure
   src={journeyMap}
@@ -107,7 +108,7 @@ The feature inventory put every product side by side. Klima was the only one in 
 | Payment flexibility | Yes | Yes | Missing | Yes | N/A | N/A |
 | Community | Yes | Yes | Yes | Yes | Yes | Yes |
 
-Yayzy is a direct competitor. Pawprint and Planet Wild are indirect. Garmin and GoFundMe are lateral: they don't offset carbon, but they keep people coming back with badges, challenges, leaderboards and visible progress.
+Yayzy is a direct competitor. Pawprint and Planet Wild are indirect. Garmin and GoFundMe are lateral: they don’t offset carbon, but they keep people coming back with badges, challenges, leaderboards and visible progress.
 
 From the analysis, the biggest chances to stand out were:
 
@@ -119,7 +120,7 @@ From the analysis, the biggest chances to stand out were:
 
 We built a persona, Layla: an optimistic beginner in her mid 30s, a mother of two and a marketing manager, who cares about climate change but needs to know where her money goes. Two secondary personas, Peter and Ted, covered the investor and the skeptical activist.
 
-Layla's core problems formed a loop:
+Layla’s core problems formed a loop:
 
 1. **Trust:** she is unsure about subscribing when she does not fully understand what the service offers or who is behind it.
 2. **Understanding:** she needs to know how her footprint is calculated before she trusts the number.
@@ -132,7 +133,7 @@ Layla's core problems formed a loop:
 
 If we increase trust and transparency in the platform and give people reasons to come back, they will be more likely to donate, keep returning and commit to a sustainable life over the long term.
 
-We planned to read it through user satisfaction in interviews and the System Usability Scale, alongside the brief's product goals: engagement, conversion to a paid plan and retention.
+We planned to read it through user satisfaction in interviews and the System Usability Scale, alongside the brief’s product goals: engagement, conversion to a paid plan and retention.
 
 ## Ideation
 
@@ -146,18 +147,18 @@ We wrote How Might We questions for each problem. For example: how might we offe
 
 <Figure
   src={crazyIntro}
-  alt="Crazy 8s sketch sheet on paper: an introduction to Klima's value, certified projects with their impact, a live follow up on a globe, and a person who feels anxious before Klima and better after"
+  alt="Crazy 8s sketch sheet on paper: an introduction to Klima’s value, certified projects with their impact, a live follow up on a globe, and a person who feels anxious before Klima and better after"
   caption="Crazy 8s: ideas for introducing Klima and showing the impact of its projects."
 />
 
 The team scored 36 feature ideas. These are the Must haves, grouped by the need they answer:
 
 {/* Rebuilt from the feature prioritization table on the team FigJam (read Oct 8 2026).
-    The board scores 11 Must, 5 Should, 14 Could, 1 Won't and leaves 5 unscored. */}
+    The board scores 11 Must, 5 Should, 14 Could, 1 Won’t and leaves 5 unscored. */}
 
 | Need | Must have features |
 | --- | --- |
-| Trust | An intro to Klima's projects and their visible impact, and a map to follow a project in real time |
+| Trust | An intro to Klima’s projects and their visible impact, and a map to follow a project in real time |
 | Understanding | A guided footprint calculation, a Learn More button, a guide character and AI help at confusing moments |
 | Impact | A map of every project with its location, to learn about each one |
 | Motivation | Rewards for sustainable actions, a leaderboard and streaks |
@@ -170,11 +171,11 @@ The work split into three stages of the app:
 
 <Compare
   before={beforeHome}
-  beforeAlt="Klima's original home screen: a greeting, the footprint in tons, a Start offsetting button and a row of project cards"
+  beforeAlt="Klima’s original home screen: a greeting, the footprint in tons, a Start offsetting button and a row of project cards"
   beforeLabel="Before: Klima home"
   after={afterHome}
   afterAlt="Redesigned home screen: the same greeting and Start Offsetting button, followed by a plain explanation of carbon neutrality and a Real Solutions in Action section"
-  afterLabel="After: May's exploration redesign"
+  afterLabel="After: May’s exploration redesign"
   caption="Exploration, led by May: key information moves up front so offsetting is easier to understand."
 />
 
@@ -182,12 +183,12 @@ The work split into three stages of the app:
 
 Our feature analysis showed that Klima had no structure for building habits and no incentive to act again. People did not feel their actions were making an impact, and they needed motivation to stay consistent.
 
-Klima's community lived in its Multiply tab. Everything there was a one time action: invite a friend, write to a representative, watch a video. Nothing brought people back the next day.
+Klima’s community lived in its Multiply tab. Everything there was a one time action: invite a friend, write to a representative, watch a video. Nothing brought people back the next day.
 
 <Figure
   src={beforeMultiplyFeatures}
-  alt="Five screens from Klima's original Multiply tab: a Write your representative card and a Coming soon list, a referral screen offering 10 extra trees for a friend with a code to share, a Get political page, a hero reading Isabel, start your own climate movement today, and a Your Movement page with a video and an Invite your friends button"
-  caption="Before: Klima's Multiply tab, built around referrals and advocacy."
+  alt="Five screens from Klima’s original Multiply tab: a Write your representative card and a Coming soon list, a referral screen offering 10 extra trees for a friend with a code to share, a Get political page, a hero reading Isabel, start your own climate movement today, and a Your Movement page with a video and an Invite your friends button"
+  caption="Before: Klima’s Multiply tab, built around referrals and advocacy."
 />
 
 I designed an Impact Hub, a home for daily action that rewards consistency and turns climate impact into visible progress:
@@ -196,12 +197,12 @@ I designed an Impact Hub, a home for daily action that rewards consistency and t
 - **Streaks:** encourage consistency over time.
 - **Badges:** mark milestones and unlock new rewards.
 - **Garden:** a virtual garden that grows as you act, so impact becomes something you can see.
-- **Community:** Discord built into Klima's existing Multiply feature, to turn a passive community into active participation and lay the groundwork for a fully gamified experience.
+- **Community:** Discord built into Klima’s existing Multiply feature, to turn a passive community into active participation and lay the groundwork for a fully gamified experience.
 
 <Compare
   before={beforeMultiply}
-  beforeAlt="Klima's original Multiply tab: a dark globe with the line Isabel, start your own climate movement today, and tabs for Offset, Reduce and Multiply"
-  beforeLabel="Before: Klima's Multiply tab"
+  beforeAlt="Klima’s original Multiply tab: a dark globe with the line Isabel, start your own climate movement today, and tabs for Offset, Reduce and Multiply"
+  beforeLabel="Before: Klima’s Multiply tab"
   after={afterImpactHub}
   afterAlt="The Impact Hub from the team project: Welcome to Your Impact Hub, with cards for Challenges, How it Works, Join the Community and My Garden, and a Klima Dashboard button"
   afterLabel="After: the Impact Hub, 2025"
@@ -214,14 +215,14 @@ Inside the hub, the loop is short: pick a challenge, log it, see what it saved, 
 
 1. **Choose a challenge.** Layla gets picks recommended for her, plus themed sets like Stop Waste and Earth Day. Each card shows how much CO₂ the action saves.
 2. **Log it.** Each challenge is tied to the UN Sustainable Development Goals it supports: Responsible Consumption and Production, and Climate Action.
-3. **See today's impact.** The saving is put in everyday terms, like driving 2 miles in a gas powered car, and a streak tracker shows the week so far.
+3. **See today’s impact.** The saving is put in everyday terms, like driving 2 miles in a gas powered car, and a streak tracker shows the week so far.
 4. **Earn a badge.** Seven days in a row unlocks the first badge, Starter Seed.
 
 <Screens
   screens={[
-    { src: screenDailyChallenges, label: "1. Choose", alt: "Daily Challenges screen: Choose One, with Layla's Choice, actions recommended just for you, and a card for buying vegetables and fruit loose that saves 620 grams, tagged with UN goals 12 and 13" },
+    { src: screenDailyChallenges, label: "1. Choose", alt: "Daily Challenges screen: Choose One, with Layla’s Choice, actions recommended just for you, and a card for buying vegetables and fruit loose that saves 620 grams, tagged with UN goals 12 and 13" },
     { src: screenChallengeSelected, label: "2. Log", alt: "Daily Challenge screen with the selected challenge card, and a line saying that completing it contributes to the United Nations Sustainable Development Goals" },
-    { src: screenStreakTracker, label: "3. Track", alt: "Today's Impact screen: a streak tracker reading 6 days in a row, one more to earn your next badge, the locked Starter Seed badge, and a week row with Monday checked" },
+    { src: screenStreakTracker, label: "3. Track", alt: "Today’s Impact screen: a streak tracker reading 6 days in a row, one more to earn your next badge, the locked Starter Seed badge, and a week row with Monday checked" },
     { src: screenBadgeDetails, label: "4. Earn", alt: "Badge Details screen for Starter Seed, locked: complete one challenge a day for 7 days in a row to unlock your first badge. Current streak 1 of 7 days" },
   ]}
   caption="The challenge loop from the 2025 team project."
@@ -269,10 +270,10 @@ The first test ran on the mid fidelity wireframes, one task per stage:
 In testing, people said the garden made their actions feel real and rewarding, badges and streaks made them excited about progress, and challenges taught them how to live more sustainably.
 
 {/* Testing feedback is written as synthesis. Use quotation marks only for statements traced to a
-    participant (Aaron, Oct 7). The deck's System Usability Scale result (40 to 90) is held until Aaron verifies
+    participant (Aaron, Oct 7). The deck’s System Usability Scale result (40 to 90) is held until Aaron verifies
     the setup, participant count and what each score measured. */}
 
-The redesign was designed to support engagement, retention and conversion to the paid plan. The team did not have Klima's analytics and the redesign never shipped, so those outcomes were not measured.
+The redesign was designed to support engagement, retention and conversion to the paid plan. The team did not have Klima’s analytics and the redesign never shipped, so those outcomes were not measured.
 
 ## Reflection
 

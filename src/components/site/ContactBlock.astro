@@ -1,0 +1,110 @@
+---
+// The closing contact block on the home and About pages (October 10): a solid navy band that ends
+// the page. "Get in touch", one line, then email, LinkedIn, and Resume in large type, and the
+// copyright line. LinkedIn waits for site.linkedin and Resume for public/resume.pdf; until then
+// they show as plain text.
+import fs from "node:fs";
+import path from "node:path";
+import { mailto, site } from "../../site.config";
+
+const hasResume = fs.existsSync(path.join(process.cwd(), "public", site.resumePath));
+const year = new Date().getFullYear();
+---
+
+<footer id="contact" class="contact surface-always-dark" aria-labelledby="contact-heading">
+  <div class="container contact__inner">
+    <h2 id="contact-heading" class="contact__title">Get in touch</h2>
+    <p class="contact__line">Have a role or project that feels like a fit? I’d love to hear about it.</p>
+    <ul class="contact__links">
+      <li><a href={mailto}>{site.email}</a></li>
+      <li>
+        {
+          site.linkedin ? (
+            <a href={site.linkedin} target="_blank" rel="noopener noreferrer">
+              LinkedIn<span class="visually-hidden"> (opens in a new tab)</span>
+            </a>
+          ) : (
+            <span>LinkedIn</span>
+          )
+        }
+      </li>
+      <li>{hasResume ? <a href={site.resumePath}>Resume</a> : <span>Resume</span>}</li>
+    </ul>
+    <p class="contact__fine">© {year} <span translate="no">{site.name}</span></p>
+  </div>
+</footer>
+
+<style>
+  .contact {
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+
+  .contact__inner {
+    display: grid;
+    gap: var(--space-5);
+    padding-block: var(--space-9) var(--space-6);
+  }
+
+  .contact__title {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+
+  .contact__line {
+    max-width: 24ch;
+    font-size: var(--step-3);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-heading);
+    text-wrap: balance;
+  }
+
+  /* Large type, one per line. The email breaks anywhere so it never runs off a phone screen. */
+  .contact__links {
+    display: grid;
+    gap: var(--space-2);
+    margin: var(--space-5) 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--step-3);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-tight);
+    overflow-wrap: anywhere;
+  }
+
+  @media (min-width: 48rem) {
+    .contact__links {
+      font-size: var(--step-4);
+    }
+  }
+
+  .contact__links a {
+    color: var(--color-ink);
+    text-decoration-thickness: var(--rule-thin);
+    text-underline-offset: 0.15em;
+  }
+
+  .contact__links a:hover {
+    color: var(--color-accent);
+  }
+
+  .contact__links span {
+    color: var(--color-ink-muted);
+  }
+
+  .contact__fine {
+    margin-block-start: var(--space-8);
+    padding-block-start: var(--space-4);
+    border-block-start: var(--rule-thin) solid var(--color-rule);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+</style>

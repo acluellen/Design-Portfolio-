@@ -11,16 +11,17 @@ Calm and exact. The work and the photos carry the color. Everything around them 
 - Square corners on everything: panels, cards, photos, video, buttons. Only round icon buttons (theme toggle, play) stay circles. No pill shapes anywhere.
 - Sentence case for every heading. Proper names keep their capitals (BRIDGEGOOD UX Design Apprenticeship, Purpose to Pixels).
 - No drop shadows and no gradients. Thin rules separate content.
-- Navy panels: the closing section only. Never pure black.
+- Navy: the contact block that ends the home and About pages. Never pure black.
 
 ## Home page
 
-Order: name, Selected work, About, closing. Selected work and About open with a thin rule across the content column that draws left to right each time the section comes into view (Micah Hoang); with reduced motion it simply shows.
+Order: name, Selected work, About, contact block. Selected work and About open with a thin rule across the content column that draws left to right each time the section comes into view (Micah Hoang); with reduced motion it simply shows.
 
 - Header (Micah Hoang): AL logo, "Product designer" and "Oakland, CA" in mono across the middle (hidden on phones), Work and About in mono, theme toggle.
-- Name: "Aaron Luellen" at `--step-6`, the largest text on the site, then "Research led product designer." in navy, then a mono meta line "2 years · EdTech · Health · Climate", then a mono links row: LinkedIn, Resume, Email (plain text until linked). No photo and no buttons.
-- About (`#about`), centered (Zeel Shah's feel), in Aaron's order: "About", a large heading with one word in the blue highlighter (`--color-highlight`), one line, a mono date, the KRON4 clip centered at `--size-clip` (44rem, opens on scroll, in color) with its caption row, then one line about coaching and "Read more about me". One image; each fact once.
-- Closing: navy panel with the BRIDGEGOOD group photo centered at the clip's width (until Aaron removes it), the question, one line, and the email.
+- Name: "Aaron Luellen" at `--step-6`, the largest text on the site. Under it one row: "Product designer focused on clarity." on the left, the mono links row (LinkedIn, Resume, Email; plain text until linked) on the right from 48rem. Nothing else. No photo and no buttons.
+- Selected work: large image tiles (`WorkTile.astro`), the featured study wide on top (`--ratio-tile-wide`), two below (`--ratio-tile`). Under each image: the number, the name (rolls to "View case study" on hover), and two or three square mono tags (`card.tags`), then the one line description. Gray placeholders (`--color-placeholder`) until the project media is ready.
+- About (`#about`): an image or video on the left (gray placeholder for now, 4:5 from 48rem, 4:3 on phones), on the right a mono "About" label, the blurb, and "Read more about me". The apprenticeship, the KRON4 clip, and the gym photos live on the About page.
+- Contact block (`ContactBlock.astro`, also on the About page): full width navy band. "Get in touch" in mono, one line, then the email, LinkedIn, and Resume in large type (plain text until linked), then the copyright line.
 
 ## Case study pages
 
@@ -36,10 +37,11 @@ Order: name, Selected work, About, closing. Selected work and About open with a 
 
 ## About page (`/about/`)
 
-- "Hey, I'm Aaron." then the intro and the coaching story. The portrait (4:5) sits on the left from 64rem, stays in view while the text scrolls, and stops at the end of the text block, before the gym photos.
-- Mono tables over thin rules (`src/data/about.ts`): Experience, Press, Education, What people say. Each row: where, what, when. Only confirmed facts go in. Missing fields show as dashed "To add" notes in review previews; the live site leaves them out, and drops a table or the quotes section until it has content.
-- Then the three gym photos, tall, wide, tall at equal heights (wide one on top on phones).
-- The header's About link opens this page and is marked current there. Below, one row of gym photos at equal heights: tall, wide, tall (`--about-row`). On phones the wide one goes on top and the two tall ones sit below.
+- "Hey, I’m Aaron." then four short paragraphs; "Let’s talk." links to the contact block. The portrait (4:5) sits on the left from 64rem, stays in view while the text scrolls, and stops at the end of the text block.
+- One short resume list (Rachel Chen's pattern, `resume` in `src/data/about.ts`): one mono line per row, year, place, role. No year until Aaron gives one.
+- "What people say" right after the list. Until real quotes arrive, review previews show a gray box in its place (`--size-quote-slot`); the live site leaves the section out.
+- "A few things that shaped me": numbered tiles with short captions, in rows (`shaped`). Each tile grows by its shape, so a row ends at one height. Phones: wide tiles full width and first in their row, the rest two across. Placeholder tiles show in review previews only.
+- The header's About link opens this page and is marked current there. The page ends with the same navy contact block as the home page.
 
 ## Color
 

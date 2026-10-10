@@ -21,6 +21,8 @@ const caseStudies = defineCollection({
         detail: z.string(),
         highlight: z.string().optional(),
         outcome: z.string().optional(),
+        // Two or three short tags under the home page tile, such as the field and the kind of work.
+        tags: z.array(z.string()).max(3).optional(),
       })
       .optional(),
     // Short names for the case study index, one per ## section, in order. Falls back to the heading.

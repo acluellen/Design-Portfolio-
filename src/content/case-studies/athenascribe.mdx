@@ -1,6 +1,6 @@
 ---
-# Words and structure come from Aaron's Claude Design draft (AthenaScribe Case Study, Main board).
-# Restructured to match the board's layout on Oct 8 2026. Links marked TODO are still "#" in the draft.
+# Words and structure come from Aaron’s Claude Design draft (AthenaScribe Case Study, Main board).
+# Restructured to match the board’s layout on Oct 8 2026. Links marked TODO are still "#" in the draft.
 title: "AthenaScribe"
 headline: "Human review for school document translation."
 summary: "AthenaScribe translates full school documents for districts. A person approves the vital ones before families receive them."
@@ -10,6 +10,7 @@ card:
   detail: "12 stakeholder interviews · Tested with counselors and vice principals · Presented at Demo Day, Block HQ"
   highlight: "translation"
   outcome: "12 stakeholder interviews"
+  tags: ["EdTech", "Research", "Translation"]
 featured: true
 role: "Research Lead"
 team:
@@ -48,7 +49,7 @@ import adminQueue from "../../assets/case-studies/athenascribe/round-one-admin-q
 
 ## Translating one school form takes two weeks of notice.
 
-It started with one principal's complaint. The team traced it to a workflow gap: messages translate automatically, and attachments wait on the district translation unit. A family waiting on a special education plan or a health form gets it late, or reads it through their child:
+It started with one principal’s complaint. The team traced it to a workflow gap: messages translate automatically, and attachments wait on the district translation unit. A family waiting on a special education plan or a health form gets it late, or reads it through their child:
 
 <div class="is-wide">
 <StatGroup>
@@ -71,7 +72,7 @@ It started with one principal's complaint. The team traced it to a workflow gap:
     **Why** District approval for research involving student data would outlast a four week sprint, so the team used guerrilla recruiting to reach administrators, counselors and teachers across Bay Area schools.
   </Card>
   <Card title="Platform audit">
-    **Why** The team audited the district's family messaging platform from two accounts, then mapped competitors and adjacent school tools to see where document translation falls through.
+    **Why** The team audited the district’s family messaging platform from two accounts, then mapped competitors and adjacent school tools to see where document translation falls through.
   </Card>
   <Card title="Policy and legal review">
     **Why** State education code, district policy and federal privacy law showed who holds the translation duty and what unreviewed machine translation puts at risk.
@@ -106,7 +107,7 @@ I synthesized the 12 interviews into 15 affinity clusters in FigJam.
 
 <Finding
   n={1}
-  finding="State law puts the translation duty on the district, and only the district's board can sign the contract."
+  finding="State law puts the translation duty on the district, and only the district’s board can sign the contract."
   changes={["Buyer", "Who translates"]}
   sources="Cal. Educ. Code § 48985 · OUSD Board Policy 5124 · Cal. Educ. Code § 17604"
 >
@@ -149,8 +150,8 @@ The two findings above put a person in charge of approving vital documents. We g
   <Card eyebrow="Research question · Phone" title="Can a school administrator complete the approval flow?" verdict="Yes, with guidance">
     All 3 tasks completed. Ease of navigation rated 8.5 out of 10.
   </Card>
-  <Card eyebrow="Research question · Laptop" title="Does the review step fit an administrator's workload?" verdict="Not at high school volume">
-    With 120 teachers sending forms, reviewing every one would not fit an administrator's day.
+  <Card eyebrow="Research question · Laptop" title="Does the review step fit an administrator’s workload?" verdict="Not at high school volume">
+    With 120 teachers sending forms, reviewing every one would not fit an administrator’s day.
   </Card>
 </CardGrid>
 
@@ -195,7 +196,7 @@ Staff upload a document. AI translates it and flags the vital ones. A person app
 <p class="label">Refinements from testing</p>
 
 <CardGrid size="small">
-  <Card title="Language">Reads each family's home language from Aeries, so no one chooses it again.</Card>
+  <Card title="Language">Reads each family’s home language from Aeries, so no one chooses it again.</Card>
   <Card title="Text size">Larger type and a wider layout that hold at 200 percent zoom. Severity 3.</Card>
   <Card title="Read aloud">Now a labeled button, since its purpose was unclear. Severity 2.</Card>
   <Card title="Opened by">Each document shows "Opened by X of Y families" and a trend. Red stays reserved for problems.</Card>
