@@ -3,18 +3,21 @@
 // Reduced motion (or no JavaScript): the still image only, and the clip never downloads.
 // `opens`: the frame starts as a small crop and opens to full size as it scrolls into view
 // (modeled on Zeel Shah's portfolio). Pure CSS, only where scroll timelines exist, never with reduced motion.
+// `once`: no caption row and no Pause button. The clip plays through once (3.5 seconds, under the
+// five second limit in WCAG 2.2.2) each time it comes into view, then rests on its last frame.
 import Photo from "./Photo.astro";
 
 interface Props {
   opens?: boolean;
+  once?: boolean;
 }
 
-const { opens = false } = Astro.props;
+const { opens = false, once = false } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
-<div class:list={["clip", { "clip--opens": opens }]} data-clip>
+<div class:list={["clip", { "clip--opens": opens }]} data-clip data-once={once ? "" : undefined}>
   <div class="clip__frame">
     <Photo
       name="kron4-still-color"
@@ -27,7 +30,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       class="clip__video"
       data-clip-video
       muted
-      loop
+      loop={!once}
       playsinline
       preload="none"
       aria-hidden="true"
@@ -40,10 +43,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   </div>
   <!-- The loop runs past five seconds, so it needs a way to stop it (WCAG 2.2.2). -->
   <!-- Optional caption from the page, with the Pause control at the end of the same row. -->
-  <div class="clip__bar">
-    <slot />
-    <button class="clip__toggle" type="button" data-clip-toggle hidden>Pause clip</button>
-  </div>
+  {
+    !once && (
+      <div class="clip__bar">
+        <slot />
+        <button class="clip__toggle" type="button" data-clip-toggle hidden>Pause clip</button>
+      </div>
+    )
+  }
 </div>
 
 <script>
@@ -51,7 +58,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
   document.querySelectorAll<HTMLElement>("[data-clip]").forEach((clip) => {
     const video = clip.querySelector<HTMLVideoElement>("[data-clip-video]")!;
-    const toggle = clip.querySelector<HTMLButtonElement>("[data-clip-toggle]")!;
+    const toggle = clip.querySelector<HTMLButtonElement>("[data-clip-toggle]");
+    const once = clip.hasAttribute("data-once");
     let inView = false;
     let pausedByVisitor = false;
     let loaded = false;
@@ -78,7 +86,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
     video.addEventListener("playing", () => clip.classList.add("is-playing"));
 
-    toggle.addEventListener("click", () => {
+    toggle?.addEventListener("click", () => {
       pausedByVisitor = !video.paused;
       if (pausedByVisitor) video.pause();
       else play();
@@ -86,7 +94,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     });
 
     const setUp = () => {
-      toggle.hidden = !motion.matches;
+      if (toggle) toggle.hidden = !motion.matches;
       if (motion.matches) play();
       else {
         video.pause();
@@ -94,11 +102,26 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       }
     };
 
-    new IntersectionObserver(([entry]) => {
-      inView = entry.isIntersecting;
-      if (inView) play();
-      else video.pause();
-    }, { rootMargin: "200px 0px" }).observe(clip);
+    if (once) {
+      // Loads as it nears the screen, plays from the start once half of it is on screen, and stays
+      // on the last frame when it ends.
+      new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting && motion.matches) load();
+      }, { rootMargin: "200px 0px" }).observe(clip);
+      new IntersectionObserver(([entry]) => {
+        inView = entry.isIntersecting;
+        if (inView) {
+          video.currentTime = 0;
+          play();
+        } else video.pause();
+      }, { threshold: 0.5 }).observe(clip);
+    } else {
+      new IntersectionObserver(([entry]) => {
+        inView = entry.isIntersecting;
+        if (inView) play();
+        else video.pause();
+      }, { rootMargin: "200px 0px" }).observe(clip);
+    }
 
     motion.addEventListener("change", setUp);
     setUp();

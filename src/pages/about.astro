@@ -8,7 +8,6 @@ import Photo from "../components/site/Photo.astro";
 import KronClip from "../components/site/KronClip.astro";
 import { showPlaceholders } from "../lib/case-studies";
 import { quotes, resume, shaped } from "../data/about";
-import { site } from "../site.config";
 
 // A tile row with no photo and no clip is a placeholder row: previews only.
 const rows = shaped.filter((row) => showPlaceholders || row.some((t) => t.photo || t.clip));
@@ -97,14 +96,12 @@ const numbered = rows.map((row) => row.map((tile) => ({ ...tile, number: String(
           <ul class="shaped__row">
             {row.map((tile) => (
               <li class:list={["shaped__tile", { "shaped__tile--wide": tile.ratio >= 1.4 }]} style={`--ratio: ${tile.ratio}`}>
+                <p class="shaped__label">
+                  <span class="shaped__number" aria-hidden="true">{tile.number} /</span>
+                  <span class="shaped__caption">{tile.caption}</span>
+                </p>
                 {tile.clip ? (
-                  <KronClip>
-                    {site.kron4Video && (
-                      <a href={site.kron4Video} target="_blank" rel="noopener noreferrer">
-                        Watch on YouTube<span class="visually-hidden"> (opens in a new tab)</span>
-                      </a>
-                    )}
-                  </KronClip>
+                  <KronClip once />
                 ) : tile.photo ? (
                   <Photo
                     name={tile.photo}
@@ -116,10 +113,6 @@ const numbered = rows.map((row) => row.map((tile) => ({ ...tile, number: String(
                 ) : (
                   <div class="shaped__slot" aria-hidden="true">Photo to add</div>
                 )}
-                <p class="shaped__caption">
-                  <span class="shaped__number" aria-hidden="true">{tile.number}</span>
-                  <span>{tile.caption}</span>
-                </p>
               </li>
             ))}
           </ul>
@@ -367,16 +360,25 @@ const numbered = rows.map((row) => row.map((tile) => ({ ...tile, number: String(
     color: var(--color-ink-muted);
   }
 
-  .shaped__caption {
+  /* "01 / CAPTION" above each picture, in the same small mono capitals as the Selected work tiles
+     on the home page. */
+  .shaped__label {
     display: flex;
-    gap: var(--space-3);
+    align-items: baseline;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
     font-size: var(--step--1);
-    color: var(--color-ink-muted);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    line-height: var(--leading-snug);
   }
 
   .shaped__number {
-    font-family: var(--font-mono);
-    letter-spacing: var(--tracking-label);
+    flex: none;
+    color: var(--color-ink-muted);
+  }
+
+  .shaped__caption {
     color: var(--color-heading);
   }
 </style>

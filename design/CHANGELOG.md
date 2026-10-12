@@ -23,6 +23,11 @@ Newest first. Every design or structure decision goes here.
 
 
 
+## 2026-10-12 · About gallery labels and a quieter clip
+
+- "A few things that shaped me": each picture now has its label above it, "01 / BRIDGEGOOD APPRENTICESHIP COHORT, 2026", in the same small mono capitals as the home page tiles (number muted, caption in heading color). The pictures do not link anywhere, so there is no "View case study" roll.
+- The KRON4 clip in the gallery lost "Watch on YouTube" and "Pause clip". To stay within WCAG 2.2.2 without a Pause button, it no longer loops: it plays once (3.5 seconds, under the five second limit) each time half of it comes into view, then rests on its last frame. New `once` option on `KronClip`.
+
 ## 2026-10-10 · Read more, smaller About text
 
 - The home About link now reads "Read more". Screen readers hear "Read more about Aaron", so the link still makes sense on its own.
