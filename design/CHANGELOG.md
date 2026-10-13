@@ -895,3 +895,11 @@ Aaron asked for a fuller browser preview, so the home page, case study page, and
 
 ### Commonplace
 - CommonPlace added as a draft, in progress tile with tags only. Facts still needed are marked TODO in its file.
+
+## 2026-10-12 · AthenaScribe in a phone, and "How it works"
+
+- The AthenaScribe tile is now a phone (`AthenaPhone.astro`, variant `tile`), since its screens are phone UI and three of the four projects are phone apps. A camera pushes into the slip, then the approval sheet, then pulls back to the Spanish slip (Rachel Chen's zoom). The skeleton fills in under the scan line, the vital lines light up, the approval is a tap with a green ring and no cursor. `AthenaScribeMotion.astro` is removed.
+- Case study hero headline: "AI translates every school form. A human in the loop approves the ones that matter." (Aaron's pick.)
+- New first section, "Translation is automatic. Approval stays human.": five feature lines beside a 12 second phone loop (`AthenaStory.astro`, variant `story`). The line for the beat on screen lights up with a progress bar; clicking a line jumps the loop. Feature 3 carries the verbatim round one testing quote about buckets.
+- Real names in the loop come from the team's prototype: Director Martin, the Reyes family, Mateo Reyes.
+- New tokens: `--as-shadow-phone`, `--as-frame`, `--as-frame-edge`, `--as-screen`.

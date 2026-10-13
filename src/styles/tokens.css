@@ -195,6 +195,10 @@
   --as-rule: #e2e3ec;
   --as-shadow-doc: 0 40px 80px -30px rgb(5 6 25 / .8), 0 2px 8px rgb(5 6 25 / .25);
   --as-shadow-pill: 0 14px 30px -10px rgb(5 6 25 / .7);
+  --as-shadow-phone: 0 50px 90px -30px rgb(5 6 25 / .85), 0 4px 12px rgb(5 6 25 / .35);
+  --as-frame: #0c0e1c; /* phone body */
+  --as-frame-edge: #3a3f5c;
+  --as-screen: #f7f7fb; /* AthenaScribe's app background */
   --font-athenascribe-head: "Lora", Georgia, serif; /* AthenaScribe's own UI fonts, used only inside its tile */
   --font-athenascribe-ui: "Nunito", system-ui, sans-serif;
 }

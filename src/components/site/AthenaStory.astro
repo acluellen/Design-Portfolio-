@@ -1,0 +1,221 @@
+---
+// "How it works" for the AthenaScribe case study (Oct 12 2026): five short feature lines beside one
+// phone loop. The line for the beat on screen lights up with a progress bar under it, App Store
+// style, and clicking a line jumps the loop to that beat. Copy approved by Aaron in chat; the quote
+// is verbatim from round one usability testing (the same quote the Testing section uses).
+import AthenaPhone from "./AthenaPhone.astro";
+
+const items = [
+  { title: "The whole file, translated.", body: "Staff scan or upload any form, and the attachment gets translated too. Today the message translates and the PDF waits." },
+  { title: "It spots the forms that matter.", body: "IEP notices, health forms, and permission slips get flagged as vital on upload." },
+  {
+    title: "Sorted for the right reviewer.",
+    body: "Forms sort by type and go to the person who owns them.",
+    quote: "I would like buckets to where it says, okay, health forms, field trip forms. Wellness checks.",
+    cite: "Administrator, round one usability testing",
+  },
+  { title: "A person signs off first.", body: "Nothing reaches a family until someone at the school approves it." },
+  { title: "In the family’s own language.", body: "AthenaScribe pulls each family’s home language from school records, so nobody has to pick it." },
+];
+---
+
+<div class="story is-wide" data-story>
+  <ol class="story__list">
+    {
+      items.map((it, i) => (
+        <li class:list={["story__item", { "is-active": i === 0 }]} data-i={i}>
+          <button type="button" class="story__btn" aria-label={`Show: ${it.title}`}>
+            <span class="story__n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+            <span class="story__text">
+              <span class="story__title">{it.title}</span>
+              <span class="story__body">{it.body}</span>
+            </span>
+          </button>
+          {it.quote && (
+            <figure class="story__quote">
+              <blockquote>“{it.quote}”</blockquote>
+              <figcaption>{it.cite}</figcaption>
+            </figure>
+          )}
+          <span class="story__bar" aria-hidden="true"><span></span></span>
+        </li>
+      ))
+    }
+  </ol>
+  <div class="story__media">
+    <AthenaPhone variant="story" />
+  </div>
+</div>
+
+<style>
+  .story {
+    display: grid;
+    gap: var(--space-6);
+    align-items: center;
+    margin-block-start: var(--space-6);
+  }
+
+  @media (min-width: 56rem) {
+    .story {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+      column-gap: var(--space-8);
+    }
+  }
+
+  .story__media {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    max-width: 100%;
+    overflow: hidden;
+    border-radius: var(--radius-media);
+  }
+
+  @media (max-width: 55.99rem) {
+    .story__media {
+      order: -1;
+    }
+  }
+
+  .story__list {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-block-start: var(--rule-thin) solid var(--color-rule);
+  }
+
+  .story__item {
+    position: relative;
+    border-block-end: var(--rule-thin) solid var(--color-rule);
+  }
+
+  .story__btn {
+    display: grid;
+    grid-template-columns: 3ch minmax(0, 1fr);
+    gap: var(--space-3);
+    inline-size: 100%;
+    padding-block: var(--space-4);
+    padding-inline: 0;
+    background: none;
+    border: 0;
+    color: inherit;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+  }
+
+  .story__btn:focus-visible {
+    outline: var(--focus-width) solid var(--color-focus);
+    outline-offset: var(--focus-offset);
+  }
+
+  .story__n {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    color: var(--color-ink-muted);
+    padding-block-start: 0.2em;
+  }
+
+  .story__text {
+    display: grid;
+    gap: var(--space-1);
+    min-width: 0;
+  }
+
+  .story__title {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-snug);
+    color: var(--color-ink-muted);
+    transition: color var(--duration-fast) var(--ease-standard);
+  }
+
+  .story__body {
+    color: var(--color-ink-muted);
+    max-width: 52ch;
+  }
+
+  .is-active .story__title {
+    color: var(--color-heading);
+  }
+
+  .is-active .story__body {
+    color: var(--color-ink);
+  }
+
+  .story__quote {
+    margin: 0 0 var(--space-4) calc(3ch + var(--space-3));
+    padding-inline-start: var(--space-3);
+    border-inline-start: var(--rule-thick) solid var(--color-rule-strong);
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  .story__quote blockquote {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--step-0);
+    line-height: var(--leading-snug);
+    color: var(--color-heading);
+  }
+
+  .story__quote figcaption {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+
+  /* The progress line under the beat on screen. */
+  .story__bar {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: calc(var(--rule-thin) * -1);
+    block-size: var(--rule-thick);
+    overflow: hidden;
+  }
+
+  .story__bar > span {
+    display: block;
+    block-size: 100%;
+    inline-size: 100%;
+    background: var(--color-heading);
+    transform-origin: left center;
+    transform: scaleX(0);
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-story]").forEach((story) => {
+    const items = [...story.querySelectorAll<HTMLElement>(".story__item")];
+    const phone = story.querySelector<HTMLElement>("[data-asp]");
+    if (!phone) return;
+    let active = 0;
+    phone.addEventListener("asp:beat", (ev) => {
+      const b = (ev as CustomEvent).detail.beat as number;
+      if (b === active) return;
+      items[active]?.classList.remove("is-active");
+      items[b]?.classList.add("is-active");
+      items[active]?.querySelector<HTMLElement>(".story__bar > span")?.style.setProperty("transform", "scaleX(0)");
+      active = b;
+    });
+    phone.addEventListener("asp:progress", (ev) => {
+      const { beat, progress } = (ev as CustomEvent).detail;
+      items[beat]?.querySelector<HTMLElement>(".story__bar > span")?.style.setProperty("transform", `scaleX(${progress})`);
+    });
+    items.forEach((item, i) =>
+      item.querySelector("button")?.addEventListener("click", () => {
+        phone.dispatchEvent(new CustomEvent("asp:seek", { detail: { beat: i } }));
+        if (i !== active) {
+          items[active]?.classList.remove("is-active");
+          items[active]?.querySelector<HTMLElement>(".story__bar > span")?.style.setProperty("transform", "scaleX(0)");
+          item.classList.add("is-active");
+          active = i;
+        }
+      }),
+    );
+  });
+</script>

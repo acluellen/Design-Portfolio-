@@ -1,0 +1,293 @@
+---
+// AthenaScribe in a phone (Oct 12 2026). One coded loop, two cuts:
+//   variant "tile":  8 s for the home page tile (16:9). Scan, vital flag, approve, Spanish.
+//   variant "story": 12 s for the case study's "How it works" (4:5), with a fifth beat, sorting,
+//                    and a `asp:beat` event so the captions beside it can follow along.
+// Effects borrowed from Rachel Chen's loops: a camera that pushes into the part that matters, a
+// skeleton that fills in as the scan reads the slip, highlighted vital lines, and each beat growing
+// out of the last. No cursor: it is a phone screen. With reduced motion it holds one still frame.
+// The scene is drawn in stage units on a fixed stage scaled to its box; colors are --as-* tokens.
+import "@fontsource/lora/600.css";
+import "@fontsource/nunito/700.css";
+import "@fontsource/nunito/800.css";
+
+interface Props {
+  variant?: "tile" | "story";
+}
+const { variant = "tile" } = Astro.props;
+const label =
+  "AthenaScribe on a phone: a permission slip is scanned and translated, flagged as a vital document, sorted to the right reviewer, approved by a person at the school, and sent to the family in Spanish.";
+---
+
+<div class:list={["asp", `asp--${variant}`]} data-asp={variant} role="img" aria-label={label}>
+  <div class="asp__stage" data-k="stage">
+    <div class="asp__bg"></div>
+    <div class="asp__blob asp__blob--a" data-k="b1"></div>
+    <div class="asp__blob asp__blob--b" data-k="b2"></div>
+    <div class="asp__grain"></div>
+
+    <div class="asp__phone" data-k="phone">
+      <div class="asp__screen">
+        <div class="asp__status"><span>9:41</span><span class="asp__sig"><i></i><i></i><i></i><b></b></span></div>
+        <img class="asp__owl" src="/media/athenascribe-owl.webp" alt="" width="34" height="34" />
+
+        <p class="asp__h" data-k="title">Scan</p>
+        <p class="asp__sub" data-k="sub">Translating the whole file</p>
+
+        <div class="asp__slip" data-k="slip">
+          <div class="asp__skel" aria-hidden="true">
+            <u style="width:46%"></u><u style="width:80%;height:14px"></u><u style="width:90%"></u><u style="width:72%"></u><u style="width:84%"></u><u style="width:88%"></u><u style="width:64%"></u><u style="width:78%"></u>
+          </div>
+          <div class="asp__read" data-k="read">
+            <div class="asp__face" data-k="en">
+              <div class="asp__school">WESTVIEW ELEMENTARY</div>
+              <p class="asp__title">Field Trip Permission Slip</p>
+              <div class="asp__field">Student: Mateo Reyes</div>
+              <div class="asp__field asp__hl"><b>Date:</b> Friday, Sept 20</div>
+              <div class="asp__field"><b>Destination:</b> Science Museum</div>
+              <div class="asp__box asp__hl"><i></i>I give permission for my child to attend</div>
+              <div class="asp__bars"><u style="width:92%"></u><u style="width:76%"></u></div>
+            </div>
+            <div class="asp__face" data-k="es" lang="es">
+              <div class="asp__school">ESCUELA PRIMARIA WESTVIEW</div>
+              <p class="asp__title">Permiso para la excursión</p>
+              <div class="asp__field">Estudiante: Mateo Reyes</div>
+              <div class="asp__field"><b>Fecha:</b> viernes, 20 de sept.</div>
+              <div class="asp__field"><b>Destino:</b> Museo de Ciencias</div>
+              <div class="asp__box"><i></i>Doy permiso para que mi hijo asista</div>
+              <div class="asp__bars"><u style="width:88%"></u><u style="width:70%"></u></div>
+            </div>
+          </div>
+          <div class="asp__scan" data-k="scan"></div>
+        </div>
+
+        <span class="asp__chip" data-k="chip"></span>
+
+        <div class="asp__sort" data-k="sort">
+          <div class="asp__tabs"><span class="asp__tab asp__tab--on">Field trips <em data-k="count">2</em></span><span class="asp__tab">Health 2</span><span class="asp__tab">IEP 1</span></div>
+          <div class="asp__route" data-k="route"><span class="asp__av">DM</span>Sent to Director Martin</div>
+        </div>
+
+        <div class="asp__sheet" data-k="sheet">
+          <span class="asp__handle"></span>
+          <div class="asp__who"><span class="asp__av asp__av--lg">DM</span><span><b>Director Martin</b><small>School administrator</small></span></div>
+          <span class="asp__go" data-k="go">Approve</span>
+        </div>
+
+        <div class="asp__toast" data-k="toast">Sent to the Reyes family</div>
+      </div>
+      <span class="asp__island"></span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .asp { position: absolute; inset: 0; overflow: hidden; background: var(--as-base); font-family: var(--font-athenascribe-ui); }
+  .asp__stage { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+  .asp--tile .asp__stage { width: 960px; height: 540px; }
+  .asp--story .asp__stage { width: 480px; height: 600px; }
+  .asp__bg { position: absolute; inset: 0; background: radial-gradient(90% 110% at 50% 40%, var(--as-base), var(--as-deep)); }
+  .asp__blob { position: absolute; border-radius: 50%; filter: blur(64px); will-change: transform; }
+  .asp__blob--a { width: 60%; height: 66%; left: 20%; top: 6%; background: var(--as-glow); opacity: .42; }
+  .asp__blob--b { width: 40%; height: 46%; left: 52%; top: 50%; background: var(--as-teal); opacity: .035; }
+  .asp__grain { position: absolute; inset: 0; opacity: .16; mix-blend-mode: overlay; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+
+  /* The phone: 324 x 672 phone units, a 300 x 648 screen. */
+  .asp__phone { position: absolute; left: 0; top: 0; width: 324px; height: 672px; border-radius: 54px; background: var(--as-frame); box-shadow: inset 0 0 0 2px var(--as-frame-edge), var(--as-shadow-phone); transform-origin: 0 0; will-change: transform; }
+  .asp__screen { position: absolute; inset: 12px; border-radius: 42px; overflow: hidden; background: var(--as-screen); color: var(--as-ink); }
+  .asp__island { position: absolute; left: 117px; top: 24px; width: 90px; height: 28px; border-radius: 14px; background: var(--as-frame); }
+  .asp__status { position: absolute; left: 30px; right: 26px; top: 16px; display: flex; justify-content: space-between; font-size: 14px; font-weight: 800; }
+  .asp__sig { display: inline-flex; align-items: flex-end; gap: 2px; }
+  .asp__sig i { width: 3px; background: var(--as-ink); border-radius: 1px; }
+  .asp__sig i:nth-child(1) { height: 5px; } .asp__sig i:nth-child(2) { height: 8px; } .asp__sig i:nth-child(3) { height: 11px; }
+  .asp__sig b { width: 22px; height: 11px; margin-left: 6px; border-radius: 3px; border: 1.5px solid var(--as-ink); }
+  .asp__owl { position: absolute; left: 133px; top: 52px; width: 34px; height: 34px; border-radius: 50%; }
+  .asp__h { position: absolute; left: 24px; top: 96px; margin: 0; font-family: var(--font-athenascribe-head); font-weight: 600; font-size: 30px; line-height: 1; }
+  .asp__sub { position: absolute; left: 24px; right: 20px; top: 136px; margin: 0; font-size: 13px; font-weight: 700; color: var(--as-muted); white-space: nowrap; }
+
+  .asp__slip { position: absolute; left: 22px; top: 170px; width: 256px; height: 300px; border-radius: 12px; background: var(--as-paper); box-shadow: 0 0 0 1px var(--as-rule), 0 12px 24px -14px rgb(5 6 25 / .35); overflow: hidden; }
+  .asp__skel { position: absolute; inset: 0; padding: 20px 18px; display: grid; align-content: start; gap: 14px; }
+  .asp__skel u, .asp__bars u { display: block; height: 8px; border-radius: 4px; background: var(--as-rule); }
+  .asp__read { position: absolute; inset: 0; background: var(--as-paper); }
+  .asp__face { position: absolute; inset: 0; padding: 18px 18px 0; }
+  .asp__school { font-size: 10px; font-weight: 800; letter-spacing: .14em; color: var(--as-muted); }
+  .asp__title { margin: 6px 0 10px; font-family: var(--font-athenascribe-head); font-weight: 600; font-size: 19px; line-height: 1.15; }
+  .asp__field { font-size: 13px; font-weight: 700; padding: 7px 5px; margin-inline: -5px; border-bottom: 1.5px solid var(--as-rule); border-radius: 4px 4px 0 0; }
+  .asp__field b, .asp__box b { font-weight: 800; }
+  .asp__hl { background: color-mix(in srgb, var(--as-amber) calc(var(--hl, 0) * 32%), transparent); box-shadow: inset 3px 0 0 color-mix(in srgb, var(--as-amber) calc(var(--hl, 0) * 100%), transparent); }
+  .asp__box { display: flex; gap: 8px; align-items: center; font-size: 13px; font-weight: 700; margin-top: 10px; padding: 7px 5px; margin-inline: -5px; border-radius: 4px; }
+  .asp__box i { width: 15px; height: 15px; border: 2px solid var(--as-indigo); border-radius: 4px; flex: none; }
+  .asp__bars { display: grid; gap: 8px; margin-top: 12px; }
+  .asp__scan { position: absolute; left: 0; right: 0; top: 0; height: 3px; background: var(--as-indigo); box-shadow: 0 0 16px 5px color-mix(in srgb, var(--as-indigo) 32%, transparent); opacity: 0; }
+
+  .asp__chip { position: absolute; right: 14px; top: 156px; display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px 0 9px; border-radius: 999px; font-size: 12px; font-weight: 800; white-space: nowrap; box-shadow: var(--as-shadow-pill); transform-origin: 100% 50%; opacity: 0; }
+  .asp__chip[data-state="vital"] { background: var(--as-amber); color: var(--as-amber-ink); }
+  .asp__chip[data-state="ok"] { background: var(--as-green); color: var(--as-paper); }
+  .asp__chip :global(svg) { width: 15px; height: 15px; }
+
+  .asp__sort { position: absolute; left: 22px; width: 256px; top: 486px; padding: 12px; border-radius: 14px; background: var(--as-paper); box-shadow: 0 0 0 1px var(--as-rule); opacity: 0; }
+  .asp__tabs { display: flex; gap: 6px; }
+  .asp__tab { padding: 5px 9px; border-radius: 999px; background: var(--as-soft); color: var(--as-muted); font-size: 11px; font-weight: 800; white-space: nowrap; }
+  .asp__tab--on { background: var(--as-indigo); color: var(--as-paper); }
+  .asp__tab em { display: inline-block; font-style: normal; }
+  .asp__route { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 13px; font-weight: 800; opacity: 0; }
+  .asp__av { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--as-soft); color: var(--as-indigo); font-size: 10px; font-weight: 800; flex: none; }
+  .asp__av--lg { width: 40px; height: 40px; font-size: 14px; }
+
+  .asp__sheet { position: absolute; left: 0; right: 0; bottom: 0; height: 168px; padding: 10px 20px 22px; border-radius: 26px 26px 0 0; background: var(--as-paper); box-shadow: 0 -18px 40px -18px rgb(5 6 25 / .45); display: grid; align-content: start; gap: 14px; transform: translateY(100%); }
+  .asp__handle { justify-self: center; width: 40px; height: 5px; border-radius: 3px; background: var(--as-rule); }
+  .asp__who { display: flex; align-items: center; gap: 12px; }
+  .asp__who b { display: block; font-size: 16px; font-weight: 800; }
+  .asp__who small { display: block; font-size: 12px; font-weight: 700; color: var(--as-muted); }
+  .asp__go { height: 48px; border-radius: 14px; background: var(--as-indigo); color: var(--as-paper); font-size: 17px; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .asp__go[data-ok] { background: var(--as-green); }
+  .asp__go :global(svg) { width: 20px; height: 20px; }
+
+  .asp__toast { position: absolute; left: 50%; top: 50px; height: 38px; padding: 0 16px; border-radius: 999px; background: var(--as-green); color: var(--as-paper); font-size: 14px; font-weight: 800; white-space: nowrap; display: flex; align-items: center; box-shadow: var(--as-shadow-pill); opacity: 0; }
+</style>
+
+<script>
+  type Beat = { scan: number; scanEnd: number; vital: number; sort: number | null; sheet: number; tap: number; es: number; out: number; dur: number; still: number };
+  type Cam = [number, number, number, number, number, number, number, number][]; // t0, t1, k0, x0, y0, k1, x1, y1
+
+  const BEATS: Record<string, Beat> = {
+    tile: { scan: 0.3, scanEnd: 2.5, vital: 2.7, sort: null, sheet: 3.3, tap: 5.1, es: 5.5, out: 7.0, dur: 8, still: 6.6 },
+    story: { scan: 0.3, scanEnd: 2.4, vital: 2.6, sort: 4.6, sheet: 7.0, tap: 8.6, es: 9.4, out: 11.2, dur: 12, still: 8.9 },
+  };
+  // Camera keyframes in phone units: zoom k on the point (x, y).
+  const FULL = [1, 162, 336] as const, SLIP = [1.45, 150, 318] as const, SORT = [1.5, 150, 520] as const, SHEET = [1.55, 150, 556] as const;
+  const seg = (t0: number, t1: number, a: readonly number[], b: readonly number[]) => [t0, t1, ...a, ...b] as Cam[number];
+  const CAMS: Record<string, Cam> = {
+    tile: [seg(0.4, 1.3, FULL, SLIP), seg(3.0, 3.7, SLIP, SHEET), seg(5.6, 6.4, SHEET, FULL)],
+    story: [seg(0.4, 1.2, FULL, [1.34, 150, 318]), seg(4.3, 5.0, [1.34, 150, 318], SORT), seg(6.8, 7.4, SORT, SHEET), seg(9.2, 9.9, SHEET, FULL)],
+  };
+  const STAGE: Record<string, { w: number; h: number; s0: number }> = { tile: { w: 960, h: 540, s0: 0.74 }, story: { w: 480, h: 600, s0: 0.83 } };
+
+  const spring = (s: number, w = 11, z = 0.62) => {
+    if (s <= 0) return 0;
+    if (z >= 1) return 1 - (1 + w * s) * Math.exp(-w * s);
+    const wd = w * Math.sqrt(1 - z * z);
+    return 1 - Math.exp(-z * w * s) * (Math.cos(wd * s) + ((z * w) / wd) * Math.sin(wd * s));
+  };
+  const cl = (v: number) => Math.max(0, Math.min(1, v));
+  const sm = (v: number) => { v = cl(v); return v * v * (3 - 2 * v); };
+  const io = (v: number) => { v = cl(v); return v < 0.5 ? 4 * v * v * v : 1 - Math.pow(-2 * v + 2, 3) / 2; };
+  const fin = (t: number, a: number, d = 0.3) => sm((t - a) / d);
+  const fout = (t: number, a: number, d = 0.35) => 1 - sm((t - a) / d);
+  const xf = (n: HTMLElement, x: number, y: number, s = 1, o = 1) => { n.style.opacity = o.toFixed(3); n.style.transform = `translate(${x.toFixed(2)}px,${y.toFixed(2)}px) scale(${s.toFixed(4)})`; };
+
+  const WARN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l9 15.5H3z"/><path d="M12 10v4M12 16.8v.1"/></svg>';
+  const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+
+  document.querySelectorAll<HTMLElement>("[data-asp]").forEach((root) => {
+    const v = root.dataset.asp === "story" ? "story" : "tile";
+    const B = BEATS[v], C = CAMS[v], S = STAGE[v];
+    const k = (n: string) => root.querySelector<HTMLElement>(`[data-k="${n}"]`)!;
+    const e = { stage: k("stage"), b1: k("b1"), b2: k("b2"), phone: k("phone"), title: k("title"), sub: k("sub"), slip: k("slip"), read: k("read"), en: k("en"), es: k("es"), scan: k("scan"), chip: k("chip"), sort: k("sort"), count: k("count"), route: k("route"), sheet: k("sheet"), go: k("go"), toast: k("toast") };
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let memo: Record<string, string | boolean> = {};
+    const once = (key: string, val: string | boolean, fn: () => void) => { if (memo[key] !== val) { memo[key] = val; fn(); } };
+    let beat = -1;
+
+    const camAt = (t: number) => {
+      let cur = [...FULL] as number[];
+      for (const [t0, t1, k0, x0, y0, k1, x1, y1] of C) {
+        if (t >= t1) cur = [k1, x1, y1];
+        else if (t > t0) { const p = io((t - t0) / (t1 - t0)); cur = [k0 + (k1 - k0) * p, x0 + (x1 - x0) * p, y0 + (y1 - y0) * p]; break; }
+        else break;
+      }
+      return cur;
+    };
+
+    const render = (t: number) => {
+      const loop = (2 * Math.PI * t) / B.dur;
+      xf(e.b1, Math.sin(loop) * 22, Math.cos(loop) * 12);
+      xf(e.b2, Math.cos(loop) * -18, Math.sin(loop) * 14);
+
+      // Camera
+      const [ck, cx, cy] = camAt(t), s = S.s0 * ck, float = Math.sin(loop) * 3;
+      e.phone.style.transform = `translate(${(S.w / 2 - cx * s).toFixed(2)}px,${(S.h / 2 - cy * s + float).toFixed(2)}px) scale(${s.toFixed(4)})`;
+
+      // 1 The scan reads the slip: the real text fills in under the line, over a skeleton.
+      const p = sm((t - B.scan) / (B.scanEnd - B.scan)) * fout(t, B.out + 0.45, 0.45);
+      e.read.style.clipPath = `inset(0 0 ${((1 - p) * 100).toFixed(2)}% 0)`;
+      e.scan.style.transform = `translateY(${(p * 297).toFixed(1)}px)`;
+      e.scan.style.opacity = (fin(t, B.scan, 0.15) * fout(t, B.scanEnd - 0.05, 0.2)).toFixed(3);
+
+      // Title and the line under it say what is happening.
+      const phase = t < B.vital ? 0 : B.sort !== null && t < B.sort ? 1 : B.sort !== null && t < B.sheet ? 2 : t < B.sheet ? 1 : t < B.es ? 3 : 4;
+      once("phase", String(phase), () => {
+        e.title.textContent = phase < 2 ? "Scan" : phase < 4 ? "Review" : "Sent";
+        e.sub.textContent = ["Translating the whole file", "Vital document found", "Sorted into Field trips", "Waiting for a person to approve", "Spanish, from school records"][phase];
+      });
+      const ph0 = [0, B.vital, B.sort ?? B.vital, B.sheet, B.es][phase];
+      const tp = fin(t, ph0, 0.25);
+      e.title.style.opacity = e.sub.style.opacity = tp.toFixed(3);
+
+      // 2 Vital: the lines that matter light up and a chip pops on.
+      e.en.style.setProperty("--hl", (fin(t, B.vital + 0.05, 0.35) * fout(t, B.es - 0.2, 0.3)).toFixed(3));
+      const chipState = t < B.tap ? "vital" : "ok";
+      once("chip", chipState, () => { e.chip.dataset.state = chipState; e.chip.innerHTML = chipState === "vital" ? `${WARN}Vital document` : `${CHECK}Approved`; });
+      const c0 = chipState === "vital" ? B.vital : B.tap;
+      xf(e.chip, 0, 0, 0.82 + 0.18 * spring(t - c0, 15, 0.5), fin(t, B.vital, 0.12) * fout(t, B.out, 0.3));
+
+      // 3 Sorted (story only): the slip joins the Field trips bucket and is routed to a person.
+      if (B.sort !== null) {
+        const se = spring(t - B.sort, 10, 0.75);
+        xf(e.sort, 0, (1 - se) * 30, 1, fin(t, B.sort, 0.25) * fout(t, B.sheet - 0.1, 0.3));
+        once("count", t >= B.sort + 0.6 ? "3" : "2", () => { e.count.textContent = t >= B.sort! + 0.6 ? "3" : "2"; });
+        e.count.style.transform = `scale(${t >= B.sort + 0.6 ? 0.7 + 0.3 * spring(t - B.sort - 0.6, 18, 0.4) : 1})`;
+        xf(e.route, (1 - spring(t - B.sort - 1.0, 11, 0.8)) * -12, 0, 1, fin(t, B.sort + 1.0, 0.25));
+      }
+
+      // 4 A person approves: the sheet rises, the button turns green with a soft ring.
+      const sh = spring(t - B.sheet, 10, 0.78) * (1 - sm((t - B.es - 0.5) / 0.45));
+      e.sheet.style.transform = `translateY(${((1 - sh) * 100).toFixed(2)}%)`;
+      const ok = t >= B.tap;
+      once("ok", ok, () => { e.go.toggleAttribute("data-ok", ok); e.go.innerHTML = ok ? `${CHECK}Approved` : "Approve"; });
+      const press = t > B.tap - 0.15 && t < B.tap ? 0.95 : 1, pop = ok ? 0.96 + 0.04 * spring(t - B.tap, 18, 0.4) : 1;
+      const ring = ok ? fout(t, B.tap, 0.6) : 0;
+      e.go.style.transform = `scale(${press * pop})`;
+      e.go.style.boxShadow = ring > 0 ? `0 0 0 ${((1 - ring) * 12).toFixed(1)}px color-mix(in srgb, var(--as-green) ${Math.round(ring * 45)}%, transparent)` : "none";
+
+      // 5 The slip turns into Spanish and goes to the family.
+      e.en.style.opacity = Math.max(fout(t, B.es, 0.2), fin(t, B.out + 0.15, 0.2)).toFixed(3);
+      e.es.style.opacity = (fin(t, B.es + 0.17, 0.22) * fout(t, B.out, 0.18)).toFixed(3);
+      const te = spring(t - B.es - 0.35, 11, 0.6);
+      e.toast.style.opacity = (fin(t, B.es + 0.35, 0.15) * fout(t, B.out, 0.3)).toFixed(3);
+      e.toast.style.transform = `translate(-50%, ${((1 - te) * -18).toFixed(2)}px) scale(${(0.9 + 0.1 * te).toFixed(4)})`;
+
+      // Tell the captions which beat is showing (story only).
+      if (v === "story") {
+        const b = t < B.vital ? 0 : t < B.sort! ? 1 : t < B.sheet ? 2 : t < B.es ? 3 : 4;
+        if (b !== beat) { beat = b; root.dispatchEvent(new CustomEvent("asp:beat", { bubbles: true, detail: { beat: b, progress: 0 } })); }
+        const starts = [0, B.vital, B.sort!, B.sheet, B.es, B.dur];
+        root.dispatchEvent(new CustomEvent("asp:progress", { bubbles: true, detail: { beat: b, progress: cl((t - starts[b]) / (starts[b + 1] - starts[b])) } }));
+      }
+    };
+
+    const fit = () => { e.stage.style.transform = `scale(${root.clientWidth / S.w})`; };
+    new ResizeObserver(fit).observe(root);
+    fit();
+
+    let t = 0, playing = false, last = 0, raf = 0;
+    const tick = (now: number) => { t = (t + Math.min(0.05, (now - last) / 1000)) % B.dur; last = now; render(t); if (playing) raf = requestAnimationFrame(tick); };
+    const play = () => { if (playing || reduce.matches) return; playing = true; last = performance.now(); raf = requestAnimationFrame(tick); };
+    const pause = () => { playing = false; cancelAnimationFrame(raf); };
+    new IntersectionObserver((es) => es.forEach((x) => (x.isIntersecting ? play() : pause()))).observe(root);
+    reduce.addEventListener("change", () => { if (reduce.matches) { pause(); render(B.still); } });
+
+    // Captions can jump the loop to a beat; with reduced motion they show that beat as a still.
+    const STILLS = [1.9, 3.9, 6.3, 8.9, 10.4];
+    root.addEventListener("asp:seek", (ev) => {
+      const i = (ev as CustomEvent).detail.beat as number;
+      const starts = [0, B.vital, B.sort ?? B.vital, B.sheet, B.es];
+      t = reduce.matches ? STILLS[i] : starts[i] + 0.01;
+      render(t);
+    });
+    (root as HTMLElement & { aspRenderAt?: (x: number) => void }).aspRenderAt = (x: number) => { pause(); t = x; render(x); };
+
+    render(reduce.matches ? B.still : 0);
+    document.fonts?.ready.then(() => render(reduce.matches ? B.still : t));
+  });
+</script>
