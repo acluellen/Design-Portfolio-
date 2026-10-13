@@ -2,6 +2,10 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-13 · Participant name removed from the Craft journey map
+
+- The parent journey map image (`journey-parent.png`, Craft Education case study) named a research participant twice in its "Key issue" row. Participants appear by role only, so both now read "Parent". Found during the cover research audit.
+
 ## 2026-10-13 · Craft Education home tile (preview)
 
 - Aaron's reference: Micah Hoang's Gaia card, a still photo of a phone on a mirror in the grass where the only motion is the logo on the screen fading in and out. AthenaScribe and Klima both move a lot, so Craft Education is the quiet one.
