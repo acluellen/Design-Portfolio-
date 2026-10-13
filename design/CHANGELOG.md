@@ -2,6 +2,12 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-12 · Klima cover slot, About clip loops again
+
+- Removed the old Klima picture (`work-klima.webp`, the two phone GA era render) from the site at Aaron's request. The Klima tile shows the gray placeholder until the new cover arrives.
+- The new Klima cover is the Figma frame "P3 Klima Prototype (Final)", node 2724:16842 (a 390 by 844 phone screen). Once its export is saved as `src/assets/photos/work-klima.png`, the tile shows it centered on a soft green (`--klima-tile-bg`), with rounded corners and a soft shadow. Alt text is a TODO until Aaron confirms what the screen shows. The Figma download was blocked here (Figma seat limit, and this workspace cannot reach figma.com).
+- About page KRON4 clip loops nonstop again (the play once change is undone). Tapping or clicking the clip pauses and plays it; a small round navy icon shows in the lower right on hover and while paused. No text button. `KronClip` option renamed from `once` to `tap`. New tokens: `--klima-tile-bg`, `--radius-klima-screen`, `--shadow-klima-screen`, `--clip-icon-size`.
+
 ## 2026-10-12 · AthenaScribe home tile: Ending A ships
 
 - The AthenaScribe tile now plays the approved motion (preview v30, "Ending A, centered end slate"), 10.85 seconds on one steady indigo scene: five forms in five languages, "Route a document" grows into a titanium iPhone, the field trip slip is scanned and flagged for admin review, then the phone fades through to "Translation is automatic. Approval stays human." with the AthenaScribe wordmark, and the first form card returns so the loop has no visible seam (checked: first and last frame match exactly).

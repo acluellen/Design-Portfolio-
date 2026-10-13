@@ -6,6 +6,7 @@
 // The whole tile is one link; on hover or focus the name rolls up to "View case study".
 import type { CaseStudy } from "../../lib/case-studies";
 import AthenaScribeTile from "./AthenaScribeTile.astro";
+import Photo from "./Photo.astro";
 
 interface Props {
   study: CaseStudy;
@@ -19,6 +20,9 @@ interface Props {
 const { study, href, wide = false, index } = Astro.props;
 const { title, card, inProgress } = study.data;
 const number = String(index).padStart(2, "0");
+// The Klima cover (the Figma frame, a tall phone screen) shows only once its file is in
+// src/assets/photos/work-klima.png (or .webp). Until then the tile keeps the gray placeholder.
+const klimaFile = Object.keys(import.meta.glob("/src/assets/photos/work-klima.{png,webp,jpg,avif}")).length > 0;
 ---
 
 <article class:list={["tile", { "tile--wide": wide, "tile--linked": href }]}>
@@ -41,7 +45,17 @@ const number = String(index).padStart(2, "0");
   </div>
 
   <div class="tile__media">
-    {study.id === "athenascribe" ? <AthenaScribeTile /> : <span class="tile__slot" aria-hidden="true">Project media</span>}
+    {
+      study.id === "athenascribe" ? (
+        <AthenaScribeTile />
+      ) : study.id === "klima" && klimaFile ? (
+        <div class="tile__klima">
+          <Photo name="work-klima" widths={[200, 300, 400, 600]} sizes="(min-width: 48rem) 9rem, 40vw" ratio="390 / 844" />
+        </div>
+      ) : (
+        <span class="tile__slot" aria-hidden="true">Project media</span>
+      )
+    }
   </div>
 
   {
@@ -80,6 +94,28 @@ const number = String(index).padStart(2, "0");
 
   .tile--linked:hover .tile__media {
     opacity: 0.85;
+  }
+
+  /* Klima cover: the tall Figma screen, centered on a soft green, like a phone held up to the tile. */
+  .tile__klima {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: var(--klima-tile-bg);
+  }
+
+  .tile__klima :global(picture),
+  .tile__klima :global(img) {
+    block-size: 86%;
+    inline-size: auto;
+    max-inline-size: none;
+  }
+
+  .tile__klima :global(img) {
+    block-size: 100%;
+    border-radius: var(--radius-klima-screen);
+    box-shadow: var(--shadow-klima-screen);
   }
 
   .tile__slot {

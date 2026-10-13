@@ -179,6 +179,10 @@
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
   --reveal-distance: 14px; /* sections slide up this far as they fade in */
   --lift-headshot: 4px;
+  --klima-tile-bg: radial-gradient(60% 75% at 50% 50%, #e4ecdc, #eef2e8 70%, #f4f6f0); /* soft green behind the Klima cover on its tile */
+  --radius-klima-screen: 14px;
+  --clip-icon-size: 34px; /* the round pause and play icon on the About clip */
+  --shadow-klima-screen: 0 24px 48px -20px rgb(30 50 30 / .35), 0 2px 6px rgb(30 50 30 / .12);
   /* AthenaScribe Selected work media. A fixed dark indigo scene, the same in both modes. */
   --as-base: #161a30;
   --as-deep: #11142a;

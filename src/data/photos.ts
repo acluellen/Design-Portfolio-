@@ -27,7 +27,7 @@ export const photos: Record<PhotoKey, { alt: string; approved: boolean }> = {
     approved: false,
   },
   "work-klima": {
-    alt: "Two Klima phone screens: a home screen with a row of potted plants, and a Challenge Complete screen.",
+    alt: "TODO: describe the Klima cover screen from Figma (P3 Klima Prototype Final, frame 2724:16842).",
     approved: false,
   },
   "work-craft-education": {
