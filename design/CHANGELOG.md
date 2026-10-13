@@ -2,6 +2,14 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-13 · Craft Education tile: real photo (replaces the mint scene)
+
+- Aaron liked the simplicity of the first Craft tile but not its colors (mint and yellow), and the flat phone looked weaker next to AthenaScribe's realistic iPhone. Three research agents looked at cover practice, the Craft project and assets, and image sources. The decision: one real photo, warm and neutral, with Craft's brand only on the screen, since Craft's design system is not final.
+- The tile is now a photo of an iPhone lying on a sunlit wooden table (Pexels photo 36538952, free license, no credit required; Aaron supplied the file). Its four corner guide marks were painted out, the sides widened 100 px each by mirroring the wood, and it was cropped to 16:9 (`public/media/craft-tile.jpg`, 1600 by 900).
+- The Craft logo sits on the photo's screen at the phone's angle (38.7 degrees) with `multiply`, so the screen's light shows through, and still fades in and out every 6 seconds. The blob, ring, and dot are gone.
+- The pause button now matches the Klima tile's (white on the dark wood). Tokens: the `--craft-mint`, `--craft-yellow`, and phone tokens are replaced by `--craft-tile-bg` and `--craft-pz-*`.
+- Kept off the cover on purpose: no photos of children or families, no puzzle pieces, no WhatsApp or Hubeta screens.
+
 ## 2026-10-13 · Participant name removed from the Craft journey map
 
 - The parent journey map image (`journey-parent.png`, Craft Education case study) named a research participant twice in its "Key issue" row. Participants appear by role only, so both now read "Parent". Found during the cover research audit.

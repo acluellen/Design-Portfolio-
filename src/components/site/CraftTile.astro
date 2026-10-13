@@ -1,23 +1,20 @@
 ---
-// Craft Education home tile (Oct 13 2026), after Micah Hoang's Gaia card: a still scene with one slow
-// motion. A phone lies on a mint table beside the yellow shape and navy ring from Craft's
-// homepage; on its screen the Craft logo fades in, holds, and fades out. The quiet tile in a row of
-// busy ones (AthenaScribe and Klima move a lot). The fade repeats past five seconds, so it has the
-// same pause button as the other tiles (WCAG 2.2.2). Reduced motion: the logo simply shows.
-// The logo is cropped from the redesigned Learning Center page (public/media/craft-logo.png).
-const label = "Craft Education’s logo on a phone screen, the phone lying on a mint table beside a yellow shape and a navy ring from the Craft homepage.";
+// Craft Education home tile (Oct 13 2026), after Micah Hoang's Gaia card: one real photo, one slow
+// motion. An iPhone lies on a sunlit wooden table (Pexels photo 36538952, free license, supplied by
+// Aaron; the four corner guide marks on its screen were painted out and the sides widened slightly).
+// On the screen the Craft Education logo fades in, holds, and fades out. Craft's brand appears only
+// on the screen, since its design system is not final. The quiet tile next to the busy AthenaScribe
+// and Klima tiles. The fade repeats past five seconds, so it has the same pause button as the other
+// tiles (WCAG 2.2.2). Reduced motion: the logo simply shows.
+// The logo is cropped from the redesigned Learning Center page (public/media/craft-logo.png, 180 by
+// 80); `multiply` lets the photo's screen light show through its white background.
+const label = "An iPhone lying on a sunlit wooden table, the Craft Education logo on its screen.";
 ---
 
 <div class="cft" data-cft>
-  <div class="cft__plane" role="img" aria-label={label}>
-    <span class="cft__blob"></span>
-    <span class="cft__ring"></span>
-    <span class="cft__dot"></span>
-    <div class="cft__phone">
-      <div class="cft__screen">
-        <img class="cft__logo" src="/media/craft-logo.png" alt="" width="180" height="80" />
-      </div>
-    </div>
+  <div class="cft__scene" role="img" aria-label={label}>
+    <img class="cft__photo" src="/media/craft-tile.jpg" alt="" width="1600" height="900" loading="lazy" decoding="async" />
+    <img class="cft__logo" src="/media/craft-logo.png" alt="" width="180" height="80" />
   </div>
   <button type="button" class="cft__pz" aria-label="Pause animation" data-cft-pz>
     <svg class="cft__pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="7" y="5" width="3.5" height="14" rx="1"></rect><rect x="13.5" y="5" width="3.5" height="14" rx="1"></rect></svg>
@@ -30,80 +27,34 @@ const label = "Craft Education’s logo on a phone screen, the phone lying on a 
     position: absolute;
     inset: 0;
     overflow: hidden;
-    container-type: inline-size;
-    background: var(--craft-mint);
-    perspective: 150cqw;
+    background: var(--craft-tile-bg);
   }
 
-  /* Everything lies on one tilted plane, like a still life shot from above at an angle. */
-  .cft__plane {
+  .cft__scene {
     position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 100cqw;
-    height: 100cqw;
-    margin: -50cqw 0 0 -50cqw;
-    transform: rotateX(52deg) rotateZ(-34deg);
-    transform-style: preserve-3d;
+    inset: 0;
   }
 
-  .cft__blob {
+  .cft__photo {
     position: absolute;
-    left: 26cqw;
-    top: 24cqw;
-    width: 46cqw;
-    height: 42cqw;
-    border-radius: 58% 42% 55% 45% / 52% 58% 42% 48%;
-    background: var(--craft-yellow);
-  }
-
-  .cft__ring {
-    position: absolute;
-    left: 62cqw;
-    top: 56cqw;
-    width: 20cqw;
-    height: 20cqw;
-    border: 1.6cqw solid var(--craft-navy);
-    border-radius: 50%;
-  }
-
-  .cft__dot {
-    position: absolute;
-    left: 24cqw;
-    top: 30cqw;
-    width: 6cqw;
-    height: 6cqw;
-    border-radius: 50%;
-    background: var(--craft-navy);
-  }
-
-  /* The phone: a dark body with a thin side, and a white screen. */
-  .cft__phone {
-    position: absolute;
-    left: 38cqw;
-    top: 27cqw;
-    width: 24cqw;
-    aspect-ratio: 9 / 19.5;
-    padding: 0.9cqw;
-    border-radius: 3.6cqw;
-    background: var(--craft-frame);
-    box-shadow:
-      -0.5cqw 0.6cqw 0 var(--craft-edge),
-      -0.9cqw 1.1cqw 0 var(--craft-frame),
-      -4cqw 5cqw 6cqw var(--craft-shadow);
-  }
-
-  .cft__screen {
-    display: grid;
-    place-items: center;
+    inset: 0;
+    width: 100%;
     height: 100%;
-    border-radius: 2.8cqw;
-    background: var(--craft-screen);
+    max-width: none;
+    object-fit: cover;
   }
 
+  /* Placed on the photo's screen: its center, its tilt (the phone lies turned 38.7 degrees), and
+     60% of the screen's width. Measured from the photo, so these numbers belong to this photo only. */
   .cft__logo {
-    width: 90%;
+    position: absolute;
+    left: 51.1%;
+    top: 49.7%;
+    width: 13.4%;
     height: auto;
+    max-width: none;
+    transform: translate(-50%, -50%) rotate(-38.7deg);
+    mix-blend-mode: multiply;
     animation: cft-breath var(--duration-craft-breath) ease-in-out infinite;
   }
 
@@ -129,9 +80,9 @@ const label = "Craft Education’s logo on a phone screen, the phone lying on a 
     height: 34px;
     padding: 0;
     border-radius: 50%;
-    border: 1px solid color-mix(in srgb, var(--craft-navy) 30%, transparent);
-    background: color-mix(in srgb, var(--craft-navy) 8%, transparent);
-    color: var(--craft-navy);
+    border: 1px solid var(--craft-pz-edge);
+    background: var(--craft-pz-bg);
+    color: var(--craft-pz-ink);
     cursor: pointer;
     opacity: 0.7;
     transition: opacity var(--duration-fast) var(--ease-standard);
@@ -143,7 +94,7 @@ const label = "Craft Education’s logo on a phone screen, the phone lying on a 
   }
 
   .cft__pz:focus-visible {
-    outline: var(--focus-width) solid var(--craft-navy);
+    outline: var(--focus-width) solid var(--craft-pz-ink);
     outline-offset: 2px;
   }
 
