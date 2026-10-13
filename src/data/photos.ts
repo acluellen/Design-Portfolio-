@@ -27,7 +27,7 @@ export const photos: Record<PhotoKey, { alt: string; approved: boolean }> = {
     approved: false,
   },
   "work-klima": {
-    alt: "TODO: describe the Klima cover screen from Figma (P3 Klima Prototype Final, frame 2724:16842).",
+    alt: "The Klima app splash screen: the green Klima logo over a misty, forested mountainside.",
     approved: false,
   },
   "work-craft-education": {

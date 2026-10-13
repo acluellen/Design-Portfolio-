@@ -2,6 +2,11 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-12 · Klima tile cover
+
+- The Klima tile shows Aaron's new cover: the splash screen with the Klima logo over a misty forest (attached in chat, exported from the Figma frame 2724:16842, 1170 by 2532). The screen sits centered with rounded corners and a soft shadow, and a blurred copy of the same forest fills the rest of the 16:9 tile. Alt text is a draft for Aaron to confirm.
+- Tokens: `--klima-tile-bg` is now a forest green fallback, new `--klima-blur-radius`, deeper `--shadow-klima-screen`.
+
 ## 2026-10-12 · Klima cover slot, About clip loops again
 
 - Removed the old Klima picture (`work-klima.webp`, the two phone GA era render) from the site at Aaron's request. The Klima tile shows the gray placeholder until the new cover arrives.
