@@ -2,7 +2,7 @@
 // AthenaScribe's Selected work media (Oct 12 2026): one hero object, the permission slip, in the
 // center of a quiet indigo tint (Micah Hoang: one object per card, no text under it but tags).
 // An 8 second loop: the slip is scanned, flagged as a vital document, and an assistant principal
-// approves it, then it turns into Spanish. Plays on its own while on screen; with reduced motion it
+// approves it (no cursor: it is a phone screen), then it turns into Spanish. Plays on its own while on screen; with reduced motion it
 // holds the approved frame. The scene is drawn on a fixed 960 x 540 stage scaled to the tile, so
 // the px values below are stage units, not page sizes. Colors are the --as-* tokens in tokens.css.
 import "@fontsource/lora/600.css";
@@ -48,7 +48,6 @@ import "@fontsource/nunito/800.css";
       <span class="asm__go" data-asm="go">Approve</span>
     </div>
 
-    <svg class="asm__el asm__cursor" data-asm="cursor" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2.5l15 8.6-6.6 1.6 3.7 7-2.9 1.5-3.7-7L4.8 19z" fill="var(--as-paper)" stroke="var(--as-ink)" stroke-width="1.4" stroke-linejoin="round"></path></svg>
   </div>
 </div>
 
@@ -92,7 +91,6 @@ import "@fontsource/nunito/800.css";
   .asm__go { height: 48px; min-width: 140px; border-radius: 12px; background: var(--as-indigo); color: var(--as-paper); font-size: 17px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
   .asm__go[data-ok] { background: var(--as-green); }
   .asm__go :global(svg) { width: 20px; height: 20px; }
-  .asm__cursor { left: 0; top: 0; width: 32px; height: 32px; filter: drop-shadow(0 4px 6px rgb(0 0 0 / .35)); opacity: 0; }
 </style>
 
 <script>
@@ -101,7 +99,7 @@ import "@fontsource/nunito/800.css";
     const DUR = 8, STILL = 6.0;
     const stage = root.querySelector<HTMLElement>("[data-asm-stage]")!;
     const q = (k: string) => root.querySelector<HTMLElement>(`[data-asm="${k}"]`)!;
-    const el = { b1: q("b1"), b2: q("b2"), doc: q("doc"), en: q("en"), es: q("es"), wash: q("wash"), scan: q("scan"), pill: q("pill"), bar: q("bar"), sub: q("sub"), go: q("go"), cursor: q("cursor") };
+    const el = { b1: q("b1"), b2: q("b2"), doc: q("doc"), en: q("en"), es: q("es"), wash: q("wash"), scan: q("scan"), pill: q("pill"), bar: q("bar"), sub: q("sub"), go: q("go") };
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     // Closed form spring: settles with a small overshoot, like a real object.
@@ -125,10 +123,7 @@ import "@fontsource/nunito/800.css";
     const check = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
     const owl = '<img src="/media/athenascribe-owl.webp" alt="" width="34" height="34">';
 
-    let pillState = "", okState: boolean | null = null, target = { x: 0, y: 0 };
-    const measure = () => {
-      target = { x: el.bar.offsetLeft + el.go.offsetLeft + el.go.offsetWidth / 2, y: el.bar.offsetTop + el.go.offsetTop + el.go.offsetHeight / 2 };
-    };
+    let pillState = "", okState: boolean | null = null;
 
     const render = (t: number) => {
       const loop = (2 * Math.PI * t) / DUR;
@@ -167,8 +162,8 @@ import "@fontsource/nunito/800.css";
       }
       const press = t > 5.0 && t < 5.15 ? 0.95 : 1, pop = ok ? 0.96 + 0.04 * spring(t - 5.15, 18, 0.4) : 1;
       el.go.style.transform = `scale(${press * pop})`;
-      const c = spring(t - 3.9, 6.5, 1), cx0 = 820, cy0 = 600;
-      set(el.cursor, { x: cx0 + (target.x + 26 - cx0) * c, y: cy0 + (target.y + 8 - cy0) * c, s: t > 5.0 && t < 5.15 ? 0.88 : 1, o: fin(t, 3.9, 0.25) * fout(t, 5.8, 0.3) });
+      const ring = ok ? fout(t, 5.15, 0.6) : 0;
+      el.go.style.boxShadow = ring > 0 ? `0 0 0 ${(1 - ring) * 14}px color-mix(in srgb, var(--as-green) ${Math.round(ring * 45)}%, transparent)` : "none";
 
       // The slip turns into Spanish, then back for the next loop
       el.en.style.opacity = Math.max(fout(t, 5.45, 0.2), fin(t, 7.25, 0.2)).toFixed(3);
@@ -192,8 +187,7 @@ import "@fontsource/nunito/800.css";
     new IntersectionObserver((entries) => entries.forEach((e) => (e.isIntersecting ? play() : pause()))).observe(root);
     reduce.addEventListener("change", () => { if (reduce.matches) { pause(); render(STILL); } });
 
-    measure();
     render(reduce.matches ? STILL : 0);
-    document.fonts?.ready.then(() => { measure(); render(reduce.matches ? STILL : t); });
+    document.fonts?.ready.then(() => { render(reduce.matches ? STILL : t); });
   }
 </script>
