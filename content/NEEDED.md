@@ -22,7 +22,7 @@ Last updated October 9, 2026. Claude keeps this list current. Placeholders show 
 
 ## About page list
 
-- [ ] Years for the Lovable hackathon and the fight team, plus the gym name.
+- [ ] Year for the Lovable hackathon. (The fight team row is off the About list, Oct 13.)
 - [ ] Decide with Tyler whether the KRON4 clip goes under AthenaScribe.
 - [ ] Later: the job seeking app for junior and mid level designers, as a new card once there is work to show.
 - [ ] KRON4 segment date.

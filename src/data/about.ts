@@ -36,8 +36,6 @@ export const resume: ResumeRow[] = [
   { when: "2026", place: "KRON4", what: "Feature", href: site.kron4Video },
   { when: "2024 to 2025", place: "General Assembly", what: "UX certificate" },
   { place: "Lovable", what: "Hackathon" },
-  // Gym name and years to add.
-  { place: "Fight team", what: "Coach" },
 ];
 
 // Real, named quotes only, with permission. Empty until Aaron sends them.

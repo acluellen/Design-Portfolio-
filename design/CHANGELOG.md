@@ -2,6 +2,10 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-13 · About list: fight team row removed
+
+- Aaron, in a comment on the preview: take the "Fight team, Coach" row out of the About page Experience list. The list now has four rows: BRIDGEGOOD, KRON4, General Assembly, Lovable.
+
 ## 2026-10-13 · Craft Education tile: real photo (replaces the mint scene)
 
 - Aaron liked the simplicity of the first Craft tile but not its colors (mint and yellow), and the flat phone looked weaker next to AthenaScribe's realistic iPhone. Three research agents looked at cover practice, the Craft project and assets, and image sources. The decision: one real photo, warm and neutral, with Craft's brand only on the screen, since Craft's design system is not final.
