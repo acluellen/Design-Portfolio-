@@ -5,6 +5,7 @@ Newest first. Every design or structure decision goes here.
 ## 2026-10-12 · Klima tile video (preview)
 
 - The Klima tile plays Aaron's cover clip from the Klima presentation (5.2 s, three shots: a hiker by wind turbines, a cyclist in the city, someone planting a tree), muted and looping, only while on screen. Pause button bottom right, same as AthenaScribe (the clip runs past 5 s, WCAG 2.2.2). Reduced motion shows the first frame. New `KlimaTile.astro`, files `public/video/klima-tile.mp4` and `.webm` (about 0.6 MB and 0.4 MB), `public/media/klima-tile-poster.jpg`, token `--klima-tile-bg`.
+- Text on the Klima video: "Designing Trust" (dim) over "for a Greener Future" (white), Aaron's own presentation line, set like the AthenaScribe end slate (site display font, same weight and tracking) so the tiles read as one set. Bottom left on a soft diagonal shade, where all three shots are darkest. Scales with the tile. Tokens `--klima-text`, `--klima-text-dim`, `--klima-scrim`.
 
 ## 2026-10-12 · Live: four tiles and the AthenaScribe Ending A tile
 

@@ -3,7 +3,7 @@
 // (a hiker by wind turbines, a cyclist in the city, someone planting a tree). Muted, looping, plays
 // only while on screen. Over 5 s, so it has a pause button (WCAG 2.2.2), same as AthenaScribe.
 // Reduced motion: the first frame as a still, and the clip never downloads.
-const label = "Klima: a hiker looks out at wind turbines, a cyclist rides through the city, and someone plants a tree.";
+const label = "Klima, Designing Trust for a Greener Future: a hiker looks out at wind turbines, a cyclist rides through the city, and someone plants a tree.";
 ---
 
 <div class="klt" data-klt>
@@ -12,6 +12,7 @@ const label = "Klima: a hiker looks out at wind turbines, a cyclist rides throug
     <source data-src="/video/klima-tile.webm" type="video/webm" />
     <source data-src="/video/klima-tile.mp4" type="video/mp4" />
   </video>
+  <p class="klt__line" aria-hidden="true"><span>Designing Trust</span> <span>for a Greener Future</span></p>
   <button type="button" class="klt__pz" aria-label="Pause video" data-klt-pz>
     <svg class="klt__pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="7" y="5" width="3.5" height="14" rx="1"></rect><rect x="13.5" y="5" width="3.5" height="14" rx="1"></rect></svg>
     <svg class="klt__play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"></path></svg>
@@ -21,6 +22,13 @@ const label = "Klima: a hiker looks out at wind turbines, a cyclist rides throug
 <style>
   .klt { position: absolute; inset: 0; overflow: hidden; background: var(--klima-tile-bg); }
   .klt__poster, .klt__video { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; }
+  /* The line, set like the AthenaScribe end slate: same font, dim first half, white second half.
+     Bottom left on a soft shade, where all three shots are darkest and no one is standing. */
+  .klt { container-type: inline-size; }
+  .klt::after { content: ""; position: absolute; inset: 0; background: var(--klima-scrim); pointer-events: none; }
+  .klt__line { position: absolute; z-index: 1; left: 5.5cqw; bottom: 5.5cqw; max-width: 62cqw; margin: 0; font-family: var(--font-display); font-size: 4.4cqw; font-weight: 600; letter-spacing: -.015em; line-height: 1.12; text-wrap: balance; text-shadow: 0 1px 12px rgb(0 0 0 / .35); }
+  .klt__line span { display: block; color: var(--klima-text); }
+  .klt__line span:first-child { color: var(--klima-text-dim); }
   .klt__pz { pointer-events: auto; position: absolute; right: 12px; bottom: 12px; z-index: 2; width: 34px; height: 34px; padding: 0; border-radius: 50%; display: grid; place-items: center; background: rgb(255 255 255 / .1); border: 1px solid rgb(255 255 255 / .22); color: var(--as-paper); cursor: pointer; opacity: .7; transition: opacity var(--duration-fast) var(--ease-standard); }
   .klt__pz:hover, .klt__pz:focus-visible { opacity: 1; }
   .klt__pz:focus-visible { outline: var(--focus-width) solid var(--as-paper); outline-offset: 2px; }
