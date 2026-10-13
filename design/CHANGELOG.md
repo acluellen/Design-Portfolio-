@@ -885,3 +885,18 @@ Aaron asked for a fuller browser preview, so the home page, case study page, and
 - `global.css` holds the reset, base element styles, and small layout helpers (`.container`, `.reading`, `.flow`, `.label`, `.visually-hidden`). All values come from tokens.
 - `public/favicon.svg` uses the paper and accent hex values directly, because SVG favicons cannot read CSS variables.
 
+
+## 2026-10-12 · Selected work: four equal tiles and the AthenaScribe motion
+
+### Layout (Micah Hoang)
+- Selected work is four equal tiles in two columns, ordered AthenaScribe, Klima, Craft Education, Commonplace. The wide featured tile is gone.
+- Tiles are 16:9 (`--ratio-work-tile`) with square corners, the mono label above and tags below. The description line under each tile is removed so the home page reads image first; the line stays in the frontmatter for the case study pages.
+
+### AthenaScribe media
+- `AthenaScribeMotion.astro`: an 8 second coded loop on a fixed 960 x 540 stage scaled to the tile. The permission slip is scanned, flagged as a vital document, approved by an assistant principal, then turns into Spanish. Spring motion, plays only on screen, holds the approved frame with reduced motion.
+- New `--as-*` tokens hold its palette. It is a fixed dark indigo scene, the same in both modes.
+- Lora 600 and Nunito 700/800 (Fontsource) load only for this tile, to match AthenaScribe's own UI.
+- `public/media/athenascribe-owl.webp`: the owl logo, cut from the logo Aaron sent.
+
+### Commonplace
+- CommonPlace added as a draft, in progress tile with tags only. Facts still needed are marked TODO in its file.

@@ -5,10 +5,8 @@ import fs from "node:fs";
 import WorkTile from "../components/site/WorkTile.astro";
 import { caseStudyHref, getAllCaseStudies } from "../lib/case-studies";
 
-// Selected work: the featured case study as one wide tile, the next two below it, by `order`.
+// Selected work: every case study with a card, as equal tiles in two columns, by `order` (Micah Hoang).
 const studies = (await getAllCaseStudies()).filter((s) => s.data.card);
-const featured = studies.find((s) => s.data.featured);
-const others = studies.filter((s) => s !== featured);
 // The Resume link goes live once public/resume.pdf exists; until then it shows as plain text.
 const hasResume = fs.existsSync(new URL("../../public/resume.pdf", import.meta.url));
 const year = new Date().getFullYear();
@@ -32,19 +30,12 @@ const year = new Date().getFullYear();
     </div>
   </section>
 
-  <!-- 2. Selected work as large image tiles: one wide on top, two below. Tiles link only when published. -->
+  <!-- 2. Selected work as equal image tiles, two per row. Tiles link only when published. -->
   <section id="work" class="work" aria-labelledby="work-heading" data-reveal>
     <h2 id="work-heading">Selected work</h2>
-    {featured && <WorkTile study={featured} href={caseStudyHref(featured)} wide index={1} />}
-    {
-      others.length > 0 && (
-        <div class="work__grid">
-          {others.map((study, i) => (
-            <WorkTile study={study} href={caseStudyHref(study)} index={i + (featured ? 2 : 1)} />
-          ))}
-        </div>
-      )
-    }
+    <div class="work__grid">
+      {studies.map((study, i) => <WorkTile study={study} href={caseStudyHref(study)} index={i + 1} />)}
+    </div>
   </section>
 
   <!-- 3. About: a large heading like "Selected work", then a small photo on the left (placeholder for
@@ -222,7 +213,7 @@ const year = new Date().getFullYear();
     }
   }
 
-  /* 2. Selected work: the wide tile, then two side by side from 48rem. */
+  /* 2. Selected work: equal tiles, two side by side from 48rem. */
   .work {
     display: grid;
     gap: var(--space-8);
