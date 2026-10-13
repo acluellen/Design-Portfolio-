@@ -27,7 +27,7 @@ export const photos: Record<PhotoKey, { alt: string; approved: boolean }> = {
     approved: false,
   },
   "work-klima": {
-    alt: "Two Klima phone screens: a home screen with a row of potted plants, and a Challenge Complete screen.",
+    alt: "TODO: Klima cover (a video, coming).",
     approved: false,
   },
   "work-craft-education": {

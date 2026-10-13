@@ -2,6 +2,10 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-12 · Live: four tiles and the AthenaScribe Ending A tile
+
+- Aaron asked for AthenaScribe to be live. Published to the live branch: the four tile Selected work grid, the AthenaScribe hero, "How it works", and the Ending A home tile. The Klima tile stays a gray placeholder on the live site until its video arrives. The old Klima picture is removed from the site.
+
 ## 2026-10-12 · AthenaScribe home tile: Ending A ships
 
 - The AthenaScribe tile now plays the approved motion (preview v30, "Ending A, centered end slate"), 10.85 seconds on one steady indigo scene: five forms in five languages, "Route a document" grows into a titanium iPhone, the field trip slip is scanned and flagged for admin review, then the phone fades through to "Translation is automatic. Approval stays human." with the AthenaScribe wordmark, and the first form card returns so the loop has no visible seam (checked: first and last frame match exactly).
