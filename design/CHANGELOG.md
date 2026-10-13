@@ -2,6 +2,11 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-13 · CommonPlace tile: corner table photo and a Klima style line
+
+- Aaron moved away from the city skyline: the cover is now his photo of a sunlit corner table set for two, with an empty booth and chairs by the window. A third place waiting for people says belonging without showing faces. Cropped to 16:9 below the posters and the window lettering.
+- No project name on the cover (the tile label above already says CommonPlace). The line reads "Building Belonging / in a New City", from Aaron's own description (young adults entering a new city), set exactly like the Klima tile's line: same font, size, and soft shade, dim first half, white second half. New `--commonplace-text*` and `--commonplace-scrim` tokens point at the Klima ones so the two stay matched.
+
 ## 2026-10-13 · CommonPlace home tile
 
 - The gray placeholder is replaced by Aaron's own CommonPlace title slide: a hazy city skyline washed toward white, with "CommonPlace", "Building Belonging for New Graduates", and the one line. Cropped to 16:9 (`public/media/commonplace-tile.jpg`). New `CommonPlaceTile.astro`.

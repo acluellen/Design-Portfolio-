@@ -1,13 +1,17 @@
 ---
-// CommonPlace home tile (Oct 13 2026): Aaron's own title slide, a hazy city skyline washed toward
-// white with "CommonPlace", "Building Belonging for New Graduates", and the one line. Still, no
-// motion: the project is in progress, and the grid already has three moving tiles.
-// Source: Aaron's slide, cropped to 16:9 (public/media/commonplace-tile.jpg, 1600 by 900).
-const label = "CommonPlace: Building Belonging for New Graduates. A near peer social belonging platform for young adults entering a new city, over a hazy city skyline.";
+// CommonPlace home tile (Oct 13 2026): a sunlit corner table set for two, an empty booth and chairs
+// by the window. A third place, waiting for people: belonging without showing faces. Photo supplied
+// by Aaron, cropped to 16:9 (public/media/commonplace-tile.jpg, 1600 by 900).
+// The line is set exactly like the Klima tile's ("Designing Trust / for a Greener Future"): same
+// font and size, dim first half, white second half, bottom left on a soft shade. No project name on
+// the cover; the tile label above it already says CommonPlace. Still, no motion: the project is in
+// progress, and three tiles already move.
+const label = "Building Belonging in a New City: a sunlit corner table set for two, with an empty booth and chairs by the window.";
 ---
 
-<div class="cpt">
-  <img class="cpt__photo" src="/media/commonplace-tile.jpg" alt={label} width="1600" height="900" loading="lazy" decoding="async" />
+<div class="cpt" role="img" aria-label={label}>
+  <img class="cpt__photo" src="/media/commonplace-tile.jpg" alt="" width="1600" height="900" loading="lazy" decoding="async" />
+  <p class="cpt__line" aria-hidden="true"><span>Building Belonging</span> <span>in a New City</span></p>
 </div>
 
 <style>
@@ -15,6 +19,7 @@ const label = "CommonPlace: Building Belonging for New Graduates. A near peer so
     position: absolute;
     inset: 0;
     overflow: hidden;
+    container-type: inline-size;
     background: var(--commonplace-tile-bg);
   }
 
@@ -25,5 +30,38 @@ const label = "CommonPlace: Building Belonging for New Graduates. A near peer so
     height: 100%;
     max-width: none;
     object-fit: cover;
+  }
+
+  .cpt::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--commonplace-scrim);
+    pointer-events: none;
+  }
+
+  .cpt__line {
+    position: absolute;
+    z-index: 1;
+    left: 5.5cqw;
+    bottom: 5.5cqw;
+    max-width: 62cqw;
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 4.4cqw;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.12;
+    text-wrap: balance;
+    text-shadow: 0 1px 12px rgb(0 0 0 / 0.35);
+  }
+
+  .cpt__line span {
+    display: block;
+    color: var(--commonplace-text);
+  }
+
+  .cpt__line span:first-child {
+    color: var(--commonplace-text-dim);
   }
 </style>
