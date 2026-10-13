@@ -1,0 +1,386 @@
+---
+// AthenaScribe home tile motion (Oct 12 2026, "Ending A", approved by Aaron in chat).
+// One 10.85 s loop on a fixed indigo scene:
+//   0.00  five school forms in five languages, slow then fast, landing on the field trip slip
+//   2.45  "Route a document" slides in; a soft press, then the button grows into the phone screen
+//         (Material container transform, emphasized easing, 0.55 s)
+//   4.15  the slip is scanned; the due date, health info, and signature get flagged
+//   5.60  "Flagged for admin review"
+//   6.25  the phone fades through to the end slate: "Translation is automatic. Approval stays human."
+//  10.05  the slate fades and the first form card returns, so the last frame matches the first.
+// No cursor. Site fonts outside the phone; AthenaScribe's own fonts (Lora, Nunito) inside it.
+// The scene is drawn in stage units (960 x 540) on a fixed stage scaled to its box, so the pixel
+// values below are drawing coordinates, not page layout. Colors are --as-* tokens.
+// Reduced motion shows one still frame (the flagged slip). A pause button meets WCAG 2.2.2.
+import "@fontsource/lora/600.css";
+import "@fontsource/nunito/700.css";
+import "@fontsource/nunito/800.css";
+
+const label =
+  "AthenaScribe: school forms arrive in Arabic, Vietnamese, Portuguese, Korean, and Spanish. Route a document opens the app on a phone, scans a field trip permission slip, and flags the due date, health information, and signature for admin review. Translation is automatic. Approval stays human.";
+const owl = "/media/athenascribe-owl.webp";
+---
+
+<div class="ast" data-ast>
+  <div class="ast-scene" role="img" aria-label={label}>
+    <div class="stage" data-k="stage">
+      <div class="bg"></div><div class="blob b1" data-k="b1"></div><div class="blob b2" data-k="b2"></div><div class="vign"></div><div class="grain"></div>
+
+      <div class="el fcard" data-k="fcard"><div class="fbody" data-k="fbody"></div></div>
+      <div class="el cta" data-k="cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h12M13 6l6 6-6 6"></path></svg>Route a document</div>
+
+      <p class="el sl sa1" data-k="sa1">Translation is automatic.</p>
+      <p class="el sl sa2" data-k="sa2">Approval stays human.</p>
+      <div class="el sal" data-k="sal"><img src={owl} alt="" width="22" height="22" />AthenaScribe</div>
+
+      <div class="el phone" data-k="phone">
+        <span class="btn l act"></span><span class="btn l vu"></span><span class="btn l vd"></span><span class="btn r sd"></span><span class="bezel"></span>
+        <div class="screen">
+          <div class="status"><span>9:41</span><span class="sig"><span class="bars4"><i></i><i></i><i></i><i></i></span><svg class="wifi" viewBox="0 0 16 12"><path d="M8 11.2 5.6 8.7a3.4 3.4 0 0 1 4.8 0zM3.5 6.6a6.4 6.4 0 0 1 9 0l-1.4 1.4a4.4 4.4 0 0 0-6.2 0zM1.3 4.4a9.5 9.5 0 0 1 13.4 0l-1.4 1.4a7.5 7.5 0 0 0-10.6 0z" fill="var(--as-ink)"></path></svg><span class="batt"><i></i></span></span></div>
+          <div class="nav"><span class="back"><svg viewBox="0 0 24 24" fill="none" stroke="var(--as-ink)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"></path></svg></span><img class="owl" src={owl} alt="" width="30" height="30" /><span class="more"><svg viewBox="0 0 24 24" fill="var(--as-ink)"><circle cx="5.5" cy="12" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="18.5" cy="12" r="1.8"></circle></svg></span></div>
+          <p class="ph">Route document</p>
+          <p class="psub" data-k="psub"></p>
+          <div class="viewer"></div>
+          <div class="docwrap">
+            <div class="page"><img src="/media/athenascribe-slip.webp" alt="" width="510" height="660" /><div class="wash" data-k="wash"></div><span class="pgn">1 / 2</span></div>
+            <div class="det v" data-k="d0"><span class="dtag">Due Sept 13</span></div>
+            <div class="det p" data-k="d1"><span class="dtag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>Health info · private</span></div>
+            <div class="det v" data-k="d2"><span class="dtag">Signature needed</span></div>
+            <div class="scan" data-k="scan"></div>
+          </div>
+          <div class="strip"><b>2 pages</b><span>English → <em>Spanish</em></span><small>· school records</small></div>
+          <div class="ai" data-k="ai"><img src={owl} alt="" width="34" height="34" /><div><b data-k="aiT">Ready to scan</b><div class="meta" data-k="aiM"></div></div></div>
+          <nav class="tabbar"><span class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M4 10.5 12 4l8 6.5V20h-5.5v-6h-5v6H4z"></path></svg>Home</span><span class="tab on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M3.5 7.5A2 2 0 0 1 5.5 5.5h4l2 2h7a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"></path></svg>Documents</span><span class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="8.5" r="3.8"></circle><path d="M4.5 20a7.5 7.5 0 0 1 15 0"></path></svg>Profile</span></nav>
+          <span class="homebar"></span>
+        </div>
+        <span class="island"></span>
+      </div>
+    </div>
+  </div>
+  <button type="button" class="ast-pz" data-k="pz" aria-label="Pause animation"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="7" y="5" width="3.5" height="14" rx="1"></rect><rect x="13.5" y="5" width="3.5" height="14" rx="1"></rect></svg></button>
+</div>
+
+<style is:global>
+  /* Everything is scoped under .ast. The scene keeps its own box model and line height so it draws
+     the same as the approved preview, whatever the page around it does. */
+  .ast { position: absolute; inset: 0; overflow: hidden; background: var(--as-base); pointer-events: none; }
+  .ast-scene, .ast-scene *, .ast-scene *::before, .ast-scene *::after { box-sizing: content-box; }
+  .ast-scene { position: absolute; inset: 0; overflow: hidden; font-family: var(--font-athenascribe-ui); font-size: 16px; line-height: normal; letter-spacing: normal; pointer-events: none; }
+  .ast-scene svg, .ast-scene img { display: inline; max-width: none; }
+  .ast-scene p { margin: 0; text-wrap: initial; }
+  .ast .stage { position: absolute; left: 0; top: 0; width: 960px; height: 540px; transform-origin: 0 0; }
+  .ast .bg { position: absolute; inset: 0; background: var(--as-base); }
+  .ast .vign { position: absolute; inset: 0; background: radial-gradient(90% 110% at 50% 40%, transparent 40%, rgb(5 6 25 / .45)); }
+  .ast .blob { position: absolute; border-radius: 50%; filter: blur(64px); opacity: 0; }
+  .ast .b1 { width: 60%; height: 66%; left: 20%; top: 6%; background: var(--as-glow); }
+  .ast .b2 { width: 40%; height: 46%; left: 52%; top: 50%; background: var(--as-teal); }
+  .ast .grain { position: absolute; inset: 0; opacity: .16; mix-blend-mode: overlay; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+  .ast .el { position: absolute; will-change: transform, opacity; }
+
+  /* The form cards */
+  .ast .fcard { z-index: 3; left: 220px; top: 180px; width: 520px; height: 180px; border-radius: 24px; background: var(--as-paper); box-shadow: var(--as-shadow-doc); color: var(--as-ink); overflow: hidden; }
+  .ast .fbody { position: absolute; inset: 0; padding: 28px 32px; display: grid; grid-template-columns: 64px 1fr; gap: 20px; align-items: center; }
+  .ast .ficon { width: 64px; height: 64px; border-radius: 16px; display: grid; place-items: center; color: var(--as-paper); }
+  .ast .ficon svg { width: 34px; height: 34px; }
+  .ast .ftext { display: grid; gap: 12px; min-width: 0; }
+  .ast .fname { font-family: var(--font-display); font-size: 29px; font-weight: 600; letter-spacing: -.01em; line-height: 1.12; }
+  .ast .frow { display: flex; gap: 7px; flex-wrap: nowrap; }
+  .ast .flang { justify-self: start; display: inline-flex; align-items: center; gap: 7px; padding: 6px 12px; border-radius: 999px; background: var(--as-soft); color: var(--as-indigo); font-family: var(--font-text), var(--font-athenascribe-scripts); font-size: 15px; font-weight: 700; white-space: nowrap; }
+  .ast .flang svg { width: 17px; height: 17px; }
+  .ast .flang i { font-style: normal; opacity: .45; }
+  .ast .cta { left: 300px; top: 226px; width: 360px; height: 88px; border-radius: 24px; background: var(--as-paper); color: var(--as-indigo); display: flex; align-items: center; justify-content: center; gap: 14px; font-family: var(--font-display); font-size: 28px; font-weight: 600; letter-spacing: -.01em; box-shadow: var(--as-shadow-pill); opacity: 0; }
+  .ast .cta svg { width: 30px; height: 30px; flex: none; }
+
+  /* The phone: 324 x 672 phone units, a 300 x 648 screen, titanium frame. */
+  .ast .phone { left: 0; top: 0; width: 324px; height: 672px; border-radius: 54px; background: var(--as-titanium); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .4), inset 0 0 2px rgb(0 0 0 / .55), 0 1px 1px rgb(0 0 0 / .12), 0 2px 2px rgb(0 0 0 / .12), 0 4px 4px rgb(0 0 0 / .12), 0 8px 8px rgb(0 0 0 / .14), 0 16px 16px rgb(0 0 0 / .16), 0 32px 48px rgb(0 0 0 / .28); transform-origin: 0 0; opacity: 0; }
+  .ast .bezel { position: absolute; inset: 3.4px; border-radius: 51px; background: var(--as-bezel); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .06); }
+  .ast .btn { position: absolute; width: 3px; background: var(--as-titanium-button); }
+  .ast .btn.l { left: -2.2px; border-radius: 3px 0 0 3px; }
+  .ast .btn.r { right: -2.2px; border-radius: 0 3px 3px 0; }
+  .ast .btn.act { top: 18%; height: 3.6%; }
+  .ast .btn.vu { top: 26%; height: 7%; }
+  .ast .btn.vd { top: 34.5%; height: 7%; }
+  .ast .btn.sd { top: 29%; height: 11%; }
+  .ast .screen { position: absolute; inset: 12px; border-radius: 42px; overflow: hidden; background: var(--as-screen); color: var(--as-ink); z-index: 1; }
+  .ast .screen::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 60; background: linear-gradient(115deg, rgb(255 255 255 / .10), rgb(255 255 255 / .03) 28%, transparent 42%); }
+  .ast .island { position: absolute; left: 114.5px; top: 20.5px; width: 95px; height: 28px; border-radius: 14px; background: #000; z-index: 3; }
+  .ast .island::after { content: ""; position: absolute; right: 21%; top: 50%; width: 8.5px; height: 8.5px; margin-top: -4.25px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #2b3a6b, #0b0f1c 60%); }
+  .ast .status { position: absolute; left: 0; right: 0; top: 16px; height: 20px; display: grid; grid-template-columns: 103px 1fr 103px; align-items: center; font-size: 14px; font-weight: 700; letter-spacing: -.01em; }
+  .ast .status > span:first-child { justify-self: center; padding-left: 8px; }
+  .ast .status > .sig { grid-column: 3; justify-self: center; padding-right: 6px; }
+  .ast .sig { display: inline-flex; align-items: center; gap: 5px; transform: scale(.92); }
+  .ast .bars4 { display: inline-flex; align-items: flex-end; gap: 1.5px; height: 11px; }
+  .ast .bars4 i { width: 3px; background: var(--as-ink); border-radius: 1px; }
+  .ast .bars4 i:nth-child(1) { height: 4px; }
+  .ast .bars4 i:nth-child(2) { height: 6px; }
+  .ast .bars4 i:nth-child(3) { height: 8.5px; }
+  .ast .bars4 i:nth-child(4) { height: 11px; }
+  .ast .wifi { width: 15px; height: 11px; }
+  .ast .batt { width: 25px; height: 12px; border-radius: 3.5px; border: 1.5px solid color-mix(in srgb, var(--as-ink) 45%, transparent); padding: 1.5px; position: relative; }
+  .ast .batt i { display: block; height: 100%; width: 78%; background: var(--as-ink); border-radius: 1.5px; }
+  .ast .nav { position: absolute; left: 16px; right: 16px; top: 52px; height: 36px; display: flex; align-items: center; justify-content: space-between; }
+  .ast .back, .ast .more { width: 36px; height: 36px; border-radius: 50%; background: var(--as-paper); box-shadow: 0 0 0 1px var(--as-rule); display: grid; place-items: center; }
+  .ast .back svg, .ast .more svg { width: 16px; height: 16px; }
+  .ast .owl { width: 30px; height: 30px; border-radius: 50%; }
+  .ast .ph { position: absolute; left: 20px; top: 100px; font-family: var(--font-athenascribe-head); font-weight: 600; font-size: 27px; line-height: 1.05; letter-spacing: -.01em; }
+  .ast .psub { position: absolute; left: 20px; right: 16px; top: 136px; font-size: 13px; font-weight: 700; color: var(--as-muted); white-space: nowrap; }
+  .ast .psub em { font-style: normal; color: var(--as-indigo-ink); font-weight: 800; }
+  .ast .viewer { position: absolute; left: 16px; right: 16px; top: 168px; height: 257px; border-radius: 18px; background: var(--as-viewer); box-shadow: inset 0 0 0 1px var(--as-viewer-edge); }
+  .ast .docwrap { position: absolute; left: 60px; top: 180px; width: 180px; height: 233px; }
+  .ast .page { position: absolute; inset: 0; border-radius: 3px; background: var(--as-paper); box-shadow: 0 0 0 1px rgb(20 22 50 / .12), 0 10px 22px -14px rgb(20 22 50 / .4); overflow: hidden; }
+  .ast .page img { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .ast .pgn { position: absolute; right: 6px; bottom: 6px; height: 16px; padding: 0 6px; border-radius: 8px; background: rgb(29 32 51 / .72); color: var(--as-paper); font-size: 9px; font-weight: 800; line-height: 16px; }
+  .ast .scan { position: absolute; left: -6px; right: -6px; top: 0; height: 2.5px; background: var(--as-indigo); box-shadow: 0 0 14px 4px color-mix(in srgb, var(--as-indigo) 30%, transparent); opacity: 0; border-radius: 2px; }
+  .ast .wash { position: absolute; left: 0; right: 0; top: 0; height: 0; background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--as-indigo) 9%, transparent)); }
+  .ast .det { position: absolute; border-radius: 3px; opacity: 0; }
+  .ast .det.v { border: 1.5px solid var(--as-amber); background: color-mix(in srgb, var(--as-amber) 16%, transparent); }
+  .ast .det.p { border: 1.5px solid var(--as-plum); background: color-mix(in srgb, var(--as-plum) 12%, transparent); }
+  .ast .dtag { position: absolute; left: -1px; bottom: calc(100% + 2px); height: 13px; padding: 0 5px; border-radius: 4px; font-size: 8.5px; font-weight: 800; line-height: 13px; white-space: nowrap; color: var(--as-paper); }
+  .ast .dtag svg { width: 8px; height: 8px; margin-right: 3px; vertical-align: -1px; }
+  .ast .det.v .dtag { background: var(--as-amber); color: var(--as-amber-ink); }
+  .ast .det.p .dtag { background: var(--as-plum); }
+  .ast .strip { position: absolute; left: 20px; right: 14px; top: 439px; display: flex; align-items: center; gap: 5px; font-size: 10.5px; font-weight: 700; color: var(--as-muted); white-space: nowrap; }
+  .ast .strip b { color: var(--as-ink); }
+  .ast .strip em { font-style: normal; color: var(--as-indigo-ink); font-weight: 800; }
+  .ast .strip small { font-size: 10.5px; color: var(--as-faint); }
+  .ast .ai { position: absolute; left: 16px; right: 16px; top: 469px; height: 68px; border-radius: 18px; background: var(--as-paper); box-shadow: 0 0 0 1px var(--as-rule), 0 8px 18px -12px rgb(20 22 50 / .3); display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: center; padding: 0 14px; }
+  .ast .ai img { width: 34px; height: 34px; border-radius: 50%; }
+  .ast .ai b { display: block; font-size: 13.5px; font-weight: 800; }
+  .ast .aim { font-size: 11px; font-weight: 700; color: var(--as-muted); }
+  .ast .ai .meta { display: flex; align-items: center; gap: 8px; margin-top: 5px; height: 18px; }
+  .ast .track { flex: 1; height: 5px; border-radius: 3px; background: var(--as-soft); overflow: hidden; }
+  .ast .fill { height: 100%; width: 0; background: var(--as-indigo); border-radius: 3px; }
+  .ast .pct { font-size: 11px; font-weight: 800; color: var(--as-muted); font-variant-numeric: tabular-nums; min-width: 28px; text-align: right; }
+  .ast .tabbar { position: absolute; left: 0; right: 0; bottom: 0; height: 84px; background: color-mix(in srgb, var(--as-paper) 92%, transparent); border-top: 1px solid var(--as-rule); display: grid; grid-template-columns: repeat(3, 1fr); padding-top: 9px; }
+  .ast .tab { display: grid; justify-items: center; align-content: start; gap: 3px; font-size: 10.5px; font-weight: 800; color: var(--as-faint); }
+  .ast .tab svg { width: 23px; height: 23px; }
+  .ast .tab.on { color: var(--as-indigo); }
+  .ast .homebar { position: absolute; left: 50%; bottom: 6px; width: 102px; height: 4px; margin-left: -51px; border-radius: 2px; background: var(--as-ink); z-index: 40; }
+
+  /* The end slate: two lines set straight on the scene, centered, then the wordmark. */
+  .ast .sl { left: 0; right: 0; text-align: center; font-family: var(--font-display); font-size: 46px; font-weight: 600; letter-spacing: -.015em; line-height: 52px; opacity: 0; }
+  .ast .sa1 { top: 163px; color: var(--as-slate-dim); }
+  .ast .sa2 { top: 215px; color: var(--as-slate); }
+  .ast .sal { left: 0; right: 0; top: 311px; display: flex; justify-content: center; align-items: center; gap: 8px; font-family: var(--font-text); font-size: 16px; font-weight: 500; color: var(--as-slate-dim); opacity: 0; }
+  .ast .sal img { border-radius: 50%; background: var(--as-paper); }
+
+  /* Pause control, above the tile's link so it stays clickable. */
+  .ast-pz { pointer-events: auto; position: absolute; right: 12px; bottom: 12px; z-index: 2; width: 34px; height: 34px; padding: 0; border-radius: 50%; display: grid; place-items: center; background: rgb(255 255 255 / .1); border: 1px solid rgb(255 255 255 / .22); color: var(--as-paper); cursor: pointer; opacity: .7; transition: opacity var(--duration-fast) var(--ease-standard); }
+  .ast-pz:hover, .ast-pz:focus-visible { opacity: 1; }
+  .ast-pz:focus-visible { outline: var(--focus-width) solid var(--as-paper); outline-offset: 2px; }
+  .ast-pz svg { width: 14px; height: 14px; }
+  @media (prefers-reduced-motion: reduce) { .ast-pz { display: none; } }
+</style>
+
+<script>
+  // Timeline in seconds. These are the approved Ending A values from the preview (v30).
+  const DUR = 10.85;
+  const STILL = 6.0; // reduced motion: the slip, flagged for admin review
+  const B = { cta: 2.45, tap: 3.25, phone: 3.55, scan: 4.15, scanEnd: 5.45, vital: 5.6, exit: 6.25, back: 10.05 };
+  const CS = [0, 0.65, 1.0, 1.25, 1.47, 2.25]; // when each form card lands: slow, fast, then it slows
+  const RO = 0.36; // the first card comes back this long after the slate starts to leave
+  const S0 = 0.74; // phone scale on the stage
+  const FULL = [1, 162, 336], PUSH = [1.04, 162, 336];
+  const CAM: [number, number, number[], number[]][] = [[3.95, 4.5, FULL, PUSH]];
+  // Where the flagged fields sit on the slip image, as fractions of the page: x, y, width, height.
+  const BOX = [[0.0847, 0.5191, 0.3425, 0.0218], [0.0847, 0.6764, 0.8306, 0.02], [0.0847, 0.7455, 0.8306, 0.02]];
+  const PW = 180, PH = 233;
+  const FOUND = BOX.map((b) => B.scan + (b[1] + b[3]) * (B.scanEnd - B.scan));
+
+  const ICON: Record<string, string> = {
+    bus: '<path d="M5 17V6.5A2.5 2.5 0 0 1 7.5 4h9A2.5 2.5 0 0 1 19 6.5V17"/><path d="M4 17h16v2H4zM5 11h14M8 20v1M16 20v1"/>',
+    health: '<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/><path d="M12 9.5v5M9.5 12h5"/>',
+    iep: '<path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/>',
+    phone: '<path d="M6.5 4h3l1.5 4-2 1.2a10 10 0 0 0 5.8 5.8L16 13l4 1.5v3A2.5 2.5 0 0 1 17.5 20 13.5 13.5 0 0 1 4 6.5 2.5 2.5 0 0 1 6.5 4z"/>',
+    lunch: '<path d="M12 7c2.5-2.5 7-1.5 7 3.5 0 5-3.5 9.5-7 9.5s-7-4.5-7-9.5C5 5.5 9.5 4.5 12 7z"/><path d="M12 7c0-2 1-3.5 2.5-4"/>',
+  };
+  const GLOBE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>';
+  // The five form cards. Icon colors are part of the drawing, one per form type.
+  const ORDER = [
+    { n: "Lunch program enrollment", nat: "العربية", l: "Arabic", i: "lunch", c: "#4f7aa0" },
+    { n: "Health and immunization form", nat: "Tiếng Việt", l: "Vietnamese", i: "health", c: "#2f9e86" },
+    { n: "Special education IEP notice", nat: "Português", l: "Portuguese", i: "iep", c: "#c08a1e" },
+    { n: "Emergency contact update", nat: "한국어", l: "Korean", i: "phone", c: "#8a62c9" },
+    { n: "Field trip permission slip", nat: "Español", l: "Spanish", i: "bus", c: "#4a5ad8" },
+  ];
+  const SUBS = ["Uploaded <em>just now</em>", "Scanning <em>both pages</em>", "<em>Vital</em> · needs admin review"];
+  const AI_T = ["Ready to scan", "Detecting PII and vital fields", "Flagged for admin review"];
+  const AI_M = [
+    '<span class="aim">AthenaScribe checks every page</span>',
+    '<span class="track"><span class="fill" data-k="fill"></span></span><span class="pct" data-k="pct">0%</span>',
+    '<span class="aim" style="color:var(--as-amber-ink)">Title VI vital document · FERPA PII</span>',
+  ];
+
+  const cb = (x1: number, y1: number, x2: number, y2: number) => (v: number) => {
+    if (v <= 0) return 0;
+    if (v >= 1) return 1;
+    let a = v;
+    for (let i = 0; i < 8; i++) {
+      const x = 3 * (1 - a) * (1 - a) * a * x1 + 3 * (1 - a) * a * a * x2 + a * a * a - v;
+      const d = 3 * (1 - a) * (1 - a) * x1 + 6 * (1 - a) * a * (x2 - x1) + 3 * a * a * (1 - x2);
+      if (Math.abs(d) < 1e-6) break;
+      a = Math.max(0, Math.min(1, a - x / d));
+    }
+    return 3 * (1 - a) * (1 - a) * a * y1 + 3 * (1 - a) * a * a * y2 + a * a * a;
+  };
+  const EMPH = cb(0.2, 0, 0, 1), DECEL = cb(0.05, 0.7, 0.1, 1), ACCEL = cb(0.3, 0, 0.8, 0.15);
+  const spring = (s: number, w = 11, z = 0.62) => {
+    if (s <= 0) return 0;
+    if (z >= 1) return 1 - (1 + w * s) * Math.exp(-w * s);
+    const wd = w * Math.sqrt(1 - z * z);
+    return 1 - Math.exp(-z * w * s) * (Math.cos(wd * s) + ((z * w) / wd) * Math.sin(wd * s));
+  };
+  const cl = (v: number) => Math.max(0, Math.min(1, v));
+  const sm = (v: number) => { v = cl(v); return v * v * (3 - 2 * v); };
+  const io = (v: number) => { v = cl(v); return v < 0.5 ? 4 * v * v * v : 1 - Math.pow(-2 * v + 2, 3) / 2; };
+  const fin = (t: number, a: number, d = 0.3) => sm((t - a) / d);
+  const fout = (t: number, a: number, d = 0.35) => 1 - sm((t - a) / d);
+  const xf = (n: HTMLElement, x: number, y: number, s = 1, o = 1) => {
+    n.style.opacity = o.toFixed(3);
+    n.style.transform = `translate(${x.toFixed(2)}px,${y.toFixed(2)}px) scale(${s.toFixed(4)})`;
+  };
+  const camAt = (t: number) => {
+    let c = FULL;
+    for (const [t0, t1, a, b] of CAM) {
+      if (t >= t1) c = b;
+      else if (t > t0) { const p = io((t - t0) / (t1 - t0)); c = a.map((v, i) => v + (b[i] - v) * p); break; }
+      else break;
+    }
+    return c;
+  };
+  const cardHTML = (f: (typeof ORDER)[number]) =>
+    `<span class="ficon" style="background:${f.c}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICON[f.i]}</svg></span><span class="ftext"><span class="fname">${f.n}</span><span class="frow"><span class="flang">${GLOBE}<bdi>${f.nat}</bdi><i>·</i>${f.l}</span></span></span>`;
+
+  const PLAY_ICON = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>';
+  const PAUSE_ICON = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="7" y="5" width="3.5" height="14" rx="1"/><rect x="13.5" y="5" width="3.5" height="14" rx="1"/></svg>';
+
+  document.querySelectorAll<HTMLElement>("[data-ast]").forEach((root) => {
+    const $ = (k: string) => root.querySelector<HTMLElement>(`[data-k="${k}"]`)!;
+    const e = {
+      stage: $("stage"), b1: $("b1"), b2: $("b2"), fcard: $("fcard"), fbody: $("fbody"), cta: $("cta"),
+      phone: $("phone"), psub: $("psub"), scan: $("scan"), wash: $("wash"), ai: $("ai"), aiT: $("aiT"), aiM: $("aiM"),
+      sa1: $("sa1"), sa2: $("sa2"), sal: $("sal"), pz: $("pz"),
+      d: [0, 1, 2].map((i) => $("d" + i)),
+    };
+    BOX.forEach((b, i) => {
+      const pad = 3, d = e.d[i];
+      d.style.left = b[0] * PW - pad + "px";
+      d.style.top = b[1] * PH - pad + "px";
+      d.style.width = b[2] * PW + pad * 2 + "px";
+      d.style.height = b[3] * PH + pad * 2 + "px";
+    });
+    const memo: Record<string, string> = {};
+    const once = (k: string, v: string, f: () => void) => { if (memo[k] !== v) { memo[k] = v; f(); } };
+
+    function render(t: number) {
+      const loop = (2 * Math.PI * t) / DUR;
+      xf(e.b1, Math.sin(loop) * 22, Math.cos(loop) * 12, 1, 0.42);
+      xf(e.b2, Math.cos(loop) * -18, Math.sin(loop) * 14, 1, 0.035);
+
+      // 1 The queue of forms, then the card slides away and returns at the end of the loop
+      const ret = t >= B.back + RO;
+      const ci = ret ? 0 : t >= CS[5] ? 4 : Math.max(0, CS.findIndex((s, j) => j < 5 && t >= s && t < CS[j + 1]));
+      once("ci", String(ci), () => { e.fbody.innerHTML = cardHTML(ORDER[ci]); });
+      const k = spring(t - (ret ? B.back : CS[ci]), 22, 0.7);
+      e.fbody.style.transform = `translateY(${(ci === 0 && !ret ? 0 : (1 - k) * 10).toFixed(2)}px)`;
+      e.fbody.style.opacity = ci > 0 && !ret ? fin(t, CS[ci], 0.06).toFixed(3) : "1";
+      if (ret) {
+        const r = DECEL(cl((t - B.back - RO) / 0.42));
+        xf(e.fcard, 0, (1 - r) * 26, 0.98 + 0.02 * r, cl((t - B.back - RO) / 0.2));
+      } else {
+        const out = sm((t - CS[5]) / 0.3);
+        xf(e.fcard, -out * 520, 0, 1 - out * 0.04, Math.pow(1 - out, 1.6));
+      }
+
+      // 2 Route a document: slides in, a soft press, then the button itself grows into the phone screen
+      const ce = spring(t - B.cta, 10, 0.75), press = t > B.tap - 0.12 && t < B.tap + 0.08 ? 0.965 : 1;
+      const m = EMPH(cl((t - B.tap - 0.08) / 0.55)), cw = 360 + (222 - 360) * m, chh = 88 + (479 - 88) * m;
+      const c = e.cta;
+      c.style.width = cw.toFixed(1) + "px";
+      c.style.height = chh.toFixed(1) + "px";
+      c.style.left = (480 - cw / 2).toFixed(1) + "px";
+      c.style.top = (270 - chh / 2).toFixed(1) + "px";
+      c.style.borderRadius = (24 + 7 * m).toFixed(1) + "px";
+      c.style.background = m > 0 ? `color-mix(in srgb, var(--as-screen) ${(m * 100).toFixed(1)}%, var(--as-paper))` : "";
+      c.style.color = `color-mix(in srgb, var(--as-indigo) ${(fout(t, B.tap + 0.08, 0.12) * 100).toFixed(1)}%, transparent)`;
+      xf(c, (1 - ce) * 560, 0, press, fin(t, B.cta, 0.15) * fout(t, B.tap + 0.66, 0.08));
+
+      // The phone, a small camera push for the scan, then it fades through to the end slate
+      const pout = ACCEL(cl((t - B.exit) / 0.3));
+      const [ck, cx, cy] = camAt(t), s = S0 * ck * (1 - 0.12 * pout), fl = Math.sin(loop) * 3;
+      e.phone.style.opacity = (cl((t - B.tap - 0.3) / 0.33) * (1 - pout)).toFixed(3);
+      e.phone.style.transform = `translate(${(480 - cx * s).toFixed(2)}px,${(270 - cy * s + fl).toFixed(2)}px) scale(${s.toFixed(4)})`;
+
+      // Subtitle under "Route document"
+      const phase = t < B.scan ? 0 : t < B.vital ? 1 : 2;
+      once("phase", String(phase), () => { e.psub.innerHTML = SUBS[phase]; });
+      const PS = [B.phone, B.scan, B.vital, 99];
+      e.psub.style.opacity = (fin(t, PS[phase], 0.2) * fout(t, PS[phase + 1] - 0.14, 0.14)).toFixed(3);
+
+      // 3 The scan and 4 the flagged fields
+      const sp = sm((t - B.scan) / (B.scanEnd - B.scan));
+      e.scan.style.transform = `translateY(${(sp * PH).toFixed(1)}px)`;
+      e.scan.style.opacity = (fin(t, B.scan, 0.12) * fout(t, B.scanEnd - 0.05, 0.18)).toFixed(3);
+      e.wash.style.height = sp * PH + "px";
+      e.wash.style.opacity = fout(t, B.scanEnd, 0.4).toFixed(3);
+      FOUND.forEach((f, i) => { const v = DECEL(cl((t - f) / 0.18)); xf(e.d[i], 0, 0, 0.96 + 0.04 * v, v); });
+      const st = t < B.scan ? 0 : t < B.scanEnd ? 1 : 2;
+      once("ai", String(st), () => { e.aiT.textContent = AI_T[st]; e.aiM.innerHTML = AI_M[st]; });
+      if (st === 1) {
+        $("fill").style.width = sp * 100 + "%";
+        $("pct").textContent = Math.round(sp * 100) + "%";
+      }
+      const ae = st === 2 ? spring(t - B.scanEnd, 14, 0.6) : 1;
+      e.ai.style.transform = `scale(${(0.97 + 0.03 * ae).toFixed(4)})`;
+
+      // 5 The end slate, one line at a time, then the wordmark
+      const a1 = B.exit + 0.3, a2 = a1 + 0.5, a3 = a1 + 1.0, q = 1 - ACCEL(cl((t - B.back) / 0.35));
+      const e1 = DECEL(cl((t - a1) / 0.35)), e2 = DECEL(cl((t - a2) / 0.35));
+      xf(e.sa1, 0, (1 - e1) * 11, 1, e1 * q);
+      xf(e.sa2, 0, (1 - e2) * 11, 1, e2 * q);
+      e.sal.style.opacity = (cl((t - a3) / 0.3) * q).toFixed(3);
+    }
+
+    const fit = () => { e.stage.style.transform = `scale(${root.clientWidth / 960})`; };
+    new ResizeObserver(fit).observe(root);
+    fit();
+
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let t = 0, playing = false, last = 0, raf = 0, visible = false, userPaused = false;
+    const tick = (now: number) => {
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      t = (t + dt) % DUR;
+      render(t);
+      if (playing) raf = requestAnimationFrame(tick);
+    };
+    const play = () => {
+      if (playing || userPaused || !visible || reduce.matches || document.hidden) return;
+      playing = true;
+      last = performance.now();
+      raf = requestAnimationFrame(tick);
+    };
+    const pause = () => { playing = false; cancelAnimationFrame(raf); };
+    const setButton = () => {
+      e.pz.setAttribute("aria-label", userPaused ? "Play animation" : "Pause animation");
+      e.pz.innerHTML = userPaused ? PLAY_ICON : PAUSE_ICON;
+    };
+    e.pz.addEventListener("click", (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      userPaused = !userPaused;
+      setButton();
+      userPaused ? pause() : play();
+    });
+    new IntersectionObserver((xs) => xs.forEach((x) => { visible = x.isIntersecting; visible ? play() : pause(); })).observe(root);
+    document.addEventListener("visibilitychange", () => (document.hidden ? pause() : play()));
+    reduce.addEventListener("change", () => { if (reduce.matches) { pause(); t = STILL; render(t); } else play(); });
+
+    // Frame checks (Playwright) call this to pause and draw one moment.
+    (root as HTMLElement & { renderAt?: (v: number) => void }).renderAt = (v: number) => { userPaused = true; pause(); t = v; render(v); };
+
+    t = reduce.matches ? STILL : 0;
+    render(t);
+    document.fonts?.ready.then(() => render(t));
+  });
+</script>

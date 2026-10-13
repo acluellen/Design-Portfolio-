@@ -194,13 +194,25 @@
   --as-muted: #6b6f86;
   --as-rule: #e2e3ec;
   --as-shadow-doc: 0 40px 80px -30px rgb(5 6 25 / .8), 0 2px 8px rgb(5 6 25 / .25);
-  --as-shadow-pill: 0 14px 30px -10px rgb(5 6 25 / .7);
+  --as-shadow-pill: 0 12px 26px -10px rgb(5 6 25 / .6);
   --as-shadow-phone: 0 50px 90px -30px rgb(5 6 25 / .85), 0 4px 12px rgb(5 6 25 / .35);
   --as-frame: #0c0e1c; /* phone body */
   --as-frame-edge: #3a3f5c;
-  --as-screen: #f7f7fb; /* AthenaScribe's app background */
+  --as-screen: #f6f6fa; /* AthenaScribe's app background */
+  /* Added Oct 12 2026 for the home tile motion (Ending A, approved in chat). */
+  --as-indigo-ink: #2437b8; /* indigo text on white inside the app */
+  --as-plum: #7a4fc4; /* private info box on the scanned slip */
+  --as-faint: #9a9db0; /* page count and quiet labels inside the app */
+  --as-viewer: #eceef5; /* the document viewer behind the slip */
+  --as-viewer-edge: #e2e4ee;
+  --as-bezel: #050505; /* the black glass edge around the phone screen */
+  --as-titanium: linear-gradient(135deg, #a9a7a1 0%, #5f5d59 15%, #d4d2cc 30%, #72706b 48%, #c3c1bb 66%, #575551 84%, #acaaa4 100%); /* phone frame */
+  --as-titanium-button: linear-gradient(90deg, #4a4843, #b0ada6 45%, #6b6964); /* phone side buttons */
+  --as-slate: #ffffff; /* end slate, second line */
+  --as-slate-dim: rgb(241 243 247 / .7); /* end slate, first line and the wordmark */
+  --font-athenascribe-scripts: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", "Geeza Pro", "Noto Sans Arabic", sans-serif; /* Korean and Arabic names on the form cards */
   --font-athenascribe-head: "Lora", Georgia, serif; /* AthenaScribe's own UI fonts, used only inside its tile */
-  --font-athenascribe-ui: "Nunito", system-ui, sans-serif;
+  --font-athenascribe-ui: "Nunito", "Apple SD Gothic Neo", "Noto Sans KR", "Geeza Pro", "Noto Sans Arabic", "Segoe UI", system-ui, sans-serif;
 }
 
 @media (min-width: 48rem) {
