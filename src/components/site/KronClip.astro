@@ -3,21 +3,22 @@
 // Reduced motion (or no JavaScript): the still image only, and the clip never downloads.
 // `opens`: the frame starts as a small crop and opens to full size as it scrolls into view
 // (modeled on Zeel Shah's portfolio). Pure CSS, only where scroll timelines exist, never with reduced motion.
-// `once`: no caption row and no Pause button. The clip plays through once (3.5 seconds, under the
-// five second limit in WCAG 2.2.2) each time it comes into view, then rests on its last frame.
+// `bare`: no caption row. The clip still loops, so it still needs a way to pause (WCAG 2.2.2): the
+// whole frame is the pause button, with a small round icon that shows on hover, on focus, and
+// while paused.
 import Photo from "./Photo.astro";
 
 interface Props {
   opens?: boolean;
-  once?: boolean;
+  bare?: boolean;
 }
 
-const { opens = false, once = false } = Astro.props;
+const { opens = false, bare = false } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
-<div class:list={["clip", { "clip--opens": opens }]} data-clip data-once={once ? "" : undefined}>
+<div class:list={["clip", { "clip--opens": opens, "clip--bare": bare }]} data-clip>
   <div class="clip__frame">
     <Photo
       name="kron4-still-color"
@@ -30,7 +31,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       class="clip__video"
       data-clip-video
       muted
-      loop={!once}
+      loop
       playsinline
       preload="none"
       aria-hidden="true"
@@ -40,11 +41,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
         { src: `${base}/video/aaron-kron4-loop-color.webm`, type: "video/webm" },
       ])}
     ></video>
+    {
+      bare && (
+        <button class="clip__icon" type="button" data-clip-toggle aria-label="Pause clip" hidden>
+          <svg class="clip__pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" /></svg>
+          <svg class="clip__play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" /></svg>
+        </button>
+      )
+    }
   </div>
   <!-- The loop runs past five seconds, so it needs a way to stop it (WCAG 2.2.2). -->
   <!-- Optional caption from the page, with the Pause control at the end of the same row. -->
   {
-    !once && (
+    !bare && (
       <div class="clip__bar">
         <slot />
         <button class="clip__toggle" type="button" data-clip-toggle hidden>Pause clip</button>
@@ -59,7 +68,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   document.querySelectorAll<HTMLElement>("[data-clip]").forEach((clip) => {
     const video = clip.querySelector<HTMLVideoElement>("[data-clip-video]")!;
     const toggle = clip.querySelector<HTMLButtonElement>("[data-clip-toggle]");
-    const once = clip.hasAttribute("data-once");
     let inView = false;
     let pausedByVisitor = false;
     let loaded = false;
@@ -90,7 +98,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       pausedByVisitor = !video.paused;
       if (pausedByVisitor) video.pause();
       else play();
-      toggle.textContent = pausedByVisitor ? "Play clip" : "Pause clip";
+      const label = pausedByVisitor ? "Play clip" : "Pause clip";
+      // The round icon keeps its label for screen readers; the text button shows it.
+      if (toggle.classList.contains("clip__icon")) toggle.setAttribute("aria-label", label);
+      else toggle.textContent = label;
+      clip.classList.toggle("is-paused", pausedByVisitor);
     });
 
     const setUp = () => {
@@ -102,26 +114,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       }
     };
 
-    if (once) {
-      // Loads as it nears the screen, plays from the start once half of it is on screen, and stays
-      // on the last frame when it ends.
-      new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting && motion.matches) load();
-      }, { rootMargin: "200px 0px" }).observe(clip);
-      new IntersectionObserver(([entry]) => {
-        inView = entry.isIntersecting;
-        if (inView) {
-          video.currentTime = 0;
-          play();
-        } else video.pause();
-      }, { threshold: 0.5 }).observe(clip);
-    } else {
-      new IntersectionObserver(([entry]) => {
-        inView = entry.isIntersecting;
-        if (inView) play();
-        else video.pause();
-      }, { rootMargin: "200px 0px" }).observe(clip);
-    }
+    new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      if (inView) play();
+      else video.pause();
+    }, { rootMargin: "200px 0px" }).observe(clip);
 
     motion.addEventListener("change", setUp);
     setUp();
@@ -234,7 +231,54 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     color: var(--color-accent);
   }
 
-  .clip__toggle[hidden] {
+  .clip__toggle[hidden],
+  .clip__icon[hidden] {
     display: none;
+  }
+
+  /* Bare clip: the whole frame pauses and plays. The round icon sits in the lower right and shows
+     on hover, on keyboard focus, and while paused. */
+  .clip__icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: var(--space-3);
+    border: 0;
+    background: none;
+    color: var(--color-always-dark-ink);
+    cursor: pointer;
+  }
+
+  .clip__icon svg {
+    inline-size: var(--control-height);
+    block-size: var(--control-height);
+    padding: var(--space-3);
+    border-radius: var(--radius-pill);
+    background: var(--color-always-dark);
+    fill: currentColor;
+    opacity: 0;
+    transition: opacity var(--duration-fast) var(--ease-standard);
+  }
+
+  .clip__play,
+  .clip.is-paused .clip__pause {
+    display: none;
+  }
+
+  .clip.is-paused .clip__play {
+    display: block;
+  }
+
+  .clip__icon:hover svg,
+  .clip__icon:focus-visible svg,
+  .clip.is-paused .clip__icon svg {
+    opacity: 1;
+  }
+
+  .clip__icon:focus-visible {
+    outline: var(--focus-width) solid var(--color-focus);
+    outline-offset: calc(var(--focus-width) * -1);
   }
 </style>

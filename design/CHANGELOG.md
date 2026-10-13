@@ -23,6 +23,11 @@ Newest first. Every design or structure decision goes here.
 
 
 
+## 2026-10-13 · Gallery clip loops again
+
+- Aaron wants the KRON4 clip on the About page to loop. A loop longer than five seconds needs a way to pause (WCAG 2.2.2), so the whole clip is now the pause button: tap or click to pause and play. A small round navy icon (pause or play) sits in the lower right and shows on hover, on keyboard focus, and while paused. Screen readers hear "Pause clip" or "Play clip". No text button and no caption row.
+- `KronClip once` is replaced by `KronClip bare`.
+
 ## 2026-10-12 · About gallery labels and a quieter clip
 
 - "A few things that shaped me": each picture now has its label above it, "01 / BRIDGEGOOD APPRENTICESHIP COHORT, 2026", in the same small mono capitals as the home page tiles (number muted, caption in heading color). The pictures do not link anywhere, so there is no "View case study" roll.

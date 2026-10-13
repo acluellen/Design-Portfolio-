@@ -101,7 +101,7 @@ const numbered = rows.map((row) => row.map((tile) => ({ ...tile, number: String(
                   <span class="shaped__caption">{tile.caption}</span>
                 </p>
                 {tile.clip ? (
-                  <KronClip once />
+                  <KronClip bare />
                 ) : tile.photo ? (
                   <Photo
                     name={tile.photo}
