@@ -2,6 +2,11 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-13 · CommonPlace home tile
+
+- The gray placeholder is replaced by Aaron's own CommonPlace title slide: a hazy city skyline washed toward white, with "CommonPlace", "Building Belonging for New Graduates", and the one line. Cropped to 16:9 (`public/media/commonplace-tile.jpg`). New `CommonPlaceTile.astro`.
+- Still, no motion: the project is in progress, and AthenaScribe, Klima, and Craft already move. Light and calm, it pairs with the Craft tile in the second row.
+
 ## 2026-10-13 · About list: fight team row removed
 
 - Aaron, in a comment on the preview: take the "Fight team, Coach" row out of the About page Experience list. The list now has four rows: BRIDGEGOOD, KRON4, General Assembly, Lovable.

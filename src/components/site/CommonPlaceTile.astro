@@ -1,0 +1,29 @@
+---
+// CommonPlace home tile (Oct 13 2026): Aaron's own title slide, a hazy city skyline washed toward
+// white with "CommonPlace", "Building Belonging for New Graduates", and the one line. Still, no
+// motion: the project is in progress, and the grid already has three moving tiles.
+// Source: Aaron's slide, cropped to 16:9 (public/media/commonplace-tile.jpg, 1600 by 900).
+const label = "CommonPlace: Building Belonging for New Graduates. A near peer social belonging platform for young adults entering a new city, over a hazy city skyline.";
+---
+
+<div class="cpt">
+  <img class="cpt__photo" src="/media/commonplace-tile.jpg" alt={label} width="1600" height="900" loading="lazy" decoding="async" />
+</div>
+
+<style>
+  .cpt {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: var(--commonplace-tile-bg);
+  }
+
+  .cpt__photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+  }
+</style>
