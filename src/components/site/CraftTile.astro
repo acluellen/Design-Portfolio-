@@ -1,0 +1,187 @@
+---
+// Craft Education home tile (Oct 13 2026), after Micah Hoang's Gaia card: a still scene with one slow
+// motion. A phone lies on a mint table beside the yellow shape and navy ring from Craft's
+// homepage; on its screen the Craft logo fades in, holds, and fades out. The quiet tile in a row of
+// busy ones (AthenaScribe and Klima move a lot). The fade repeats past five seconds, so it has the
+// same pause button as the other tiles (WCAG 2.2.2). Reduced motion: the logo simply shows.
+// The logo is cropped from the redesigned Learning Center page (public/media/craft-logo.png).
+const label = "Craft Education’s logo on a phone screen, the phone lying on a mint table beside a yellow shape and a navy ring from the Craft homepage.";
+---
+
+<div class="cft" data-cft>
+  <div class="cft__plane" role="img" aria-label={label}>
+    <span class="cft__blob"></span>
+    <span class="cft__ring"></span>
+    <span class="cft__dot"></span>
+    <div class="cft__phone">
+      <div class="cft__screen">
+        <img class="cft__logo" src="/media/craft-logo.png" alt="" width="180" height="80" />
+      </div>
+    </div>
+  </div>
+  <button type="button" class="cft__pz" aria-label="Pause animation" data-cft-pz>
+    <svg class="cft__pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="7" y="5" width="3.5" height="14" rx="1"></rect><rect x="13.5" y="5" width="3.5" height="14" rx="1"></rect></svg>
+    <svg class="cft__play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"></path></svg>
+  </button>
+</div>
+
+<style>
+  .cft {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    container-type: inline-size;
+    background: var(--craft-mint);
+    perspective: 150cqw;
+  }
+
+  /* Everything lies on one tilted plane, like a still life shot from above at an angle. */
+  .cft__plane {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 100cqw;
+    height: 100cqw;
+    margin: -50cqw 0 0 -50cqw;
+    transform: rotateX(52deg) rotateZ(-34deg);
+    transform-style: preserve-3d;
+  }
+
+  .cft__blob {
+    position: absolute;
+    left: 26cqw;
+    top: 24cqw;
+    width: 46cqw;
+    height: 42cqw;
+    border-radius: 58% 42% 55% 45% / 52% 58% 42% 48%;
+    background: var(--craft-yellow);
+  }
+
+  .cft__ring {
+    position: absolute;
+    left: 62cqw;
+    top: 56cqw;
+    width: 20cqw;
+    height: 20cqw;
+    border: 1.6cqw solid var(--craft-navy);
+    border-radius: 50%;
+  }
+
+  .cft__dot {
+    position: absolute;
+    left: 24cqw;
+    top: 30cqw;
+    width: 6cqw;
+    height: 6cqw;
+    border-radius: 50%;
+    background: var(--craft-navy);
+  }
+
+  /* The phone: a dark body with a thin side, and a white screen. */
+  .cft__phone {
+    position: absolute;
+    left: 38cqw;
+    top: 27cqw;
+    width: 24cqw;
+    aspect-ratio: 9 / 19.5;
+    padding: 0.9cqw;
+    border-radius: 3.6cqw;
+    background: var(--craft-frame);
+    box-shadow:
+      -0.5cqw 0.6cqw 0 var(--craft-edge),
+      -0.9cqw 1.1cqw 0 var(--craft-frame),
+      -4cqw 5cqw 6cqw var(--craft-shadow);
+  }
+
+  .cft__screen {
+    display: grid;
+    place-items: center;
+    height: 100%;
+    border-radius: 2.8cqw;
+    background: var(--craft-screen);
+  }
+
+  .cft__logo {
+    width: 90%;
+    height: auto;
+    animation: cft-breath var(--duration-craft-breath) ease-in-out infinite;
+  }
+
+  .cft.is-paused .cft__logo,
+  .cft.is-off .cft__logo {
+    animation-play-state: paused;
+  }
+
+  @keyframes cft-breath {
+    0%, 100% { opacity: 0; }
+    35%, 70% { opacity: 1; }
+  }
+
+  .cft__pz {
+    pointer-events: auto;
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid color-mix(in srgb, var(--craft-navy) 30%, transparent);
+    background: color-mix(in srgb, var(--craft-navy) 8%, transparent);
+    color: var(--craft-navy);
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity var(--duration-fast) var(--ease-standard);
+  }
+
+  .cft__pz:hover,
+  .cft__pz:focus-visible {
+    opacity: 1;
+  }
+
+  .cft__pz:focus-visible {
+    outline: var(--focus-width) solid var(--craft-navy);
+    outline-offset: 2px;
+  }
+
+  .cft__pz svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .cft__play,
+  .cft.is-paused .cft__pause {
+    display: none;
+  }
+
+  .cft.is-paused .cft__play {
+    display: block;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cft__logo {
+      animation: none;
+    }
+
+    .cft__pz {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-cft]").forEach((root) => {
+    const pz = root.querySelector<HTMLButtonElement>("[data-cft-pz]")!;
+    pz.addEventListener("click", (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      const paused = root.classList.toggle("is-paused");
+      pz.setAttribute("aria-label", paused ? "Play animation" : "Pause animation");
+    });
+    // Rests while off screen.
+    new IntersectionObserver(([e]) => root.classList.toggle("is-off", !e.isIntersecting)).observe(root);
+  });
+</script>

@@ -2,6 +2,14 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-13 · Craft Education home tile (preview)
+
+- Aaron's reference: Micah Hoang's Gaia card, a still photo of a phone on a mirror in the grass where the only motion is the logo on the screen fading in and out. AthenaScribe and Klima both move a lot, so Craft Education is the quiet one.
+- New `CraftTile.astro`: a phone lies on a mint table, seen from above at an angle, beside the soft yellow shape, navy ring, and navy dot from the redesigned Craft homepage. On the white screen the Craft Education logo fades in, holds, and fades out every 6 seconds (`--duration-craft-breath`). Built in CSS, no video.
+- The logo is cropped from the redesigned Learning Center page (`public/media/craft-logo.png`, 180 by 80); no new artwork.
+- Colors sampled from the Craft screens: mint #d5efe7, navy #18508e, yellow #f5d89f (new `--craft-*` tokens).
+- The fade repeats past five seconds, so the tile has the same round pause button as the other tiles, in Craft navy (WCAG 2.2.2). It rests while off screen. Reduced motion: the logo simply shows.
+
 ## 2026-10-12 · Klima tile video (preview)
 
 - The Klima tile plays Aaron's cover clip from the Klima presentation (5.2 s, three shots: a hiker by wind turbines, a cyclist in the city, someone planting a tree), muted and looping, only while on screen. Pause button bottom right, same as AthenaScribe (the clip runs past 5 s, WCAG 2.2.2). Reduced motion shows the first frame. New `KlimaTile.astro`, files `public/video/klima-tile.mp4` and `.webm` (about 0.6 MB and 0.4 MB), `public/media/klima-tile-poster.jpg`, token `--klima-tile-bg`.

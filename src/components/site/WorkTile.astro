@@ -7,6 +7,7 @@
 import type { CaseStudy } from "../../lib/case-studies";
 import AthenaScribeTile from "./AthenaScribeTile.astro";
 import KlimaTile from "./KlimaTile.astro";
+import CraftTile from "./CraftTile.astro";
 
 interface Props {
   study: CaseStudy;
@@ -42,7 +43,7 @@ const number = String(index).padStart(2, "0");
   </div>
 
   <div class="tile__media">
-    {study.id === "athenascribe" ? <AthenaScribeTile /> : study.id === "klima" ? <KlimaTile /> : <span class="tile__slot" aria-hidden="true">Project media</span>}
+    {study.id === "athenascribe" ? <AthenaScribeTile /> : study.id === "klima" ? <KlimaTile /> : study.id === "craft-education" ? <CraftTile /> : <span class="tile__slot" aria-hidden="true">Project media</span>}
   </div>
 
   {
