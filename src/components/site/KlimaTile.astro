@@ -1,0 +1,58 @@
+---
+// Klima home tile (Oct 12 2026): Aaron's cover clip from the Klima presentation, 5.2 s, three shots
+// (a hiker by wind turbines, a cyclist in the city, someone planting a tree). Muted, looping, plays
+// only while on screen. Over 5 s, so it has a pause button (WCAG 2.2.2), same as AthenaScribe.
+// Reduced motion: the first frame as a still, and the clip never downloads.
+const label = "Klima: a hiker looks out at wind turbines, a cyclist rides through the city, and someone plants a tree.";
+---
+
+<div class="klt" data-klt>
+  <img class="klt__poster" src="/media/klima-tile-poster.jpg" alt="" width="1280" height="720" />
+  <video class="klt__video" muted loop playsinline preload="none" poster="/media/klima-tile-poster.jpg" aria-label={label} role="img">
+    <source data-src="/video/klima-tile.webm" type="video/webm" />
+    <source data-src="/video/klima-tile.mp4" type="video/mp4" />
+  </video>
+  <button type="button" class="klt__pz" aria-label="Pause video" data-klt-pz>
+    <svg class="klt__pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="7" y="5" width="3.5" height="14" rx="1"></rect><rect x="13.5" y="5" width="3.5" height="14" rx="1"></rect></svg>
+    <svg class="klt__play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"></path></svg>
+  </button>
+</div>
+
+<style>
+  .klt { position: absolute; inset: 0; overflow: hidden; background: var(--klima-tile-bg); }
+  .klt__poster, .klt__video { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; }
+  .klt__pz { pointer-events: auto; position: absolute; right: 12px; bottom: 12px; z-index: 2; width: 34px; height: 34px; padding: 0; border-radius: 50%; display: grid; place-items: center; background: rgb(255 255 255 / .1); border: 1px solid rgb(255 255 255 / .22); color: var(--as-paper); cursor: pointer; opacity: .7; transition: opacity var(--duration-fast) var(--ease-standard); }
+  .klt__pz:hover, .klt__pz:focus-visible { opacity: 1; }
+  .klt__pz:focus-visible { outline: var(--focus-width) solid var(--as-paper); outline-offset: 2px; }
+  .klt__pz svg { width: 14px; height: 14px; }
+  .klt__play, .klt.is-paused .klt__pause { display: none; }
+  .klt.is-paused .klt__play { display: block; }
+  @media (prefers-reduced-motion: reduce) { .klt__video, .klt__pz { display: none; } }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-klt]").forEach((root) => {
+    const video = root.querySelector("video")!;
+    const pz = root.querySelector<HTMLButtonElement>("[data-klt-pz]")!;
+    const motion = matchMedia("(prefers-reduced-motion: no-preference)");
+    let loaded = false, inView = false, paused = false;
+    const load = () => {
+      if (loaded) return;
+      loaded = true;
+      video.querySelectorAll("source").forEach((s) => (s.src = s.dataset.src!));
+      video.load();
+    };
+    const play = () => { if (!motion.matches || paused || !inView || document.hidden) return; load(); video.play().catch(() => {}); };
+    pz.addEventListener("click", (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      paused = !paused;
+      root.classList.toggle("is-paused", paused);
+      pz.setAttribute("aria-label", paused ? "Play video" : "Pause video");
+      paused ? video.pause() : play();
+    });
+    new IntersectionObserver(([e]) => { inView = e.isIntersecting; inView ? play() : video.pause(); }, { rootMargin: "200px 0px" }).observe(root);
+    document.addEventListener("visibilitychange", () => (document.hidden ? video.pause() : play()));
+    motion.addEventListener("change", () => (motion.matches ? play() : video.pause()));
+  });
+</script>

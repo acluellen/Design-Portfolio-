@@ -179,6 +179,7 @@
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
   --reveal-distance: 14px; /* sections slide up this far as they fade in */
   --lift-headshot: 4px;
+  --klima-tile-bg: #1d2a33; /* under the Klima tile video while it loads, sampled from its first frame */
   /* AthenaScribe Selected work media. A fixed dark indigo scene, the same in both modes. */
   --as-base: #161a30;
   --as-deep: #11142a;

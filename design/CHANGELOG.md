@@ -2,6 +2,10 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-12 · Klima tile video (preview)
+
+- The Klima tile plays Aaron's cover clip from the Klima presentation (5.2 s, three shots: a hiker by wind turbines, a cyclist in the city, someone planting a tree), muted and looping, only while on screen. Pause button bottom right, same as AthenaScribe (the clip runs past 5 s, WCAG 2.2.2). Reduced motion shows the first frame. New `KlimaTile.astro`, files `public/video/klima-tile.mp4` and `.webm` (about 0.6 MB and 0.4 MB), `public/media/klima-tile-poster.jpg`, token `--klima-tile-bg`.
+
 ## 2026-10-12 · Live: four tiles and the AthenaScribe Ending A tile
 
 - Aaron asked for AthenaScribe to be live. Published to the live branch: the four tile Selected work grid, the AthenaScribe hero, "How it works", and the Ending A home tile. The Klima tile stays a gray placeholder on the live site until its video arrives. The old Klima picture is removed from the site.
