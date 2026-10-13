@@ -141,6 +141,7 @@
   /* Media and controls */
   --ratio-tile-wide: 16 / 9; /* the wide Selected work tile */
   --ratio-tile: 4 / 3; /* the two smaller tiles, and gallery placeholders */
+  --ratio-work-tile: 16 / 9; /* every Selected work tile, two equal columns (Micah Hoang) */
   --ratio-about-media: 4 / 5; /* the home About photo */
   --size-about-photo-phone: 10rem; /* the home About photo on phones, above the text */
   --size-quote-slot: 10rem; /* height of the empty "What people say" box in previews */
@@ -178,6 +179,24 @@
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
   --reveal-distance: 14px; /* sections slide up this far as they fade in */
   --lift-headshot: 4px;
+  /* AthenaScribe Selected work media. A fixed dark indigo scene, the same in both modes. */
+  --as-base: #161a30;
+  --as-deep: #11142a;
+  --as-glow: #5b5fc0;
+  --as-teal: #2f7f73;
+  --as-indigo: #2f45d0;
+  --as-soft: #eceaf8;
+  --as-amber: #f2b544;
+  --as-amber-ink: #4a3000;
+  --as-green: #2e9e6a;
+  --as-paper: #ffffff;
+  --as-ink: #1d2033;
+  --as-muted: #6b6f86;
+  --as-rule: #e2e3ec;
+  --as-shadow-doc: 0 40px 80px -30px rgb(5 6 25 / .8), 0 2px 8px rgb(5 6 25 / .25);
+  --as-shadow-pill: 0 14px 30px -10px rgb(5 6 25 / .7);
+  --font-athenascribe-head: "Lora", Georgia, serif; /* AthenaScribe's own UI fonts, used only inside its tile */
+  --font-athenascribe-ui: "Nunito", system-ui, sans-serif;
 }
 
 @media (min-width: 48rem) {

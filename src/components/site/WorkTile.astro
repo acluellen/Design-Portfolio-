@@ -1,9 +1,11 @@
 ---
-// A Selected work tile (October 10 direction): "01 / ATHENASCRIBE" in small mono capitals, then a
-// large image, then two or three small rounded outline tags, then the one line description. The
-// image is a gray placeholder until the project media is ready. `wide` is the full width tile on top.
+// A Selected work tile (October 12 direction, Micah Hoang): "01 / ATHENASCRIBE" in small mono
+// capitals, then a 16:9 image with one hero object, then two or three small rounded outline tags.
+// No description under the tile; the one line lives on the case study page. Projects without media
+// yet show a gray placeholder.
 // The whole tile is one link; on hover or focus the name rolls up to "View case study".
 import type { CaseStudy } from "../../lib/case-studies";
+import AthenaScribeMotion from "./AthenaScribeMotion.astro";
 
 interface Props {
   study: CaseStudy;
@@ -38,8 +40,8 @@ const number = String(index).padStart(2, "0");
     </h3>
   </div>
 
-  <div class="tile__media" aria-hidden="true">
-    <span class="tile__slot">Project media</span>
+  <div class="tile__media">
+    {study.id === "athenascribe" ? <AthenaScribeMotion /> : <span class="tile__slot" aria-hidden="true">Project media</span>}
   </div>
 
   {
@@ -50,7 +52,6 @@ const number = String(index).padStart(2, "0");
     )
   }
 
-  {card?.description && <p class="tile__description">{card.description}</p>}
   {inProgress && <p class="tile__status">In progress</p>}
   {!href && !inProgress && <p class="tile__status">Case study coming soon</p>}
 </article>
@@ -67,15 +68,12 @@ const number = String(index).padStart(2, "0");
   .tile__media {
     display: grid;
     place-items: center;
-    aspect-ratio: var(--ratio-tile);
+    position: relative;
+    aspect-ratio: var(--ratio-work-tile);
     background: var(--color-placeholder);
     border-radius: var(--radius-media);
     overflow: hidden;
     transition: opacity var(--duration-fast) var(--ease-standard);
-  }
-
-  .tile--wide .tile__media {
-    aspect-ratio: var(--ratio-tile-wide);
   }
 
   .tile--linked:hover .tile__media {
@@ -175,11 +173,6 @@ const number = String(index).padStart(2, "0");
     letter-spacing: var(--tracking-label);
     text-transform: uppercase;
     line-height: var(--leading-snug);
-    color: var(--color-ink-muted);
-  }
-
-  .tile__description {
-    max-width: var(--measure-reading);
     color: var(--color-ink-muted);
   }
 
