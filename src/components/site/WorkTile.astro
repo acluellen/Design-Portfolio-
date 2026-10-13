@@ -5,7 +5,7 @@
 // yet show a gray placeholder.
 // The whole tile is one link; on hover or focus the name rolls up to "View case study".
 import type { CaseStudy } from "../../lib/case-studies";
-import AthenaScribeMotion from "./AthenaScribeMotion.astro";
+import AthenaPhone from "./AthenaPhone.astro";
 
 interface Props {
   study: CaseStudy;
@@ -41,7 +41,7 @@ const number = String(index).padStart(2, "0");
   </div>
 
   <div class="tile__media">
-    {study.id === "athenascribe" ? <AthenaScribeMotion /> : <span class="tile__slot" aria-hidden="true">Project media</span>}
+    {study.id === "athenascribe" ? <AthenaPhone variant="tile" /> : <span class="tile__slot" aria-hidden="true">Project media</span>}
   </div>
 
   {

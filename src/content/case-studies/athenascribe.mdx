@@ -2,7 +2,7 @@
 # Words and structure come from Aaron’s Claude Design draft (AthenaScribe Case Study, Main board).
 # Restructured to match the board’s layout on Oct 8 2026. Links marked TODO are still "#" in the draft.
 title: "AthenaScribe"
-headline: "Human review for school document translation."
+headline: "AI translates every school form. A human in the loop approves the ones that matter."
 summary: "AthenaScribe translates full school documents for districts. A person approves the vital ones before families receive them."
 card:
   label: "Research lead · BRIDGEGOOD capstone"
@@ -32,13 +32,22 @@ heroMedia:
   label: "Watch the KRON4 live segment on YouTube"
   caption: "I talked about AthenaScribe live on KRON4."
   linkText: "Watch on YouTube"
-index: ["Problem", "Research", "Findings", "Testing", "Redesign", "Goals", "Takeaway"]
+index: ["How it works", "Problem", "Research", "Findings", "Testing", "Redesign", "Goals", "Takeaway"]
 order: 1
 status: "published"
 ---
 
 import uploadScreen from "../../assets/case-studies/athenascribe/round-one-upload.webp";
 import adminQueue from "../../assets/case-studies/athenascribe/round-one-admin-queue.webp";
+import AthenaStory from "../../components/site/AthenaStory.astro";
+
+<Section>
+
+## Translation is automatic. Approval stays human.
+
+<AthenaStory />
+
+</Section>
 
 <Contribution>
   <Mine label="My contribution">Research framing, workflow audit, risk synthesis, product pivot, core reviewer flow.</Mine>
