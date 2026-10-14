@@ -1,12 +1,12 @@
 # Visual rules
 
-Current direction from October 9, 2026: warm graph paper, deep navy ink, blue for links only, square corners. Picked by Aaron from the reference review (Micah Hoang, Zeel Shah, Angelina Cao, Narin Kim, Rachel Chen, Tee Hodgson). The October 7 direction is in git history (commit 1ff9146).
+Current direction from October 9, 2026: warm paper, deep navy ink, blue for links only, square corners. Picked by Aaron from the reference review (Micah Hoang, Zeel Shah, Angelina Cao, Narin Kim, Rachel Chen, Tee Hodgson). The October 7 direction is in git history (commit 1ff9146).
 
 ## Direction
 
 Calm and exact. The work and the photos carry the color. Everything around them stays quiet.
 
-- Warm paper page with faint graph lines (Zeel). Deep navy for headings, primary buttons, the logo, and the closing block (Micah). The AL blue is for links only.
+- Warm, plain paper page. Deep navy for headings, primary buttons, the logo, and the closing block (Micah). The AL blue is for links only.
 - Display: Hanken Grotesk (`--font-display`) for the name, every heading, and large display text (subtitles, the About blurb, the contact block) on every page. Body text, buttons, and the menu: Atkinson Hyperlegible Next (`--font-text`), chosen for reading. Headings at 500 with slight negative tracking; page section titles ("Selected work", "A few things that shaped me") and subtitles at 300; the name at 800. Labels, metadata, the header, and the menu: Atkinson Hyperlegible Mono (`--font-mono`), uppercase.
 - Square corners on everything: panels, cards, photos, video, buttons. Only round icon buttons (theme toggle, play) stay circles. No pill shapes, except the small outline tags under the Selected work tiles (`--radius-tag`, Aaron's call on Oct 10).
 - Sentence case for every heading. Proper names keep their capitals (BRIDGEGOOD UX Design Apprenticeship, Purpose to Pixels).
@@ -50,7 +50,7 @@ Never pure black (`#000000`) anywhere.
 
 | Role | Light | Dark |
 |---|---|---|
-| Page | `#F6F3ED` with graph lines `rgb(32 31 29 / 0.06)` | `#12161C`, lines at 4% |
+| Page | `#F6F3ED` | `#12161C` |
 | Cards and light panels | `#FFFFFF`, border `#DCD7CD` | `#1A2029` |
 | Media backdrop | `#EFEBE3` | `#161C25` |
 | Headings | `#1B2A3A` navy | `#F1F3F7` |
@@ -66,7 +66,7 @@ Contrast, all WCAG AA or better:
 - Dark: body 15.3:1, secondary 7.8:1, links 8.7:1.
 - Navy panels: text 12.9:1, secondary 8.0:1, links 7.7:1.
 
-Wrap navy panels in `.surface-always-dark`. It remaps ink, headings, muted ink, rules, links, labels, and buttons (paper buttons with navy text), and turns the graph lines off.
+Wrap navy panels in `.surface-always-dark`. It remaps ink, headings, muted ink, rules, links, labels, and buttons (paper buttons with navy text).
 
 ## Theme
 
@@ -136,7 +136,7 @@ Wrap navy panels in `.surface-always-dark`. It remaps ink, headings, muted ink, 
 
 ## Link preview
 
-- `public/og-image.png` (1200 by 630): the navy AL logo, "Aaron Luellen" in Atkinson Hyperlegible Next, and "Product designer, research led, Oakland" on the graph paper, with a navy bar at the bottom. The source is `design/share/og-image.html`. Regenerate with `node scripts/make-og-image.cjs`.
+- `public/og-image.png` (1200 by 630): the navy AL logo, "Aaron Luellen" in Atkinson Hyperlegible Next, and "Product designer, research led, Oakland" on warm paper, with a navy bar at the bottom. The source is `design/share/og-image.html`. Regenerate with `node scripts/make-og-image.cjs`.
 - Open Graph and Twitter tags live in `BaseLayout.astro`. They need `site` set in `astro.config.mjs` to output absolute URLs.
 
 ## Motion

@@ -2,6 +2,12 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-14 · Page grid turned off
+
+- Aaron: no graph paper background on any page, in light or dark mode. The warm paper color stays as it is.
+- `--color-grid` is now `transparent` in every theme block of `tokens.css` (old values kept in comments). The grid code in `global.css` and `--size-grid` stay, so restoring the old values brings it back.
+- `design/DESIGN.md` no longer describes graph lines.
+
 ## 2026-10-13 · CommonPlace tile: corner table photo and a Klima style line
 
 - Aaron moved away from the city skyline: the cover is now his photo of a sunlit corner table set for two, with an empty booth and chairs by the window. A third place waiting for people says belonging without showing faces. Cropped to 16:9 below the posters and the window lettering.
