@@ -20,15 +20,9 @@ const numbered = rows.map((row) => row.map((tile) => ({ ...tile, number: String(
     <!-- Portrait and text share one block, so the sticky portrait stops where the text ends. -->
     <div class="about-page__main">
     <figure class="about-page__portrait">
-      <Photo
-        name="headshot"
-        widths={[320, 480, 720]}
-        sizes="(min-width: 64rem) 22rem, 70vw"
-        cover={4 / 5}
-        ratio="4 / 5"
-        loading="eager"
-        class="about-page__photo"
-      />
+      <!-- Gray placeholder until Aaron picks a new portrait (Oct 14). The headshot is still in
+           src/assets/photos/headshot.jpg: swap this div back for <Photo name="headshot" ...> to restore. -->
+      <div class="about-page__photo about-page__slot" aria-hidden="true">Photo</div>
     </figure>
 
     <div class="about-page__content">
@@ -168,6 +162,18 @@ const numbered = rows.map((row) => row.map((tile) => ({ ...tile, number: String(
     margin: 0;
   }
 
+  /* The gray placeholder, styled like the home About photo. */
+  .about-page__portrait .about-page__slot {
+    display: grid;
+    place-items: center;
+    background: var(--color-placeholder);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+
   .about-page__portrait :global(.about-page__photo) {
     display: block;
     inline-size: min(70%, var(--size-portrait));
@@ -181,6 +187,10 @@ const numbered = rows.map((row) => row.map((tile) => ({ ...tile, number: String(
     .about-page__portrait :global(.about-page__photo) {
       inline-size: 100%;
     }
+  }
+
+  .about-page__portrait .about-page__slot.about-page__slot {
+    display: grid;
   }
 
   .about-page__content {

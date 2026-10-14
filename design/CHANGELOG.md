@@ -981,3 +981,10 @@ Aaron asked for a fuller browser preview, so the home page, case study page, and
 - Selected work columns sit closer (`--gap-tile-column`, 16px), so each tile is about 30 percent larger at laptop width.
 - Hero line "Product designer focused on clarity." is now small and regular on two short lines (`--step-1`, `--measure-role`), like Micah's "Brand designer with a systems mind."
 - Home About: no visible heading (kept for screen readers), a small photo (`--size-about-photo`, 10rem) with the blurb right beside it at `--step-1` regular (`--measure-about`). Before, the blurb was large light display text.
+
+## 2026-10-14 · Links row, home About, contact block, About portrait (after Micah Hoang)
+
+- Hero links row: one comma separated line ("LinkedIn, Resume, Email"), every item in the main ink, underline on hover only. It sits close above the Selected work line (`.hero` pulls the next section up by the full `--section-gap`) and farther below the role line (`--space-8`).
+- Home About: the photo is 2:3 (`--ratio-about-photo`), the blurb drops to body size (`--font-text`, `--step-0`, `--leading-about`, `--measure-about` 34rem) in the main ink, with "Read more" closer under it. More space above the block (`--space-9`). "Scroll to top" moves to the left edge.
+- Contact block: the one line sentence is removed. Email, LinkedIn, and Resume are big stacked capitals (`--size-contact-link`, regular weight, `--leading-contact-link`) with small mono labels at the top right of each word ("@gmail.com", "Profile", "PDF"); the email is split so the name reads big. Items not live yet (no LinkedIn address, no resume file) stay muted. A bottom bar under a thin line: "Open to associate product design roles" on the left, the copyright on the right.
+- About page: the headshot is swapped for a gray "Photo" placeholder until Aaron picks a new portrait. The headshot file stays in the project.

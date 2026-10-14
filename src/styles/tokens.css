@@ -115,7 +115,11 @@
   --gap-section-heading: var(--space-7); /* "Selected work" to the first tile labels */
   --gap-tile-column: var(--space-4); /* between the two tile columns, tight like Micah Hoang */
   --measure-role: 18ch; /* the hero line breaks onto two short lines */
-  --measure-about: 40ch; /* the home About blurb */
+  --measure-about: 34rem; /* the home About blurb, about 545px like Micah Hoang's */
+  --leading-about: 1.5; /* the home About blurb at body size */
+  --ratio-about-photo: 2 / 3; /* the home About photo, tall like Micah Hoang's */
+  --size-contact-link: clamp(2.25rem, 1rem + 5vw, 5.5rem); /* the big stacked links in the contact block */
+  --leading-contact-link: 1.05;
   --gap-tile-row: var(--space-6); /* between rows of Selected work tiles on phones; --space-7 from 48rem */
   --space-page-top: var(--space-7); /* header to the name */
   --panel-padding: clamp(1.5rem, 0.5rem + 4vw, 5rem); /* inside rounded section panels */

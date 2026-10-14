@@ -1,7 +1,7 @@
 ---
-// The closing contact block on the home and About pages (October 10): a solid navy band that ends
-// the page. "Get in touch", one line, then email, LinkedIn, and Resume in large type, and the
-// copyright line. LinkedIn waits for site.linkedin and Resume for public/resume.pdf; until then
+// The closing contact block on the home and About pages (October 14, after Micah Hoang): a solid
+// navy band that ends the page. "Get in touch", then email, LinkedIn, and Resume as big stacked
+// capitals with small labels, then a bar with the open to work line and the copyright. LinkedIn waits for site.linkedin and Resume for public/resume.pdf; until then
 // they show as plain text.
 import fs from "node:fs";
 import path from "node:path";
@@ -9,40 +9,60 @@ import { mailto, site } from "../../site.config";
 
 const hasResume = fs.existsSync(path.join(process.cwd(), "public", site.resumePath));
 const year = new Date().getFullYear();
+const [emailName, emailDomain] = site.email.split("@");
 ---
 
-<!-- Scroll to top, on the paper above the navy block (like "Back to top" on the case studies). -->
+<!-- Scroll to top, on the paper above the navy block, on the left like the rest of the page. -->
 <div class="container to-top">
   <a class="to-top__link" href="#top">Scroll to top <span aria-hidden="true">↑</span></a>
 </div>
 
+<!-- Big stacked capitals, each with a small label at its top right (after Micah Hoang). The email is
+     split so the name reads big and the domain small. Unlinked items stay muted until they go live. -->
 <footer id="contact" class="contact surface-always-dark" aria-labelledby="contact-heading">
   <div class="container contact__inner">
     <h2 id="contact-heading" class="contact__title">Get in touch</h2>
-    <p class="contact__line">Have a role or project that feels like a fit? I’d love to hear about it.</p>
     <ul class="contact__links">
-      <li><a href={mailto}>{site.email}</a></li>
+      <li>
+        <a href={mailto} aria-label={`Email ${site.email}`}>
+          <span class="contact__word">{emailName}</span><span class="contact__tag" aria-hidden="true">@{emailDomain}</span>
+        </a>
+      </li>
       <li>
         {
           site.linkedin ? (
             <a href={site.linkedin} target="_blank" rel="noopener noreferrer">
-              LinkedIn<span class="visually-hidden"> (opens in a new tab)</span>
+              <span class="contact__word">LinkedIn</span><span class="contact__tag" aria-hidden="true">Profile</span>
+              <span class="visually-hidden"> (opens in a new tab)</span>
             </a>
           ) : (
-            <span>LinkedIn</span>
+            <span class="contact__off"><span class="contact__word">LinkedIn</span><span class="contact__tag">Profile</span></span>
           )
         }
       </li>
-      <li>{hasResume ? <a href={site.resumePath}>Resume</a> : <span>Resume</span>}</li>
+      <li>
+        {
+          hasResume ? (
+            <a href={site.resumePath}>
+              <span class="contact__word">Resume</span><span class="contact__tag" aria-hidden="true">PDF</span>
+            </a>
+          ) : (
+            <span class="contact__off"><span class="contact__word">Resume</span><span class="contact__tag">PDF</span></span>
+          )
+        }
+      </li>
     </ul>
-    <p class="contact__fine">© {year} <span translate="no">{site.name}</span></p>
+    <div class="contact__bar">
+      <p>Open to associate product design roles</p>
+      <p>© {year} <span translate="no">{site.name}</span></p>
+    </div>
   </div>
 </footer>
 
 <style>
   .to-top {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     padding-block-end: var(--space-5);
   }
 
@@ -71,8 +91,7 @@ const year = new Date().getFullYear();
 
   .contact__inner {
     display: grid;
-    gap: var(--space-5);
-    padding-block: var(--space-9) var(--space-6);
+    padding-block: var(--space-6) var(--space-5);
   }
 
   .contact__title {
@@ -84,53 +103,60 @@ const year = new Date().getFullYear();
     color: var(--color-ink-muted);
   }
 
-  .contact__line {
-    max-width: 24ch;
-    font-family: var(--font-display);
-    font-weight: var(--weight-light);
-    font-size: var(--step-3);
-    line-height: var(--leading-snug);
-    letter-spacing: var(--tracking-tight);
-    color: var(--color-heading);
-    text-wrap: balance;
-  }
-
-  /* Large type, one per line. The email breaks anywhere so it never runs off a phone screen. */
+  /* Big capitals, regular weight, stacked tight. */
   .contact__links {
     display: grid;
-    gap: var(--space-2);
-    margin: var(--space-5) 0 0;
+    justify-items: start;
+    margin: var(--space-8) 0 0;
     padding: 0;
     list-style: none;
     font-family: var(--font-display);
-    font-size: var(--step-3);
-    line-height: var(--leading-snug);
+    font-weight: var(--weight-regular);
+    font-size: var(--size-contact-link);
+    line-height: var(--leading-contact-link);
     letter-spacing: var(--tracking-tight);
-    overflow-wrap: anywhere;
+    text-transform: uppercase;
   }
 
-  @media (min-width: 48rem) {
-    .contact__links {
-      font-size: var(--step-4);
-    }
-  }
-
-  .contact__links a {
+  .contact__links a,
+  .contact__off {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0 var(--space-2);
     color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  .contact__links a:hover .contact__word {
+    text-decoration: underline;
     text-decoration-thickness: var(--rule-thin);
-    text-underline-offset: 0.15em;
+    text-underline-offset: 0.1em;
   }
 
-  .contact__links a:hover {
-    color: var(--color-accent);
-  }
-
-  .contact__links span {
+  /* Not live yet (no LinkedIn address or resume file): muted so it doesn't read as a broken link. */
+  .contact__off {
     color: var(--color-ink-muted);
   }
 
-  .contact__fine {
-    margin-block-start: var(--space-8);
+  /* The small label at the top right of each big word. */
+  .contact__tag {
+    padding-block-start: 0.35em;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    font-weight: var(--weight-regular);
+    letter-spacing: var(--tracking-label);
+    line-height: 1;
+    color: var(--color-ink-muted);
+  }
+
+  /* Bottom bar: open to work on the left, copyright on the right, under a thin line. */
+  .contact__bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-5);
+    margin-block-start: var(--space-10);
     padding-block-start: var(--space-4);
     border-block-start: var(--rule-thin) solid var(--color-rule);
     font-family: var(--font-mono);

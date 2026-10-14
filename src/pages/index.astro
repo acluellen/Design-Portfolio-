@@ -118,7 +118,7 @@ const year = new Date().getFullYear();
   .hero {
     display: grid;
     gap: var(--space-5);
-    margin-block-end: calc(var(--space-4) - var(--section-gap));
+    margin-block-end: calc(0px - var(--section-gap));
   }
 
   /* The name, set like a wordmark: the heaviest weight, tight letter spacing. */
@@ -148,7 +148,7 @@ const year = new Date().getFullYear();
     align-items: center;
     justify-content: space-between;
     gap: 0 var(--space-5);
-    margin-block-start: var(--space-4);
+    margin-block-start: var(--space-8);
     font-family: var(--font-mono);
     font-size: var(--step--1);
     letter-spacing: var(--tracking-label);
@@ -156,10 +156,11 @@ const year = new Date().getFullYear();
     color: var(--color-ink-muted);
   }
 
+  /* One comma separated line, every item the same ink (Micah Hoang). Underline on hover only. */
   .hero__links {
     display: flex;
     flex-wrap: wrap;
-    gap: 0 var(--space-5);
+    gap: 0 var(--space-2);
     margin: 0;
     padding: 0;
     list-style: none;
@@ -172,8 +173,25 @@ const year = new Date().getFullYear();
     min-block-size: var(--control-height);
   }
 
-  .hero__links a {
+  .hero__links a,
+  .hero__links span {
     color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  .hero__links a:hover {
+    text-decoration: underline;
+    text-underline-offset: var(--underline-offset);
+  }
+
+  .hero__links li:not(:last-child)::after {
+    content: ",";
+    color: var(--color-ink);
+  }
+
+  .hero__links li {
+    display: inline-flex;
+    align-items: center;
   }
 
   /* Sections after the name open with a thin rule across the content column. As the line scrolls
@@ -247,7 +265,7 @@ const year = new Date().getFullYear();
      screen readers. */
   .about {
     display: grid;
-    padding-block-start: var(--space-8);
+    padding-block-start: var(--space-9);
   }
 
   .about h2 {
@@ -273,7 +291,7 @@ const year = new Date().getFullYear();
     display: grid;
     place-items: center;
     inline-size: min(100%, var(--size-about-photo-phone));
-    aspect-ratio: var(--ratio-about-media);
+    aspect-ratio: var(--ratio-about-photo);
     background: var(--color-placeholder);
     border-radius: var(--radius-media);
     font-family: var(--font-mono);
@@ -292,7 +310,7 @@ const year = new Date().getFullYear();
   .about__text {
     display: grid;
     justify-items: start;
-    gap: var(--space-5);
+    gap: var(--space-4);
   }
 
   /* Light like the hero subtitle, one step smaller (Micah Hoang's scale). The first line sits level
@@ -300,12 +318,11 @@ const year = new Date().getFullYear();
   .about__blurb {
     max-width: var(--measure-about);
     margin-block-start: 0;
-    font-family: var(--font-display);
+    font-family: var(--font-text);
     font-weight: var(--weight-regular);
-    font-size: var(--step-1);
-    line-height: var(--leading-snug);
-    letter-spacing: var(--tracking-tight);
-    color: var(--color-heading);
+    font-size: var(--step-0);
+    line-height: var(--leading-about);
+    color: var(--color-ink);
     text-wrap: pretty;
   }
 
