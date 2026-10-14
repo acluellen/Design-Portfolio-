@@ -967,3 +967,11 @@ Aaron asked for a fuller browser preview, so the home page, case study page, and
 - The name sits closer under the header (`--space-page-top`), and the links row sits closer under the subtitle. On a 1440 by 900 screen both top project images now show in full on the first screen; before, only their top edge showed.
 - About (from 48rem) uses the same two columns as Selected work: the photo in the left column (`--size-about-photo`, 20rem, about as tall as the blurb) and the blurb starting on the same line as the right hand tiles.
 - "In progress" and "Case study coming soon" moved to the right end of a tile's label row, like ©2026 in the hero row, so every tile ends at its tags and rows stay even.
+
+## 2026-10-14 · Home page closer to Micah Hoang's frame
+
+- The site now runs near full width with small side margins (`--gutter`: 16px on phones, 24px from 48rem; `--measure-wide` 120rem only caps very wide monitors). Before, every page sat in a centered 76rem column with up to 176px of empty space on each side at laptop width, which read as a template.
+- Case study pages keep the centered 76rem frame (`--measure-case`) until their own redesign.
+- Selected work columns sit closer (`--gap-tile-column`, 16px), so each tile is about 30 percent larger at laptop width.
+- Hero line "Product designer focused on clarity." is now small and regular on two short lines (`--step-1`, `--measure-role`), like Micah's "Brand designer with a systems mind."
+- Home About: no visible heading (kept for screen readers), a small photo (`--size-about-photo`, 10rem) with the blurb right beside it at `--step-1` regular (`--measure-about`). Before, the blurb was large light display text.

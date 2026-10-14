@@ -42,7 +42,7 @@ const year = new Date().getFullYear();
        now) with the blurb and the link beside it. The apprenticeship, the KRON4 clip, and the gym
        photos live on the About page. -->
   <section id="about" class="about" aria-labelledby="about-heading" data-reveal>
-    <h2 id="about-heading">About Aaron</h2>
+    <h2 id="about-heading" class="visually-hidden">About Aaron</h2>
     <div class="about__body">
       <div class="about__media" aria-hidden="true">
         <span>Photo</span>
@@ -130,10 +130,12 @@ const year = new Date().getFullYear();
   }
 
   /* Light, so the name carries the weight. */
+  /* Small and regular on two short lines (Micah Hoang), so the name and the work carry the page. */
   .hero__role {
+    max-width: var(--measure-role);
     font-family: var(--font-display);
-    font-weight: var(--weight-light);
-    font-size: var(--step-3);
+    font-weight: var(--weight-regular);
+    font-size: var(--step-1);
     line-height: var(--leading-snug);
     letter-spacing: var(--tracking-tight);
     color: var(--color-heading);
@@ -229,7 +231,7 @@ const year = new Date().getFullYear();
 
   .work__grid {
     display: grid;
-    gap: var(--gap-tile-row) var(--space-6);
+    gap: var(--gap-tile-row) var(--gap-tile-column);
   }
 
   @media (min-width: 48rem) {
@@ -241,9 +243,11 @@ const year = new Date().getFullYear();
 
   /* 3. About: the heading matches "Selected work". Below it the photo takes a quarter of the width
      with the text beside it, both aligned to the top. Phones: the photo above the text. */
+  /* No visible heading (Micah Hoang): the line, then the photo and blurb. The heading stays for
+     screen readers. */
   .about {
     display: grid;
-    gap: var(--gap-section-heading);
+    padding-block-start: var(--space-8);
   }
 
   .about h2 {
@@ -257,12 +261,11 @@ const year = new Date().getFullYear();
     align-items: start;
   }
 
-  /* From 48rem the About row uses the same two columns as Selected work, so the blurb starts on
-     the same line as the right hand tiles. */
-  @media (min-width: 48rem) {
+  /* Small photo with the blurb right beside it, from 40rem. */
+  @media (min-width: 40rem) {
     .about__body {
-      grid-template-columns: 1fr 1fr;
-      column-gap: var(--space-6);
+      grid-template-columns: var(--size-about-photo) 1fr;
+      column-gap: var(--space-5);
     }
   }
 
@@ -280,9 +283,9 @@ const year = new Date().getFullYear();
     color: var(--color-ink-muted);
   }
 
-  @media (min-width: 48rem) {
+  @media (min-width: 40rem) {
     .about__media {
-      inline-size: min(100%, var(--size-about-photo));
+      inline-size: 100%;
     }
   }
 
@@ -295,11 +298,11 @@ const year = new Date().getFullYear();
   /* Light like the hero subtitle, one step smaller (Micah Hoang's scale). The first line sits level
      with the photo's top. */
   .about__blurb {
-    max-width: 34ch;
+    max-width: var(--measure-about);
     margin-block-start: 0;
     font-family: var(--font-display);
-    font-weight: var(--weight-light);
-    font-size: var(--step-2);
+    font-weight: var(--weight-regular);
+    font-size: var(--step-1);
     line-height: var(--leading-snug);
     letter-spacing: var(--tracking-tight);
     color: var(--color-heading);

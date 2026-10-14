@@ -212,6 +212,12 @@ const indexItems = [
 </PageLayout>
 
 <style>
+  /* Case study pages keep the earlier centered width while the rest of the site runs near full
+     width. Their own redesign (Micah Hoang's project page frame) comes next. */
+  .container {
+    max-width: var(--measure-case);
+  }
+
   .hero {
     display: grid;
     gap: var(--space-5);

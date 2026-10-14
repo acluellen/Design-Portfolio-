@@ -107,11 +107,15 @@
 
   /* Layout */
   --measure-reading: 68ch;
-  --measure-wide: 76rem;
+  --measure-wide: 120rem; /* near full width like Micah Hoang; only caps very wide monitors */
+  --measure-case: 76rem; /* case study pages keep the centered frame until their own redesign */
   --gutter: var(--space-4);
   --header-height: 4.5rem;
   --section-gap: clamp(3.5rem, 1.5rem + 5vw, 6rem); /* the same space between every home section; always larger than the gaps inside a section */
-  --gap-section-heading: var(--space-6); /* section title to its content (Selected work, About) */
+  --gap-section-heading: var(--space-7); /* "Selected work" to the first tile labels */
+  --gap-tile-column: var(--space-4); /* between the two tile columns, tight like Micah Hoang */
+  --measure-role: 18ch; /* the hero line breaks onto two short lines */
+  --measure-about: 40ch; /* the home About blurb */
   --gap-tile-row: var(--space-6); /* between rows of Selected work tiles on phones; --space-7 from 48rem */
   --space-page-top: var(--space-7); /* header to the name */
   --panel-padding: clamp(1.5rem, 0.5rem + 4vw, 5rem); /* inside rounded section panels */
@@ -147,7 +151,7 @@
   --ratio-work-tile: 16 / 9; /* every Selected work tile, two equal columns (Micah Hoang) */
   --ratio-about-media: 4 / 5; /* the home About photo */
   --size-about-photo-phone: 10rem; /* the home About photo on phones, above the text */
-  --size-about-photo: 20rem; /* the home About photo from 48rem, in the left column, about as tall as the blurb */
+  --size-about-photo: 10rem; /* the home About photo, small beside the blurb (Micah Hoang) */
   --size-quote-slot: 10rem; /* height of the empty "What people say" box in previews */
   --size-portrait: clamp(14rem, 4rem + 16vw, 22rem); /* About portrait width from 48rem up */
   --size-logo: 3rem;
@@ -233,15 +237,10 @@
   --font-athenascribe-ui: "Nunito", "Apple SD Gothic Neo", "Noto Sans KR", "Geeza Pro", "Noto Sans Arabic", "Segoe UI", system-ui, sans-serif;
 }
 
+/* Small side margins on every screen (Micah Hoang): 16px on phones, 24px from 48rem. */
 @media (min-width: 48rem) {
   :root {
-    --gutter: var(--space-6);
-  }
-}
-
-@media (min-width: 80rem) {
-  :root {
-    --gutter: var(--space-8);
+    --gutter: var(--space-5);
   }
 }
 
