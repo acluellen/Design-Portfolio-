@@ -988,3 +988,11 @@ Aaron asked for a fuller browser preview, so the home page, case study page, and
 - Home About: the photo is 2:3 (`--ratio-about-photo`), the blurb drops to body size (`--font-text`, `--step-0`, `--leading-about`, `--measure-about` 34rem) in the main ink, with "Read more" closer under it. More space above the block (`--space-9`). "Scroll to top" moves to the left edge.
 - Contact block: the one line sentence is removed. Email, LinkedIn, and Resume are big stacked capitals (`--size-contact-link`, regular weight, `--leading-contact-link`) with small mono labels at the top right of each word ("@gmail.com", "Profile", "PDF"); the email is split so the name reads big. Items not live yet (no LinkedIn address, no resume file) stay muted. A bottom bar under a thin line: "Open to associate product design roles" on the left, the copyright on the right.
 - About page: the headshot is swapped for a gray "Photo" placeholder until Aaron picks a new portrait. The headshot file stays in the project.
+
+## 2026-10-14 · Type tuned to Aaron's own text (evidence review)
+
+Sized from the page's real text, not from Micah Hoang's. Evidence grades: A standard or replicated studies, B single study, C convention.
+- Home About blurb: 31rem wide (`--measure-about`), now 58 to 62 characters a line on desktop and 40 to 46 on phones, close to the best tested line length of about 55 (B) and inside the 45 to 75 convention (C). The short last line ("keep going.") is gone. 17px on phones, 18px on desktop (`--size-about-text`; larger body text reads no worse, B). Line height stays 1.5 (WCAG, A).
+- Hero line: `--size-role`, 28px on desktop (about a fifth of the 136px name) and 20px on phones, still two short lines (C).
+- Small mono labels: letter spacing up from 0.03em to 0.06em (`--tracking-label`); slightly wider spacing helps small capitals read (B for the direction, C for the value). Applies to every mono label.
+- Unchanged on purpose: the name size (782px of 1440, one line on phones), the About line height, and all copy.

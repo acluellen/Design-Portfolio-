@@ -90,7 +90,7 @@
   --leading-body: 1.65;
   --tracking-tight: -0.02em;
   --tracking-wordmark: -0.045em; /* the name on the home page */
-  --tracking-label: 0.03em; /* mono labels need less spacing than sans caps */
+  --tracking-label: 0.06em; /* small uppercase mono labels: a little extra spacing helps small capitals read (Oct 14 evidence review) */
   --tracking-button: -0.01em;
 
   /* Space (4px base) */
@@ -115,7 +115,9 @@
   --gap-section-heading: var(--space-7); /* "Selected work" to the first tile labels */
   --gap-tile-column: var(--space-4); /* between the two tile columns, tight like Micah Hoang */
   --measure-role: 18ch; /* the hero line breaks onto two short lines */
-  --measure-about: 34rem; /* the home About blurb, about 545px like Micah Hoang's */
+  --measure-about: 31rem; /* the home About blurb: about 55 to 60 characters a line at 18px, close to the best tested line length */
+  --size-about-text: clamp(1.0625rem, 1rem + 0.25vw, 1.125rem); /* the home About blurb: 17px on phones, 18px on desktop */
+  --size-role: clamp(1.25rem, 1rem + 0.9vw, 1.75rem); /* the hero line: about a fifth of the name's size on desktop */
   --leading-about: 1.5; /* the home About blurb at body size */
   --ratio-about-photo: 2 / 3; /* the home About photo, tall like Micah Hoang's */
   --size-contact-link: clamp(2.25rem, 1rem + 5vw, 5.5rem); /* the big stacked links in the contact block */
