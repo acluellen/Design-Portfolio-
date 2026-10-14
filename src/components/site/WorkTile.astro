@@ -41,6 +41,8 @@ const number = String(index).padStart(2, "0");
         )
       }
     </h3>
+    {inProgress && <p class="tile__status">In progress</p>}
+    {!href && !inProgress && <p class="tile__status">Case study coming soon</p>}
   </div>
 
   <div class="tile__media">
@@ -55,8 +57,6 @@ const number = String(index).padStart(2, "0");
     )
   }
 
-  {inProgress && <p class="tile__status">In progress</p>}
-  {!href && !inProgress && <p class="tile__status">Case study coming soon</p>}
 </article>
 
 <style>
@@ -181,7 +181,9 @@ const number = String(index).padStart(2, "0");
     color: var(--color-ink-muted);
   }
 
+  /* Sits at the right end of the label row, like ©2026 in the hero row. */
   .tile__status {
+    margin-inline-start: auto;
     font-family: var(--font-mono);
     font-size: var(--step--1);
     letter-spacing: var(--tracking-label);

@@ -960,3 +960,10 @@ Aaron asked for a fuller browser preview, so the home page, case study page, and
 - New first section, "Translation is automatic. Approval stays human.": five feature lines beside a 12 second phone loop (`AthenaStory.astro`, variant `story`). The line for the beat on screen lights up with a progress bar; clicking a line jumps the loop. Feature 3 carries the verbatim round one testing quote about buckets.
 - Real names in the loop come from the team's prototype: Director Martin, the Reyes family, Mateo Reyes.
 - New tokens: `--as-shadow-phone`, `--as-frame`, `--as-frame-edge`, `--as-screen`.
+
+## 2026-10-14 · Home page spacing pass
+
+- Spacing now steps down from outside in: the gap between sections (`--section-gap`, about 96px on desktop and 56px on phones) is always larger than the gap between tile rows (`--gap-tile-row`, 48px desktop, 32px phones), which is larger than a section title to its content (`--gap-section-heading`, 32px). Before, the tile rows (64px) sat farther apart than the sections themselves (32 to 60px), so the page read as one long list.
+- The name sits closer under the header (`--space-page-top`), and the links row sits closer under the subtitle. On a 1440 by 900 screen both top project images now show in full on the first screen; before, only their top edge showed.
+- About (from 48rem) uses the same two columns as Selected work: the photo in the left column (`--size-about-photo`, 20rem, about as tall as the blurb) and the blurb starting on the same line as the right hand tiles.
+- "In progress" and "Case study coming soon" moved to the right end of a tile's label row, like ©2026 in the hero row, so every tile ends at its tags and rows stay even.

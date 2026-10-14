@@ -110,7 +110,7 @@ const year = new Date().getFullYear();
   .stack {
     display: grid;
     gap: var(--section-gap);
-    padding-block: var(--section-gap);
+    padding-block: var(--space-page-top) var(--section-gap);
   }
 
   /* 1. Name and one line close under the header, then the links row with the year at its right
@@ -118,7 +118,6 @@ const year = new Date().getFullYear();
   .hero {
     display: grid;
     gap: var(--space-5);
-    padding-block-start: var(--space-6);
     margin-block-end: calc(var(--space-4) - var(--section-gap));
   }
 
@@ -147,7 +146,7 @@ const year = new Date().getFullYear();
     align-items: center;
     justify-content: space-between;
     gap: 0 var(--space-5);
-    margin-block-start: var(--space-6);
+    margin-block-start: var(--space-4);
     font-family: var(--font-mono);
     font-size: var(--step--1);
     letter-spacing: var(--tracking-label);
@@ -220,7 +219,7 @@ const year = new Date().getFullYear();
   /* 2. Selected work: equal tiles, two side by side from 48rem. */
   .work {
     display: grid;
-    gap: var(--space-8);
+    gap: var(--gap-section-heading);
   }
 
   .work h2 {
@@ -230,12 +229,13 @@ const year = new Date().getFullYear();
 
   .work__grid {
     display: grid;
-    gap: var(--space-8) var(--space-6);
+    gap: var(--gap-tile-row) var(--space-6);
   }
 
   @media (min-width: 48rem) {
     .work__grid {
       grid-template-columns: 1fr 1fr;
+      row-gap: var(--space-7);
     }
   }
 
@@ -243,7 +243,7 @@ const year = new Date().getFullYear();
      with the text beside it, both aligned to the top. Phones: the photo above the text. */
   .about {
     display: grid;
-    gap: var(--space-8);
+    gap: var(--gap-section-heading);
   }
 
   .about h2 {
@@ -257,10 +257,12 @@ const year = new Date().getFullYear();
     align-items: start;
   }
 
-  @media (min-width: 40rem) {
+  /* From 48rem the About row uses the same two columns as Selected work, so the blurb starts on
+     the same line as the right hand tiles. */
+  @media (min-width: 48rem) {
     .about__body {
-      grid-template-columns: 1fr 3fr;
-      column-gap: var(--space-7);
+      grid-template-columns: 1fr 1fr;
+      column-gap: var(--space-6);
     }
   }
 
@@ -278,9 +280,9 @@ const year = new Date().getFullYear();
     color: var(--color-ink-muted);
   }
 
-  @media (min-width: 40rem) {
+  @media (min-width: 48rem) {
     .about__media {
-      inline-size: 100%;
+      inline-size: min(100%, var(--size-about-photo));
     }
   }
 
