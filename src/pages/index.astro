@@ -49,8 +49,12 @@ const year = new Date().getFullYear();
       </div>
       <div class="about__text">
         <p class="about__blurb">
-          I’m a product designer focused on clarity. I use research to understand how people work, then
-          design around what they need.
+          I’m interested in the small details that can change someone’s entire experience. The explanation
+          that finally makes sense, the unexpected moment of confusion, or the reason someone decides to
+          keep going.
+        </p>
+        <p class="about__blurb">
+          Research gives me a way to understand those moments and bring what I learn into design.
         </p>
         <a class="about__more" href="/about/">Read more<span class="visually-hidden"> about Aaron</span></a>
       </div>
@@ -290,7 +294,7 @@ const year = new Date().getFullYear();
      with the photo's top. */
   .about__blurb {
     max-width: 34ch;
-    margin-block-start: calc((1lh - 1cap) / -2);
+    margin-block-start: 0;
     font-family: var(--font-display);
     font-weight: var(--weight-light);
     font-size: var(--step-2);
@@ -301,6 +305,10 @@ const year = new Date().getFullYear();
   }
 
   /* Plain small mono capitals in the main text color. Underline on hover only. */
+  .about__blurb:first-child {
+    margin-block-start: calc((1lh - 1cap) / -2);
+  }
+
   .about__more {
     display: inline-flex;
     align-items: center;
