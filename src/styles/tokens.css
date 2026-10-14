@@ -7,18 +7,18 @@
 
 :root {
   /* Color: light (warm graph paper) */
-  --color-paper: #f6f3ed;
+  --color-paper: #f4f3f0; /* neutral paper (Oct 14): less yellow, so the photos show their own color */
   --color-paper-raised: #ffffff; /* cards and poster mats */
   --color-band: #ffffff; /* light panels use the card color */
-  --color-panel: #efebe3; /* soft backdrop behind media */
-  --color-placeholder: #dcd8d0; /* gray media placeholders until the real images arrive */
+  --color-panel: #ebeae6; /* soft backdrop behind media */
+  --color-placeholder: #dcdbd7; /* gray media placeholders until the real images arrive */
   --color-ink: #201f1d; /* body text: 14.9:1 on paper */
   --color-heading: #1b2a3a; /* deep navy for headings: 13.2:1 on paper */
   --color-ink-muted: #524e49; /* 7.5:1 on paper */
-  --color-rule: #dcd7cd; /* card borders, thin lines */
-  --color-rule-strong: #c4beb2;
+  --color-rule: #dbd9d4; /* card borders, thin lines */
+  --color-rule-strong: #c2c0ba;
   --color-grid: transparent; /* page grid off (Oct 14); was rgb(32 31 29 / 0.06). The grid code stays in global.css */
-  --color-rule-section: #9d978c; /* the drawn lines above home sections, darker so the draw is seen */
+  --color-rule-section: #9b9993; /* the drawn lines above home sections, darker so the draw is seen */
   --size-grid: 3rem; /* graph paper square */
 
   /* Links: the AL blue, now used for links and small accents only. 6.1:1 on paper. */
@@ -161,6 +161,7 @@
   --size-quote-slot: 10rem; /* height of the empty "What people say" box in previews */
   --size-portrait: clamp(14rem, 4rem + 16vw, 22rem); /* About portrait width from 48rem up */
   --size-logo: 3rem;
+  --size-logo-mark: 1.75rem; /* height of the AL lines in the header, without the square */
   --control-height: 2.75rem; /* 44px */
   --control-height-small: 2.25rem; /* 36px, the button look inside a card (the card itself is the link) */
   --control-padding: var(--space-6);

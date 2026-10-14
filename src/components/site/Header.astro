@@ -44,6 +44,11 @@ const onAbout = path.startsWith("/about");
   // At very large text sizes the header can grow tall. Past a fifth of the screen it stops
   // sticking and scrolls away with the page, so it never covers the content.
   const header = document.querySelector<HTMLElement>(".site-header");
+  if (header) {
+    const line = () => header.classList.toggle("is-scrolled", window.scrollY > 4);
+    line();
+    window.addEventListener("scroll", line, { passive: true });
+  }
   if (header && "ResizeObserver" in window) {
     const MAX_SHARE = 0.2;
     const check = () => header.classList.toggle("site-header--tall", header.offsetHeight > window.innerHeight * MAX_SHARE);
@@ -85,7 +90,13 @@ const onAbout = path.startsWith("/about");
     top: env(safe-area-inset-top, 0px);
     z-index: 20;
     background: var(--color-paper);
-    border-bottom: var(--rule-thin) solid var(--color-rule);
+    border-bottom: var(--rule-thin) solid transparent;
+    transition: border-color var(--duration-fast) var(--ease-standard);
+  }
+
+  /* The thin line shows only once content scrolls under the header. */
+  .site-header.is-scrolled {
+    border-bottom-color: var(--color-rule);
   }
 
   /* Wraps instead of stacking: at very large text the links move to a second row, side by side. */
@@ -98,7 +109,11 @@ const onAbout = path.startsWith("/about");
     padding-block: var(--space-3);
   }
 
+  /* The AL lines sit in a full size tap target. */
   .site-header__home {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--control-height);
     text-decoration: none;
     border-radius: var(--radius-media);
   }

@@ -47,14 +47,14 @@
     padding: 0;
     background: transparent;
     color: var(--color-ink);
-    border: var(--rule-thin) solid var(--color-rule);
+    border: var(--rule-thin) solid transparent; /* no ring at rest, so the header stays light */
     border-radius: var(--radius-pill);
     cursor: pointer;
     transition: border-color var(--duration-fast) var(--ease-standard);
   }
 
   .theme-toggle:hover {
-    border-color: var(--color-ink);
+    border-color: var(--color-rule-strong);
   }
 
   .theme-toggle__icon {

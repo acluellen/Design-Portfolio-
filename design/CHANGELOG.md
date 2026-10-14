@@ -996,3 +996,14 @@ Sized from the page's real text, not from Micah Hoang's. Evidence grades: A stan
 - Hero line: `--size-role`, 28px on desktop (about a fifth of the 136px name) and 20px on phones, still two short lines (C).
 - Small mono labels: letter spacing up from 0.03em to 0.06em (`--tracking-label`); slightly wider spacing helps small capitals read (B for the direction, C for the value). Applies to every mono label.
 - Unchanged on purpose: the name size (782px of 1440, one line on phones), the About line height, and all copy.
+
+## 2026-10-14 · Lighter header and neutral paper (evidence review)
+
+Header (less visual weight at the top, so the name leads):
+- The AL mark drops its filled navy square: just the two letters in the heading color, cropped and a little thicker so they read small (`--size-logo-mark`). The link keeps a 44px tap target.
+- The theme button loses its ring at rest; a light ring shows on hover and keyboard focus.
+- The line under the header shows only once the page scrolls under it.
+
+Color (light mode only; dark mode unchanged):
+- Page paper moves from warm cream `#F6F3ED` to neutral `#F4F3F0`, with panel, placeholder, and rule grays matched. The cream sat at the same hue as the Craft wood photo (about 40 degrees), so that tile blended into the page while the cool tiles stood out. A neutral surround keeps the photos' own colors (color appearance models, A; value, C). Every text color still passes: body 14.8:1, navy 13.2:1, muted 7.4:1, links 6.0:1.
+- Navy stays the brand color for headings, the logo, and the contact block (low chroma, so it doesn't fight the photos; C). Blue stays for links only (C). Option "cool paper plus near black ink" was rendered and not taken: it changes the brand with no evidence for doing so.

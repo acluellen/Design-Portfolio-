@@ -4,12 +4,17 @@
 // Falls back to a text mark if the file is missing.
 const files = import.meta.glob<string>("/src/assets/brand/logo.svg", { eager: true, query: "?raw", import: "default" });
 const raw = Object.values(files)[0];
+// October 14: the header shows the AL lines alone, without the filled square, so the top of the
+// page reads lighter. The square is dropped, the view is cropped to the two letters, and the
+// triangle line is thickened so it still reads at this small size. Colors follow the theme.
 const svg = raw
   ?.replace(/<svg /, '<svg class="logo" aria-hidden="true" focusable="false" ')
+  .replace(/viewBox="[^"]*"/, 'viewBox="24 47 88 50"')
   .replace(/\s(role|aria-label)="[^"]*"/g, "")
-  .replace(/fill="#1B2A3A"/i, 'style="fill: var(--color-logo)"')
-  .replace(/stroke="#F6F3ED"/i, 'style="stroke: var(--color-logo-ink)"')
-  .replace(/fill="#F6F3ED"/i, 'style="fill: var(--color-logo-ink)"');
+  .replace(/<rect[^>]*\/>/i, "")
+  .replace(/stroke="#F6F3ED"/i, 'style="stroke: var(--color-logo)"')
+  .replace(/stroke-width="[^"]*"/i, 'stroke-width="3.4"')
+  .replace(/fill="#F6F3ED"/i, 'style="fill: var(--color-logo)"');
 ---
 
 {svg ? <Fragment set:html={svg} /> : <span class="logo logo--text" aria-hidden="true">AL</span>}
@@ -17,8 +22,8 @@ const svg = raw
 <style>
   :global(.logo) {
     display: block;
-    inline-size: var(--size-logo);
-    block-size: var(--size-logo);
+    inline-size: auto;
+    block-size: var(--size-logo-mark);
   }
 
   .logo--text {

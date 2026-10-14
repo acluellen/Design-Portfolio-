@@ -51,8 +51,8 @@ Never pure black (`#000000`) anywhere.
 | Role | Light | Dark |
 |---|---|---|
 | Page | `#F6F3ED` | `#12161C` |
-| Cards and light panels | `#FFFFFF`, border `#DCD7CD` | `#1A2029` |
-| Media backdrop | `#EFEBE3` | `#161C25` |
+| Cards and light panels | `#FFFFFF`, border `#DBD9D4` | `#1A2029` |
+| Media backdrop | `#EBEAE6` | `#161C25` |
 | Headings | `#1B2A3A` navy | `#F1F3F7` |
 | Body text | `#201F1D` | `#E9ECF1` |
 | Secondary text and labels | `#524E49` | `#A3ABB7` |
