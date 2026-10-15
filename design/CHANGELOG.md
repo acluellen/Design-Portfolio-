@@ -2,6 +2,10 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-15 · Draft portrait in the home and About photo boxes
+
+- Aaron's draft portrait (`src/assets/photos/aaron-portrait.jpg`, photo key `aaron-portrait`) fills the home About box (2:3) and the About page portrait box (4:5), cropped with `object-fit: cover` around his face (`--focus-portrait`). Alt: "Aaron Luellen seated at a wooden table in a navy sweater". The build makes the AVIF and WebP copies. To swap in the final photo, replace the file under the same name.
+
 ## 2026-10-14 · Page grid turned off
 
 - Aaron: no graph paper background on any page, in light or dark mode. The warm paper color stays as it is.

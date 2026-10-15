@@ -1,5 +1,6 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
+import Photo from "../components/site/Photo.astro";
 import { mailto, site } from "../site.config";
 import fs from "node:fs";
 import WorkTile from "../components/site/WorkTile.astro";
@@ -44,8 +45,8 @@ const year = new Date().getFullYear();
   <section id="about" class="about" aria-labelledby="about-heading" data-reveal>
     <h2 id="about-heading" class="visually-hidden">About Aaron</h2>
     <div class="about__body">
-      <div class="about__media" aria-hidden="true">
-        <span>Photo</span>
+      <div class="about__media">
+        <Photo name="aaron-portrait" widths={[160, 320, 480]} sizes="10rem" cover={2 / 3} ratio="2 / 3" class="about__photo" />
       </div>
       <div class="about__text">
         <p class="about__blurb">
@@ -305,6 +306,23 @@ const year = new Date().getFullYear();
     .about__media {
       inline-size: 100%;
     }
+  }
+
+  /* The portrait fills the box; the crop keeps the face in view (slightly above center). */
+  .about__media {
+    overflow: hidden;
+  }
+
+  .about__media :global(picture),
+  .about__media :global(.about__photo) {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .about__media :global(.about__photo) {
+    object-fit: cover;
+    object-position: var(--focus-portrait);
   }
 
   .about__text {

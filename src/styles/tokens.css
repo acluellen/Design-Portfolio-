@@ -159,6 +159,7 @@
   --size-about-photo-phone: 10rem; /* the home About photo on phones, above the text */
   --size-about-photo: 10rem; /* the home About photo, small beside the blurb (Micah Hoang) */
   --size-quote-slot: 10rem; /* height of the empty "What people say" box in previews */
+  --focus-portrait: 55% 28%; /* crop focus for the portrait photo: Aaron's face, slightly above center */
   --size-portrait: clamp(14rem, 4rem + 16vw, 22rem); /* About portrait width from 48rem up */
   --size-logo: 3rem;
   --size-logo-mark: 1.75rem; /* height of the AL lines in the header, without the square */

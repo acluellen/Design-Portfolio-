@@ -20,9 +20,16 @@ const numbered = rows.map((row) => row.map((tile) => ({ ...tile, number: String(
     <!-- Portrait and text share one block, so the sticky portrait stops where the text ends. -->
     <div class="about-page__main">
     <figure class="about-page__portrait">
-      <!-- Gray placeholder until Aaron picks a new portrait (Oct 14). The headshot is still in
-           src/assets/photos/headshot.jpg: swap this div back for <Photo name="headshot" ...> to restore. -->
-      <div class="about-page__photo about-page__slot" aria-hidden="true">Photo</div>
+      <!-- Draft portrait; swap the file src/assets/photos/aaron-portrait.jpg to replace it. -->
+      <Photo
+        name="aaron-portrait"
+        widths={[320, 480, 704]}
+        sizes="(min-width: 64rem) 22rem, 70vw"
+        cover={4 / 5}
+        ratio="4 / 5"
+        loading="eager"
+        class="about-page__photo"
+      />
     </figure>
 
     <div class="about-page__content">
@@ -180,6 +187,7 @@ const numbered = rows.map((row) => row.map((tile) => ({ ...tile, number: String(
     block-size: auto;
     aspect-ratio: 4 / 5;
     object-fit: cover;
+    object-position: var(--focus-portrait);
     border-radius: var(--radius-media);
   }
 

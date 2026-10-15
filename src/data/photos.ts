@@ -4,6 +4,7 @@
 
 export type PhotoKey =
   | "headshot"
+  | "aaron-portrait"
   | "work-athenascribe"
   | "work-klima"
   | "work-craft-education"
@@ -18,6 +19,12 @@ export type PhotoKey =
   | "kron4-still-color";
 
 export const photos: Record<PhotoKey, { alt: string; approved: boolean }> = {
+  // Draft portrait (Oct 15). To swap it, replace src/assets/photos/aaron-portrait.jpg with the final
+  // photo under the same name; both pages update on the next build.
+  "aaron-portrait": {
+    alt: "Aaron Luellen seated at a wooden table in a navy sweater",
+    approved: true,
+  },
   headshot: {
     alt: "Aaron smiling broadly at the camera in a brown henley shirt.",
     approved: false,
