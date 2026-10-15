@@ -3,6 +3,7 @@ import PageLayout from "../layouts/PageLayout.astro";
 import { mailto, site } from "../site.config";
 import fs from "node:fs";
 import WorkTile from "../components/site/WorkTile.astro";
+import Photo from "../components/site/Photo.astro";
 import { caseStudyHref, getAllCaseStudies } from "../lib/case-studies";
 
 // Selected work: every case study with a card, as equal tiles in two columns, by `order` (Micah Hoang).
@@ -44,8 +45,8 @@ const year = new Date().getFullYear();
   <section id="about" class="about" aria-labelledby="about-heading" data-reveal>
     <h2 id="about-heading" class="visually-hidden">About Aaron</h2>
     <div class="about__body">
-      <div class="about__media" aria-hidden="true">
-        <span>Photo</span>
+      <div class="about__media">
+        <Photo name="portrait-preview" widths={[200, 320, 480, 600]} sizes="(min-width: 40rem) 13rem, 60vw" ratio="4 / 5" cover={4 / 5} class="about__portrait-img" />
       </div>
       <div class="about__text">
         <p class="about__blurb">
@@ -305,6 +306,15 @@ const year = new Date().getFullYear();
     .about__media {
       inline-size: 100%;
     }
+  }
+
+  .about__media :global(picture),
+  .about__media :global(img) {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-media);
   }
 
   .about__text {

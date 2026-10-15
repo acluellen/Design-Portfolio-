@@ -3,6 +3,7 @@
 // Alt text: approved lines are confirmed by Aaron. The rest are drafts written from the photos.
 
 export type PhotoKey =
+  | "portrait-preview"
   | "headshot"
   | "work-athenascribe"
   | "work-klima"
@@ -18,6 +19,10 @@ export type PhotoKey =
   | "kron4-still-color";
 
 export const photos: Record<PhotoKey, { alt: string; approved: boolean }> = {
+  "portrait-preview": {
+    alt: "Portrait of Aaron seated at a wooden table in a navy sweater against a warm beige background.",
+    approved: false,
+  },
   headshot: {
     alt: "Aaron smiling broadly at the camera in a brown henley shirt.",
     approved: false,
