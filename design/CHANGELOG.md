@@ -2,6 +2,13 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-15 · Home About: a label, a statement, a bigger photo
+
+- "About Aaron" shows as a small muted mono label after the line, like "Get in touch". "Selected work" stays the one big heading; About reads as a quieter section. A big "About Aaron" like Micah Hoang's felt like too much (Aaron). The space from the line drops from 6rem to 2rem, the same as "Selected work"; 1.5rem from the label to the photo (`--gap-about-heading`).
+- The first paragraph is the statement: Hanken Grotesk, one step up (`--size-about-lede`, 20px on phones, 22px on desktop) with tighter lines (`--leading-about-lede`, 1.3). The second paragraph stays body size and supports it. Before, both were the same body text, so nothing read as Aaron's voice.
+- The photo grows from 10rem to 12rem on desktop (`--size-about-photo`) so it is about as tall as the text. Phones keep 10rem.
+- Unchanged: all copy, the left alignment, "Read more".
+
 ## 2026-10-15 · Draft portrait in the home and About photo boxes
 
 - Aaron's draft portrait (`src/assets/photos/aaron-portrait.jpg`, photo key `aaron-portrait`) fills the home About box (2:3) and the About page portrait box (4:5), cropped with `object-fit: cover` around his face (`--focus-portrait`). Alt: "Aaron Luellen seated at a wooden table in a navy sweater". The build makes the AVIF and WebP copies. To swap in the final photo, replace the file under the same name.

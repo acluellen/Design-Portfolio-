@@ -39,17 +39,17 @@ const year = new Date().getFullYear();
     </div>
   </section>
 
-  <!-- 3. About: a large heading like "Selected work", then a small photo on the left (placeholder for
-       now) with the blurb and the link beside it. The apprenticeship, the KRON4 clip, and the gym
+  <!-- 3. About: a small mono label, then the portrait on the left with the statement, one supporting
+       line, and the link beside it. The apprenticeship, the KRON4 clip, and the gym
        photos live on the About page. -->
   <section id="about" class="about" aria-labelledby="about-heading" data-reveal>
-    <h2 id="about-heading" class="visually-hidden">About Aaron</h2>
+    <h2 id="about-heading" class="about__title">About Aaron</h2>
     <div class="about__body">
       <div class="about__media">
-        <Photo name="aaron-portrait" widths={[160, 320, 480]} sizes="10rem" cover={2 / 3} ratio="2 / 3" class="about__photo" />
+        <Photo name="aaron-portrait" widths={[192, 384, 576]} sizes="(min-width: 40rem) 12rem, 10rem" cover={2 / 3} ratio="2 / 3" class="about__photo" />
       </div>
       <div class="about__text">
-        <p class="about__blurb">
+        <p class="about__blurb about__blurb--lede">
           I’m interested in the small details that can change someone’s entire experience. The explanation
           that finally makes sense, the unexpected moment of confusion, or the reason someone decides to
           keep going.
@@ -260,18 +260,23 @@ const year = new Date().getFullYear();
     }
   }
 
-  /* 3. About: the heading matches "Selected work". Below it the photo takes a quarter of the width
-     with the text beside it, both aligned to the top. Phones: the photo above the text. */
-  /* No visible heading (Micah Hoang): the line, then the photo and blurb. The heading stays for
-     screen readers. */
+  /* 3. About: the photo on the left with the text beside it, both aligned to the top. Phones: the
+     photo above the text. */
+  /* A small mono label after the line, like "Get in touch" (Oct 15): "Selected work" stays the one
+     big heading; About is a quieter section. Same space from the line as "Selected work". */
   .about {
     display: grid;
-    padding-block-start: var(--space-9);
+    gap: var(--gap-about-heading);
+    padding-block-start: var(--space-6);
   }
 
-  .about h2 {
-    font-size: var(--step-4);
-    font-weight: var(--weight-light);
+  .about__title {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
   }
 
   .about__body {
@@ -344,11 +349,19 @@ const year = new Date().getFullYear();
     text-wrap: pretty;
   }
 
-  /* Plain small mono capitals in the main text color. Underline on hover only. */
+  /* The first paragraph is the statement: display face, one step up, tighter lines. The second
+     stays body size and supports it (Oct 15). */
+  .about__blurb--lede {
+    font-family: var(--font-display);
+    font-size: var(--size-about-lede);
+    line-height: var(--leading-about-lede);
+  }
+
   .about__blurb:first-child {
     margin-block-start: calc((1lh - 1cap) / -2);
   }
 
+  /* Plain small mono capitals in the main text color. Underline on hover only. */
   .about__more {
     display: inline-flex;
     align-items: center;

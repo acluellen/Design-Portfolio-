@@ -119,6 +119,9 @@
   --size-about-text: clamp(1.0625rem, 1rem + 0.25vw, 1.125rem); /* the home About blurb: 17px on phones, 18px on desktop */
   --size-role: clamp(1.25rem, 1rem + 0.9vw, 1.75rem); /* the hero line: about a fifth of the name's size on desktop */
   --leading-about: 1.5; /* the home About blurb at body size */
+  --size-about-lede: var(--step-1); /* the home About statement (first paragraph): 20px on phones, 22px on desktop, one step over the body */
+  --leading-about-lede: var(--leading-snug); /* the home About statement: tighter, like display text */
+  --gap-about-heading: var(--space-5); /* the home "About Aaron" label to the photo and text */
   --ratio-about-photo: 2 / 3; /* the home About photo, tall like Micah Hoang's */
   --size-contact-link: clamp(2.25rem, 1rem + 5vw, 5.5rem); /* the big stacked links in the contact block */
   --leading-contact-link: 1.05;
@@ -157,7 +160,7 @@
   --ratio-work-tile: 16 / 9; /* every Selected work tile, two equal columns (Micah Hoang) */
   --ratio-about-media: 4 / 5; /* the home About photo */
   --size-about-photo-phone: 10rem; /* the home About photo on phones, above the text */
-  --size-about-photo: 10rem; /* the home About photo, small beside the blurb (Micah Hoang) */
+  --size-about-photo: 12rem; /* the home About photo beside the blurb, as tall as the text block (Oct 15) */
   --size-quote-slot: 10rem; /* height of the empty "What people say" box in previews */
   --focus-portrait: 55% 28%; /* crop focus for the portrait photo: Aaron's face, slightly above center */
   --size-portrait: clamp(14rem, 4rem + 16vw, 22rem); /* About portrait width from 48rem up */
