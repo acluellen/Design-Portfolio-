@@ -1,0 +1,247 @@
+---
+// The AthenaScribe case study cover (Oct 17 2026): the home tile's document alerts without the phone.
+// Five school documents arrive as alerts, each in a family's home language, one after another; then
+// the line "Translation is automatic. Approval stays human." settles over them. Same indigo scene,
+// icons, and card look as AthenaScribeTile, but pure CSS: no phone, no scan, no script besides the
+// pause button. The loop is 11 s, over 5 s, so it has a pause control (WCAG 2.2.2). Reduced motion
+// shows the five alerts, dimmed, under the line.
+// The scene is drawn in stage units (960 wide); --u is one unit at the box's width.
+import "@fontsource/nunito/700.css";
+import "@fontsource/nunito/800.css";
+
+const label =
+  "AthenaScribe: five school documents arrive as alerts, in Arabic, Vietnamese, Portuguese, Korean, and Spanish. Translation is automatic. Approval stays human.";
+
+const ICON: Record<string, string> = {
+  bus: '<path d="M5 17V6.5A2.5 2.5 0 0 1 7.5 4h9A2.5 2.5 0 0 1 19 6.5V17"/><path d="M4 17h16v2H4zM5 11h14M8 20v1M16 20v1"/>',
+  health: '<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/><path d="M12 9.5v5M9.5 12h5"/>',
+  iep: '<path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/>',
+  phone: '<path d="M6.5 4h3l1.5 4-2 1.2a10 10 0 0 0 5.8 5.8L16 13l4 1.5v3A2.5 2.5 0 0 1 17.5 20 13.5 13.5 0 0 1 4 6.5 2.5 2.5 0 0 1 6.5 4z"/>',
+  lunch: '<path d="M12 7c2.5-2.5 7-1.5 7 3.5 0 5-3.5 9.5-7 9.5s-7-4.5-7-9.5C5 5.5 9.5 4.5 12 7z"/><path d="M12 7c0-2 1-3.5 2.5-4"/>',
+};
+
+// x and y are stage units from the top left of the 960 by 540 scene.
+const alerts = [
+  { n: "Lunch program enrollment", nat: "العربية", l: "Arabic", i: "lunch", c: "#4f7aa0", x: 48, y: 60 },
+  { n: "Health and immunization form", nat: "Tiếng Việt", l: "Vietnamese", i: "health", c: "#2f9e86", x: 512, y: 100 },
+  { n: "Special education IEP notice", nat: "Português", l: "Portuguese", i: "iep", c: "#c08a1e", x: 128, y: 214 },
+  { n: "Emergency contact update", nat: "한국어", l: "Korean", i: "phone", c: "#8a62c9", x: 528, y: 300 },
+  { n: "Field trip permission slip", nat: "Español", l: "Spanish", i: "bus", c: "#4a5ad8", x: 72, y: 372 },
+];
+---
+
+<div class="al" data-al>
+  <div class="al__scene" role="img" aria-label={label}>
+    <div class="al__bg"></div>
+    <div class="al__blob al__blob--a"></div>
+    <div class="al__blob al__blob--b"></div>
+    <div class="al__vign"></div>
+
+    {
+      alerts.map((a, i) => (
+        <div class="al__card" style={`--i:${i}; --x:${a.x}; --y:${a.y}`}>
+          <span class="al__icon" style={`background:${a.c}`}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" set:html={ICON[a.i]} />
+          </span>
+          <span class="al__text">
+            <b class="al__name">{a.n}</b>
+            <span class="al__chip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" /></svg>
+              <span lang={a.l === "Arabic" ? "ar" : undefined}>{a.nat}</span> · {a.l}
+            </span>
+          </span>
+        </div>
+      ))
+    }
+
+    <p class="al__line al__line--a">Translation is automatic.</p>
+    <p class="al__line al__line--b">Approval stays human.</p>
+  </div>
+  <button type="button" class="al__pz" aria-label="Pause animation" data-al-pz>
+    <svg class="al__pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="7" y="5" width="3.5" height="14" rx="1"></rect><rect x="13.5" y="5" width="3.5" height="14" rx="1"></rect></svg>
+    <svg class="al__play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-7z"></path></svg>
+  </button>
+</div>
+
+<style>
+  .al {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    container-type: inline-size;
+    background: var(--as-base);
+  }
+
+  .al__scene {
+    --u: calc(100cqw / 960);
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    font-family: var(--font-athenascribe-ui);
+  }
+
+  .al__bg {
+    position: absolute;
+    inset: 0;
+    background: var(--as-base);
+  }
+
+  .al__vign {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(90% 110% at 50% 40%, transparent 40%, rgb(5 6 25 / 0.45));
+  }
+
+  .al__blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(calc(var(--u) * 64));
+  }
+
+  .al__blob--a { width: 60%; height: 66%; left: 20%; top: 6%; background: var(--as-glow); opacity: 0.42; }
+  .al__blob--b { width: 40%; height: 46%; left: 52%; top: 50%; background: var(--as-teal); opacity: 0.12; }
+
+  .al__card {
+    position: absolute;
+    left: calc(var(--u) * var(--x));
+    top: calc(var(--u) * var(--y));
+    inline-size: calc(var(--u) * 400);
+    display: flex;
+    align-items: center;
+    gap: calc(var(--u) * 18);
+    padding: calc(var(--u) * 18) calc(var(--u) * 22);
+    background: var(--as-paper);
+    color: var(--as-ink);
+    border-radius: calc(var(--u) * 22);
+    box-shadow: var(--as-shadow-doc);
+    animation: al-card 11s ease-in-out infinite backwards;
+    animation-delay: calc(var(--i) * 0.4s);
+  }
+
+  .al__icon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    inline-size: calc(var(--u) * 56);
+    block-size: calc(var(--u) * 56);
+    border-radius: calc(var(--u) * 16);
+    color: var(--as-paper);
+  }
+
+  .al__icon svg { inline-size: 56%; block-size: 56%; }
+
+  .al__text { display: grid; gap: calc(var(--u) * 6); min-inline-size: 0; }
+
+  .al__name {
+    font-size: calc(var(--u) * 22);
+    font-weight: 800;
+    line-height: 1.15;
+  }
+
+  .al__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: calc(var(--u) * 6);
+    inline-size: fit-content;
+    padding: calc(var(--u) * 3) calc(var(--u) * 10);
+    border-radius: 999px;
+    background: var(--as-soft);
+    color: var(--as-indigo-ink);
+    font-family: var(--font-athenascribe-scripts), var(--font-athenascribe-ui);
+    font-size: calc(var(--u) * 15);
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  .al__chip svg { inline-size: calc(var(--u) * 16); block-size: calc(var(--u) * 16); }
+
+  .al__line {
+    position: absolute;
+    inset-inline: 0;
+    margin: 0;
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: calc(var(--u) * 46);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: calc(var(--u) * 54);
+    opacity: 0;
+    animation: al-line 11s ease-in-out infinite;
+  }
+
+  .al__line--a { top: calc(var(--u) * 212); color: var(--as-slate-dim); }
+  .al__line--b { top: calc(var(--u) * 266); color: var(--as-slate); animation-name: al-line-b; }
+
+  /* Each alert follows the same 11 s shape, started a little later than the one before. */
+  @keyframes al-card {
+    0% { opacity: 0; transform: translateY(calc(var(--u) * 28)); }
+    6%, 58% { opacity: 1; transform: none; }
+    66%, 94% { opacity: 0.12; transform: none; }
+    100% { opacity: 0; transform: none; }
+  }
+
+  @keyframes al-line {
+    0%, 82% { opacity: 0; transform: translateY(calc(var(--u) * 10)); }
+    88%, 96% { opacity: 1; transform: none; }
+    100% { opacity: 0; transform: none; }
+  }
+
+  @keyframes al-line-b {
+    0%, 85% { opacity: 0; transform: translateY(calc(var(--u) * 10)); }
+    91%, 96% { opacity: 1; transform: none; }
+    100% { opacity: 0; transform: none; }
+  }
+
+  .al.is-paused .al__card,
+  .al.is-paused .al__line {
+    animation-play-state: paused;
+  }
+
+  .al__pz {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    inline-size: 34px;
+    block-size: 34px;
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid rgb(255 255 255 / 0.22);
+    background: rgb(255 255 255 / 0.1);
+    color: var(--as-paper);
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity var(--duration-fast) var(--ease-standard);
+  }
+
+  .al__pz:hover,
+  .al__pz:focus-visible { opacity: 1; }
+
+  .al__pz:focus-visible {
+    outline: var(--focus-width) solid var(--as-paper);
+    outline-offset: 2px;
+  }
+
+  .al__pz svg { inline-size: 14px; block-size: 14px; }
+  .al__play, .al.is-paused .al__pause { display: none; }
+  .al.is-paused .al__play { display: block; }
+
+  /* Reduced motion: the five alerts, dimmed, under the line. No loop, so no pause button. */
+  @media (prefers-reduced-motion: reduce) {
+    .al__card { animation: none; opacity: 0.16; }
+    .al__line { animation: none; opacity: 1; }
+    .al__pz { display: none; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-al]").forEach((root) => {
+    const pz = root.querySelector<HTMLButtonElement>("[data-al-pz]")!;
+    pz.addEventListener("click", () => {
+      const paused = root.classList.toggle("is-paused");
+      pz.setAttribute("aria-label", paused ? "Play animation" : "Pause animation");
+    });
+  });
+</script>

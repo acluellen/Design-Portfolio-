@@ -12,7 +12,9 @@
 // Shown only in dev and review previews (like VideoSlot), never on the live site. The caption says
 // what decision the finished visual demonstrates. To replace one, swap it for a <Figure>, a
 // <Compare>, or a coded component and keep the caption.
+import type { ImageMetadata } from "astro";
 import { showPlaceholders } from "../../lib/case-studies";
+import Shot from "./Shot.astro";
 
 type Kind = "diagram" | "pair" | "artifact" | "dashboard" | "phone" | "notes" | "quote" | "photo";
 
@@ -22,6 +24,16 @@ interface Item {
   caption: string;
   /** For `pair`: the names of the two sides, shown inside their frames. */
   sides?: [string, string];
+  /** A heading under the visual, above the caption. */
+  title?: string;
+  /** A small label over the title, such as "01 Upload". */
+  eyebrow?: string;
+  /** The word before the label inside a placeholder: "Placeholder" (default), "Proposed screen", "Proposed revision", "In development". */
+  tag?: string;
+  /** An actual image. When set, the placeholder becomes an enlargeable figure at the same shape. */
+  src?: ImageMetadata;
+  alt?: string;
+  fit?: "cover" | "contain";
 }
 
 interface Props {
@@ -36,22 +48,37 @@ const { items, columns = 1, uniform = false } = Astro.props;
 ---
 
 {
-  showPlaceholders && (
+  (showPlaceholders || items.some((i) => i.src)) && (
     <div class:list={["ph", "is-wide", "is-full", `ph--${columns}`, { "ph--uniform": uniform }]}>
-      {items.map((item) => (
-        <figure class={`ph__item ph__item--${item.kind}`}>
-          <div class="ph__frame">
-            <span class="ph__sketch" aria-hidden="true">
-              <i>{item.sides?.[0]}</i>
-              <i>{item.sides?.[1]}</i>
-              <i />
-              <i />
-            </span>
-            <span class="ph__label">Placeholder · {item.label}</span>
-          </div>
-          <figcaption class="ph__caption">{item.caption}</figcaption>
-        </figure>
-      ))}
+      {items.map((item) =>
+        item.src ? (
+          <figure class={`ph__item ph__item--${item.kind}`}>
+            {item.eyebrow && <p class="ph__eyebrow">{item.eyebrow}</p>}
+            <div class="ph__frame ph__frame--shot">
+              <Shot src={item.src} alt={item.alt ?? ""} fit={item.fit ?? "cover"} />
+            </div>
+            {item.title && <p class="ph__title">{item.title}</p>}
+            <figcaption class="ph__caption">{item.caption}</figcaption>
+          </figure>
+        ) : (
+          showPlaceholders && (
+            <figure class={`ph__item ph__item--${item.kind}`}>
+              {item.eyebrow && <p class="ph__eyebrow">{item.eyebrow}</p>}
+              <div class="ph__frame">
+                <span class="ph__sketch" aria-hidden="true">
+                  <i>{item.sides?.[0]}</i>
+                  <i>{item.sides?.[1]}</i>
+                  <i />
+                  <i />
+                </span>
+                <span class="ph__label">{item.tag ?? "Placeholder"} · {item.label}</span>
+              </div>
+              {item.title && <p class="ph__title">{item.title}</p>}
+              <figcaption class="ph__caption">{item.caption}</figcaption>
+            </figure>
+          )
+        ),
+      )}
     </div>
   )
 }
@@ -135,6 +162,31 @@ const { items, columns = 1, uniform = false } = Astro.props;
     font-size: var(--step--1);
     font-weight: var(--weight-semibold);
     color: var(--color-accent);
+  }
+
+  .ph__frame--shot {
+    display: block;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+
+  .ph__eyebrow {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-label-ink);
+  }
+
+  .ph__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-snug);
+    color: var(--color-heading);
   }
 
   .ph__caption {

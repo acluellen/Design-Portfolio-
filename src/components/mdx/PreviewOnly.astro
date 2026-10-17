@@ -1,0 +1,8 @@
+---
+// Content that shows in dev and review previews but not on the live site: for a finding or a visual
+// that still needs a source record before it is published as evidence. The reason for holding it
+// lives in the MDX as a comment, never in the rendered page.
+import { showPlaceholders } from "../../lib/case-studies";
+---
+
+{showPlaceholders && <div class="flow is-wide is-full"><slot /></div>}

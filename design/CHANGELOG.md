@@ -13,6 +13,15 @@ Newest first. Every design or structure decision goes here.
 - Delivery: milestones, KRON4 as its own moment, program (launched by Google.org) and mentor affiliations (Google, PayPal, State Farm) under separate labels. Open slots no longer print an internal TODO.
 - Facts kept as records: 3 of 3 phone tasks, 8.5 out of 10 ease of navigation, the 120 teachers volume point, the 2+ weeks district advance notice (labeled as advance notice, not measured turnaround), and the three school day target as the next evaluation goal.
 
+## 2026-10-17 · AthenaScribe: rebuilt from the approved build brief
+
+- Baseline: branch `athenascribe-approved-build`, commit `f89f5e1`, tag `baseline-before-approved-build`.
+- Cover: `AthenaAlerts` (CSS only) replaces the tile on this page: five school document alerts, each in a family's home language, then the line "Translation is automatic. Approval stays human." No phone. 11 s loop, pause button, reduced motion shows the alerts dimmed under the line. The home tile is unchanged.
+- Order and copy follow the brief: overview and contributions; school tools and the attachment gap (an `AttachmentGap` illustration, labeled as one); opportunity and the product introduction; research; priorities and policy research (routine and important branches); one document from upload to family access; testing; the revised prototype and the review capacity question; milestones and what I learned. Nine sidebar links.
+- Not used on the page: the Good morning Ms Daniels phone screen (`round-one-upload.webp` stays in the project), tags, stats not in the brief, the alert research table, the lanes and mapping diagrams. The original queue appears only as a cropped screen (`round-one-queue-crop.webp`), without the laptop frame.
+- New blocks: `Shot` (an image with an Enlarge button that opens a dialog; Escape or Close dismisses it and focus returns), `Columns` (open columns), `PreviewOnly` (held content, shown in previews only), `AttachmentGap`. `Placeholders` gained titles, eyebrows, a status word (Proposed screen, Proposed revision, In development), and actual images.
+- Held for evidence: the deadline finding shows in previews only, until it is confirmed against a session record. The testing context line has no participant count yet.
+
 ## 2026-10-16 · AthenaScribe: evidence, comparisons, and the need to interface map
 
 - Research: the generic evidence table is gone. Fieldwork ("walking into local nonprofits throughout Oakland") opens a three part composition, each with a finding caption: an outreach photo, an affinity cluster, and a communication tool capture (all placeholders until the files arrive).

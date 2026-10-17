@@ -2,7 +2,7 @@
 import PageLayout from "./PageLayout.astro";
 import Photo from "../components/site/Photo.astro";
 import ActionLink from "../components/mdx/ActionLink.astro";
-import AthenaScribeTile from "../components/site/AthenaScribeTile.astro";
+import AthenaAlerts from "../components/site/AthenaAlerts.astro";
 import type { PhotoKey } from "../data/photos";
 import type { CaseStudy } from "../lib/case-studies";
 
@@ -31,11 +31,11 @@ const indexItems = [
 <PageLayout title={title} description={summary}>
   <article>
     <header class="container hero" id="overview">
-      {/* The coded cover, the same loop as the home tile, at case study width, before the title. */}
+      {/* The coded cover (the home tile's document alerts without the phone), at case study width, before the title. */}
       {
         heroTile === "athenascribe" && (
           <div class="hero__tile">
-            <AthenaScribeTile />
+            <AthenaAlerts />
           </div>
         )
       }

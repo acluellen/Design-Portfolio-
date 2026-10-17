@@ -1,0 +1,60 @@
+---
+// Open columns: a short title and a caption under a thin rule, no boxes. For three priorities or
+// two lessons. Stacks on phones.
+interface Item {
+  title: string;
+  caption: string;
+}
+
+interface Props {
+  items: Item[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class:list={["cols", "is-wide", "is-full", `cols--${items.length}`]}>
+  {
+    items.map((item) => (
+      <div class="cols__item">
+        <p class="cols__title">{item.title}</p>
+        <p class="cols__caption">{item.caption}</p>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .cols {
+    display: grid;
+    gap: var(--space-6) var(--space-7);
+  }
+
+  @media (min-width: 48rem) {
+    .cols--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cols--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+
+  .cols__item {
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+    padding-block-start: var(--space-3);
+    border-block-start: var(--rule-thin) solid var(--color-rule-strong);
+  }
+
+  .cols__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-snug);
+    color: var(--color-heading);
+  }
+
+  .cols__caption {
+    margin: 0;
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
+  }
+</style>

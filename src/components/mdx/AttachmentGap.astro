@@ -1,0 +1,124 @@
+---
+// An illustration (not audit evidence): a translated school message beside the English document
+// attached to it. The attachment is the highlighted failure point. Drawn in HTML so it stays
+// readable and accessible. The caption sits directly under it.
+interface Props {
+  caption: string;
+}
+const { caption } = Astro.props;
+---
+
+<figure class="ag is-wide is-full">
+  <div class="ag__row">
+    <div class="ag__msg">
+      <p class="ag__tag">Message · Español</p>
+      <span class="ag__line" style="--w: 90%"></span>
+      <span class="ag__line" style="--w: 76%"></span>
+      <span class="ag__line" style="--w: 84%"></span>
+      <p class="ag__ok">Translated</p>
+    </div>
+    <span class="ag__plus" aria-hidden="true">+</span>
+    <div class="ag__att">
+      <p class="ag__tag">Attachment · English</p>
+      <p class="ag__file">Field trip permission slip</p>
+      <span class="ag__line" style="--w: 94%"></span>
+      <span class="ag__line" style="--w: 70%"></span>
+      <p class="ag__gap">Needs translation</p>
+    </div>
+  </div>
+  <figcaption class="ag__caption">
+    <span class="ag__label">Illustration</span>
+    {caption}
+  </figcaption>
+</figure>
+
+<style>
+  .ag {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .ag__row {
+    display: grid;
+    gap: var(--space-4);
+    align-items: stretch;
+  }
+
+  @media (min-width: 48rem) {
+    .ag__row {
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      gap: var(--space-5);
+    }
+  }
+
+  .ag__msg,
+  .ag__att {
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
+    padding: var(--space-5);
+    border: var(--rule-thin) solid var(--color-rule-strong);
+    border-radius: var(--radius-media);
+  }
+
+  .ag__msg {
+    background: var(--color-placeholder);
+  }
+
+  .ag__att {
+    border: var(--rule-thick) dashed var(--color-accent);
+  }
+
+  .ag__plus {
+    align-self: center;
+    justify-self: center;
+    font-family: var(--font-mono);
+    font-size: var(--step-2);
+    color: var(--color-ink-muted);
+  }
+
+  .ag__tag,
+  .ag__label {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-label-ink);
+  }
+
+  .ag__line {
+    display: block;
+    inline-size: var(--w);
+    block-size: var(--space-2);
+    border-radius: var(--radius-tag);
+    background: var(--color-rule-strong);
+  }
+
+  .ag__file {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: var(--weight-medium);
+    color: var(--color-heading);
+  }
+
+  .ag__ok,
+  .ag__gap {
+    margin: 0;
+    font-size: var(--step--1);
+    font-weight: var(--weight-semibold);
+  }
+
+  .ag__ok { color: var(--color-ink-muted); }
+  .ag__gap { color: var(--color-accent); }
+
+  .ag__caption {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-3);
+    align-items: baseline;
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
+  }
+</style>
