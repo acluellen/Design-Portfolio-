@@ -52,6 +52,10 @@ const caseStudies = defineCollection({
         linkText: z.string(),
       })
       .optional(),
+    /** A coded cover above the title, in place of the hero text and video side by side. */
+    heroTile: z.enum(["athenascribe"]).optional(),
+    /** Set false to leave out the grey line under the headline, when the headline says it all. */
+    heroSummary: z.boolean().default(true),
     order: z.number(),
     status: z.enum(["draft", "published"]).default("draft"),
     tags: z.array(z.string()).default([]),

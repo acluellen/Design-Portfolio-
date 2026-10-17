@@ -7,6 +7,8 @@ Last updated October 9, 2026. Claude keeps this list current. Placeholders show 
 - [ ] AthenaScribe: the public `.lovable.app` prototype link. Never the editor link with `magic_link`.
 - [ ] AthenaScribe: the FigJam link for the affinity map.
 - [ ] AthenaScribe: the prototype walkthrough video.
+- [ ] AthenaScribe: confirm the mentor affiliations for PayPal and State Farm (records list Google, Meta, and YouTube), and one named mentor quote.
+- [ ] AthenaScribe: visuals for the placeholders (research synthesis, prioritization, round one comparison, Aeries intake, admin dashboard, review, family access, next round).
 - [ ] Craft Education: a public prototype link.
 - [ ] Klima: the 2026 UI refresh. Required before Klima is published.
 - [ ] Resume PDF (goes in `public/resume.pdf`; the Resume link appears on its own).

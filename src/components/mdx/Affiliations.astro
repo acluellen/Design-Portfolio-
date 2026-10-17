@@ -1,0 +1,71 @@
+---
+// A compact, labeled list: what the program is, and who the mentors are connected to. Program
+// support and mentor affiliations sit under separate labels, so no company reads as a client or as
+// having commissioned the project. An item without a `note` is an open slot and is not shown at all
+// until its relationship is confirmed.
+
+interface Item {
+  name: string;
+  /** The confirmed relationship, in a few words. Leave out while it is unconfirmed. */
+  note?: string;
+}
+
+interface Props {
+  label: string;
+  items: Item[];
+}
+
+const { label, items } = Astro.props;
+const shown = items.filter((i) => i.note);
+---
+
+{
+  shown.length > 0 && (
+    <div class="aff">
+      <p class="label">{label}</p>
+      <ul class="aff__list">
+        {shown.map((item) => (
+          <li class="aff__item">
+            <span class="aff__name">{item.name}</span>
+            <span class="aff__note">{item.note}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+<style>
+  .aff {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .aff__list {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-block-start: var(--rule-thin) solid var(--color-rule);
+  }
+
+  .aff__item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-1) var(--space-4);
+    padding-block: var(--space-3);
+    border-block-end: var(--rule-thin) solid var(--color-rule);
+  }
+
+  .aff__name {
+    font-weight: var(--weight-medium);
+    color: var(--color-heading);
+  }
+
+  .aff__note {
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
+  }
+
+</style>

@@ -23,7 +23,12 @@ import Split from "./Split.astro";
 import Fixes from "./Fixes.astro";
 import ActionLink from "./ActionLink.astro";
 import VideoSlot from "./VideoSlot.astro";
+import Placeholders from "./Placeholders.astro";
+import VideoLink from "./VideoLink.astro";
+import Affiliations from "./Affiliations.astro";
+import Flow from "./Flow.astro";
+import Moments from "./Moments.astro";
 
-export const mdxComponents = { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team, Sources, Compare, Screens, Section, CardGrid, Card, Tag, Shift, Finding, ScreenPair, Steps, Split, Fixes, ActionLink, VideoSlot };
+export const mdxComponents = { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team, Sources, Compare, Screens, Section, CardGrid, Card, Tag, Shift, Finding, ScreenPair, Steps, Split, Fixes, ActionLink, VideoSlot, Placeholders, VideoLink, Affiliations, Flow, Moments };
 
-export { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team, Sources, Compare, Screens, Section, CardGrid, Card, Tag, Shift, Finding, ScreenPair, Steps, Split, Fixes, ActionLink, VideoSlot };
+export { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team, Sources, Compare, Screens, Section, CardGrid, Card, Tag, Shift, Finding, ScreenPair, Steps, Split, Fixes, ActionLink, VideoSlot, Placeholders, VideoLink, Affiliations, Flow, Moments };

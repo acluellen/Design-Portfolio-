@@ -2,6 +2,7 @@
 import PageLayout from "./PageLayout.astro";
 import Photo from "../components/site/Photo.astro";
 import ActionLink from "../components/mdx/ActionLink.astro";
+import AthenaScribeTile from "../components/site/AthenaScribeTile.astro";
 import type { PhotoKey } from "../data/photos";
 import type { CaseStudy } from "../lib/case-studies";
 
@@ -14,7 +15,7 @@ interface Props {
 }
 
 const { study, prev, next, sections = [] } = Astro.props;
-const { title, summary, headline, role, team, timeline, client, program, tools, cover, status, heroMedia, prototype, card, order } =
+const { title, summary, headline, role, team, timeline, client, program, tools, cover, status, heroMedia, heroTile, heroSummary, tags, prototype, card, order } =
   study.data;
 // The same number the study has on the home page cards.
 const number = String(order).padStart(2, "0");
@@ -30,6 +31,14 @@ const indexItems = [
 <PageLayout title={title} description={summary}>
   <article>
     <header class="container hero" id="overview">
+      {/* The coded cover, the same loop as the home tile, at case study width, before the title. */}
+      {
+        heroTile === "athenascribe" && (
+          <div class="hero__tile">
+            <AthenaScribeTile />
+          </div>
+        )
+      }
       <div class:list={["hero__top", { "hero__top--media": heroMedia }]}>
         <div class="hero__intro">
           <!-- Index row, like the home page cards: number and name in mono over a thin rule. -->
@@ -39,7 +48,14 @@ const indexItems = [
             {status === "draft" && <span class="hero__draft">Draft</span>}
           </p>
           <h1>{headline ?? title}</h1>
-          <p class="hero__summary">{summary}</p>
+          {heroSummary && <p class="hero__summary">{summary}</p>}
+          {
+            tags.length > 0 && (
+              <ul class="hero__tags" aria-label="Tags">
+                {tags.map((tag) => <li>{tag}</li>)}
+              </ul>
+            )
+          }
           {
             prototype && (
               <ActionLink
@@ -156,7 +172,7 @@ const indexItems = [
       )
     }
 
-    <div class:list={["container", { "case-grid": indexItems.length > 2 }]}>
+    <div class:list={["container", { "case-grid": indexItems.length > 2, "container--wide": heroTile }]}>
       {
         indexItems.length > 2 && (
           <nav class="case-index" aria-label="Sections">
@@ -218,10 +234,22 @@ const indexItems = [
     max-width: var(--measure-case);
   }
 
+  .container--wide {
+    max-width: var(--measure-case-wide);
+  }
+
   .hero {
     display: grid;
     gap: var(--space-5);
     padding-block: var(--space-9) var(--space-7);
+  }
+
+  /* The tile fills its box (it is absolute inside), so the box sets the 16:9 shape. */
+  .hero__tile {
+    position: relative;
+    aspect-ratio: var(--ratio-tile-wide);
+    border-radius: var(--radius-media);
+    overflow: hidden;
   }
 
   .hero__top {
@@ -311,6 +339,28 @@ const indexItems = [
   .hero__intro h1 {
     max-width: 22ch;
     font-size: var(--step-5);
+  }
+
+  /* Small rounded outline tags, like the ones under the home tiles. */
+  .hero__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .hero__tags li {
+    padding: var(--space-1) var(--space-3);
+    border: var(--rule-thin) solid var(--color-rule-strong);
+    border-radius: var(--radius-tag);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    line-height: var(--leading-snug);
+    color: var(--color-ink-muted);
   }
 
   .hero__summary {
@@ -432,6 +482,17 @@ const indexItems = [
   /* Each part of the story starts well clear of the one before. */
   .body > :global(.section) {
     margin-block-start: var(--space-8);
+  }
+
+  /* The wide case study lets each part use the whole body column; its text still keeps the reading
+     measure (the rule above), and .is-full blocks use the full width. */
+  .container--wide .body :global(.section__inner) {
+    max-width: none;
+  }
+
+  /* The wide case study breathes more between parts: 56px on phones up to 96px on desktop. */
+  .container--wide .body > :global(.section) {
+    margin-block-start: var(--section-gap);
   }
 
   /* A small note under a block: method details, baselines. */
@@ -602,6 +663,12 @@ const indexItems = [
     .case-grid .body > :global(.is-wide),
     .case-grid .body :global(.section__inner > .is-wide) {
       max-width: var(--measure-reading);
+    }
+
+    /* Diagrams, comparisons, and interface details use the whole body column. */
+    .case-grid .body > :global(.is-full),
+    .case-grid .body :global(.section__inner > .is-full) {
+      max-width: none;
     }
 
     .case-bar {

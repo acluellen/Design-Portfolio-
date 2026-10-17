@@ -6,20 +6,15 @@
 import AthenaPhone from "./AthenaPhone.astro";
 
 const items = [
-  { title: "The whole file, translated.", body: "Staff scan or upload any form, and the attachment gets translated too. Today the message translates and the PDF waits." },
-  { title: "It spots the forms that matter.", body: "IEP notices, health forms, and permission slips get flagged as vital on upload." },
-  {
-    title: "Sorted for the right reviewer.",
-    body: "Forms sort by type and go to the person who owns them.",
-    quote: "I would like buckets to where it says, okay, health forms, field trip forms. Wellness checks.",
-    cite: "Administrator, round one usability testing",
-  },
-  { title: "A person signs off first.", body: "Nothing reaches a family until someone at the school approves it." },
-  { title: "In the family’s own language.", body: "AthenaScribe pulls each family’s home language from school records, so nobody has to pick it." },
+  { title: "The whole file, translated.", body: "The attachment translates with the message." },
+  { title: "Dates and consent language.", body: "Highlighted for attention." },
+  { title: "Sorted by type.", body: "Sent to the right reviewer." },
+  { title: "Review when needed.", body: "Others return with a machine translation label." },
+  { title: "The family’s own language.", body: "Read from school records." },
 ];
 ---
 
-<div class="story is-wide" data-story>
+<div class="story is-wide is-full" data-story>
   <ol class="story__list">
     {
       items.map((it, i) => (

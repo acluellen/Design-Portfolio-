@@ -1,0 +1,77 @@
+---
+// A still that links to a video on another site, with a play mark and a caption. Used for the KRON4
+// segment in AthenaScribe's Delivery section (it used to sit in the hero). The still is a photo slot
+// from src/data/photos.ts.
+import Photo from "../site/Photo.astro";
+import type { PhotoKey } from "../../data/photos";
+
+interface Props {
+  photo: PhotoKey;
+  href: string;
+  /** Names the link for screen readers, e.g. "Watch the KRON4 live segment on YouTube". */
+  label: string;
+  caption: string;
+  linkText: string;
+}
+
+const { photo, href, label, caption, linkText } = Astro.props;
+---
+
+<figure class="vl">
+  <a class="vl__link" href={href} target="_blank" rel="noopener">
+    <Photo name={photo} widths={[480, 720, 1080]} sizes="(min-width: 56rem) 34rem, 92vw" ratio="16 / 9" cover={16 / 9} />
+    <span class="vl__play" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+    </span>
+    <span class="visually-hidden">{label} (opens in a new tab)</span>
+  </a>
+  <figcaption class="vl__caption">
+    {caption}{" "}
+    <a href={href} target="_blank" rel="noopener">{linkText}<span class="visually-hidden"> (opens in a new tab)</span></a>
+  </figcaption>
+</figure>
+
+<style>
+  .vl {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+  }
+
+  .vl__link {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border: var(--rule-thin) solid var(--color-rule);
+    border-radius: var(--radius-media);
+  }
+
+  .vl__link :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .vl__play {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    display: grid;
+    place-items: center;
+    inline-size: var(--size-play);
+    block-size: var(--size-play);
+    translate: -50% -50%;
+    border-radius: 50%;
+    color: var(--color-always-dark-ink);
+    background: var(--color-overlay);
+    transition: background var(--duration-hover) var(--ease-standard);
+  }
+
+  .vl__link:hover .vl__play {
+    background: var(--color-brand);
+  }
+
+  .vl__caption {
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
+  }
+</style>

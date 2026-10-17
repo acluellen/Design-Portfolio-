@@ -1,9 +1,9 @@
 ---
 # Words and structure come from Aaron’s Claude Design draft (AthenaScribe Case Study, Main board).
-# Restructured to match the board’s layout on Oct 8 2026. Links marked TODO are still "#" in the draft.
+# Restructured on Oct 8 2026, and again on Oct 16 2026 to the twelve part narrative brief (coded cover first, diagrams for relationships, the scan in V2).
 title: "AthenaScribe"
-headline: "AI translates every school form. A human in the loop approves the ones that matter."
-summary: "AthenaScribe translates full school documents for districts. A person approves the vital ones before families receive them."
+headline: "Helping schools translate documents and coordinate review, so families can understand what comes next."
+summary: "AthenaScribe helps schools translate documents and coordinate review, so families can understand what comes next. A BRIDGEGOOD case study by the research lead."
 card:
   label: "Research lead · BRIDGEGOOD capstone"
   description: "The team built a translation tool so Oakland families get school documents in their own language, with staff checking the important ones. I led the research."
@@ -12,231 +12,405 @@ card:
   outcome: "12 stakeholder interviews"
   tags: ["EdTech", "Research", "Translation"]
 featured: true
-role: "Research Lead"
+role: "Research Lead, Product Design"
 team:
-  - name: "G. Garcia"
+  - name: "Gaby Garcia"
     role: "Product Lead"
-  - name: "M. Maenner"
+  - name: "Miriam Maenner"
     role: "Design Systems"
-  - name: "R. Villagran"
+  - name: "Renato Villagran"
     role: "User Flows"
-  - name: "Tyler" # TODO: last name, to show as first initial and last name like the others.
+  - name: "Tyler" # TODO: last name, to show in full like the others.
     role: "Project coach"
-timeline: "4 week design sprint"
+timeline: "Summer 2026, with continued development and testing"
 program: "BRIDGEGOOD UX Design Apprenticeship"
-tools: ["FigJam"]
+tools: ["Figma Design", "FigJam", "Figma Make", "Claude Code", "GitHub", "Vercel"]
 prototype: "TODO" # Aaron to send the live prototype URL.
-heroMedia:
-  photo: "kron4-still-color"
-  href: "https://www.youtube.com/watch?v=r4l9IsyDUD4"
-  label: "Watch the KRON4 live segment on YouTube"
-  caption: "I talked about AthenaScribe live on KRON4."
-  linkText: "Watch on YouTube"
-index: ["How it works", "Problem", "Research", "Findings", "Testing", "Redesign", "Goals", "Takeaway"]
+heroTile: "athenascribe"
+heroSummary: false
+tags: ["0 to 1 platform", "EdTech", "Design for social good"]
+index: ["Problem", "Research", "Direction", "Testing", "V2", "Delivery", "Reflection"]
 order: 1
 status: "published"
 ---
 
 import uploadScreen from "../../assets/case-studies/athenascribe/round-one-upload.webp";
-import adminQueue from "../../assets/case-studies/athenascribe/round-one-admin-queue.webp";
 import AthenaStory from "../../components/site/AthenaStory.astro";
 
-<Section>
-
-## Translation is automatic. Approval stays human.
-
-<AthenaStory />
-
-</Section>
-
 <Contribution>
-  <Mine label="My contribution">Research framing, workflow audit, risk synthesis, product pivot, core reviewer flow.</Mine>
+  <Mine label="My contribution">I led research and synthesis, investigated the document translation gap, and helped shape the review workflow. I collaborated with the product lead on prototyping and testing, then carried those findings into the next iteration.</Mine>
   <Team label="Team contribution">Visual system, supporting flows, prototype refinement, Demo Day delivery.</Team>
 </Contribution>
 
-<Section tone="panel">
+<Section>
 
-## Translating one school form takes two weeks of notice.
+## A translated message can still arrive with a document a family cannot read.
 
-It started with one principal’s complaint. The team traced it to a workflow gap: messages translate automatically, and attachments wait on the district translation unit. A family waiting on a special education plan or a health form gets it late, or reads it through their child:
+Attached permission slips and health forms can leave a family finding someone to translate and explain them.
 
-<div class="is-wide">
+<Flow
+  rows={[
+    {
+      title: "One permission slip",
+      steps: [
+        { text: "Read the message", note: "Translated.", state: "ok" },
+        { text: "Open the attachment", note: "Still in English.", state: "gap" },
+        { text: "Find help understanding it", state: "gap" },
+      ],
+    },
+  ]}
+/>
+
+### A disconnected workflow leaves families waiting and staff coordinating.
+
+<Split>
+  <div class="flow">
+    <p class="label">Fragmented workflows</p>
+    <p>Messages, attachments, language information, and review responsibilities sit across different tools and people.</p>
+  </div>
+  <div class="flow">
+    <p class="label">Limited visibility</p>
+    <p>Staff need to know which documents require attention, who owns the next step, and whether families have received them.</p>
+  </div>
+</Split>
+
+<Flow
+  rows={[
+    {
+      title: "Existing workflow",
+      steps: [
+        { text: "Message" },
+        { text: "Untranslated attachment", state: "gap" },
+        { text: "Request for help" },
+        { text: "Manual coordination" },
+      ],
+    },
+    {
+      title: "Proposed direction",
+      steps: [
+        { text: "Document" },
+        { text: "Translation", state: "focus" },
+        { text: "Review when needed", state: "focus" },
+        { text: "Family access", state: "focus" },
+      ],
+    },
+  ]}
+  caption="The opportunity was to connect the steps around translation."
+/>
+
+<div class="is-wide is-full">
 <StatGroup>
-  <Stat value="2+ weeks" label="notice for a 1 to 3 page document" source="OUSD AR 5124" />
-  <Stat value="3+ weeks" label="longer documents" source="OUSD AR 5124" />
-  <Stat value="9 staff" label="for 13,314 English learners" source="OUSD Interpretation and Translation Unit · California Department of Education, 2025 to 2026" />
+  <Stat value="2+ weeks" label="advance notice requested for a 1 to 3 page document" source="OUSD AR 5124 · Advance notice, not measured turnaround" />
+  <Stat value="9 staff" label="in the translation unit for 13,314 English learners" source="OUSD Interpretation and Translation Unit · California Department of Education, 2025 to 2026" />
 </StatGroup>
 </div>
 
-<Callout label="Design target" variant="strong">Shorten translation turnaround and route vital documents to the right person to approve.</Callout>
-
 </Section>
 
-<Section>
+<Section tone="panel">
 
-## Interviews, an audit and a policy review landed on attachments.
+## Understanding where school communication breaks down.
 
-<CardGrid>
-  <Card title="12 stakeholder interviews">
-    **Why** District approval for research involving student data would outlast a four week sprint, so the team used guerrilla recruiting to reach administrators, counselors and teachers across Bay Area schools.
-  </Card>
-  <Card title="Platform audit">
-    **Why** The team audited the district’s family messaging platform from two accounts, then mapped competitors and adjacent school tools to see where document translation falls through.
-  </Card>
-  <Card title="Policy and legal review">
-    **Why** State education code, district policy and federal privacy law showed who holds the translation duty and what unreviewed machine translation puts at risk.
-  </Card>
-</CardGrid>
+I combined stakeholder interviews with communication tool walkthroughs and competitive analysis to understand how staff handled document translation and where existing tools left gaps.
 
-The product lead ran outreach across 63 contacts. I led the interviews and synthesis. The design systems lead built the design system, and the user flows lead mapped the user flows.
+We used guerrilla research: walking into local nonprofits throughout Oakland to talk with the people who work with families.
 
-I synthesized the 12 interviews into 15 affinity clusters in FigJam.
+<Placeholders
+  columns={3}
+  uniform
+  items={[
+    { kind: "photo", label: "Outreach photo: Oakland nonprofits", caption: "In the field: walking into local nonprofits throughout Oakland." },
+    { kind: "artifact", label: "Affinity cluster: manual coordination", caption: "Staff described fragmented systems and manual coordination." },
+    { kind: "dashboard", label: "Communication tool capture", caption: "Messages translate automatically. Attachments wait on the district translation unit." },
+  ]}
+/>
 
 {/* TODO: add href once Aaron sends the FigJam link. */}
 <ActionLink label="View the affinity map in FigJam" />
 
-</Section>
+### Turning research into a product roadmap.
 
-<Section tone="panel">
+<p class="label">How might we</p>
 
-## Two findings changed who the product serves and how it works.
+How might we help schools deliver understandable documents while making review manageable for staff?
 
-<Shift
-  before={{ label: "The original idea", title: "ParentSquare translator" }}
-  after={{ label: "What research led to", title: "District platform" }}
+I used feature prioritization to connect the research to a feasible first experience. Three ideas organized it.
+
+<Flow
   rows={[
-    { label: "Buyer", before: "The messaging platform", after: "School districts", finding: 1 },
-    { label: "Who translates", before: "Third party translation model", after: "AI, checked by an administrator", finding: 1 },
-    { label: "Accuracy", before: "Machine output, no human check", after: "Human approval before delivery", finding: 2 },
-    { label: "Privacy", before: "Records leave district control", after: "Records stay under district control", finding: 2 },
+    {
+      title: "Visibility",
+      steps: [
+        { label: "Staff question", text: "What needs attention, and when?" },
+        { label: "Interface response", text: "Priority, deadline, and document status.", state: "focus" },
+      ],
+    },
+    {
+      title: "Accountability",
+      steps: [
+        { label: "Staff question", text: "Who owns the next step?" },
+        { label: "Interface response", text: "Reviewer assignment and approval handoff.", state: "focus" },
+      ],
+    },
+    {
+      title: "Action",
+      steps: [
+        { label: "Staff question", text: "What can I do now?" },
+        { label: "Interface response", text: "Review, approve, request changes, or follow up.", state: "focus" },
+      ],
+    },
   ]}
 />
 
-<p class="label">Why it changed</p>
-
-<Finding
-  n={1}
-  finding="State law puts the translation duty on the district, and only the district’s board can sign the contract."
-  changes={["Buyer", "Who translates"]}
-  sources="Cal. Educ. Code § 48985 · OUSD Board Policy 5124 · Cal. Educ. Code § 17604"
->
-  After an engineer and a design consultant pointed the team toward schools, the product lead made the district the buyer. The UX and UI leads rebuilt the flows and screens around school staff.
-</Finding>
-
-<Finding
-  n={2}
-  finding="Unreviewed machine translation of student records creates Title VI and FERPA exposure."
-  changes={["Accuracy", "Privacy"]}
-  sources="U.S. v. Cherry Creek School District settlement, 2024 · 34 CFR § 99.31(a)(1)(i)(B) · Orange County Dept. of Education RFP 26-01, 2026"
->
-  Districts already have a person check vital translations, so the team made that step part of the product. I introduced the review flow, and the UX and UI leads rebuilt the user flow and screens around it, including a verification screen with the source and translation side by side.
-</Finding>
-
-Competing school apps tell schools their document translation "is not intended for use with legal documents." AthenaScribe was built for those documents. It flags them on upload and routes them to a person.
+<Placeholders
+  columns={1}
+  items={[{ kind: "diagram", label: "Feature prioritization", caption: "The prioritization artifact: what the team ranked for the first experience." }]}
+/>
 
 </Section>
 
 <Section>
 
-<p class="label">Round one of usability testing</p>
+## From an embedded translator to a district platform.
 
-## The new design held up in testing, and the queue needed sorting.
+We initially explored translation inside existing school software. As the work developed, we needed space to coordinate document intake, review, approval, and family access. That shifted the direction toward a standalone platform.
 
-The two findings above put a person in charge of approving vital documents. We gave that step to the administrators who would run it and asked two things: can they use it, and does it fit their day?
-
-<ScreenPair
-  label="As tested"
-  small={uploadScreen}
-  smallAlt="Round one upload screen on a phone: Analyzing document, 86 percent, a field trip permission slip being scanned, checking for vital information and checking for personal data"
-  smallCaption="Upload: the app scans and translates each document, then sends the vital ones to the right person to approve."
-  steps={["Scan", "Translate", "Right person"]}
-  large={adminQueue}
-  largeAlt="Round one admin queue on a laptop: eight documents in one list, from a school photo order to a special education IEP notice"
-  largeCaption="Review: every document sat in one list, from a school photo order to a special education IEP notice."
+<Flow
+  rows={[
+    {
+      steps: [
+        { label: "Stage 1", text: "Embedded translation", note: "A translation feature inside existing school software." },
+        { label: "Stage 2", text: "Standalone prototype", note: "A separate space for intake, review, approval, and family access.", state: "focus" },
+        { label: "Stage 3", text: "V2 with Aeries", note: "School records and language information join the platform." },
+      ],
+    },
+  ]}
 />
 
-<CardGrid>
-  <Card eyebrow="Research question · Phone" title="Can a school administrator complete the approval flow?" verdict="Yes, with guidance">
-    All 3 tasks completed. Ease of navigation rated 8.5 out of 10.
-  </Card>
-  <Card eyebrow="Research question · Laptop" title="Does the review step fit an administrator’s workload?" verdict="Not at high school volume">
-    With 120 teachers sending forms, reviewing every one would not fit an administrator’s day.
-  </Card>
-</CardGrid>
+State law puts the translation duty on the district, and districts already have a person check important translations. The district became the buyer, and staff review became part of the product.
+
+<p class="note">Cal. Educ. Code § 48985 · OUSD Board Policy 5124 · 34 CFR § 99.31</p>
+
+### Connecting school operations with family access.
+
+The product lead and I explored both experiences: how school teams manage documents and how families receive, understand, and act on them.
+
+<Flow
+  rows={[
+    { title: "School lane", steps: [{ text: "Submit the document" }, { text: "See what needs attention" }, { text: "Check and approve" }] },
+    { title: "Family lane", steps: [{ text: "Receive the document" }, { text: "Read it in their own language" }, { text: "Act on it" }], },
+  ]}
+  caption="One document connects both lanes."
+/>
+
+### Translate the document. Keep important decisions with people.
+
+<p class="label">Original prototype</p>
+
+The first prototype connected document submission, translation, review when needed, and family access.
+
+<Flow
+  rows={[
+    {
+      title: "Needs review",
+      steps: [
+        { text: "Document" },
+        { text: "Translation" },
+        { text: "Staff review", state: "focus" },
+        { text: "Family access" },
+      ],
+    },
+    {
+      title: "Returns right away",
+      steps: [
+        { text: "Document" },
+        { text: "Translation", note: "With a machine translation label." },
+        { text: "Family access" },
+      ],
+    },
+  ]}
+/>
 
 <Split>
-  <Quote source="Administrator, round one usability testing">"I would like buckets to where it says, okay, health forms, field trip forms. Wellness checks."</Quote>
-  <Fixes
-    label="Next version"
-    items={[
-      { severity: 3, text: "Documents sorted into buckets by type, with flags for the types an administrator wants to see." },
-      { severity: 2, text: "The refresh control shows a visible update with a timestamp." },
-    ]}
+  <Figure
+    narrow
+    src={uploadScreen}
+    alt="Original prototype upload screen on a phone: Analyzing document, 86 percent, a field trip permission slip being scanned, checking for important information and checking for personal data"
+    caption="Original prototype: upload and scan."
   />
+  <div class="flow">
+    <p>The human in the loop approach gives designated staff responsibility for checking documents that require review before release.</p>
+  </div>
 </Split>
 
-<p class="note">Round one: live prototype · Informed by administrators, counselors, community school staff and nonprofit leaders across the Bay Area · Tasks: upload, work the review queue, approve for delivery · Measures: task completion, think aloud, rating questions</p>
+<Placeholders
+  columns={1}
+  items={[{ kind: "dashboard", label: "Original prototype: review and family screens", caption: "The review step and the family view, as they were in the first prototype." }]}
+/>
 
 </Section>
 
 <Section tone="panel">
 
-<p class="label">Redesign after round one</p>
+## Completing the flow was only part of the test.
 
-## Translation is automatic. Approval stays human.
+We tested whether people could follow the document journey and whether the review process fit an administrator’s workload. With 120 teachers sending forms, reviewing every document would not fit an administrator’s day. Two sessions changed the interface.
 
-Staff upload a document. AI translates it and flags the vital ones. A person approves before it sends.
+<p class="label">Queue organization · Round one session</p>
 
-{/* TODO: the prototype href and the walkthrough video (an mp4 in public/video/) once Aaron sends them. */}
-<Split>
-  <div class="flow">
-    <Steps
-      label="How a document moves through AthenaScribe"
-      steps={["Staff upload", "Language from school records", "Sorted by document type", "Sent to the right reviewer", "Family reads and signs"]}
-    />
-    <ActionLink label="View live prototype" variant="primary" />
-  </div>
-  <VideoSlot
-    label="Prototype walkthrough video (phone)"
-    caption="A walkthrough of the redesign, from scan to the buckets each admin sees: assistant principal, counselor and district translator. Designed after round one."
-  />
-</Split>
+<Flow
+  rows={[{ steps: [{ text: "Original list", note: "Every document in one queue." }, { text: "Feedback about buckets", note: "From an administrator.", state: "focus" }, { text: "Categorized queue", note: "Documents sorted by type." }] }]}
+/>
 
-<p class="label">Refinements from testing</p>
+<Placeholders
+  columns={1}
+  items={[{ kind: "pair", label: "Queue: original and categorized", sides: ["Original list", "Categorized queue"], caption: "We tested the one list, heard the request for buckets, then added them." }]}
+/>
 
-<CardGrid size="small">
-  <Card title="Language">Reads each family’s home language from Aeries, so no one chooses it again.</Card>
-  <Card title="Text size">Larger type and a wider layout that hold at 200 percent zoom. Severity 3.</Card>
-  <Card title="Read aloud">Now a labeled button, since its purpose was unclear. Severity 2.</Card>
-  <Card title="Opened by">Each document shows "Opened by X of Y families" and a trend. Red stays reserved for problems.</Card>
-</CardGrid>
+<Quote source="Administrator, round one usability testing">"I would like buckets to where it says, okay, health forms, field trip forms. Wellness checks."</Quote>
 
-</Section>
+<p class="label">Deadline visibility · Another test session</p>
 
-<Section>
+<Flow
+  rows={[{ steps: [{ text: "Original screen", note: "No deadline for the administrator." }, { text: "Observed need", note: "Administrators needed to know when a document was due.", state: "focus" }, { text: "Due date and status", note: "We tested, then added them." }] }]}
+/>
 
-## The target: same day for routine documents, two school days for vital ones.
+<Placeholders
+  columns={1}
+  items={[{ kind: "pair", label: "Deadline: before and after", sides: ["Original screen", "With due date and status"], caption: "The missing deadline, and the due date and status we added." }]}
+/>
 
-<p class="label">Design target · Not yet measured · Baseline: OUSD AR 5124</p>
-
-| Document | OUSD today | AthenaScribe target |
-|---|---|---|
-| Routine | 2+ weeks | Same day |
-| Vital | 2 to 3+ weeks | 2 school days |
-
-<div class="is-wide">
+<div class="is-wide is-full">
 <StatGroup>
-  <Stat value="6" label="design changes for V2" source="Round one usability testing" />
-  <Stat value="8.5 out of 10" label="ease of navigation in usability testing" source="Round one usability testing" />
+  <Stat value="3 of 3" label="phone tasks completed, with guidance" source="Round one usability testing" />
+  <Stat value="8.5 out of 10" label="ease of navigation rating" source="Round one usability testing" />
 </StatGroup>
 </div>
 
 </Section>
 
+<Section>
+
+<p class="label">V2 · In development</p>
+
+## Organizing the dashboard around what needs attention.
+
+I’m building the next iteration in code with Aeries, bringing school language information, document organization, and review status into a more connected experience.
+
+<AthenaStory />
+
+<Moments
+  items={[
+    { title: "A clearer starting point", caption: "Document upload, audience selection, and school language information.", label: "V2 upload and language", kind: "dashboard" },
+    { title: "A dashboard organized around action", caption: "Annotated to the three ideas: priority, deadline, and status (visibility); reviewer and handoff (accountability); review, approve, and follow up (action).", label: "V2 action dashboard", kind: "dashboard" },
+    { title: "Review with clear responsibility", caption: "Source and translation comparison, ownership, and approval status.", label: "V2 review", kind: "dashboard" },
+    { title: "Visibility through to the family", caption: "Delivery and access information for staff, with a clear reading and action experience for families.", label: "V2 family access", kind: "phone" },
+  ]}
+/>
+
+<Placeholders
+  columns={1}
+  items={[{ kind: "dashboard", label: "Iteration in code: recording", caption: "The V2 build in progress, recorded from the interface." }]}
+/>
+
+### Testing the revised experience.
+
+The next round focuses on whether staff can find priority documents, understand review ownership, and complete the revised workflow.
+
+<Placeholders
+  columns={3}
+  items={[
+    { kind: "notes", label: "What we tested", caption: "The tasks, and who tried them." },
+    { kind: "notes", label: "What we observed", caption: "What happened, in their words." },
+    { kind: "notes", label: "What changed", caption: "What we changed in the interface." },
+  ]}
+/>
+
+<p class="label">Design target · Next evaluation goal</p>
+
+The next iteration targets translation and required review within three school days.
+
+<div class="is-wide is-full">
+<StatGroup>
+  <Stat value="2+ weeks" label="district advance notice requested today" source="OUSD AR 5124 · Advance notice" />
+  <Stat value="3 school days" label="proposed target for translation and required review" source="Design target · Not yet measured" />
+</StatGroup>
+</div>
+
+I’ll return to this target as the revised workflow is tested, using what we learn to refine deadlines, routing, and reviewer workload.
+
+### One system across different responsibilities.
+
+Shared components, document states, and status language connect the staff, reviewer, and family experiences.
+
+<Flow
+  arrows={false}
+  rows={[
+    { title: "Components", steps: [{ text: "Document card" }, { text: "Status chip" }, { text: "Source and translation panel" }] },
+    { title: "Document states", steps: [{ text: "Translating" }, { text: "Needs review" }, { text: "Waiting for approval" }, { text: "Approved" }, { text: "Opened by X of Y families" }] },
+    { title: "Accessibility decisions", steps: [{ text: "Layout holds at 200 percent zoom" }, { text: "Read aloud is a labeled button" }, { text: "Red is reserved for problems" }] },
+  ]}
+  caption="The design system is team work, led by the design systems lead."
+/>
+
+</Section>
+
 <Section tone="panel">
 
-## A safeguard nobody has time to use is still a delay.
+## From research to a working prototype.
 
-I designed the review step for accuracy first. Testing showed speed matters just as much, so the next version puts a deadline on every vital document, visible to staff and administrators.
+- Developed an interactive prototype connecting translation, review, and family access.
+- Presented the project at BRIDGEGOOD Demo Day at Block HQ.
+- Continued testing and development through the active Aeries build.
+
+<Split>
+  <VideoLink
+    photo="kron4-still-color"
+    href="https://www.youtube.com/watch?v=r4l9IsyDUD4"
+    label="Watch the KRON4 live segment on YouTube"
+    caption="Separately from Demo Day, I talked about AthenaScribe live on KRON4."
+    linkText="Watch on YouTube"
+  />
+  <div class="flow">
+    <Affiliations
+      label="Program"
+      items={[{ name: "BRIDGEGOOD UX Design Apprenticeship", note: "Launched by Google.org" }]}
+    />
+    <Affiliations
+      label="Mentor affiliations"
+      items={[
+        { name: "Google", note: "Mentor affiliation" },
+        { name: "PayPal", note: "Mentor affiliation" },
+        { name: "State Farm", note: "Mentor affiliation" },
+      ]}
+    />
+  </div>
+</Split>
+
+</Section>
+
+<Section>
+
+## What I learned
+
+### Research can change the shape of the product.
+
+Investigating the document gap expanded the work into a workflow connecting several people.
+
+### A safeguard that nobody has time to use is still a delay.
+
+Testing made the workload behind review visible and gave the next iteration a clearer focus.
+
+### Building makes the next questions concrete.
+
+Working in code lets me examine the handoffs and interactions that static screens leave open.
+
+{/* TODO: the prototype href once Aaron sends it. */}
+<ActionLink label="View live prototype" variant="primary" />
+
+<Placeholders
+  columns={1}
+  items={[{ kind: "quote", label: "Mentor or teammate feedback", caption: "A named quote, with their permission." }]}
+/>
 
 </Section>

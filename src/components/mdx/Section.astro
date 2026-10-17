@@ -8,7 +8,7 @@ interface Props {
 const { tone = "plain" } = Astro.props;
 ---
 
-<section class:list={["section", "is-wide", `section--${tone}`]}>
+<section class:list={["section", "is-wide", "is-full", `section--${tone}`]}>
   <div class="section__inner flow">
     <slot />
   </div>

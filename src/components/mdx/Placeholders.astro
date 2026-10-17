@@ -1,0 +1,201 @@
+---
+// Labeled placeholders for visuals that are not ready. Each has a shape that matches what will go
+// there, with a faint sketch inside so a row of them does not read as identical boxes:
+//   diagram    wide workflow or relationship diagram (21:9)
+//   pair       a paired comparison, before and after (21:9)
+//   artifact   a research artifact such as an affinity map (16:9)
+//   dashboard  a large interface detail (16:10)
+//   phone      one phone screen in a tall frame (4:5)
+//   photo      a real photograph (16:9)
+//   notes      a short notes area (4:3)
+//   quote      a strip for one quotation (6:1)
+// Shown only in dev and review previews (like VideoSlot), never on the live site. The caption says
+// what decision the finished visual demonstrates. To replace one, swap it for a <Figure>, a
+// <Compare>, or a coded component and keep the caption.
+import { showPlaceholders } from "../../lib/case-studies";
+
+type Kind = "diagram" | "pair" | "artifact" | "dashboard" | "phone" | "notes" | "quote" | "photo";
+
+interface Item {
+  kind: Kind;
+  label: string;
+  caption: string;
+  /** For `pair`: the names of the two sides, shown inside their frames. */
+  sides?: [string, string];
+}
+
+interface Props {
+  items: Item[];
+  /** Items across on wide screens (phones: one across, or two for `phone`). */
+  columns?: 1 | 2 | 3 | 4;
+  /** Every frame at 4:3, so a row of mixed kinds (a photo, an artifact, a capture) lines up. */
+  uniform?: boolean;
+}
+
+const { items, columns = 1, uniform = false } = Astro.props;
+---
+
+{
+  showPlaceholders && (
+    <div class:list={["ph", "is-wide", "is-full", `ph--${columns}`, { "ph--uniform": uniform }]}>
+      {items.map((item) => (
+        <figure class={`ph__item ph__item--${item.kind}`}>
+          <div class="ph__frame">
+            <span class="ph__sketch" aria-hidden="true">
+              <i>{item.sides?.[0]}</i>
+              <i>{item.sides?.[1]}</i>
+              <i />
+              <i />
+            </span>
+            <span class="ph__label">Placeholder · {item.label}</span>
+          </div>
+          <figcaption class="ph__caption">{item.caption}</figcaption>
+        </figure>
+      ))}
+    </div>
+  )
+}
+
+<style>
+  .ph {
+    display: grid;
+    gap: var(--space-6) var(--space-5);
+  }
+
+  .ph--4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: 40rem) {
+    .ph--2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .ph--3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 56rem) {
+    .ph--4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .ph__item {
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
+    margin: 0;
+  }
+
+  .ph__frame {
+    position: relative;
+    display: grid;
+    align-content: end;
+    justify-items: start;
+    padding: var(--space-4);
+    overflow: hidden;
+    aspect-ratio: var(--ratio-tile-wide);
+    background: var(--color-placeholder);
+    border: var(--rule-thick) dashed var(--color-accent);
+    border-radius: var(--radius-media);
+  }
+
+  .ph__item--diagram .ph__frame,
+  .ph__item--pair .ph__frame {
+    aspect-ratio: var(--ratio-diagram);
+  }
+
+  .ph__item--dashboard .ph__frame {
+    aspect-ratio: var(--ratio-dashboard);
+  }
+
+  .ph__item--notes .ph__frame {
+    aspect-ratio: var(--ratio-tile);
+  }
+
+  .ph__item--quote .ph__frame {
+    aspect-ratio: var(--ratio-strip);
+  }
+
+
+  .ph__item--phone .ph__frame {
+    aspect-ratio: var(--ratio-about-media);
+  }
+
+  .ph.ph--uniform .ph__item .ph__frame {
+    aspect-ratio: var(--ratio-tile);
+  }
+
+  .ph__label {
+    position: relative;
+    font-size: var(--step--1);
+    font-weight: var(--weight-semibold);
+    color: var(--color-accent);
+  }
+
+  .ph__caption {
+    max-inline-size: var(--measure-reading);
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
+  }
+
+  /* The sketch: four faint shapes placed by kind. */
+  .ph__sketch {
+    position: absolute;
+    inset: var(--space-5) var(--space-5) var(--space-8);
+  }
+
+  .ph__sketch > i {
+    position: absolute;
+    border: var(--rule-thin) solid var(--color-rule-strong);
+    border-radius: var(--radius-section);
+    opacity: 0.7;
+  }
+
+  /* Diagram: three steps joined by a line. */
+  .ph__item--diagram .ph__sketch > i:nth-child(1) { inset: 25% auto 25% 0; inline-size: 24%; }
+  .ph__item--diagram .ph__sketch > i:nth-child(2) { inset: 25% auto 25% 38%; inline-size: 24%; }
+  .ph__item--diagram .ph__sketch > i:nth-child(3) { inset: 25% 0 25% auto; inline-size: 24%; }
+  .ph__item--diagram .ph__sketch > i:nth-child(4) { inset: 50% 0 auto 0; border-width: var(--rule-thin) 0 0; border-radius: 0; z-index: -1; }
+
+  .ph__sketch > i {
+    padding: var(--space-2);
+    font-size: var(--step--1);
+    font-style: normal;
+    color: var(--color-ink-muted);
+  }
+
+  /* Notes: three faint lines. */
+  .ph__item--notes .ph__sketch > i:nth-child(1) { inset: 0 0 auto 0; block-size: 0; }
+  .ph__item--notes .ph__sketch > i:nth-child(2) { inset: 24% 0 auto 0; block-size: 0; }
+  .ph__item--notes .ph__sketch > i:nth-child(3) { inset: 48% 0 auto 0; block-size: 0; }
+  .ph__item--notes .ph__sketch > i:nth-child(4),
+  .ph__item--quote .ph__sketch { display: none; }
+
+  /* Pair: a before frame and an after frame. */
+  .ph__item--pair .ph__sketch > i:nth-child(1) { inset: 0 auto 0 0; inline-size: 46%; }
+  .ph__item--pair .ph__sketch > i:nth-child(2) { inset: 0 0 0 auto; inline-size: 46%; }
+  .ph__item--pair .ph__sketch > i:nth-child(n + 3) { display: none; }
+
+  /* Artifact: a field of small notes. */
+  .ph__item--artifact .ph__sketch > i { inline-size: 14%; block-size: 22%; }
+  .ph__item--artifact .ph__sketch > i:nth-child(1) { inset: 0 auto auto 4%; }
+  .ph__item--artifact .ph__sketch > i:nth-child(2) { inset: 8% auto auto 34%; }
+  .ph__item--artifact .ph__sketch > i:nth-child(3) { inset: 0 auto auto 64%; }
+  .ph__item--artifact .ph__sketch > i:nth-child(4) { inset: 46% auto auto 20%; }
+
+  /* Dashboard: a header bar over rows. */
+  .ph__item--dashboard .ph__sketch > i:nth-child(1) { inset: 0 0 auto 0; block-size: 16%; }
+  .ph__item--dashboard .ph__sketch > i:nth-child(2) { inset: 26% 0 auto 0; block-size: 16%; }
+  .ph__item--dashboard .ph__sketch > i:nth-child(3) { inset: 50% 0 auto 0; block-size: 16%; }
+  .ph__item--dashboard .ph__sketch > i:nth-child(4) { display: none; }
+
+  /* Phone: one screen outline. */
+  .ph__item--phone .ph__sketch { inset: var(--space-4) 22% var(--space-8); }
+  .ph__item--phone .ph__sketch > i:nth-child(1) { inset: 0; border-radius: var(--radius-media); }
+  .ph__item--phone .ph__sketch > i:nth-child(n + 2) { display: none; }
+</style>

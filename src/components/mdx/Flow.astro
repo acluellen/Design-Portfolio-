@@ -1,0 +1,164 @@
+---
+// A simple diagram of steps joined by arrows: one or more rows, each with an optional title. Used for
+// relationships that are already established (a message that translates and an attachment that does
+// not, an existing workflow next to a proposed one, a document passing between roles, research
+// leading to priorities). Wide screens: one line of steps with arrows. Phones: stacked, arrows down.
+// A step can carry a small label (a role or a stage), a note, and a state:
+//   ok     the step works today
+//   gap    the step breaks or is missing (dashed)
+//   focus  the step the diagram is about (accent outline)
+// `arrows={false}` shows plain groups of chips instead, with no connectors.
+interface Step {
+  text: string;
+  label?: string;
+  note?: string;
+  state?: "ok" | "gap" | "focus";
+}
+
+interface Row {
+  title?: string;
+  steps: Step[];
+}
+
+interface Props {
+  rows: Row[];
+  /** Short line directly under the diagram: what it shows or helped decide. */
+  caption?: string;
+  arrows?: boolean;
+}
+
+const { rows, caption, arrows = true } = Astro.props;
+---
+
+<figure class="fd is-wide is-full">
+  {
+    rows.map((row) => (
+      <div class="fd__row">
+        {row.title && <p class="fd__title">{row.title}</p>}
+        <ol class:list={["fd__steps", { "fd__steps--plain": !arrows }]} style={`--n: ${row.steps.length}`}>
+          {row.steps.map((step) => (
+            <li class:list={["fd__step", step.state && `fd__step--${step.state}`]}>
+              {step.label && <span class="fd__label">{step.label}</span>}
+              <span class="fd__text">{step.text}</span>
+              {step.note && <span class="fd__note">{step.note}</span>}
+            </li>
+          ))}
+        </ol>
+      </div>
+    ))
+  }
+  {caption && <figcaption class="fd__caption">{caption}</figcaption>}
+</figure>
+
+<style>
+  .fd {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .fd__row {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .fd__title {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-label-ink);
+  }
+
+  .fd__steps {
+    display: grid;
+    gap: var(--space-6);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 48rem) {
+    .fd__steps {
+      grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+      gap: var(--space-7);
+    }
+
+    .fd__steps--plain {
+      gap: var(--space-4);
+    }
+  }
+
+  .fd__step {
+    position: relative;
+    display: grid;
+    gap: var(--space-1);
+    align-content: start;
+    padding: var(--space-4);
+    border: var(--rule-thin) solid var(--color-rule-strong);
+    border-radius: var(--radius-section);
+  }
+
+  .fd__step--ok {
+    background: var(--color-placeholder);
+  }
+
+  .fd__step--gap {
+    border-style: dashed;
+    color: var(--color-ink-muted);
+  }
+
+  .fd__step--focus {
+    border-color: var(--color-accent);
+    border-width: var(--rule-thick);
+  }
+
+  .fd__label {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-label-ink);
+  }
+
+  .fd__text {
+    font-weight: var(--weight-medium);
+    color: var(--color-heading);
+  }
+
+  .fd__step--gap .fd__text {
+    color: var(--color-ink-muted);
+  }
+
+  .fd__note {
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
+  }
+
+  /* The arrow between steps: down on phones, across from 48rem. */
+  .fd__steps:not(.fd__steps--plain) > .fd__step:not(:last-child)::after {
+    content: "↓";
+    position: absolute;
+    inset: 100% 0 auto;
+    display: grid;
+    place-items: center;
+    block-size: var(--space-6);
+    font-family: var(--font-mono);
+    color: var(--color-ink-muted);
+  }
+
+  @media (min-width: 48rem) {
+    .fd__steps:not(.fd__steps--plain) > .fd__step:not(:last-child)::after {
+      content: "→";
+      inset: 0 auto 0 100%;
+      inline-size: var(--space-7);
+      block-size: auto;
+    }
+  }
+
+  .fd__caption {
+    max-inline-size: var(--measure-reading);
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
+  }
+</style>

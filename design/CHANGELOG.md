@@ -2,6 +2,25 @@
 
 Newest first. Every design or structure decision goes here.
 
+## 2026-10-16 · AthenaScribe: the twelve part narrative, diagrams first
+
+- Order: setup, gap, problem, research, prioritization, direction, original prototype, testing, V2, design consistency, delivery, reflection. The sidebar has eight links (Overview, Problem, Research, Direction, Testing, V2, Delivery, Reflection); the other beats are subheadings inside them.
+- Cover: the coded home tile loop first (`heroTile`), then the title, tags (0 to 1 platform, EdTech, Design for social good), the contribution, and a compact facts row with the full tools list. The headline is the one statement; the grey summary line is off (`heroSummary: false`).
+- Width: this page uses `--measure-case-wide` for the body, and `Section`, `Flow`, `Moments`, `Placeholders`, and `Split` carry `.is-full`, so diagrams use the whole column beside the sidebar (about 1120px at 1440) while text keeps the reading measure. Space between parts is `--section-gap` (56px on phones, 96px on desktop).
+- New blocks: `Flow` (arrow diagrams for the message versus attachment gap, existing versus proposed workflow, research to priorities, three stages, the document journey, testing feedback to changes, design system chips), `Moments` (four large V2 visuals, text beside frame, alternating sides). `Placeholders` now has shapes (diagram, pair, artifact, dashboard, phone, notes, quote) with a faint sketch each.
+- Scan: the one moving permission slip scan sits in V2 (it shows document sorting, which came after round one). Its chip and caption say "Needs review" instead of "Vital document".
+- Testing: the buckets quotation appears once, beside the changes it led to; the quote was removed from the scan's story list. No laptop mockup, no Good morning screen.
+- Delivery: milestones, KRON4 as its own moment, program (launched by Google.org) and mentor affiliations (Google, PayPal, State Farm) under separate labels. Open slots no longer print an internal TODO.
+- Facts kept as records: 3 of 3 phone tasks, 8.5 out of 10 ease of navigation, the 120 teachers volume point, the 2+ weeks district advance notice (labeled as advance notice, not measured turnaround), and the three school day target as the next evaluation goal.
+
+## 2026-10-16 · AthenaScribe: evidence, comparisons, and the need to interface map
+
+- Research: the generic evidence table is gone. Fieldwork ("walking into local nonprofits throughout Oakland") opens a three part composition, each with a finding caption: an outreach photo, an affinity cluster, and a communication tool capture (all placeholders until the files arrive).
+- Prioritization: the three priorities became the mapping Visibility, Accountability, Action, each with a staff question and an interface response. The V2 dashboard caption echoes the same three ideas.
+- Testing: two focused comparisons replace the repeated buckets, severity, and three chain material. Queue organization (original list, buckets feedback, categorized queue) comes from the round one session and keeps the one quotation. Deadline visibility comes from another test session, and says we tested, then added it.
+- Cuts: the overview paragraph and caption, the four role row (now a school lane and a family lane), the review branch caption, and the long scan explanations (now short labels).
+- Not on the page: the round one laptop queue screen (the Good morning Ms Daniels screen is not in the project). Scope is not restored yet: its wording was not supplied.
+
 ## 2026-10-15 · Home About: a label, a statement, a bigger photo
 
 - "About Aaron" shows as a small muted mono label after the line, like "Get in touch". "Selected work" stays the one big heading; About reads as a quieter section. A big "About Aaron" like Micah Hoang's felt like too much (Aaron). The space from the line drops from 6rem to 2rem, the same as "Selected work"; 1.5rem from the label to the photo (`--gap-about-heading`).

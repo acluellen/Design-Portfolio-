@@ -108,6 +108,7 @@
   /* Layout */
   --measure-reading: 68ch;
   --measure-wide: 120rem; /* near full width like Micah Hoang; only caps very wide monitors */
+  --measure-case-wide: 88rem; /* case study body when it holds wide diagrams and comparisons (AthenaScribe) */
   --measure-case: 76rem; /* case study pages keep the centered frame until their own redesign */
   --gutter: var(--space-4);
   --header-height: 4.5rem;
@@ -155,6 +156,9 @@
   --about-row: 0.8fr 1.4fr 0.8fr;
 
   /* Media and controls */
+  --ratio-diagram: 21 / 9; /* wide workflow diagrams and paired comparisons in case studies */
+  --ratio-strip: 6 / 1; /* a one line quotation strip */
+  --ratio-dashboard: 16 / 10; /* large interface details in case studies */
   --ratio-tile-wide: 16 / 9; /* the wide Selected work tile */
   --ratio-tile: 4 / 3; /* the two smaller tiles, and gallery placeholders */
   --ratio-work-tile: 16 / 9; /* every Selected work tile, two equal columns (Micah Hoang) */

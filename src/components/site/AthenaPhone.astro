@@ -16,7 +16,7 @@ interface Props {
 }
 const { variant = "tile" } = Astro.props;
 const label =
-  "AthenaScribe on a phone: a permission slip is scanned and translated, flagged as a vital document, sorted to the right reviewer, approved by a person at the school, and sent to the family in Spanish.";
+  "AthenaScribe on a phone: a permission slip is scanned and translated, flagged for review, sorted to the right reviewer, approved by a person at the school, and sent to the family in Spanish.";
 ---
 
 <div class:list={["asp", `asp--${variant}`]} data-asp={variant} role="img" aria-label={label}>
@@ -218,7 +218,7 @@ const label =
       const phase = t < B.vital ? 0 : B.sort !== null && t < B.sort ? 1 : B.sort !== null && t < B.sheet ? 2 : t < B.sheet ? 1 : t < B.es ? 3 : 4;
       once("phase", String(phase), () => {
         e.title.textContent = phase < 2 ? "Scan" : phase < 4 ? "Review" : "Sent";
-        e.sub.textContent = ["Translating the whole file", "Vital document found", "Sorted into Field trips", "Waiting for a person to approve", "Spanish, from school records"][phase];
+        e.sub.textContent = ["Translating the whole file", "Needs review", "Sorted into Field trips", "Waiting for a person to approve", "Spanish, from school records"][phase];
       });
       const ph0 = [0, B.vital, B.sort ?? B.vital, B.sheet, B.es][phase];
       const tp = fin(t, ph0, 0.25);
@@ -227,7 +227,7 @@ const label =
       // 2 Vital: the lines that matter light up and a chip pops on.
       e.en.style.setProperty("--hl", (fin(t, B.vital + 0.05, 0.35) * fout(t, B.es - 0.2, 0.3)).toFixed(3));
       const chipState = t < B.tap ? "vital" : "ok";
-      once("chip", chipState, () => { e.chip.dataset.state = chipState; e.chip.innerHTML = chipState === "vital" ? `${WARN}Vital document` : `${CHECK}Approved`; });
+      once("chip", chipState, () => { e.chip.dataset.state = chipState; e.chip.innerHTML = chipState === "vital" ? `${WARN}Needs review` : `${CHECK}Approved`; });
       const c0 = chipState === "vital" ? B.vital : B.tap;
       xf(e.chip, 0, 0, 0.82 + 0.18 * spring(t - c0, 15, 0.5), fin(t, B.vital, 0.12) * fout(t, B.out, 0.3));
 
