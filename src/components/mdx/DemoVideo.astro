@@ -1,8 +1,8 @@
 ---
 // A short silent screen recording of school software, shown as a compact tile in a row of three
-// (see DemoRow) with an Expand button that opens a larger viewer. A demonstration (not research
+// (see DemoRow). A demonstration (not research
 // evidence): the poster first, then muted inline playback. All the clips loop together, without
-// stopping, while on screen; leaving the screen pauses a clip. Each has a pause and play button.
+// stopping, while on screen; leaving the screen pauses a clip. Tap a clip (or press Enter or Space on it) to pause or play it.
 // With reduced motion nothing plays by itself: the poster shows and the button starts it.
 // The files in public/video/demos are sanitized copies: names, schools, emails, photos, and IDs are
 // painted out in the video itself (not by CSS). The originals are kept outside the public folder.
@@ -43,22 +43,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     >
     </video>
     <img class="demo__poster" src={`${base}${poster}`} alt="" width={width} height={height} loading="lazy" decoding="async" />
-    <button type="button" class="demo__btn" data-demo-btn aria-label="Play video">
-      <svg class="demo__i demo__i--play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" /></svg>
-      <svg class="demo__i demo__i--pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="7" y="5" width="3.5" height="14" rx="1" /><rect x="13.5" y="5" width="3.5" height="14" rx="1" /></svg>
-    </button>
-    <button
-      type="button"
-      class="demo__expand"
-      data-demo-expand
-      data-src={`${base}${src}`}
-      data-poster={`${base}${poster}`}
-      data-w={width}
-      data-h={height}
-      data-title={label}
-      data-desc={description}
-    >
-      Expand<span class="visually-hidden"> video to read the details: {label}</span>
+    <button type="button" class="demo__tap" data-demo-btn aria-label="Play video">
+      <svg class="demo__i" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" /></svg>
     </button>
   </div>
   <figcaption class="demo__caption">{caption}</figcaption>
@@ -114,59 +100,38 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     visibility: hidden;
   }
 
-  .demo__btn {
+  /* The whole clip is one button: tap or press Enter or Space to pause or play. A play mark shows
+     only while it is paused, so a playing clip stays clean. */
+  .demo__tap {
     position: absolute;
-    inset: auto var(--space-2) var(--space-2) auto;
+    inset: 0;
     display: grid;
     place-items: center;
-    inline-size: 2.25rem;
-    block-size: 2.25rem;
     padding: 0;
     border: 0;
-    border-radius: 50%;
-    background: var(--color-overlay);
+    background: transparent;
     color: var(--color-always-dark-ink);
     cursor: pointer;
-    opacity: 0.85;
-    transition: opacity var(--duration-fast) var(--ease-standard), background var(--duration-hover) var(--ease-standard);
+    -webkit-tap-highlight-color: transparent;
   }
 
-  .demo__btn:hover,
-  .demo__btn:focus-visible {
-    opacity: 1;
-    background: var(--color-brand);
-  }
-
-  .demo__expand {
-    position: absolute;
-    inset: auto auto var(--space-2) var(--space-2);
-    padding: var(--space-1) var(--space-3);
-    border: var(--rule-thin) solid var(--color-rule-strong);
-    border-radius: var(--radius-tag);
-    background: var(--color-paper);
-    color: var(--color-ink);
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    letter-spacing: var(--tracking-label);
-    text-transform: uppercase;
-    cursor: zoom-in;
-  }
-
-  .demo__btn:focus-visible,
-  .demo__expand:focus-visible {
+  .demo__tap:focus-visible {
     outline: var(--focus-width) solid var(--color-focus);
-    outline-offset: var(--focus-offset);
+    outline-offset: calc(var(--focus-offset) * -1);
   }
 
   .demo__i {
-    inline-size: 1rem;
-    block-size: 1rem;
     display: none;
+    box-sizing: content-box;
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+    padding: var(--space-3);
+    border-radius: 50%;
+    background: var(--color-overlay);
   }
 
-  .demo[data-state="paused"] .demo__i--play,
-  .demo[data-state="idle"] .demo__i--play,
-  .demo[data-state="playing"] .demo__i--pause {
+  .demo[data-state="paused"] .demo__i,
+  .demo[data-state="idle"] .demo__i {
     display: block;
   }
 
@@ -177,72 +142,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   }
 </style>
 
-<style is:global>
-  /* The expanded viewer: one dialog for the page, with the full size clip and its own controls. */
-  .demo-viewer {
-    margin: auto; /* the site reset removes the dialog's own centering */
-    inline-size: min(96vw, var(--size-demo-viewer));
-    max-inline-size: none;
-    max-block-size: 94vh;
-    padding: var(--space-3);
-    border: var(--rule-thin) solid var(--color-rule-strong);
-    border-radius: var(--radius-media);
-    background: var(--color-paper);
-    color: var(--color-ink);
-  }
-
-  .demo-viewer::backdrop {
-    background: rgb(0 0 0 / 0.6);
-  }
-
-  .demo-viewer__bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-4);
-    margin-block-end: var(--space-3);
-  }
-
-  .demo-viewer__title {
-    margin: 0;
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    letter-spacing: var(--tracking-label);
-    text-transform: uppercase;
-    color: var(--color-label-ink);
-  }
-
-  .demo-viewer__close {
-    padding: var(--space-1) var(--space-4);
-    border: var(--rule-thin) solid var(--color-rule-strong);
-    border-radius: var(--radius-tag);
-    background: transparent;
-    color: var(--color-ink);
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    letter-spacing: var(--tracking-label);
-    text-transform: uppercase;
-    cursor: pointer;
-  }
-
-  .demo-viewer__close:focus-visible {
-    outline: var(--focus-width) solid var(--color-focus);
-    outline-offset: var(--focus-offset);
-  }
-
-  .demo-viewer__video {
-    display: block;
-    inline-size: 100%;
-    max-block-size: calc(94vh - var(--space-9));
-    object-fit: contain;
-    background: var(--color-placeholder);
-  }
-</style>
 
 <script>
   // One controller for every demo on the page. All of them loop, together and without stopping,
   // while they are on screen; a clip pauses when it leaves the screen and picks up again when it
-  // returns. Each has its own pause and play button. With reduced motion nothing starts by itself.
+  // returns. A tap on a clip pauses or plays that clip. With reduced motion nothing starts by itself.
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
   type Demo = { root: HTMLElement; v: HTMLVideoElement; btn: HTMLButtonElement; ratio: number; userPaused: boolean };
   const demos: Demo[] = [...document.querySelectorAll<HTMLElement>("[data-demo]")].map((root) => ({
@@ -253,8 +157,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     userPaused: false,
   }));
 
-  let viewer: HTMLDialogElement | null = null;
-  let opener: HTMLElement | null = null;
   const playing = (d: Demo) => !d.v.paused;
   const label: Record<string, string> = { playing: "Pause video", paused: "Play video", idle: "Play video" };
 
@@ -271,12 +173,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
   // Start every clip that is on screen and was not paused by the visitor.
   function resume() {
-    if (reduce.matches || viewer?.open) return;
+    if (reduce.matches) return;
     demos.forEach((d) => { if (d.ratio >= 0.5 && !d.userPaused && !playing(d)) start(d); });
   }
 
   demos.forEach((d) => {
-    d.root.dataset.state = "idle";
+    paint(d);
     d.v.loop = true;
     d.v.addEventListener("play", () => paint(d));
     d.v.addEventListener("pause", () => paint(d));
@@ -289,43 +191,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       if (d.ratio < 0.25 && playing(d)) { d.v.pause(); paint(d); }
       else resume();
     }, { threshold: [0, 0.25, 0.5, 0.75, 1] }).observe(d.root);
-  });
-
-  // Expand: the same sanitized clip in a larger dialog with the browser's own controls. Escape or the
-  // Close button dismisses it and focus goes back to the button that opened it. The inline clips
-  // pause while it is open and pick up again when it closes (unless the visitor had paused them).
-  function openViewer(btn: HTMLElement) {
-    demos.forEach((o) => { if (playing(o)) { o.v.pause(); paint(o); } });
-    if (!viewer) {
-      viewer = document.createElement("dialog");
-      viewer.className = "demo-viewer";
-      viewer.innerHTML = '<div class="demo-viewer__bar"><p class="demo-viewer__title"></p><button type="button" class="demo-viewer__close">Close</button></div><video class="demo-viewer__video" controls loop playsinline muted controlslist="nodownload"></video>';
-      document.body.append(viewer);
-      viewer.querySelector(".demo-viewer__close")!.addEventListener("click", () => viewer!.close());
-      viewer.addEventListener("click", (e) => { if (e.target === viewer) viewer!.close(); });
-      viewer.addEventListener("close", () => {
-        const v = viewer!.querySelector("video")!;
-        v.pause();
-        v.removeAttribute("src");
-        v.load();
-        opener?.focus();
-        resume();
-      });
-    }
-    const v = viewer.querySelector("video")!;
-    viewer.setAttribute("aria-label", `Expanded video: ${btn.dataset.title}`);
-    viewer.querySelector(".demo-viewer__title")!.textContent = btn.dataset.title ?? "";
-    v.src = btn.dataset.src ?? "";
-    v.poster = btn.dataset.poster ?? "";
-    v.setAttribute("aria-label", btn.dataset.desc ?? "");
-    v.style.aspectRatio = `${btn.dataset.w} / ${btn.dataset.h}`;
-    opener = btn;
-    viewer.showModal();
-    if (!reduce.matches) v.play().catch(() => {});
-  }
-
-  demos.forEach((d) => {
-    d.root.querySelector<HTMLButtonElement>("[data-demo-expand]")!.addEventListener("click", (e) => openViewer(e.currentTarget as HTMLElement));
   });
 
   reduce.addEventListener("change", () => { if (reduce.matches) demos.forEach((d) => { if (playing(d)) { d.v.pause(); paint(d); } }); else resume(); });
