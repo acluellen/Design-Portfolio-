@@ -17,6 +17,6 @@ const { Content, headings } = await render(study);
 const sections = headings.filter((h) => h.depth === 2);
 ---
 
-<CaseStudyLayout study={study} prev={prev} next={next} sections={sections}>
+<CaseStudyLayout study={study} prev={prev} next={next} sections={sections} headings={headings}>
   <Content components={mdxComponents} />
 </CaseStudyLayout>

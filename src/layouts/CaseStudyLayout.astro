@@ -12,24 +12,96 @@ interface Props {
   next?: CaseStudy;
   /** The study's ## headings, for the section index. */
   sections?: { slug: string; text: string }[];
+  /** Every ## and ### heading, in order, for the compact variant's indented links. */
+  headings?: { depth: number; slug: string; text: string }[];
 }
 
-const { study, prev, next, sections = [] } = Astro.props;
-const { title, summary, headline, role, team, timeline, client, program, tools, cover, status, heroMedia, heroTile, heroSummary, tags, prototype, card, order } =
+const { study, prev, next, sections = [], headings = [] } = Astro.props;
+const { title, summary, headline, role, team, timeline, client, program, tools, cover, status, heroMedia, heroTile, heroSummary, tags, prototype, card, order, indexChildren } =
   study.data;
 // The same number the study has on the home page cards.
 const number = String(order).padStart(2, "0");
 
 // Section index (Tee Hodgson's strip and Angelina Cao's numbered index): Overview, then one line
 // per ## section, named by the study's `index` list or, failing that, by the heading itself.
+// The compact variant (AthenaScribe): its own masthead, intro, and a quiet side rail.
+const compact = Boolean(heroTile);
+
+// One optional indented link per section: the first ### heading after each ## heading.
+const childOf: Record<string, { id: string; label: string }> = {};
+{
+  let at = -1;
+  for (const h of headings) {
+    if (h.depth === 2) at++;
+    else if (h.depth === 3 && at >= 0 && sections[at] && indexChildren?.[at] && !childOf[sections[at].slug]) {
+      childOf[sections[at].slug] = { id: h.slug, label: indexChildren[at] };
+    }
+  }
+}
+
 const indexItems = [
-  { id: "overview", label: "Overview" },
-  ...sections.map((s, i) => ({ id: s.slug, label: study.data.index?.[i] ?? s.text })),
+  { id: "overview", label: "Overview", child: undefined as { id: string; label: string } | undefined },
+  ...sections.map((s, i) => ({ id: s.slug, label: study.data.index?.[i] ?? s.text, child: childOf[s.slug] })),
 ].map((item, i) => ({ ...item, number: String(i + 1).padStart(2, "0") }));
 ---
 
-<PageLayout title={title} description={summary}>
-  <article>
+<PageLayout title={title} description={summary} crumb={compact ? title : undefined}>
+  <article class:list={{ "cs-article": compact }}>
+    {
+      compact && (
+        <aside class="cs-rail">
+          <div class="cs-rail__sticky">
+            <nav aria-label="On this page">
+              <ul class="cs-nav">
+                {indexItems.map((item) => (
+                  <li>
+                    <a href={`#${item.id}`} data-case-link={item.id}>{item.label}</a>
+                    {item.child && (
+                      <ul>
+                        <li><a href={`#${item.child.id}`} data-case-link={item.child.id}>{item.child.label}</a></li>
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+        </aside>
+      )
+    }
+    {
+      compact && (
+        <header class="cs-hero" id="overview">
+          <div class="cs-hero__visual">
+            <div class="hero__tile">
+              <AthenaAlerts />
+            </div>
+          </div>
+          <div class="cs-intro">
+            <h1>{headline ?? title}</h1>
+            <dl class="cs-meta">
+              <div>
+                <dt>Role</dt>
+                <dd>{role}</dd>
+              </div>
+              <div>
+                <dt>Timeline</dt>
+                <dd>{timeline}</dd>
+              </div>
+              {
+                program && (
+                  <div>
+                    <dt>Program</dt>
+                    <dd>{program}</dd>
+                  </div>
+                )
+              }
+            </dl>
+          </div>
+        </header>
+      )
+    }
+    {!compact && (
     <header class="container hero" id="overview">
       {/* The coded cover (the home tile's document alerts without the phone), at case study width, before the title. */}
       {
@@ -154,10 +226,11 @@ const indexItems = [
 
       {cover && <img class="hero__cover" src={cover.src} alt={cover.alt} />}
     </header>
+    )}
 
     <!-- Phones and tablets: a thin bar under the header names the current section and opens the list. -->
     {
-      indexItems.length > 2 && (
+      indexItems.length > 2 && !compact && (
         <details class="case-bar" data-case-bar>
           <summary>
             <span class="case-bar__current" data-case-current>{indexItems[0].number} / {indexItems[0].label}</span>
@@ -172,8 +245,9 @@ const indexItems = [
       )
     }
 
-    <div class:list={["container", { "case-grid": indexItems.length > 2, "container--wide": heroTile }]}>
+    <div class:list={[compact ? "cs-shell" : "container", { "case-grid": indexItems.length > 2 && !compact, "container--wide": heroTile && !compact }]}>
       {
+        compact ? null : (
         indexItems.length > 2 && (
           <nav class="case-index" aria-label="Sections">
             <ol>
@@ -183,8 +257,29 @@ const indexItems = [
             </ol>
           </nav>
         )
+        )
       }
-      <div class="flow body">
+
+      <div class:list={["flow", "body", { "cs-body": compact }]}>
+        {
+          compact && (
+            <details class="cs-toc" data-cs-toc>
+              <summary>On this page</summary>
+              <ul class="cs-nav">
+                {indexItems.map((item) => (
+                  <li>
+                    <a href={`#${item.id}`} data-case-link={item.id}>{item.label}</a>
+                    {item.child && (
+                      <ul>
+                        <li><a href={`#${item.child.id}`} data-case-link={item.child.id}>{item.child.label}</a></li>
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </details>
+          )
+        }
         <slot />
       </div>
       <!-- End of the case study: inside the grid, so the side index stays in view down to here. -->
@@ -742,15 +837,308 @@ const indexItems = [
       scroll-padding-top: calc(var(--header-height) + var(--control-height) + var(--space-4));
     }
   }
+
+  /* ---- The compact case study (AthenaScribe) ------------------------------------------------ */
+  .cs-hero,
+  .cs-shell {
+    /* The widest content: 1040px, but never closer than 48px to the side rail beside it. */
+    --cs-wide: min(var(--measure-case-hero), 100%);
+    padding-inline: var(--gutter);
+  }
+
+  @media (min-width: 80rem) {
+    .cs-hero,
+    .cs-shell {
+      --cs-wide: min(var(--measure-case-hero), 100% - 24rem);
+    }
+  }
+
+  .cs-hero {
+    padding-block-start: var(--space-5);
+  }
+
+  .cs-hero__visual {
+    max-inline-size: var(--cs-wide);
+    margin-inline: auto;
+  }
+
+  .cs-intro {
+    max-inline-size: var(--measure-case-reading);
+    margin: var(--space-7) auto 0;
+  }
+
+  .cs-intro h1 {
+    font-family: var(--font-display);
+    font-size: var(--size-case-title);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-case-title);
+    letter-spacing: var(--tracking-tight);
+    text-wrap: balance;
+    color: var(--color-heading);
+  }
+
+  .cs-meta {
+    display: grid;
+    gap: var(--space-5) var(--space-6);
+    margin: var(--space-6) 0 0;
+    padding-block-end: var(--space-8);
+    border-block-end: var(--rule-thin) solid var(--color-rule);
+  }
+
+  @media (min-width: 40rem) {
+    .cs-meta {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .cs-meta dt {
+    font-family: var(--font-text);
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
+  }
+
+  .cs-meta dd {
+    margin: var(--space-2) 0 0;
+    font-size: var(--step-0);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-snug);
+    color: var(--color-ink);
+  }
+
+  .cs-article {
+    position: relative;
+  }
+
+  .cs-body {
+    max-inline-size: var(--cs-wide);
+    margin-inline: auto;
+    padding-block-start: 0;
+  }
+
+  /* Ordinary text sits in the centered reading column; wide evidence uses the full width. */
+  .cs-body :global(.section__inner) {
+    max-width: none;
+  }
+
+  .cs-body :global(.section__inner > *) {
+    max-width: var(--measure-case-reading);
+    margin-inline: auto;
+  }
+
+  /* Evidence sits on the same two edges as the text. Only the hero above the title is wider. */
+  .cs-body :global(.section__inner > :is(.is-wide, .is-full)) {
+    max-width: var(--measure-case-reading);
+    margin-inline: auto;
+  }
+
+  /* Video labels read like the other quiet labels: sentence case, so they stay on one line. */
+  .cs-body :global(.demo__label) {
+    font-family: var(--font-text);
+    font-size: var(--step--1);
+    font-weight: var(--weight-medium);
+    letter-spacing: normal;
+    text-transform: none;
+    color: var(--color-ink);
+  }
+
+  /* One rhythm for the whole page, no rules between sections: 24 between lines of text, 32 around a
+     block of evidence, 64 before a subheading, 96 between sections. */
+  .cs-body > :global(.section) {
+    margin-block-start: var(--space-9);
+    padding-block-start: 0;
+    border-block-start: 0;
+  }
+
+  /* The first section is the overview: 48px under the hairline that closes the details. */
+  .cs-body > :global(.section:first-of-type) {
+    margin-block-start: var(--space-7);
+  }
+
+  .cs-body :global(.section__inner > * + *) {
+    margin-block-start: var(--space-5);
+  }
+
+  .cs-body :global(.section__inner > :is(.is-wide, .is-full)),
+  .cs-body :global(.section__inner > :is(.is-wide, .is-full) + *) {
+    margin-block-start: var(--space-6);
+  }
+
+  .cs-body :global(.section__inner > :is(h2, h3)) {
+    margin-block-start: var(--space-8);
+  }
+
+  .cs-body :global(.section__inner > :is(h2, h3):first-child) {
+    margin-block-start: 0;
+  }
+
+  .cs-body :global(.section__inner > :is(h2, h3) + *) {
+    margin-block-start: var(--space-4);
+  }
+
+  /* The label above a section reads like the side links: sentence case, quiet. */
+  .cs-body :global(.section__inner > p.label) {
+    font-family: var(--font-text);
+    font-size: var(--step-0);
+    font-weight: var(--weight-regular);
+    letter-spacing: normal;
+    text-transform: none;
+  }
+
+  .cs-body :global(.section__inner > p:not([class])) {
+    color: var(--color-ink-muted);
+  }
+
+  .cs-body :global(.collab) {
+    margin-block-start: var(--space-7);
+  }
+
+  .cs-shell .case-end {
+    max-inline-size: var(--cs-wide);
+    margin-inline: auto;
+  }
+
+  /* Side navigation: quiet text, no numbers, rules, or boxes. A 4px square marks the section being
+     read; its space is always reserved, so the labels never move. */
+  .cs-rail {
+    display: none;
+  }
+
+  .cs-nav,
+  .cs-nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .cs-nav {
+    font-family: var(--font-text);
+    font-size: var(--step--1);
+    font-weight: var(--weight-regular);
+    line-height: 1.25rem;
+  }
+
+  .cs-nav > li + li {
+    margin-block-start: var(--space-3);
+  }
+
+  .cs-nav ul {
+    margin-inline-start: var(--space-4);
+  }
+
+  .cs-nav a {
+    position: relative;
+    display: block;
+    padding: var(--space-1) 0 var(--space-1) var(--space-3);
+    color: var(--color-ink-muted);
+    text-decoration: none;
+  }
+
+  .cs-nav a::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-start: calc(var(--space-1) + 0.5rem - 2px);
+    inline-size: 4px;
+    block-size: 4px;
+    background: var(--color-accent);
+    opacity: 0;
+  }
+
+  .cs-nav a:hover {
+    color: var(--color-ink);
+  }
+
+  .cs-nav a[aria-current] {
+    color: var(--color-accent);
+  }
+
+  .cs-nav a[aria-current]::before {
+    opacity: 1;
+  }
+
+  /* Below the rail's breakpoint: a collapsed "On this page" list above the overview. */
+  .cs-toc {
+    max-inline-size: var(--measure-case-reading);
+    margin: var(--space-6) auto 0;
+  }
+
+  .cs-toc summary {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding-block: var(--space-2);
+    font-family: var(--font-text);
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .cs-toc summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .cs-toc summary::after {
+    content: "";
+    inline-size: 6px;
+    block-size: 6px;
+    border: solid currentColor;
+    border-width: 0 1.5px 1.5px 0;
+    transform: rotate(45deg) translateY(-2px);
+  }
+
+  .cs-toc[open] summary::after {
+    transform: rotate(-135deg) translateY(-2px);
+  }
+
+  .cs-toc .cs-nav {
+    padding-block: var(--space-2) var(--space-3);
+  }
+
+  @media (min-width: 80rem) {
+    .cs-toc {
+      display: none;
+    }
+
+    .cs-rail {
+      display: block;
+      position: absolute;
+      inset-block: 0;
+      z-index: 5;
+      inset-inline-start: var(--space-5);
+      inline-size: var(--size-case-rail);
+      pointer-events: none;
+    }
+
+    /* Fills the viewport under the masthead, so the links sit in its vertical middle. */
+    .cs-rail__sticky {
+      position: sticky;
+      inset-block-start: var(--header-height);
+      display: flex;
+      align-items: center;
+      block-size: calc(100dvh - var(--header-height));
+    }
+
+    .cs-rail nav {
+      pointer-events: auto;
+    }
+  }
 </style>
 
 <script>
-  // Marks the section on screen in both the side index and the bar, and closes the bar after a jump.
+  // Marks the section being read in every link list (the side rail, the "On this page" list, and the
+  // older bar). The position comes from where each heading sits in the viewport, so it works in any
+  // scrolling container, including inside a preview frame. Scroll events are caught in the capture
+  // phase so a scrolling parent is heard too.
   const links = [...document.querySelectorAll<HTMLAnchorElement>("[data-case-link]")];
   const current = document.querySelector<HTMLElement>("[data-case-current]");
   const bar = document.querySelector<HTMLDetailsElement>("[data-case-bar]");
+  const toc = document.querySelector<HTMLDetailsElement>("[data-cs-toc]");
   const ids = [...new Set(links.map((a) => a.dataset.caseLink!))];
-  const targets = ids.map((id) => document.getElementById(id)).filter((el): el is HTMLElement => el !== null);
+  const targets = ids
+    .map((id) => document.getElementById(id))
+    .filter((el): el is HTMLElement => el !== null)
+    .sort((a, b) => (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1));
 
   const mark = (id: string) => {
     links.forEach((a) => {
@@ -762,23 +1150,33 @@ const indexItems = [
   };
 
   if (targets.length > 0) {
-    // The last section whose top has passed the upper third of the screen is current.
+    // The last heading whose top has passed a line a little below the masthead is current.
     let queued = false;
     const update = () => {
       queued = false;
-      const line = window.innerHeight * 0.33;
+      const header = document.querySelector<HTMLElement>(".cs-top, .site-header");
+      const line = (header?.getBoundingClientRect().bottom ?? 0) + window.innerHeight * 0.25;
       let active = targets[0].id;
       for (const t of targets) if (t.getBoundingClientRect().top <= line) active = t.id;
+      // At the very bottom of the page the last section is current, even when it is too short to reach the line.
+      if (document.documentElement.getBoundingClientRect().bottom <= window.innerHeight + 2) active = targets[targets.length - 1].id;
       mark(active);
     };
-    addEventListener("scroll", () => {
+    const queue = () => {
       if (!queued) {
         queued = true;
         requestAnimationFrame(update);
       }
-    }, { passive: true });
+    };
+    document.addEventListener("scroll", queue, { passive: true, capture: true });
+    addEventListener("resize", queue);
     update();
   }
 
-  links.forEach((a) => a.addEventListener("click", () => bar && (bar.open = false)));
+  links.forEach((a) =>
+    a.addEventListener("click", () => {
+      if (bar) bar.open = false;
+      if (toc) toc.open = false;
+    }),
+  );
 </script>

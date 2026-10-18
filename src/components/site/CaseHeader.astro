@@ -1,0 +1,91 @@
+---
+// The compact masthead for a case study page (AthenaScribe): "← Work / AthenaScribe" on the left,
+// a quiet About link and the theme control on the right. No logo, profession, or location, and no
+// full width rule: a light, slightly see through band that keeps the text readable as the page
+// scrolls under it. The other pages keep the full Header.
+import ThemeToggle from "./ThemeToggle.astro";
+
+interface Props {
+  /** The page's name, shown as the current crumb. */
+  crumb: string;
+}
+
+const { crumb } = Astro.props;
+---
+
+<header class="cs-top">
+  <div class="cs-top__inner">
+    <nav class="cs-top__crumbs" aria-label="Breadcrumb">
+      <a href="/#work"><span aria-hidden="true">←</span> Work</a>
+      <span class="cs-top__sep" aria-hidden="true">/</span>
+      <span aria-current="page" translate="no">{crumb}</span>
+    </nav>
+    <div class="cs-top__end">
+      <a class="cs-top__about" href="/about/">About</a>
+      <ThemeToggle />
+    </div>
+  </div>
+</header>
+
+<style is:global>
+  /* This page's shorter masthead, and 24px page padding on phones and up. */
+  :root {
+    --header-height: 3.5rem;
+    --gutter: var(--space-5);
+  }
+</style>
+
+<style>
+  .cs-top {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 20;
+    background: color-mix(in srgb, var(--color-paper) 88%, transparent);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+
+  .cs-top__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    min-block-size: var(--header-height);
+    padding-inline: var(--gutter);
+  }
+
+  .cs-top__crumbs {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-2);
+    font-family: var(--font-text);
+    font-size: var(--step--1);
+    color: var(--color-ink);
+  }
+
+  .cs-top__crumbs a,
+  .cs-top__about {
+    color: var(--color-ink-muted);
+    text-decoration: none;
+  }
+
+  .cs-top__crumbs a:hover,
+  .cs-top__about:hover {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-underline-offset: var(--underline-offset);
+  }
+
+  .cs-top__sep {
+    color: var(--color-ink-muted);
+  }
+
+  .cs-top__end {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    font-family: var(--font-text);
+    font-size: var(--step--1);
+  }
+</style>

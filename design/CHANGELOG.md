@@ -1054,3 +1054,25 @@ Header (less visual weight at the top, so the name leads):
 Color (light mode only; dark mode unchanged):
 - Page paper moves from warm cream `#F6F3ED` to neutral `#F4F3F0`, with panel, placeholder, and rule grays matched. The cream sat at the same hue as the Craft wood photo (about 40 degrees), so that tile blended into the page while the cool tiles stood out. A neutral surround keeps the photos' own colors (color appearance models, A; value, C). Every text color still passes: body 14.8:1, navy 13.2:1, muted 7.4:1, links 6.0:1.
 - Navy stays the brand color for headings, the logo, and the contact block (low chroma, so it doesn't fight the photos; C). Blue stays for links only (C). Option "cool paper plus near black ink" was rendered and not taken: it changes the brand with no evidence for doing so.
+
+## 2026-10-18 (AthenaScribe masthead, title and section navigation)
+
+- AthenaScribe only (`heroTile: "athenascribe"`): compact masthead (← Work / AthenaScribe, About, theme control), no profession or location, no divider. Other case studies keep the full header and index.
+- Hero animation now sits above a single H1. Removed the numbered eyebrow, the oversized project name, the subtitle, the prototype placeholder and the At a glance strip.
+- Role, Timeline and Program sit in three columns under the H1, sentence case labels. Collaborators and tools moved into a compact block after the contribution content (new `Collaborators` MDX component, no names or roles dropped).
+- Reading column 760px and hero width 1040px, as tokens: `--measure-case-reading`, `--measure-case-hero`, `--size-case-rail`, `--leading-case-title`, `--size-case-title`.
+- Left rail: Atkinson 14px, grouped as navigation only (page sections unchanged), 4px square active marker with reserved space, no borders or filled rows. Shown at 80rem and up, with at least 48px to the widest content. Below that, an On this page disclosure sits above the overview.
+- Active link follows scroll using a capture phase scroll listener, so it also works when the scrolling container is not the window. Added optional `indexChildren` front matter field.
+
+## 2026-10-18 (AthenaScribe: Rachel's page as the spacing reference)
+
+- The side rail now belongs to the whole article, not the body, so it sits beside the hero from the first screen and stays in the left gutter, vertically centered, down to the end. The last link is current at the very bottom of the page.
+- One vertical rhythm, no rules between sections: 24 between lines of text, 32 around evidence blocks, 64 before a subheading, 96 between sections, 16 from a heading to its text. Existing space tokens only.
+- A hairline closes the details (64 above, 48 below), replacing the earlier 64 gap. Metadata columns are equal thirds.
+- Section labels directly under a section are sentence case sans, and section paragraphs use the muted ink (7.5:1 light, AA dark). Headings, contribution labels, video labels and all copy are unchanged.
+
+## 2026-10-18 (AthenaScribe: one measure for text and evidence)
+
+- Everything below the hero now sits on the 760px reading column's two edges: the school software videos, placeholders and other evidence blocks. Only the hero above the title is wider. Reason: widening the text would push lines past 90 characters, so the evidence aligns to the text instead.
+- The three videos stay in a row at about 243px each. Their labels are sentence case so they stay on one line. Captions are unchanged.
+- Dense diagrams may need an enlarge control once real artwork replaces the placeholders.

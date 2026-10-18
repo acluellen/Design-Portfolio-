@@ -109,6 +109,11 @@
   --measure-reading: 68ch;
   --measure-wide: 120rem; /* near full width like Micah Hoang; only caps very wide monitors */
   --ratio-demo: 2 / 1; /* every school software demo tile in the row: the recording sits inside it at its own shape */
+  --measure-case-reading: 47.5rem; /* the compact case study reading column: title, details, overview, body text (760px) */
+  --measure-case-hero: 65rem; /* the widest content in the compact case study: the hero and wide evidence (1040px) */
+  --size-case-rail: 9rem; /* the compact case study's side navigation */
+  --leading-case-title: 1.15; /* the compact case study title */
+  --size-case-title: clamp(2rem, 1.3rem + 2.4vw, 3rem); /* 32px on phones up to 48px on desktop */
   --measure-case-wide: 88rem; /* case study body when it holds wide diagrams and comparisons (AthenaScribe) */
   --measure-case: 76rem; /* case study pages keep the centered frame until their own redesign */
   --gutter: var(--space-4);

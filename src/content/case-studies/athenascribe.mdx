@@ -2,7 +2,7 @@
 # Words and structure come from Aaron’s Claude Design draft (AthenaScribe Case Study, Main board).
 # Restructured on Oct 8 2026, and rebuilt on Oct 17 2026 from the approved build brief (alerts cover without the phone, nine sections).
 title: "AthenaScribe"
-headline: "AthenaScribe"
+headline: "School document translation, with staff review built in."
 summary: "Connecting school document translation, staff review, and family access."
 card:
   label: "Research lead · BRIDGEGOOD capstone"
@@ -28,6 +28,7 @@ tools: ["Figma Design", "FigJam", "Figma Make", "Claude Code", "GitHub", "Vercel
 prototype: "TODO" # Aaron to send the live prototype URL.
 heroTile: "athenascribe"
 index: ["School tools", "Opportunity", "Research", "Priorities", "Core flows", "Testing", "Revision", "Milestones"]
+indexChildren: ["Attachment gap", "Shared workflow", "The takeaway", "Who checks it", "", "Queue changes", "Review and time", "Lessons"]
 order: 1
 status: "published"
 ---
@@ -46,6 +47,8 @@ Through BRIDGEGOOD and partner organizations, our team explored education and op
   <Mine label="My contribution">I led research and synthesis, investigated the document translation gap, and helped shape the review workflow. I collaborated with the product lead on prototyping and testing.</Mine>
   <Team label="Team contribution">Visual system, supporting flows, prototype refinement, and Demo Day presentation.</Team>
 </Contribution>
+
+<Collaborators people={frontmatter.team} tools={frontmatter.tools} />
 
 </Section>
 
