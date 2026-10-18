@@ -1076,3 +1076,16 @@ Color (light mode only; dark mode unchanged):
 - Everything below the hero now sits on the 760px reading column's two edges: the school software videos, placeholders and other evidence blocks. Only the hero above the title is wider. Reason: widening the text would push lines past 90 characters, so the evidence aligns to the text instead.
 - The three videos stay in a row at about 243px each. Their labels are sentence case so they stay on one line. Captions are unchanged.
 - Dense diagrams may need an enlarge control once real artwork replaces the placeholders.
+
+## 2026-10-18 (AthenaScribe: the top graphic is gone, the name and facts lead)
+
+- Removed the animated document cover above the title. The component file stays for the older header.
+- New opening above the overview, from Aaron's header mock: the project name, the headline (the page's one H1), then four facts in columns: Program, My role, Contribution, Timeline. The one line under the headline ("AthenaScribe connects…") is left out on purpose.
+- Set in the site's own fonts and tokens (not the serif in the mock). Four columns from 56rem, two from 40rem, one on phones. Left edge shared with the overview.
+- New optional `contribution` front matter list, taken from the mock. Timeline is now "6 Weeks, 4 Designers, 1 PM" under the label Timeline / Team (Aaron's choice, replacing "Summer 2026, with continued development and testing").
+
+## 2026-10-18 (AthenaScribe: collaborators, tools, and the contribution block)
+
+- Collaborators shown as first name and last initial: Gaby G., Miriam M., Renato V., Tyler W. Tyler's role is now Product manager (was Project coach).
+- Tools are now Figma, Lovable, Claude, Userlytics.
+- Removed the My contribution and Team contribution block under the overview. The Contribution column in the header stays. The Contribution component file stays for other pages.

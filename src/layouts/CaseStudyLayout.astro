@@ -17,7 +17,7 @@ interface Props {
 }
 
 const { study, prev, next, sections = [], headings = [] } = Astro.props;
-const { title, summary, headline, role, team, timeline, client, program, tools, cover, status, heroMedia, heroTile, heroSummary, tags, prototype, card, order, indexChildren } =
+const { title, summary, headline, role, team, timeline, client, program, tools, cover, status, heroMedia, heroTile, heroSummary, tags, prototype, card, order, indexChildren, contribution } =
   study.data;
 // The same number the study has on the home page cards.
 const number = String(order).padStart(2, "0");
@@ -72,22 +72,10 @@ const indexItems = [
     {
       compact && (
         <header class="cs-hero" id="overview">
-          <div class="cs-hero__visual">
-            <div class="hero__tile">
-              <AthenaAlerts />
-            </div>
-          </div>
           <div class="cs-intro">
+            <p class="cs-name" translate="no">{title}</p>
             <h1>{headline ?? title}</h1>
             <dl class="cs-meta">
-              <div>
-                <dt>Role</dt>
-                <dd>{role}</dd>
-              </div>
-              <div>
-                <dt>Timeline</dt>
-                <dd>{timeline}</dd>
-              </div>
               {
                 program && (
                   <div>
@@ -96,6 +84,26 @@ const indexItems = [
                   </div>
                 )
               }
+              <div>
+                <dt>My role</dt>
+                <dd>{role}</dd>
+              </div>
+              {
+                contribution && contribution.length > 0 && (
+                  <div>
+                    <dt>Contribution</dt>
+                    <dd>
+                      <ul class="cs-meta__list">
+                        {contribution.map((item) => <li>{item}</li>)}
+                      </ul>
+                    </dd>
+                  </div>
+                )
+              }
+              <div>
+                <dt>Timeline / Team</dt>
+                <dd>{timeline}</dd>
+              </div>
             </dl>
           </div>
         </header>
@@ -864,7 +872,17 @@ const indexItems = [
 
   .cs-intro {
     max-inline-size: var(--measure-case-reading);
-    margin: var(--space-7) auto 0;
+    margin: var(--space-8) auto 0;
+  }
+
+  .cs-name {
+    margin: 0 0 var(--space-5);
+    font-family: var(--font-display);
+    font-size: var(--step-5);
+    font-weight: var(--weight-wordmark);
+    line-height: var(--leading-tight);
+    letter-spacing: var(--tracking-wordmark);
+    color: var(--color-heading);
   }
 
   .cs-intro h1 {
@@ -887,20 +905,34 @@ const indexItems = [
 
   @media (min-width: 40rem) {
     .cs-meta {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 56rem) {
+    .cs-meta {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
 
   .cs-meta dt {
     font-family: var(--font-text);
     font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
     color: var(--color-ink-muted);
+  }
+
+  .cs-meta__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
   .cs-meta dd {
     margin: var(--space-2) 0 0;
     font-size: var(--step-0);
-    font-weight: var(--weight-medium);
+    font-weight: var(--weight-regular);
     line-height: var(--leading-snug);
     color: var(--color-ink);
   }
