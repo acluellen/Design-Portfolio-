@@ -1089,3 +1089,11 @@ Color (light mode only; dark mode unchanged):
 - Collaborators shown as first name and last initial: Gaby G., Miriam M., Renato V., Tyler W. Tyler's role is now Product manager (was Project coach).
 - Tools are now Figma, Lovable, Claude, Userlytics.
 - Removed the My contribution and Team contribution block under the overview. The Contribution column in the header stays. The Contribution component file stays for other pages.
+
+## 2026-10-18 (AthenaScribe: the attachment illustration becomes a laptop video)
+
+- Replaced the "Translation stops at the attachment" illustration with one 18 second looping video in a drawn laptop (no photo, no new colors): a FigJam board that zooms in on three sticky notes in turn (Emergency Alerts, Posts and Events, Attach Forms File UI), each time zooming back out. Same player as the three school software demos: muted, loops, tap to pause, poster first, nothing plays by itself with reduced motion.
+- Zoom timing follows the reference's rhythm: a quick eased move, then a long hold. Aaron's own recordings are the source. The camera is one smooth, eased path (not Aaron's pinch path): it blends between a ladder of sharp, fixed stills taken from the recordings, so there is no shake and no jumps between zoom levels. The pointer (both the black and the white arrow) is found and removed in every still. The reference recording is not on the site.
+- Privacy: the last clip's browser tab strip and bookmarks (real district and tool names) are cropped out of every frame. An OCR pass over the finished video found no names, emails or addresses. The "Softare Comparision" typo on the board stays, by Aaron's choice.
+- `DemoVideo` gained a `device="laptop"` option and an optional label. The old `AttachmentGap` component stays for reference.
+- The caption is a draft for Aaron to rewrite.

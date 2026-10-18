@@ -14,20 +14,23 @@ interface Props {
   /** The recording's own size in pixels: the clip keeps this shape inside its tile. */
   width: number;
   height: number;
-  /** What the example is for, in small mono capitals over the video. */
-  label: string;
+  /** What the example is for, in small mono capitals over the video. Optional. */
+  label?: string;
+  /** "laptop" sets the clip in a drawn laptop, at the screen's own 16:10 shape. */
+  device?: "laptop";
   /** The visible action, directly under the video. */
   caption: string;
   /** What a screen reader hears for the video. */
   description: string;
 }
 
-const { src, poster, width, height, label, caption, description } = Astro.props;
+const { src, poster, width, height, label, device, caption, description } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
-<figure class="demo" data-demo>
-  <p class="demo__label">{label}</p>
+<figure class:list={["demo", { "demo--laptop": device === "laptop" }]} data-demo>
+  {label && <p class="demo__label">{label}</p>}
+  <div class="demo__device">
   <div class="demo__frame">
     <video
       class="demo__video"
@@ -46,6 +49,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     <button type="button" class="demo__tap" data-demo-btn aria-label="Play video">
       <svg class="demo__i" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" /></svg>
     </button>
+  </div>
   </div>
   <figcaption class="demo__caption">{caption}</figcaption>
 </figure>
@@ -139,6 +143,54 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     font-size: var(--step--1);
     line-height: var(--leading-snug);
     color: var(--color-ink-muted);
+  }
+
+  /* A drawn laptop for one large recording: a dark lid around a 16:10 screen, and a base that is a
+     little wider than the lid. Colors are the always dark navy tokens, so it reads in both themes. */
+  .demo__device {
+    display: grid;
+  }
+
+  .demo--laptop .demo__device {
+    position: relative;
+    padding: clamp(0.375rem, 1.6%, 0.875rem);
+    margin-block-end: var(--space-4);
+    background: var(--color-always-dark);
+    border-radius: var(--radius-media) var(--radius-media) 0 0;
+  }
+
+  .demo--laptop .demo__device::after {
+    content: "";
+    position: absolute;
+    inset-block-start: 100%;
+    inset-inline: -4%;
+    block-size: var(--space-3);
+    background: var(--color-always-dark-rule-strong);
+    border-radius: 0 0 var(--radius-media) var(--radius-media);
+  }
+
+  .demo--laptop .demo__device::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    inset-block-start: 100%;
+    inset-inline-start: 50%;
+    inline-size: 16%;
+    block-size: var(--space-1);
+    translate: -50% 0;
+    background: var(--color-always-dark-raised);
+    border-radius: 0 0 var(--radius-media) var(--radius-media);
+  }
+
+  .demo--laptop .demo__frame {
+    aspect-ratio: var(--ratio-dashboard);
+    border: 0;
+    border-radius: calc(var(--radius-media) / 2);
+    background: var(--color-always-dark);
+  }
+
+  .demo--laptop :is(.demo__video, .demo__poster) {
+    object-fit: cover;
   }
 </style>
 
