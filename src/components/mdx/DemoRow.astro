@@ -1,0 +1,22 @@
+---
+// Holds the school software demos in one row of equal tiles with aligned tops. They stack only on
+// narrow phones.
+---
+
+<div class="demo-row is-wide is-full">
+  <slot />
+</div>
+
+<style>
+  .demo-row {
+    display: grid;
+    gap: var(--space-6) var(--space-4);
+    align-items: start;
+  }
+
+  @media (min-width: 40rem) {
+    .demo-row {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

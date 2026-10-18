@@ -30,10 +30,11 @@ import Flow from "./Flow.astro";
 import Moments from "./Moments.astro";
 import Shot from "./Shot.astro";
 import DemoVideo from "./DemoVideo.astro";
+import DemoRow from "./DemoRow.astro";
 import Columns from "./Columns.astro";
 import PreviewOnly from "./PreviewOnly.astro";
 import AttachmentGap from "./AttachmentGap.astro";
 
-export const mdxComponents = { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team, Sources, Compare, Screens, Section, CardGrid, Card, Tag, Shift, Finding, ScreenPair, Steps, Split, Fixes, ActionLink, VideoSlot, Placeholders, VideoLink, Affiliations, Flow, Moments, Columns, DemoVideo, Shot, PreviewOnly, AttachmentGap };
+export const mdxComponents = { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team, Sources, Compare, Screens, Section, CardGrid, Card, Tag, Shift, Finding, ScreenPair, Steps, Split, Fixes, ActionLink, VideoSlot, Placeholders, VideoLink, Affiliations, Flow, Moments, Columns, DemoVideo, DemoRow, Shot, PreviewOnly, AttachmentGap };
 
-export { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team, Sources, Compare, Screens, Section, CardGrid, Card, Tag, Shift, Finding, ScreenPair, Steps, Split, Fixes, ActionLink, VideoSlot, Placeholders, VideoLink, Affiliations, Flow, Moments, Columns, DemoVideo, Shot, PreviewOnly, AttachmentGap };
+export { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team, Sources, Compare, Screens, Section, CardGrid, Card, Tag, Shift, Finding, ScreenPair, Steps, Split, Fixes, ActionLink, VideoSlot, Placeholders, VideoLink, Affiliations, Flow, Moments, Columns, DemoVideo, DemoRow, Shot, PreviewOnly, AttachmentGap };

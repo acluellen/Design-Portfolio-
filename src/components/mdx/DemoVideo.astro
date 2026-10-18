@@ -1,5 +1,6 @@
 ---
-// A short silent screen recording of school software, shown as a demonstration (not research
+// A short silent screen recording of school software, shown as a compact tile in a row of three
+// (see DemoRow) with an Expand button that opens a larger viewer. A demonstration (not research
 // evidence): the poster first, then muted inline playback. The clips play one at a time, in page
 // order, only while on screen; leaving the screen pauses a clip. Each has a pause, play, and replay
 // button. With reduced motion nothing plays by itself: the poster shows and the button starts it.
@@ -10,7 +11,7 @@ interface Props {
   src: string;
   /** Path in /public to the poster image: the first thing a visitor sees. */
   poster: string;
-  /** The recording's own size in pixels, so the box keeps its natural shape. */
+  /** The recording's own size in pixels: the clip keeps this shape inside its tile. */
   width: number;
   height: number;
   /** What the example is for, in small mono capitals over the video. */
@@ -25,13 +26,12 @@ const { src, poster, width, height, label, caption, description } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
-<figure class="demo is-wide is-full" data-demo>
+<figure class="demo" data-demo>
   <p class="demo__label">{label}</p>
-  <div class="demo__frame" style={`--ratio: ${width} / ${height}`}>
+  <div class="demo__frame">
     <video
       class="demo__video"
       src={`${base}${src}`}
-      poster={`${base}${poster}`}
       width={width}
       height={height}
       muted
@@ -41,19 +41,38 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       disablepictureinpicture
     >
     </video>
+    <img class="demo__poster" src={`${base}${poster}`} alt="" width={width} height={height} loading="lazy" decoding="async" />
     <button type="button" class="demo__btn" data-demo-btn aria-label="Play video">
       <svg class="demo__i demo__i--play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" /></svg>
       <svg class="demo__i demo__i--pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="7" y="5" width="3.5" height="14" rx="1" /><rect x="13.5" y="5" width="3.5" height="14" rx="1" /></svg>
       <svg class="demo__i demo__i--replay" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.6-5.9" /><path d="M4 4v5h5" /></svg>
+    </button>
+    <button
+      type="button"
+      class="demo__expand"
+      data-demo-expand
+      data-src={`${base}${src}`}
+      data-poster={`${base}${poster}`}
+      data-w={width}
+      data-h={height}
+      data-title={label}
+      data-desc={description}
+    >
+      Expand<span class="visually-hidden"> video to read the details: {label}</span>
     </button>
   </div>
   <figcaption class="demo__caption">{caption}</figcaption>
 </figure>
 
 <style>
+  /* A compact tile in a row of three: every tile is the same width and shape, and the recording sits
+     inside it at its own proportions (never stretched or cropped), centered on the tile's background. */
   .demo {
     display: grid;
     gap: var(--space-3);
+    align-content: start;
+    min-inline-size: 0;
+    margin: 0;
   }
 
   .demo__label {
@@ -65,31 +84,43 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     color: var(--color-label-ink);
   }
 
-  /* The cap sits on the frame, not the figure: the page's wide block rule resets the figure's width. */
   .demo__frame {
     position: relative;
-    max-inline-size: var(--size-demo-video);
-    aspect-ratio: var(--ratio);
+    aspect-ratio: var(--ratio-demo);
     overflow: hidden;
+    display: grid;
+    place-items: center;
     background: var(--color-placeholder);
     border: var(--rule-thin) solid var(--color-rule-strong);
     border-radius: var(--radius-media);
   }
 
-  .demo__video {
+  .demo__video,
+  .demo__poster {
+    grid-area: 1 / 1;
     display: block;
     inline-size: 100%;
     block-size: 100%;
     object-fit: contain;
   }
 
+  /* The poster covers the video until the clip first plays, and is a plain image so every browser
+     scales it the same way. */
+  .demo__poster {
+    pointer-events: none;
+  }
+
+  .demo:is([data-state="playing"], [data-state="paused"], [data-state="ended"]) .demo__poster {
+    visibility: hidden;
+  }
+
   .demo__btn {
     position: absolute;
-    inset: auto var(--space-3) var(--space-3) auto;
+    inset: auto var(--space-2) var(--space-2) auto;
     display: grid;
     place-items: center;
-    inline-size: 2.5rem;
-    block-size: 2.5rem;
+    inline-size: 2.25rem;
+    block-size: 2.25rem;
     padding: 0;
     border: 0;
     border-radius: 50%;
@@ -106,14 +137,30 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     background: var(--color-brand);
   }
 
-  .demo__btn:focus-visible {
+  .demo__expand {
+    position: absolute;
+    inset: auto auto var(--space-2) var(--space-2);
+    padding: var(--space-1) var(--space-3);
+    border: var(--rule-thin) solid var(--color-rule-strong);
+    border-radius: var(--radius-tag);
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    cursor: zoom-in;
+  }
+
+  .demo__btn:focus-visible,
+  .demo__expand:focus-visible {
     outline: var(--focus-width) solid var(--color-focus);
     outline-offset: var(--focus-offset);
   }
 
   .demo__i {
-    inline-size: 1.125rem;
-    block-size: 1.125rem;
+    inline-size: 1rem;
+    block-size: 1rem;
     display: none;
   }
 
@@ -125,9 +172,71 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   }
 
   .demo__caption {
-    max-inline-size: var(--measure-reading);
     font-size: var(--step--1);
+    line-height: var(--leading-snug);
     color: var(--color-ink-muted);
+  }
+</style>
+
+<style is:global>
+  /* The expanded viewer: one dialog for the page, with the full size clip and its own controls. */
+  .demo-viewer {
+    margin: auto; /* the site reset removes the dialog's own centering */
+    inline-size: min(96vw, var(--size-demo-viewer));
+    max-inline-size: none;
+    max-block-size: 94vh;
+    padding: var(--space-3);
+    border: var(--rule-thin) solid var(--color-rule-strong);
+    border-radius: var(--radius-media);
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+
+  .demo-viewer::backdrop {
+    background: rgb(0 0 0 / 0.6);
+  }
+
+  .demo-viewer__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-block-end: var(--space-3);
+  }
+
+  .demo-viewer__title {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-label-ink);
+  }
+
+  .demo-viewer__close {
+    padding: var(--space-1) var(--space-4);
+    border: var(--rule-thin) solid var(--color-rule-strong);
+    border-radius: var(--radius-tag);
+    background: transparent;
+    color: var(--color-ink);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .demo-viewer__close:focus-visible {
+    outline: var(--focus-width) solid var(--color-focus);
+    outline-offset: var(--focus-offset);
+  }
+
+  .demo-viewer__video {
+    display: block;
+    inline-size: 100%;
+    max-block-size: calc(94vh - var(--space-9));
+    object-fit: contain;
+    background: var(--color-placeholder);
   }
 </style>
 
@@ -144,6 +253,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     ended: false,
   }));
 
+  let viewer: HTMLDialogElement | null = null;
+  let opener: HTMLElement | null = null;
   const playing = (d: Demo) => !d.v.paused && !d.v.ended;
   const label: Record<string, string> = { playing: "Pause video", paused: "Play video", idle: "Play video", ended: "Replay video" };
 
@@ -153,7 +264,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     d.btn.setAttribute("aria-label", label[s]);
   }
 
-  function pauseOthers(except: Demo) {
+  function pauseOthers(except: Demo | null) {
     demos.forEach((o) => { if (o !== except && playing(o)) { o.v.pause(); paint(o); } });
   }
 
@@ -165,7 +276,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
   // The next clip that is on screen, has not played, and was not paused by the visitor.
   function next() {
-    if (reduce.matches || demos.some(playing)) return;
+    if (reduce.matches || demos.some(playing) || viewer?.open) return;
     const d = demos.find((x) => x.ratio >= 0.5 && !x.ended && !x.userPaused);
     if (d) start(d);
   }
@@ -184,6 +295,43 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       if (d.ratio < 0.25 && playing(d)) { d.v.pause(); paint(d); }
       else next();
     }, { threshold: [0, 0.25, 0.5, 0.75, 1] }).observe(d.root);
+  });
+
+  // Expand: the same sanitized clip in a larger dialog with the browser's own controls. Escape or the
+  // Close button dismisses it and focus goes back to the button that opened it. The inline clip
+  // pauses while it is open.
+  function openViewer(d: Demo, btn: HTMLElement) {
+    d.userPaused = true;
+    pauseOthers(null);
+    if (!viewer) {
+      viewer = document.createElement("dialog");
+      viewer.className = "demo-viewer";
+      viewer.innerHTML = '<div class="demo-viewer__bar"><p class="demo-viewer__title"></p><button type="button" class="demo-viewer__close">Close</button></div><video class="demo-viewer__video" controls playsinline muted controlslist="nodownload"></video>';
+      document.body.append(viewer);
+      viewer.querySelector(".demo-viewer__close")!.addEventListener("click", () => viewer!.close());
+      viewer.addEventListener("click", (e) => { if (e.target === viewer) viewer!.close(); });
+      viewer.addEventListener("close", () => {
+        const v = viewer!.querySelector("video")!;
+        v.pause();
+        v.removeAttribute("src");
+        v.load();
+        opener?.focus();
+      });
+    }
+    const v = viewer.querySelector("video")!;
+    viewer.setAttribute("aria-label", `Expanded video: ${btn.dataset.title}`);
+    viewer.querySelector(".demo-viewer__title")!.textContent = btn.dataset.title ?? "";
+    v.src = btn.dataset.src ?? "";
+    v.poster = btn.dataset.poster ?? "";
+    v.setAttribute("aria-label", btn.dataset.desc ?? "");
+    v.style.aspectRatio = `${btn.dataset.w} / ${btn.dataset.h}`;
+    opener = btn;
+    viewer.showModal();
+    if (!reduce.matches) v.play().catch(() => {});
+  }
+
+  demos.forEach((d) => {
+    d.root.querySelector<HTMLButtonElement>("[data-demo-expand]")!.addEventListener("click", (e) => openViewer(d, e.currentTarget as HTMLElement));
   });
 
   reduce.addEventListener("change", () => { if (reduce.matches) demos.forEach((d) => { if (playing(d)) { d.v.pause(); paint(d); } }); else next(); });

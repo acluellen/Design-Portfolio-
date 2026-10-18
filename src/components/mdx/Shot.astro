@@ -77,6 +77,7 @@ const widths = [...new Set([480, 720, 960, 1280, src.width])].filter((w) => w <=
 
 <style is:global>
   .lightbox {
+    margin: auto; /* the site reset removes the dialog's own centering */
     inline-size: min(96vw, 90rem);
     max-inline-size: none;
     max-block-size: 94vh;
