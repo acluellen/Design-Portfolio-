@@ -5,7 +5,7 @@
 // is verbatim from round one usability testing (the same quote the Testing section uses).
 import AthenaPhone from "./AthenaPhone.astro";
 
-const items = [
+const items: { title: string; body: string; quote?: string; cite?: string }[] = [
   { title: "The whole file, translated.", body: "The attachment translates with the message." },
   { title: "Dates and consent language.", body: "Highlighted for attention." },
   { title: "Sorted by type.", body: "Sent to the right reviewer." },

@@ -1,0 +1,190 @@
+---
+// A short silent screen recording of school software, shown as a demonstration (not research
+// evidence): the poster first, then muted inline playback. The clips play one at a time, in page
+// order, only while on screen; leaving the screen pauses a clip. Each has a pause, play, and replay
+// button. With reduced motion nothing plays by itself: the poster shows and the button starts it.
+// The files in public/video/demos are sanitized copies: names, schools, emails, photos, and IDs are
+// painted out in the video itself (not by CSS). The originals are kept outside the public folder.
+interface Props {
+  /** Path in /public to the H.264 MP4, such as "/video/demos/aeries.mp4". */
+  src: string;
+  /** Path in /public to the poster image: the first thing a visitor sees. */
+  poster: string;
+  /** The recording's own size in pixels, so the box keeps its natural shape. */
+  width: number;
+  height: number;
+  /** What the example is for, in small mono capitals over the video. */
+  label: string;
+  /** The visible action, directly under the video. */
+  caption: string;
+  /** What a screen reader hears for the video. */
+  description: string;
+}
+
+const { src, poster, width, height, label, caption, description } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<figure class="demo is-wide is-full" data-demo>
+  <p class="demo__label">{label}</p>
+  <div class="demo__frame" style={`--ratio: ${width} / ${height}`}>
+    <video
+      class="demo__video"
+      src={`${base}${src}`}
+      poster={`${base}${poster}`}
+      width={width}
+      height={height}
+      muted
+      playsinline
+      preload="metadata"
+      aria-label={description}
+      disablepictureinpicture
+    >
+    </video>
+    <button type="button" class="demo__btn" data-demo-btn aria-label="Play video">
+      <svg class="demo__i demo__i--play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" /></svg>
+      <svg class="demo__i demo__i--pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="7" y="5" width="3.5" height="14" rx="1" /><rect x="13.5" y="5" width="3.5" height="14" rx="1" /></svg>
+      <svg class="demo__i demo__i--replay" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.6-5.9" /><path d="M4 4v5h5" /></svg>
+    </button>
+  </div>
+  <figcaption class="demo__caption">{caption}</figcaption>
+</figure>
+
+<style>
+  .demo {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .demo__label {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-label-ink);
+  }
+
+  /* The cap sits on the frame, not the figure: the page's wide block rule resets the figure's width. */
+  .demo__frame {
+    position: relative;
+    max-inline-size: var(--size-demo-video);
+    aspect-ratio: var(--ratio);
+    overflow: hidden;
+    background: var(--color-placeholder);
+    border: var(--rule-thin) solid var(--color-rule-strong);
+    border-radius: var(--radius-media);
+  }
+
+  .demo__video {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: contain;
+  }
+
+  .demo__btn {
+    position: absolute;
+    inset: auto var(--space-3) var(--space-3) auto;
+    display: grid;
+    place-items: center;
+    inline-size: 2.5rem;
+    block-size: 2.5rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--color-overlay);
+    color: var(--color-always-dark-ink);
+    cursor: pointer;
+    opacity: 0.85;
+    transition: opacity var(--duration-fast) var(--ease-standard), background var(--duration-hover) var(--ease-standard);
+  }
+
+  .demo__btn:hover,
+  .demo__btn:focus-visible {
+    opacity: 1;
+    background: var(--color-brand);
+  }
+
+  .demo__btn:focus-visible {
+    outline: var(--focus-width) solid var(--color-focus);
+    outline-offset: var(--focus-offset);
+  }
+
+  .demo__i {
+    inline-size: 1.125rem;
+    block-size: 1.125rem;
+    display: none;
+  }
+
+  .demo[data-state="paused"] .demo__i--play,
+  .demo[data-state="idle"] .demo__i--play,
+  .demo[data-state="playing"] .demo__i--pause,
+  .demo[data-state="ended"] .demo__i--replay {
+    display: block;
+  }
+
+  .demo__caption {
+    max-inline-size: var(--measure-reading);
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
+  }
+</style>
+
+<script>
+  // One controller for every demo on the page: they play one at a time, in page order.
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+  type Demo = { root: HTMLElement; v: HTMLVideoElement; btn: HTMLButtonElement; ratio: number; userPaused: boolean; ended: boolean };
+  const demos: Demo[] = [...document.querySelectorAll<HTMLElement>("[data-demo]")].map((root) => ({
+    root,
+    v: root.querySelector("video")!,
+    btn: root.querySelector<HTMLButtonElement>("[data-demo-btn]")!,
+    ratio: 0,
+    userPaused: false,
+    ended: false,
+  }));
+
+  const playing = (d: Demo) => !d.v.paused && !d.v.ended;
+  const label: Record<string, string> = { playing: "Pause video", paused: "Play video", idle: "Play video", ended: "Replay video" };
+
+  function paint(d: Demo) {
+    const s = d.ended ? "ended" : playing(d) ? "playing" : d.v.currentTime > 0 ? "paused" : "idle";
+    d.root.dataset.state = s;
+    d.btn.setAttribute("aria-label", label[s]);
+  }
+
+  function pauseOthers(except: Demo) {
+    demos.forEach((o) => { if (o !== except && playing(o)) { o.v.pause(); paint(o); } });
+  }
+
+  function start(d: Demo) {
+    pauseOthers(d);
+    d.v.play().then(() => paint(d)).catch(() => paint(d));
+    paint(d);
+  }
+
+  // The next clip that is on screen, has not played, and was not paused by the visitor.
+  function next() {
+    if (reduce.matches || demos.some(playing)) return;
+    const d = demos.find((x) => x.ratio >= 0.5 && !x.ended && !x.userPaused);
+    if (d) start(d);
+  }
+
+  demos.forEach((d) => {
+    d.root.dataset.state = "idle";
+    d.v.addEventListener("ended", () => { d.ended = true; paint(d); next(); });
+    d.v.addEventListener("pause", () => paint(d));
+    d.btn.addEventListener("click", () => {
+      if (d.ended) { d.v.currentTime = 0; d.ended = false; d.userPaused = false; start(d); return; }
+      if (playing(d)) { d.userPaused = true; d.v.pause(); paint(d); return; }
+      d.userPaused = false; start(d);
+    });
+    new IntersectionObserver(([e]) => {
+      d.ratio = e.intersectionRatio;
+      if (d.ratio < 0.25 && playing(d)) { d.v.pause(); paint(d); }
+      else next();
+    }, { threshold: [0, 0.25, 0.5, 0.75, 1] }).observe(d.root);
+  });
+
+  reduce.addEventListener("change", () => { if (reduce.matches) demos.forEach((d) => { if (playing(d)) { d.v.pause(); paint(d); } }); else next(); });
+</script>

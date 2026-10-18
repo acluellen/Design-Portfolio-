@@ -108,6 +108,7 @@
   /* Layout */
   --measure-reading: 68ch;
   --measure-wide: 120rem; /* near full width like Micah Hoang; only caps very wide monitors */
+  --size-demo-video: 56rem; /* a school software demo video: about the recording's own width, so its text stays readable */
   --measure-case-wide: 88rem; /* case study body when it holds wide diagrams and comparisons (AthenaScribe) */
   --measure-case: 76rem; /* case study pages keep the centered frame until their own redesign */
   --gutter: var(--space-4);
