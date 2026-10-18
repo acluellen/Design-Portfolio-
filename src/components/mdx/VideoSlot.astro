@@ -10,15 +10,17 @@ interface Props {
   /** What the recording shows, for the placeholder and for screen readers. */
   label: string;
   caption: string;
+  /** "wide" is a landscape 16:9 frame at the full column width (a news clip); the default is a phone. */
+  shape?: "phone" | "wide";
 }
 
-const { src, label, caption } = Astro.props;
+const { src, label, caption, shape = "phone" } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
 {
   (src || showPlaceholders) && (
-    <figure class="video-slot">
+    <figure class:list={["video-slot", { "video-slot--wide": shape === "wide" }]}>
       {src ? (
         <video class="video-slot__frame" controls preload="metadata" playsinline aria-label={label}>
           <source src={`${base}${src}`} type="video/mp4" />
@@ -85,5 +87,21 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     font-size: var(--step--1);
     color: var(--color-ink-muted);
     text-align: center;
+  }
+
+  /* A landscape clip, such as a news segment: the full column width, 16:9. */
+  .video-slot--wide {
+    justify-items: stretch;
+  }
+
+  .video-slot--wide .video-slot__caption {
+    max-inline-size: none;
+    text-align: start;
+  }
+
+  .video-slot--wide .video-slot__frame {
+    inline-size: 100%;
+    aspect-ratio: var(--ratio-tile-wide);
+    background: var(--color-always-dark);
   }
 </style>

@@ -1097,3 +1097,10 @@ Color (light mode only; dark mode unchanged):
 - Privacy: the last clip's browser tab strip and bookmarks (real district and tool names) are cropped out of every frame. An OCR pass over the finished video found no names, emails or addresses. The "Softare Comparision" typo on the board stays, by Aaron's choice.
 - `DemoVideo` gained a `device="laptop"` option and an optional label. The old `AttachmentGap` component stays for reference.
 - The caption is a draft for Aaron to rewrite.
+- Posts and Events card: the zoom now lands on the whole page UI (the full post screen with the sticky on it), not just the sticky, so the interface is readable in context. The cursor repair that had smudged the T in Translated is patched from a deeper still.
+
+## 2026-10-18 (AthenaScribe: the KRON4 clip slot in the overview)
+
+- The overview now reads: the label, the "Through BRIDGEGOOD…" paragraph, then a wide video slot for Aaron's KRON4 interview, then "AthenaScribe helps school teams…". Same words, moved.
+- `VideoSlot` gained `shape="wide"`: a landscape 16:9 frame at the full column width, with controls so the visitor presses play (sound on). Without a file it shows a dashed placeholder in review previews and nothing on the live site. The caption is a draft from Aaron's description.
+- The KRON4 clip is in: cropped to the picture (the phone recording's dark side bars removed), 9 seconds, 1280 wide, about 1.1 MB. The recording had no audio, so it is a silent loop. It uses the same player as the other demos (starts when on screen, loops, tap to pause, poster first, still with reduced motion) in a new full width `device="wide"` frame at the clip's own shape. Alt text says it is silent and names Aaron Luellen as the lower third does.

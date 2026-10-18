@@ -17,7 +17,7 @@ interface Props {
   /** What the example is for, in small mono capitals over the video. Optional. */
   label?: string;
   /** "laptop" sets the clip in a drawn laptop, at the screen's own 16:10 shape. */
-  device?: "laptop";
+  device?: "laptop" | "wide";
   /** The visible action, directly under the video. */
   caption: string;
   /** What a screen reader hears for the video. */
@@ -28,7 +28,7 @@ const { src, poster, width, height, label, device, caption, description } = Astr
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
-<figure class:list={["demo", { "demo--laptop": device === "laptop" }]} data-demo>
+<figure class:list={["demo", { "demo--laptop": device === "laptop", "demo--wide": device === "wide" }]} style={device === "wide" ? `--demo-ratio: ${width} / ${height}` : undefined} data-demo>
   {label && <p class="demo__label">{label}</p>}
   <div class="demo__device">
   <div class="demo__frame">
@@ -143,6 +143,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     font-size: var(--step--1);
     line-height: var(--leading-snug);
     color: var(--color-ink-muted);
+  }
+
+  /* One wide clip at the full column width, in its own shape: such as a television segment. */
+  .demo--wide .demo__frame {
+    aspect-ratio: var(--demo-ratio);
+    border: 0;
+    background: var(--color-always-dark);
+  }
+
+  .demo--wide :is(.demo__video, .demo__poster) {
+    object-fit: cover;
   }
 
   /* A drawn laptop for one large recording: a dark lid around a 16:10 screen, and a base that is a
