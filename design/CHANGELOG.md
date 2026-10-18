@@ -16,7 +16,7 @@ Newest first. Every design or structure decision goes here.
 ## 2026-10-18 · AthenaScribe: three school software demos
 
 - The three placeholders under "Schools have useful tools for staying connected" are now real screen recordings: a school communication tool (writing and previewing a post), a student information system (a profile, then a class gradebook), and a learning management system (creating a course). Captions say what is visible and call them demonstrations.
-- One shared `DemoVideo` component. Muted inline MP4 (H.264), poster first, one clip plays at a time in page order while on screen, a clip pauses when it leaves the screen, and each has a pause, play, and replay button. With reduced motion nothing plays by itself.
+- One shared `DemoVideo` component. Muted inline MP4 (H.264), poster first. All three clips loop together without stopping while they are on screen (Aaron, Oct 18); a clip pauses when it leaves the screen, and each has a pause and play button. With reduced motion nothing plays by itself.
 - Layout: one clip per row at about its own width (`--size-demo-video`, 56rem), caption directly beneath. Three columns would have made the interface text about 7px.
 - Privacy is in the video files (public/video/demos), not CSS: opaque masks over school names, district web address, user and student names, emails, profile photos, IDs, and teacher names, plus cropping out the browser tabs, address bar, and bookmarks. Originals stay outside the public folder. Each export was scanned with text recognition for leftovers.
 - Rachel Chen's two recordings were references only. They are not in the project.
