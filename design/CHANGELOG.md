@@ -1132,3 +1132,57 @@ Color (light mode only; dark mode unchanged):
 - Mentor roles updated: Google Maps quant researcher, BG graphic designer, PayPal product manager, State Farm product manager and coach. The BG quote about where each claim came from was replaced with one about spacing and a single system, since it did not fit a graphic designer. Quotes are still placeholders with source TODO.
 - The KRON4 asset files were renamed without hyphens (`kron4interview.mp4`, `kron4interviewposter.webp`) so the copy check stays clean.
 - Decided: mentor labels keep role and company name. OPEN: Aaron meets Tyler tomorrow to settle the wording ("mentor" may become "design input", "coaching", or whatever the best 2026 case studies use). The Google, PayPal and Fambot endings will be screenshots, added later.
+
+## 2026-10-19 (AthenaScribe: FigJam clip out of the laptop)
+
+- The FigJam clip under "Translation stops at the attachment." no longer sits in the drawn laptop. It uses the same full width frame as the KRON4 clip, at its own 16:10 shape. The laptop option stays in `DemoVideo` but nothing uses it now.
+
+## 2026-10-19 (AthenaScribe: research board camera tour)
+
+- The FigJam clip under "Translation stops at the attachment." is replaced by one continuous camera tour of the research board (new `BoardTour` component, drawn on a canvas, no animation library). The caption is unchanged. The laptop stays removed.
+- One fixed surface: the wide board screenshot, a sharper screenshot of the three category lists aligned on top of it (feature matched, scale 0.487), and a full size still of one slide per category placed exactly over its thumbnail (template matched, 0.89 to 0.94 correlation). Nothing is swapped during the loop.
+- Sequence (26.4 seconds, loops): hold the whole board 2.2s, zoom into Emergency Alerts, hold 3.0s, pan to Posts and Events, hold 3.0s, pan to Forms and Attachments, hold 5.2s, return to the exact opening view. Holds are fully still (checked frame by frame). Zoom is the only zoom out and only at the end.
+- Every stop shows its still at the same size (0.7 screen pixels per still pixel, under the stills' own resolution). At the last stop, "Edit Translation" and "6th Grade Date Night Flyer.pdf" are readable together on desktop and phone.
+- Cropped out: the Figma toolbars on both board screenshots, and the browser tab bar, bookmarks bar, and address bar of the Forms and Attachments still (the app's own header and below is kept). OCR over 114 captured frames found no bookmark or tab names.
+- Plays when half on screen, pauses off screen, tap to pause or play (same controls as the other demos). With reduced motion the whole board shows and the button starts the tour. The page never scrolls by itself.
+- Not shown at the stops: the category headings (Emergency Alerts, Posts, Forms and Attachments). At a size where the sticky notes and the PDF read, a heading and its thumbnail cannot share the frame. The sticky note in each still names the category.
+- The old FigJam clip files stay in `public/video/demos` unused.
+
+## 2026-10-19 (SAVE POINT: stopped here, nothing committed or pushed)
+
+Aaron asked to stop editing, not commit or push, and record where things stand. Preview v91 matches the files on disk.
+
+**What changed since the last push (`761beaf`), all uncommitted**
+- FigJam clip under "Translation stops at the attachment." removed from the laptop, then replaced by the research board camera tour: `src/components/mdx/BoardTour.astro` (new), registered in `src/components/mdx/index.ts`, used in `src/content/case-studies/athenascribe.mdx`.
+- Five tour images in `public/media/researchtour/`: `board.webp`, `boardclose.webp`, `detailemer.webp`, `detailposts.webp`, `detailforms.webp` (browser bars cropped from the last one).
+- Changelog entries for the laptop removal and the tour.
+- Checks passed on this state: `npm run check` (0 errors), `npm run check:copy` (no matches), full cycle run at 1440 and 390 wide with a controlled clock, OCR scan of 114 frames found no tab or bookmark names.
+
+**Unfinished or open**
+- Not watched in a real browser on real hardware (Safari, a real phone, reduced motion setting untested).
+- Category headings are not visible at the stops (readability won). Aaron to decide whether to trade size for headings.
+- Pans between categories are fast and show soft board in between; durations can be lengthened (`T.pan`, `T.panB` in `BoardTour.astro`).
+- The old FigJam clip files (`public/video/demos/figjam-translation*`) are unused and can be deleted.
+- Mentor section wording ("mentor" versus design input or coaching) waits on Aaron's meeting with Tyler. Google, PayPal and Fambot endings (screenshots) come later.
+- Preview artifact is near its 511 file limit; stale files may need removing before more media is added.
+
+**How to resume**
+1. `cd /home/user/Design-Portfolio-` on branch `athenascribe-approved-build` (tracks `claude/aarons-ux-portfolio-0gobso`). Run `git status` to confirm the five uncommitted items above.
+2. `SHOW_DRAFTS=true npm run build`, then `npm run check:copy`.
+3. Preview: `npx astro preview --port 4510`, open `/work/athenascribe/`. To republish: `node $S/bundle.cjs <dir>` then publish `athenascribe.html` plus the five media files to the preview artifact.
+4. To save for good: say "commit and push".
+
+## 2026-10-19 (AthenaScribe: board tour, first stop shows the whole slide)
+
+- The first stop (Emergency Alerts) no longer aims at the sticky note. The camera now zooms in until the whole slide fills the view: the banner, the note, and the phone together, as in the still Aaron supplied. The other two stops are unchanged. The pan from the first stop to Posts and Events now also eases the zoom in, since the first stop is wider; there is still no zoom out until the final return.
+- Still uncommitted and unpushed.
+
+## 2026-10-19 (AthenaScribe: research board tour rebuilt from the new exports)
+
+- The tour now runs on Aaron's new exports: the wide board (2000 by 1112), one export per list (Emergency Alerts, Posts/Events, Forms/Attachments), and the three final highlighted cards. Layers on one fixed surface: wide board, the three lists, the three cards. Nothing swaps during the loop.
+- Stops: whole board, then Emergency Alerts with the whole card in view (the size Aaron approved), then Posts and Events (sticky note, Google Translate line, date form), then Forms and Attachments ("Edit Translation", the attached PDF, and the sticky note together). Then back to the exact opening view. Sticky notes read: "Native Translation", "Google Translate", "No Translation for attached file".
+- Faster: zoom in 2.8s (was 3.4s), pans 2.0s each (were 3.0s), return 3.2s. Holds unchanged: 2.2s, 3.0s, 3.0s, 5.2s. Loop is 23.4s. Checked frame by frame at 1440 and 390 wide: holds are fully still and the loop restarts on the opening view.
+- The list exports use different row spacing from the wide board, so the list area of the board was rebuilt from the exports: the old thumbnails were painted out and each list placed in the same spot, headings kept. OPEN: re-export the wide from the final layout and swap it in.
+- Fixes along the way: the wide export had an 88 pixel black strip at the bottom (filled white).
+- PUBLIC REPO: the repo is public, so the raw cards are not committed. The only visible name (on the Forms card header) is blurred, and every image was scanned for names, URLs, bookmarks, and taskbar text. OPEN before any public release: crop the Forms card header for real, remove the green marks left on the Posts card, and check the other list cards in Figma.
+- OPEN: Tyler walkthrough tomorrow, then settle "mentor" wording. OPEN: Google, PayPal, Fambot endings (screenshots) later.

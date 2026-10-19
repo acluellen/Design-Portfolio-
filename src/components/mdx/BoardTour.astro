@@ -1,0 +1,353 @@
+---
+// A camera tour of Aaron's FigJam research board, drawn on one fixed surface: the wide board
+// screenshot, a sharp export of each of the three category lists placed over the thumbnails, and the
+// full size highlighted card of each list placed over its own thumbnail. The camera moves over that
+// surface and never swaps an image: whole board, Emergency Alerts, Posts and Events, Forms and
+// Attachments, then back to the whole board. It plays while on screen, loops, and pauses on tap (the
+// same controls as the other demos). With reduced motion nothing plays by itself: the whole board
+// shows and the button starts the tour.
+interface Props {
+  /** The visible line directly under the tour. */
+  caption: string;
+  /** What a screen reader hears for the tour. */
+  description: string;
+}
+
+const { caption, description } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const file = (name: string) => `${base}/media/researchtour/${name}.webp`;
+---
+
+<figure class="tour" data-tour data-state="idle">
+  <div
+    class="tour__frame"
+    data-board-src={file("board")}
+    data-listemer-src={file("listemer")}
+    data-listposts-src={file("listposts")}
+    data-listforms-src={file("listforms")}
+    data-cardemer-src={file("cardemer")}
+    data-cardposts-src={file("cardposts")}
+    data-cardforms-src={file("cardforms")}
+  >
+    <img class="tour__poster" src={file("board")} alt="" width={2000} height={1112} loading="lazy" decoding="async" />
+    <canvas class="tour__canvas" role="img" aria-label={description} hidden></canvas>
+    <button type="button" class="tour__tap" data-tour-btn aria-label="Play animation">
+      <svg class="tour__i" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" /></svg>
+    </button>
+  </div>
+  <figcaption class="tour__caption">{caption}</figcaption>
+</figure>
+
+<style>
+  .tour {
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
+    min-inline-size: 0;
+    margin: 0;
+  }
+
+  .tour__frame {
+    position: relative;
+    aspect-ratio: 2000 / 1112;
+    overflow: hidden;
+    background: var(--color-always-dark);
+    border-radius: var(--radius-media);
+  }
+
+  .tour__poster,
+  .tour__canvas {
+    position: absolute;
+    inset: 0;
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .tour__canvas[hidden] {
+    display: none;
+  }
+
+  .tour[data-ready] .tour__poster {
+    visibility: hidden;
+  }
+
+  .tour__tap {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--color-always-dark-ink);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .tour__tap:focus-visible {
+    outline: var(--focus-width) solid var(--color-focus);
+    outline-offset: calc(var(--focus-offset) * -1);
+  }
+
+  .tour__i {
+    display: none;
+    box-sizing: content-box;
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+    padding: var(--space-3);
+    border-radius: 50%;
+    background: var(--color-overlay);
+  }
+
+  .tour:is([data-state="paused"], [data-state="idle"]) .tour__i {
+    display: block;
+  }
+
+  .tour__caption {
+    font-size: var(--step--1);
+    line-height: var(--leading-snug);
+    color: var(--color-ink-muted);
+  }
+</style>
+
+<script>
+  // Board space is the pixels of board.webp (2000 by 1112). Every other layer is placed in it:
+  // x, y and w are board pixels; the height follows each picture's own shape.
+  const BOARD = { w: 2000, h: 1112 };
+  const PLACE = {
+    board: { x: 0, y: 0, w: 2000 },
+    listemer: { x: 282.75, y: 279.58, w: 252.18 },
+    listposts: { x: 282.75, y: 467.96, w: 248.96 },
+    listforms: { x: 282.75, y: 609.53, w: 250.08 },
+    cardemer: { x: 472.87, y: 359.47, w: 59.25 },
+    cardposts: { x: 470.07, y: 508.26, w: 59.25 },
+    cardforms: { x: 471.05, y: 648.42, w: 59.54 },
+  } as const;
+  type Key = keyof typeof PLACE;
+  const ORDER = Object.keys(PLACE) as Key[];
+  // Stops 2 and 3 show a card at this many screen pixels per pixel of a 2000 pixel wide card.
+  const DETAIL = 0.7;
+
+  // Seconds: [hold on the whole board, zoom in, hold, pan, hold, pan, hold, return].
+  const T = { open: 2.2, zoomIn: 2.8, holdA: 3.0, pan: 2.0, holdB: 3.0, panB: 2.0, holdC: 5.2, back: 3.2 };
+
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+  type Cam = { cx: number; cy: number; k: number };
+  type Seg = { dur: number; from: Cam; to: Cam };
+
+  const smoother = (u: number) => u * u * u * (u * (u * 6 - 15) + 10);
+
+  // The camera from a to b. The zoom is even on a log scale; the center follows so the target stays
+  // on a straight path (a pure pan when both zooms match).
+  function between(a: Cam, b: Cam, u: number): Cam {
+    const e = smoother(u);
+    const la = Math.log(a.k);
+    const lb = Math.log(b.k);
+    const k = Math.exp(la + (lb - la) * e);
+    const w = Math.abs(lb - la) < 1e-4 ? e : (1 / a.k - 1 / k) / (1 / a.k - 1 / b.k);
+    return { cx: a.cx + (b.cx - a.cx) * w, cy: a.cy + (b.cy - a.cy) * w, k };
+  }
+
+  function load(src: string) {
+    return new Promise<HTMLImageElement>((resolve, reject) => {
+      const img = new Image();
+      img.decoding = "async";
+      img.onload = () => img.decode().catch(() => {}).then(() => resolve(img));
+      img.onerror = () => reject(new Error(src));
+      img.src = src;
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>("[data-tour]").forEach((root) => {
+    const frame = root.querySelector<HTMLElement>(".tour__frame")!;
+    const canvas = root.querySelector<HTMLCanvasElement>(".tour__canvas")!;
+    const btn = root.querySelector<HTMLButtonElement>("[data-tour-btn]")!;
+    const ctx = canvas.getContext("2d")!;
+    const label = { playing: "Pause animation", paused: "Play animation", idle: "Play animation" };
+
+    let imgs: Record<string, HTMLImageElement> | null = null;
+    let loading = false;
+    let segs: Seg[] = [];
+    let total = 0;
+    let vw = 0;
+    let vh = 0;
+    let dpr = 1;
+    let t = 0;
+    let last = 0;
+    let raf = 0;
+    let playing = false;
+    let userPaused = false;
+    let ratio = 0;
+
+    function paint() {
+      const s = playing ? "playing" : t > 0 ? "paused" : "idle";
+      root.dataset.state = s;
+      btn.setAttribute("aria-label", label[s]);
+    }
+
+    // A camera that looks at pixel (px, py) of a card, with s screen pixels per card pixel.
+    function onCard(key: Key, px: number, py: number, s: number): Cam {
+      const img = imgs![key];
+      const f = PLACE[key].w / img.naturalWidth; // board pixels per card pixel
+      return { cx: PLACE[key].x + px * f, cy: PLACE[key].y + py * f, k: s / f };
+    }
+
+    // The camera stops, from the size of the view. Each region is anchored by what must stay in it.
+    function build() {
+      const whole: Cam = { cx: BOARD.w / 2, cy: BOARD.h / 2, k: vw / BOARD.w };
+
+      // First stop: the whole card fills the view (cover fit), not a close up of the note.
+      const e = imgs!.cardemer;
+      const a = onCard("cardemer", e.naturalWidth / 2, e.naturalHeight / 2, Math.max(vw / e.naturalWidth, vh / e.naturalHeight));
+
+      // Second stop: the translate button, the sticky note and the date form of the Posts card.
+      const p = imgs!.cardposts;
+      const sp = (DETAIL * 2000) / p.naturalWidth;
+      const rwp = vw / sp;
+      const rhp = vh / sp;
+      const lp = Math.min(1422 - rwp, 814);
+      const b = onCard("cardposts", lp + rwp / 2, 320 + rhp / 2, sp);
+
+      // Third stop: "Edit Translation", the attached PDF, and the sticky note of the Forms card.
+      const f = imgs!.cardforms;
+      const sf = (DETAIL * 2000) / f.naturalWidth;
+      const rwf = vw / sf;
+      const rhf = vh / sf;
+      const c = onCard("cardforms", 305 + rwf / 2, 690 - rhf / 2, sf);
+
+      const hold = (cam: Cam, dur: number): Seg => ({ dur, from: cam, to: cam });
+      segs = [
+        hold(whole, T.open),
+        { dur: T.zoomIn, from: whole, to: a },
+        hold(a, T.holdA),
+        { dur: T.pan, from: a, to: b },
+        hold(b, T.holdB),
+        { dur: T.panB, from: b, to: c },
+        hold(c, T.holdC),
+        { dur: T.back, from: c, to: whole },
+      ];
+      total = segs.reduce((n, s) => n + s.dur, 0);
+    }
+
+    function camAt(sec: number): Cam {
+      let r = sec % total;
+      for (const s of segs) {
+        if (r < s.dur) return s.from === s.to ? s.from : between(s.from, s.to, r / s.dur);
+        r -= s.dur;
+      }
+      return segs[0].from;
+    }
+
+    function layer(img: HTMLImageElement, cam: Cam, bx: number, by: number, bw: number) {
+      const bh = (bw * img.naturalHeight) / img.naturalWidth;
+      const tx = vw / 2 - cam.k * cam.cx;
+      const ty = vh / 2 - cam.k * cam.cy;
+      const dx = tx + bx * cam.k;
+      const dy = ty + by * cam.k;
+      const dw = bw * cam.k;
+      const dh = bh * cam.k;
+      const x0 = Math.max(0, dx);
+      const y0 = Math.max(0, dy);
+      const x1 = Math.min(vw, dx + dw);
+      const y1 = Math.min(vh, dy + dh);
+      if (x1 <= x0 || y1 <= y0) return;
+      const fx = img.naturalWidth / dw;
+      const fy = img.naturalHeight / dh;
+      ctx.drawImage(img, (x0 - dx) * fx, (y0 - dy) * fy, (x1 - x0) * fx, (y1 - y0) * fy, x0 * dpr, y0 * dpr, (x1 - x0) * dpr, (y1 - y0) * dpr);
+    }
+
+    function draw(cam: Cam) {
+      if (!imgs) return;
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
+      ctx.fillStyle = getComputedStyle(frame).backgroundColor;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ORDER.forEach((key) => layer(imgs![key], cam, PLACE[key].x, PLACE[key].y, PLACE[key].w));
+    }
+
+    function size() {
+      const r = frame.getBoundingClientRect();
+      vw = r.width;
+      vh = r.height;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(vw * dpr);
+      canvas.height = Math.round(vh * dpr);
+      build();
+      draw(camAt(t));
+    }
+
+    function tick(now: number) {
+      if (!playing) return;
+      t += Math.min(now - last, 100) / 1000;
+      last = now;
+      draw(camAt(t));
+      raf = requestAnimationFrame(tick);
+    }
+
+    function play() {
+      if (!imgs || playing) return;
+      playing = true;
+      last = performance.now();
+      paint();
+      raf = requestAnimationFrame(tick);
+    }
+
+    function pause() {
+      playing = false;
+      cancelAnimationFrame(raf);
+      paint();
+    }
+
+    async function prepare() {
+      if (imgs || loading) return;
+      loading = true;
+      const d = frame.dataset;
+      const src: Record<Key, string | undefined> = {
+        board: d.boardSrc,
+        listemer: d.listemerSrc,
+        listposts: d.listpostsSrc,
+        listforms: d.listformsSrc,
+        cardemer: d.cardemerSrc,
+        cardposts: d.cardpostsSrc,
+        cardforms: d.cardformsSrc,
+      };
+      try {
+        const loaded = await Promise.all(ORDER.map((k) => load(src[k]!)));
+        imgs = Object.fromEntries(ORDER.map((k, i) => [k, loaded[i]]));
+      } catch {
+        loading = false;
+        return; // the whole board poster stays
+      }
+      canvas.hidden = false;
+      size();
+      root.setAttribute("data-ready", "");
+      new ResizeObserver(size).observe(frame);
+      resume();
+    }
+
+    function resume() {
+      if (reduce.matches || userPaused || ratio < 0.5) return;
+      play();
+    }
+
+    btn.addEventListener("click", () => {
+      if (!imgs) { userPaused = false; prepare().then(play); return; }
+      if (playing) { userPaused = true; pause(); return; }
+      userPaused = false;
+      play();
+    });
+
+    // Load the pictures a little before the tour scrolls into view.
+    new IntersectionObserver(([e]) => { if (e.isIntersecting) prepare(); }, { rootMargin: "400px 0px" }).observe(root);
+
+    new IntersectionObserver(([e]) => {
+      ratio = e.intersectionRatio;
+      if (ratio < 0.25 && playing) pause();
+      else resume();
+    }, { threshold: [0, 0.25, 0.5, 0.75, 1] }).observe(root);
+
+    reduce.addEventListener("change", () => { if (reduce.matches) pause(); else resume(); });
+    paint();
+  });
+</script>
