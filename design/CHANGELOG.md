@@ -1104,3 +1104,31 @@ Color (light mode only; dark mode unchanged):
 - The overview now reads: the label, the "Through BRIDGEGOOD…" paragraph, then a wide video slot for Aaron's KRON4 interview, then "AthenaScribe helps school teams…". Same words, moved.
 - `VideoSlot` gained `shape="wide"`: a landscape 16:9 frame at the full column width, with controls so the visitor presses play (sound on). Without a file it shows a dashed placeholder in review previews and nothing on the live site. The caption is a draft from Aaron's description.
 - The KRON4 clip is in: cropped to the picture (the phone recording's dark side bars removed), 9 seconds, 1280 wide, about 1.1 MB. The recording had no audio, so it is a silent loop. It uses the same player as the other demos (starts when on screen, loops, tap to pause, poster first, still with reduced motion) in a new full width `device="wide"` frame at the clip's own shape. Alt text says it is silent and names Aaron Luellen as the lower third does.
+
+## 2026-10-18 (AthenaScribe: header facts and the contribution sentence)
+
+- Header facts are now Program, My role, Timeline, Team. Timeline reads 6 Weeks; Team reads 4 Designers, 1 PM (the earlier combined line, split in two). New optional `teamSize` front matter field replaces `contribution`.
+- The contribution list left the header and is now one sentence after "AthenaScribe helps school teams…": "I contributed product strategy, user research, competitive analysis, and prototyping." User flows and wireframing are removed, as Aaron asked.
+
+## 2026-10-19 (AthenaScribe: copy pass, Aaron approved each line)
+
+- Repeats cut to what is new: the Opportunity line now reads "One workflow could hold translation, staff review, and family access together." and the shared workflow line reads "Important documents go to staff for review before a family sees them." The Overview line stays the one definition.
+- Role line: "I led the user research and contributed product strategy, competitive analysis, and prototyping."
+- "What I learned" cards rewritten in Aaron's plainer voice, using facts already on the page. No new facts or numbers.
+- Kept: the administrator dashboard placeholder under Opportunity (it shows hiring managers how the product works). Parked: relabeling the side navigation.
+
+## 2026-10-19 (AthenaScribe: header team, tools placement, mentor voices)
+
+- Header: Timeline reads "6 Weeks, Design Sprint". Team reads "Gaby G., Miriam M., Renato V." (new `teamLine` front matter field; `teamSize` removed). The label stays Team. Tyler W. (Product manager) is still in `team` but not shown anywhere now: Aaron to decide where he is credited.
+- The Collaborators block left the Overview, so the KRON4 clip goes straight into "AthenaScribe helps school teams…". The tools line moved to sit directly under the AthenaScribe prototype placeholder (new `Tools` component, `previewOnly` until the real dashboard is in).
+- New last section "What mentors said." (new `Voices` component): one larger pull quote, then short rows with the role on the left. No cards, grid, logos or button. The four quotes (Google, BG, PayPal, State Farm mentors) are placeholders written as a vision, source TODO. The whole section is hidden on the live site until every quote has a real source. It is not in the side navigation. Everything from "From research to a public presentation" down, and the footer, is unchanged.
+- OPEN: Aaron to send the Google, PayPal and Fambot case study endings (links, screenshots, or downloads) when the proof section gets its real design pass. Remind him then.
+- OPEN: no button and no "Want to learn more." The live prototype link is not built; when it exists it becomes one plain factual line.
+
+## 2026-10-19 (AthenaScribe: stacked team with roles, YouTube link)
+
+- Header Team is now a vertical list: each name with its role under it in small muted type, no periods or commas ("Gaby G / Product Lead", "Miriam M / Design Systems", "Renato V / User Flows"). The front matter `team` items carry `name`, `role`, and `inHeader`; the `teamLine` field is removed. Tyler W is kept in the data (State Farm mentor and coach, product manager) but not shown in the header.
+- The KRON4 caption now ends with a small link, "Watch with sound on YouTube", to the full segment at 2:20 (opens in a new tab). It sits in the caption because the clip is silent and the link is the only way to hear it: near the video, quiet, not a button. `DemoVideo` gained an optional `link` prop for this.
+- Mentor roles updated: Google Maps quant researcher, BG graphic designer, PayPal product manager, State Farm product manager and coach. The BG quote about where each claim came from was replaced with one about spacing and a single system, since it did not fit a graphic designer. Quotes are still placeholders with source TODO.
+- The KRON4 asset files were renamed without hyphens (`kron4interview.mp4`, `kron4interviewposter.webp`) so the copy check stays clean.
+- Decided: mentor labels keep role and company name. OPEN: Aaron meets Tyler tomorrow to settle the wording ("mentor" may become "design input", "coaching", or whatever the best 2026 case studies use). The Google, PayPal and Fambot endings will be screenshots, added later.

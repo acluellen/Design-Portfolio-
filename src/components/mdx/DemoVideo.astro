@@ -20,11 +20,13 @@ interface Props {
   device?: "laptop" | "wide";
   /** The visible action, directly under the video. */
   caption: string;
+  /** An optional small link at the end of the caption, such as the full segment on YouTube. */
+  link?: { href: string; text: string };
   /** What a screen reader hears for the video. */
   description: string;
 }
 
-const { src, poster, width, height, label, device, caption, description } = Astro.props;
+const { src, poster, width, height, label, device, caption, link, description } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
@@ -51,7 +53,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     </button>
   </div>
   </div>
-  <figcaption class="demo__caption">{caption}</figcaption>
+  <figcaption class="demo__caption">
+    {caption}
+    {link && (
+      <>
+        {" "}
+        <a href={link.href} target="_blank" rel="noopener">
+          {link.text}<span class="visually-hidden"> (opens in a new tab)</span>
+        </a>
+      </>
+    )}
+  </figcaption>
 </figure>
 
 <style>

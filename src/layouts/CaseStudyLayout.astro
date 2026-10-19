@@ -17,7 +17,7 @@ interface Props {
 }
 
 const { study, prev, next, sections = [], headings = [] } = Astro.props;
-const { title, summary, headline, role, team, timeline, client, program, tools, cover, status, heroMedia, heroTile, heroSummary, tags, prototype, card, order, indexChildren, contribution } =
+const { title, summary, headline, role, team, timeline, client, program, tools, cover, status, heroMedia, heroTile, heroSummary, tags, prototype, card, order, indexChildren } =
   study.data;
 // The same number the study has on the home page cards.
 const number = String(order).padStart(2, "0");
@@ -88,22 +88,29 @@ const indexItems = [
                 <dt>My role</dt>
                 <dd>{role}</dd>
               </div>
+              <div>
+                <dt>Timeline</dt>
+                <dd>{timeline}</dd>
+              </div>
               {
-                contribution && contribution.length > 0 && (
+                team.some((p) => p.inHeader) && (
                   <div>
-                    <dt>Contribution</dt>
+                    <dt>Team</dt>
                     <dd>
-                      <ul class="cs-meta__list">
-                        {contribution.map((item) => <li>{item}</li>)}
+                      <ul class="cs-meta__people">
+                        {team
+                          .filter((p) => p.inHeader)
+                          .map((p) => (
+                            <li>
+                              <span class="cs-meta__name">{p.name}</span>
+                              <span class="cs-meta__role">{p.role}</span>
+                            </li>
+                          ))}
                       </ul>
                     </dd>
                   </div>
                 )
               }
-              <div>
-                <dt>Timeline / Team</dt>
-                <dd>{timeline}</dd>
-              </div>
             </dl>
           </div>
         </header>
@@ -923,10 +930,22 @@ const indexItems = [
     color: var(--color-ink-muted);
   }
 
-  .cs-meta__list {
+
+  .cs-meta__people {
     margin: 0;
     padding: 0;
     list-style: none;
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .cs-meta__people li {
+    display: grid;
+  }
+
+  .cs-meta__role {
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
   }
 
   .cs-meta dd {

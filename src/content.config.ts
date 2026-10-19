@@ -30,13 +30,12 @@ const caseStudies = defineCollection({
     // Optional short labels for one indented link under each index entry, in the same order: the
     // first ### heading after that ## heading. Empty string for none.
     indexChildren: z.array(z.string()).optional(),
-    contribution: z.array(z.string()).optional(),
     // The one large card at the top of Selected work.
     featured: z.boolean().default(false),
     // Shows a small "In progress" label on the home page card. The card never links while true.
     inProgress: z.boolean().default(false),
     role: z.string(),
-    team: z.array(z.object({ name: z.string(), role: z.string() })),
+    team: z.array(z.object({ name: z.string(), role: z.string(), /** Show this person in the compact header's Team column. */ inHeader: z.boolean().optional() })),
     timeline: z.string(),
     /** The client, for client projects. */
     client: z.string().optional(),

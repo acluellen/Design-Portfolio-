@@ -14,18 +14,20 @@ card:
 featured: true
 role: "Research Lead, Product Design"
 team:
-  - name: "Gaby G."
+  - name: "Gaby G"
     role: "Product Lead"
-  - name: "Miriam M."
+    inHeader: true
+  - name: "Miriam M"
     role: "Design Systems"
-  - name: "Renato V."
+    inHeader: true
+  - name: "Renato V"
     role: "User Flows"
-  - name: "Tyler W." # Last initial only, like the others.
-    role: "Product manager"
-timeline: "6 Weeks, 4 Designers, 1 PM" # Aaron chose this over "Summer 2026, with continued development and testing", Oct 18.
+    inHeader: true
+  - name: "Tyler W" # Mentor and coach, product manager at State Farm. Not shown in the header.
+    role: "Mentor and coach"
+timeline: "6 Weeks, Design Sprint"
 program: "BRIDGEGOOD UX Design Apprenticeship"
 tools: ["Figma", "Lovable", "Claude", "Userlytics"]
-contribution: ["Product strategy", "User research", "Competitive analysis", "User flows and wireframing", "Prototyping"] # From Aaron's header mock, Oct 18.
 prototype: "TODO" # Aaron to send the live prototype URL.
 heroTile: "athenascribe"
 index: ["School tools", "Opportunity", "Research", "Priorities", "Core flows", "Testing", "Revision", "Milestones"]
@@ -44,17 +46,17 @@ Through BRIDGEGOOD and partner organizations, our team explored education and op
 
 <DemoVideo
   device="wide"
-  src="/video/kron4-interview.mp4"
-  poster="/video/kron4-interview-poster.webp"
+  src="/video/kron4interview.mp4"
+  poster="/video/kron4interviewposter.webp"
   width={1280}
   height={700}
   caption="Speaking on KRON4 about AthenaScribe and education and opportunity gaps."
+  link={{ href: "https://www.youtube.com/watch?v=r4l9IsyDUD4&t=140s", text: "Watch with sound on YouTube" }}
   description="Silent clip from the KRON4 interview. Aaron Luellen sits on the set with two other guests."
 />
 
-AthenaScribe helps school teams manage document translation and review so families can understand what comes next.
+AthenaScribe helps school teams manage document translation and review so families can understand what comes next. I led the user research and contributed product strategy, competitive analysis, and prototyping.
 
-<Collaborators people={frontmatter.team} tools={frontmatter.tools} />
 
 </Section>
 
@@ -122,11 +124,11 @@ A permission slip or health form can introduce another task: finding someone to 
 
 ## What if the document were as understandable as the message?
 
-We saw an opportunity to connect document translation, staff review, and family access in one workflow.
+One workflow could hold translation, staff review, and family access together.
 
 ### A shared workflow for school document translation.
 
-AthenaScribe translates school documents and routes important ones to staff for review before families receive them.
+Important documents go to staff for review before a family sees them.
 
 <p class="label">AthenaScribe prototype</p>
 
@@ -135,6 +137,9 @@ AthenaScribe translates school documents and routes important ones to staff for 
   columns={1}
   items={[{ kind: "dashboard", label: "Administrator dashboard", caption: "School teams manage translation and review. Families receive the document in their language." }]}
 />
+
+{/* previewOnly keeps this line off the live site while the dashboard above it is still a placeholder. Remove it when the real dashboard is in. */}
+<Tools tools={frontmatter.tools} previewOnly />
 
 </Section>
 
@@ -322,9 +327,20 @@ We developed an interactive prototype and presented AthenaScribe at BRIDGEGOOD D
 
 <Columns
   items={[
-    { title: "Research can change the product’s scope.", caption: "Investigating document translation led us to examine the responsibilities and handoffs around it." },
-    { title: "A clear journey still needs to fit the work.", caption: "Testing shifted attention toward how staff organize requests and know what needs action." },
+    { title: "The problem was bigger than the document.", caption: "We started with translation. Research showed the work also included who checks a document and who gets it back to the family." },
+    { title: "A clear flow still has to fit someone’s day.", caption: "Testing showed staff sort documents by type, so the queue should too." },
   ]}
 />
 
 </Section>
+
+<Voices
+  heading="What mentors said."
+  id="mentors"
+  items={[
+    { role: "Quant researcher at Google Maps, mentor", quote: "Research findings became product priorities quickly, and each priority pointed back to evidence.", source: "TODO" },
+    { role: "Graphic designer, BRIDGEGOOD mentor", quote: "Every screen felt like part of one system. He noticed spacing details most people miss.", source: "TODO" },
+    { role: "Product manager at PayPal, mentor", quote: "He treated privacy as part of the design. School names and student details were handled before anyone asked.", source: "TODO" },
+    { role: "Product manager at State Farm, mentor and coach", quote: "He explained the review step in plain language, so people outside design understood why it mattered.", source: "TODO" },
+  ]}
+/>

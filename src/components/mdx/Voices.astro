@@ -1,0 +1,105 @@
+---
+// What mentors said: one larger pull quote, then short rows with the role on the left. No boxes, no
+// cards, no logos. Roles only, never names. A quote with `source: "TODO"` is a placeholder: the whole
+// section shows in dev and review previews and is hidden on the live site until every quote has a
+// real source, so a stand in can never reach visitors.
+import Section from "./Section.astro";
+import { showPlaceholders } from "../../lib/case-studies";
+
+interface Props {
+  heading: string;
+  /** The heading's anchor, since this section is not part of the side navigation. */
+  id: string;
+  items: { role: string; quote: string; source: string }[];
+}
+
+const { heading, id, items } = Astro.props;
+const live = items.length > 0 && items.every((i) => i.source && i.source !== "TODO");
+const [lead, ...rest] = items;
+---
+
+{
+  (live || showPlaceholders) && lead && (
+    <Section>
+      <h2 id={id}>{heading}</h2>
+      {!live && <p class="note">Placeholder quotes, written as a vision. Each one needs a real quote and a source before this section can go live.</p>}
+      <figure class="voices__lead">
+        <blockquote>
+          <p>{lead.quote}</p>
+        </blockquote>
+        <figcaption>{lead.role}</figcaption>
+      </figure>
+      <ul class="voices__list">
+        {
+          rest.map((i) => (
+            <li>
+              <p class="voices__role">{i.role}</p>
+              <blockquote>
+                <p>{i.quote}</p>
+              </blockquote>
+            </li>
+          ))
+        }
+      </ul>
+    </Section>
+  )
+}
+
+<style>
+  .voices__lead {
+    margin: 0;
+  }
+
+  .voices__lead blockquote,
+  .voices__list blockquote {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .voices__lead p {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-heading);
+  }
+
+  .voices__lead figcaption,
+  .voices__role {
+    margin: var(--space-3) 0 0;
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
+  }
+
+  .voices__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .voices__list li {
+    display: grid;
+    gap: var(--space-2);
+    padding-block: var(--space-5);
+    border-block-start: var(--rule-thin) solid var(--color-rule);
+  }
+
+  .voices__list .voices__role {
+    margin: 0;
+  }
+
+  .voices__list blockquote p {
+    margin: 0;
+    color: var(--color-ink);
+  }
+
+  @media (min-width: 40rem) {
+    .voices__list li {
+      grid-template-columns: minmax(8rem, 10rem) minmax(0, 1fr);
+      column-gap: var(--space-5);
+    }
+  }
+</style>

@@ -1,0 +1,33 @@
+---
+// The tools behind a piece of work, in one quiet wrapping line. Reads from the case study's front
+// matter `tools`, so there is one source. Sits directly under the thing it was used to make.
+import { showPlaceholders } from "../../lib/case-studies";
+
+interface Props {
+  tools: string[];
+  /** Show only in dev and review previews, for a line that sits under a placeholder. Remove it once the real image is in. */
+  previewOnly?: boolean;
+}
+
+const { tools, previewOnly = false } = Astro.props;
+---
+
+{
+  tools.length > 0 && (!previewOnly || showPlaceholders) && (
+    <p class="tools">
+      <span class="tools__label">Tools</span> {tools.join(", ")}
+    </p>
+  )
+}
+
+<style>
+  .tools {
+    margin: 0;
+    font-size: var(--step--1);
+    color: var(--color-ink-muted);
+  }
+
+  .tools__label {
+    margin-inline-end: var(--space-2);
+  }
+</style>
