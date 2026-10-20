@@ -39,6 +39,9 @@ status: "published"
 import queueOriginal from "../../assets/case-studies/athenascribe/round-one-queue-crop.webp";
 import journeyAnalysis from "../../assets/case-studies/athenascribe/journeyanalysis.webp";
 import journeyReview from "../../assets/case-studies/athenascribe/journeyreview.webp";
+import platformAnalysis from "../../assets/case-studies/athenascribe/platformanalysis.webp";
+import affinityMap from "../../assets/case-studies/athenascribe/affinitymap.webp";
+import featureAnalysis from "../../assets/case-studies/athenascribe/featureanalysis.webp";
 
 <Section>
 
@@ -140,24 +143,23 @@ Important documents go to staff for review before a family sees them.
 
 We combined stakeholder interviews, school software walkthroughs, and competitive research to understand how documents moved between school staff and families.
 
-{/* Real software captures and the selected comparison go here. */}
+{/* Three small artifacts as proof of the work, each enlargeable. TODO: a larger export of the ParentSquare column would let its notes be read when enlarged. */}
 <Placeholders
-  columns={1}
-  items={[{ kind: "artifact", label: "Software captures and comparative analysis", caption: "Selected platform research and synthesis from our FigJam board." }]}
+  columns={3}
+  uniform
+  items={[
+    { kind: "artifact", label: "Feature analysis", caption: "Feature analysis", src: featureAnalysis, fit: "contain", alt: "Full page captures from the platform research, side by side. One column holds ParentSquare screens for emergency alerts, posts and events, and forms and attachments, with written feature analysis notes beneath them." },
+    { kind: "artifact", label: "Pluses and deltas", caption: "Pluses and deltas", src: platformAnalysis, fit: "contain", alt: "A table of pluses and deltas for five reference platforms: Puck, Google Translate, Pimsleur, Duolingo, and Babbel. Each row names a plus and a delta. The Google Translate delta says camera translation moves parents outside ParentSquare and separates the document from its school message." },
+    { kind: "artifact", label: "Affinity map", caption: "Affinity map", src: affinityMap, fit: "contain", alt: "The affinity map from the interviews: colored sticky notes grouped into clusters in four columns, each with a heading and a short summary. Headings include Programs Don’t Survive Long Enough to Compound, No Centralized Home, Mentorship by Lived Experience, Family Engagement and the Parent Gap, and Translation and Document Access Gap." },
+  ]}
 />
 
-<Split>
-  <Placeholders
-    columns={1}
-    items={[{ kind: "artifact", label: "Affinity cluster: coordinating the document", caption: "One readable cluster from the affinity map: the cluster heading and a few relevant notes." }]}
-  />
-  <div class="flow">
-    ### The document was only part of the task.
-    <p>Translation also involved coordinating who would handle the document, check important information, and get it back to the family.</p>
-    {/* TODO: add href once Aaron sends the FigJam link. The link stays as plain text, not a button. */}
-    <ActionLink variant="text" label="View the full affinity map in FigJam" />
-  </div>
-</Split>
+### The document was only part of the task.
+
+Translation also involved coordinating who would handle the document, check important information, and get it back to the family.
+
+{/* TODO: add href once Aaron sends the FigJam link. The link stays as plain text, not a button. */}
+<ActionLink variant="text" label="View the full affinity map in FigJam" />
 
 These findings helped us prioritize the document itself, the review process, and family access.
 
