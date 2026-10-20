@@ -146,8 +146,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     background: var(--color-overlay);
   }
 
-  .demo[data-state="paused"] .demo__i,
-  .demo[data-state="idle"] .demo__i {
+  /* Shown only after a visitor pauses the clip, or with reduced motion. Never while it loads or scrolls
+     into view. */
+  .demo[data-mark] .demo__i {
     display: block;
   }
 
@@ -238,6 +239,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   function paint(d: Demo) {
     const s = playing(d) ? "playing" : d.v.currentTime > 0 ? "paused" : "idle";
     d.root.dataset.state = s;
+    d.root.toggleAttribute("data-mark", d.userPaused || (reduce.matches && !playing(d)));
     d.btn.setAttribute("aria-label", label[s]);
   }
 
@@ -268,5 +270,5 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     }, { threshold: [0, 0.25, 0.5, 0.75, 1] }).observe(d.root);
   });
 
-  reduce.addEventListener("change", () => { if (reduce.matches) demos.forEach((d) => { if (playing(d)) { d.v.pause(); paint(d); } }); else resume(); });
+  reduce.addEventListener("change", () => { if (reduce.matches) demos.forEach((d) => { if (playing(d)) { d.v.pause(); } }); else resume(); demos.forEach(paint); });
 </script>

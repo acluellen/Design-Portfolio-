@@ -1,0 +1,99 @@
+---
+// Stacked text groups that link a finding to a priority and to the design response. No table and no
+// cards: each group is three short lines with a small label over each, under one thin rule.
+// A group with `source: "TODO"` has a finding that is not yet backed by a research record. Its
+// finding line shows in dev and review previews with "Source needed", and is left out on the live
+// site, so an unsupported finding never reaches visitors. The priority and the response still show.
+import { showPlaceholders } from "../../lib/case-studies";
+
+interface Item {
+  finding: string;
+  priority: string;
+  response: string;
+  /** "TODO" holds the finding line back from the live site until a source is confirmed. */
+  source?: string;
+}
+
+interface Props {
+  items: Item[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="conn">
+  {
+    items.map((item) => {
+      const held = item.source === "TODO";
+      return (
+        <dl class="conn__group">
+          {(!held || showPlaceholders) && (
+            <div class="conn__row">
+              <dt class="conn__label">
+                Finding{held && <span class="conn__flag"> · Source needed</span>}
+              </dt>
+              <dd class="conn__finding">{item.finding}</dd>
+            </div>
+          )}
+          <div class="conn__row">
+            <dt class="conn__label">Priority</dt>
+            <dd class="conn__priority">{item.priority}</dd>
+          </div>
+          <div class="conn__row">
+            <dt class="conn__label">Design response</dt>
+            <dd class="conn__response">{item.response}</dd>
+          </div>
+        </dl>
+      );
+    })
+  }
+</div>
+
+<style>
+  .conn {
+    display: grid;
+    gap: var(--space-6);
+    max-inline-size: var(--measure-reading);
+  }
+
+  .conn__group {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+    padding-block-start: var(--space-3);
+    border-block-start: var(--rule-thin) solid var(--color-rule-strong);
+  }
+
+  .conn__row {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  .conn__label {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-label-ink);
+  }
+
+  .conn__flag {
+    color: var(--color-accent);
+  }
+
+  .conn__row dd {
+    margin: 0;
+  }
+
+  .conn__finding {
+    color: var(--color-ink-muted);
+  }
+
+  .conn__priority {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-snug);
+    color: var(--color-heading);
+  }
+</style>

@@ -1,22 +1,33 @@
 ---
-// A button that links out, such as "View the affinity map in FigJam". Without `href` it shows a
-// dashed placeholder in dev and review previews, and nothing in production.
+// A button that links out, such as "View the affinity map in FigJam". `variant="text"` is a plain text
+// link instead of a button (`small` sets it in small type). Without `href` it shows a dashed
+// placeholder in dev and review previews, and nothing in production.
 import Button from "../site/Button.astro";
 import { showPlaceholders } from "../../lib/case-studies";
 
 interface Props {
   label: string;
   href?: string;
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "text";
+  /** Text variant only: small type, for a quiet side link. */
+  small?: boolean;
 }
 
-const { label, href, variant = "secondary" } = Astro.props;
+const { label, href, variant = "secondary", small = false } = Astro.props;
+const buttonVariant = variant === "text" ? "secondary" : variant;
 ---
 
 {
-  href ? (
+  href && variant === "text" ? (
+    <p class:list={["action", "action--text", { "action--small": small }]}>
+      <a href={href} target="_blank" rel="noopener">
+        {label}
+        <span class="visually-hidden"> (opens in a new tab)</span>
+      </a>
+    </p>
+  ) : href ? (
     <p class="action">
-      <Button href={href} variant={variant} external>
+      <Button href={href} variant={buttonVariant} external>
         {label}
         <span class="visually-hidden"> (opens in a new tab)</span>
       </Button>
@@ -31,6 +42,10 @@ const { label, href, variant = "secondary" } = Astro.props;
 }
 
 <style>
+  .action--small {
+    font-size: var(--step--1);
+  }
+
   .placeholder-chip {
     display: inline-flex;
     align-items: center;

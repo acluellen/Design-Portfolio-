@@ -100,7 +100,9 @@ const file = (name: string) => `${base}/media/researchtour/${name}.webp`;
     background: var(--color-overlay);
   }
 
-  .tour:is([data-state="paused"], [data-state="idle"]) .tour__i {
+  /* The play mark shows only after a visitor pauses the tour, or with reduced motion. Never while
+     it loads, scrolls into view, or waits off screen. */
+  .tour[data-mark] .tour__i {
     display: block;
   }
 
@@ -117,36 +119,42 @@ const file = (name: string) => `${base}/media/researchtour/${name}.webp`;
   const BOARD = { w: 2000, h: 1112 };
   const PLACE = {
     board: { x: 0, y: 0, w: 2000 },
-    listemer: { x: 282.75, y: 279.58, w: 252.18 },
-    listposts: { x: 282.75, y: 467.96, w: 248.96 },
-    listforms: { x: 282.75, y: 609.53, w: 250.08 },
-    cardemer: { x: 472.87, y: 359.47, w: 59.25 },
-    cardposts: { x: 470.07, y: 508.26, w: 59.25 },
-    cardforms: { x: 471.05, y: 648.42, w: 59.54 },
+    listemer: { x: 346.5, y: 3.92, w: 840.7 },
+    listposts: { x: 347.15, y: 417.08, w: 839.39 },
+    listforms: { x: 347.15, y: 809.32, w: 839.39 },
+    cardemer: { x: 959.79, y: 272.53, w: 183.69 },
+    cardposts: { x: 952.78, y: 637.84, w: 183.83 },
+    cardforms: { x: 947.32, y: 995.67, w: 183.41 },
   } as const;
   type Key = keyof typeof PLACE;
   const ORDER = Object.keys(PLACE) as Key[];
-  // Stops 2 and 3 show a card at this many screen pixels per pixel of a 2000 pixel wide card.
-  const DETAIL = 0.7;
-
-  // Seconds: [hold on the whole board, zoom in, hold, pan, hold, pan, hold, return].
-  const T = { open: 2.2, zoomIn: 2.8, holdA: 3.0, pan: 2.0, holdB: 3.0, panB: 2.0, holdC: 5.2, back: 3.2 };
+  // Seconds. The tour reads like a scroll through one list: the whole board, in to a list (the card
+  // with its neighbors in view), in to the card, back out to the list, then a level pan to the next
+  // list. The last card returns straight to the whole board.
+  // Move times follow the size of the zoom, at a steady rate of about 1.7 times the scale each second:
+  // the small zoom from the whole board to a list is short, the long pull back from a card is longer.
+  // `open` is the short beat on the whole board when the loop comes round; the first play adds
+  // `openFirst` on top, so a visitor still gets a full establishing shot.
+  const T = { open: 0.5, openFirst: 0.7, intoList: 1.1, listHold: 0.3, toCard: 0.9, card: 3.5, fromCard: 0.9, pan: 1.2, back: 1.4 };
 
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
   type Cam = { cx: number; cy: number; k: number };
   type Seg = { dur: number; from: Cam; to: Cam };
 
   const smoother = (u: number) => u * u * u * (u * (u * 6 - 15) + 10);
+  // Leave a screen quickly and settle slowly onto the next: the move is half done at about 40% of its
+  // time. It starts and ends at rest, so every hold stays still.
+  const ease = (u: number) => smoother(Math.pow(u, 0.8));
 
   // The camera from a to b. The zoom is even on a log scale; the center follows so the target stays
   // on a straight path (a pure pan when both zooms match).
   function between(a: Cam, b: Cam, u: number): Cam {
-    const e = smoother(u);
+    const e = ease(u);
     const la = Math.log(a.k);
     const lb = Math.log(b.k);
-    const k = Math.exp(la + (lb - la) * e);
-    const w = Math.abs(lb - la) < 1e-4 ? e : (1 / a.k - 1 / k) / (1 / a.k - 1 / b.k);
-    return { cx: a.cx + (b.cx - a.cx) * w, cy: a.cy + (b.cy - a.cy) * w, k };
+    const kBase = Math.exp(la + (lb - la) * e);
+    const w = Math.abs(lb - la) < 1e-4 ? e : (1 / a.k - 1 / kBase) / (1 / a.k - 1 / b.k);
+    return { cx: a.cx + (b.cx - a.cx) * w, cy: a.cy + (b.cy - a.cy) * w, k: kBase };
   }
 
   function load(src: string) {
@@ -173,16 +181,21 @@ const file = (name: string) => `${base}/media/researchtour/${name}.webp`;
     let vw = 0;
     let vh = 0;
     let dpr = 1;
-    let t = 0;
+    let t = -T.openFirst;
     let last = 0;
     let raf = 0;
     let playing = false;
     let userPaused = false;
     let ratio = 0;
+    let kList = 1; // zoom that shows a whole list, the same for all three so the pans stay level
+    let kCard = 1; // the smallest zoom that shows a whole card
+    const hasFilter = "filter" in ctx;
+    const CARDS: Key[] = ["cardemer", "cardposts", "cardforms"];
 
     function paint() {
       const s = playing ? "playing" : t > 0 ? "paused" : "idle";
       root.dataset.state = s;
+      root.toggleAttribute("data-mark", userPaused || (reduce.matches && !playing));
       btn.setAttribute("aria-label", label[s]);
     }
 
@@ -193,39 +206,55 @@ const file = (name: string) => `${base}/media/researchtour/${name}.webp`;
       return { cx: PLACE[key].x + px * f, cy: PLACE[key].y + py * f, k: s / f };
     }
 
-    // The camera stops, from the size of the view. Each region is anchored by what must stay in it.
+    // The camera stops, from the size of the view. Every stop shows its whole card, filling the view
+    // (cover fit). The Forms card is wider than the view, so its edges trim a little; cx moves that
+    // trim to the right side, so the logo and menu on the left stay in view.
+    function whole(key: Key, cx?: number): Cam {
+      const img = imgs![key];
+      const s = Math.max(vw / img.naturalWidth, vh / img.naturalHeight);
+      return onCard(key, cx ?? img.naturalWidth / 2, img.naturalHeight / 2, s);
+    }
+
     function build() {
-      const whole: Cam = { cx: BOARD.w / 2, cy: BOARD.h / 2, k: vw / BOARD.w };
+      const wholeBoard: Cam = { cx: BOARD.w / 2, cy: BOARD.h / 2, k: vw / BOARD.w };
+      const a = whole("cardemer");
+      const b = whole("cardposts");
+      const c = whole("cardforms", 722);
 
-      // First stop: the whole card fills the view (cover fit), not a close up of the note.
-      const e = imgs!.cardemer;
-      const a = onCard("cardemer", e.naturalWidth / 2, e.naturalHeight / 2, Math.max(vw / e.naturalWidth, vh / e.naturalHeight));
-
-      // Second stop: the translate button, the sticky note and the date form of the Posts card.
-      const p = imgs!.cardposts;
-      const sp = (DETAIL * 2000) / p.naturalWidth;
-      const rwp = vw / sp;
-      const rhp = vh / sp;
-      const lp = Math.min(1422 - rwp, 814);
-      const b = onCard("cardposts", lp + rwp / 2, 320 + rhp / 2, sp);
-
-      // Third stop: "Edit Translation", the attached PDF, and the sticky note of the Forms card.
-      const f = imgs!.cardforms;
-      const sf = (DETAIL * 2000) / f.naturalWidth;
-      const rwf = vw / sf;
-      const rhf = vh / sf;
-      const c = onCard("cardforms", 305 + rwf / 2, 690 - rhf / 2, sf);
+      // A list stop frames the whole list picture, with a little room around it.
+      const listKeys: Key[] = ["listemer", "listposts", "listforms"];
+      const fit = listKeys.map((key) => {
+        const bw = PLACE[key].w;
+        const bh = (bw * imgs![key].naturalHeight) / imgs![key].naturalWidth;
+        return Math.min(vw / bw, vh / bh) * 0.94;
+      });
+      kList = Math.min(...fit);
+      kCard = Math.min(a.k, b.k, c.k);
+      const [l1, l2, l3] = listKeys.map((key): Cam => {
+        const bw = PLACE[key].w;
+        const bh = (bw * imgs![key].naturalHeight) / imgs![key].naturalWidth;
+        return { cx: PLACE[key].x + bw / 2, cy: PLACE[key].y + bh / 2, k: kList };
+      });
 
       const hold = (cam: Cam, dur: number): Seg => ({ dur, from: cam, to: cam });
+      const move = (dur: number, from: Cam, to: Cam): Seg => ({ dur, from, to });
       segs = [
-        hold(whole, T.open),
-        { dur: T.zoomIn, from: whole, to: a },
-        hold(a, T.holdA),
-        { dur: T.pan, from: a, to: b },
-        hold(b, T.holdB),
-        { dur: T.panB, from: b, to: c },
-        hold(c, T.holdC),
-        { dur: T.back, from: c, to: whole },
+        hold(wholeBoard, T.open),
+        move(T.intoList, wholeBoard, l1),
+        hold(l1, T.listHold),
+        move(T.toCard, l1, a),
+        hold(a, T.card),
+        move(T.fromCard, a, l1),
+        move(T.pan, l1, l2),
+        hold(l2, T.listHold),
+        move(T.toCard, l2, b),
+        hold(b, T.card),
+        move(T.fromCard, b, l2),
+        move(T.pan, l2, l3),
+        hold(l3, T.listHold),
+        move(T.toCard, l3, c),
+        hold(c, T.card),
+        move(T.back, c, wholeBoard),
       ];
       total = segs.reduce((n, s) => n + s.dur, 0);
     }
@@ -257,13 +286,81 @@ const file = (name: string) => `${base}/media/researchtour/${name}.webp`;
       ctx.drawImage(img, (x0 - dx) * fx, (y0 - dy) * fy, (x1 - x0) * fx, (y1 - y0) * fy, x0 * dpr, y0 * dpr, (x1 - x0) * dpr, (y1 - y0) * dpr);
     }
 
+    // A thin accent ring around the three highlighted cards, shown only while the whole board is in
+    // view. It fades with the zoom, so it is gone before the camera arrives at a card and returns on the
+    // way back out.
+    function ring(cam: Cam) {
+      const r = Math.log(cam.k / (vw / BOARD.w));
+      const t = Math.min(1, Math.max(0, (r - 0.2) / 1.2));
+      const alpha = 1 - t * t * (3 - 2 * t);
+      if (alpha <= 0.01) return;
+      const color = getComputedStyle(frame).getPropertyValue("--color-accent").trim() || "#1d4ed8";
+      const tx = vw / 2 - cam.k * cam.cx;
+      const ty = vh / 2 - cam.k * cam.cy;
+      const pad = 3;
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2 * dpr;
+      (["cardemer", "cardposts", "cardforms"] as Key[]).forEach((key) => {
+        const img = imgs![key];
+        const bw = PLACE[key].w;
+        const bh = (bw * img.naturalHeight) / img.naturalWidth;
+        const x = (tx + PLACE[key].x * cam.k - pad) * dpr;
+        const y = (ty + PLACE[key].y * cam.k - pad) * dpr;
+        ctx.strokeRect(x, y, (bw * cam.k + pad * 2) * dpr, (bh * cam.k + pad * 2) * dpr);
+      });
+      ctx.restore();
+    }
+
+    // How far the camera has gone from the list view toward a card: 0 at the list, 1 at the card.
+    function focus(cam: Cam) {
+      const span = Math.log(kCard / kList);
+      if (span <= 0) return 0;
+      const u = Math.min(1, Math.max(0, (Math.log(cam.k / kList) - 0.1 * span) / (0.8 * span)));
+      return u * u * (3 - 2 * u);
+    }
+
+    // The card nearest the middle of the view stays sharp while the camera moves in on it.
+    function nearest(cam: Cam): Key {
+      let best = CARDS[0];
+      let d = Infinity;
+      CARDS.forEach((key) => {
+        const bw = PLACE[key].w;
+        const bh = (bw * imgs![key].naturalHeight) / imgs![key].naturalWidth;
+        const dd = Math.hypot(PLACE[key].x + bw / 2 - cam.cx, PLACE[key].y + bh / 2 - cam.cy);
+        if (dd < d) { d = dd; best = key; }
+      });
+      return best;
+    }
+
     function draw(cam: Cam) {
       if (!imgs) return;
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = "high";
-      ctx.fillStyle = getComputedStyle(frame).backgroundColor;
+      const bg = getComputedStyle(frame).backgroundColor;
+      // Beyond the board's edge (the first and last list stops reach past it) the canvas is the same
+      // white as the board's own margin, so no dark band shows.
+      ctx.fillStyle = "#fff";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ORDER.forEach((key) => layer(imgs![key], cam, PLACE[key].x, PLACE[key].y, PLACE[key].w));
+      const f = focus(cam);
+      const draw1 = (key: Key) => layer(imgs![key], cam, PLACE[key].x, PLACE[key].y, PLACE[key].w);
+      if (f < 0.02) {
+        ORDER.forEach(draw1);
+      } else {
+        // Everything around the chosen card softens and dims as the camera closes in, then clears
+        // again on the way back out. Without canvas blur support only the dimming shows.
+        const keep = nearest(cam);
+        if (hasFilter) (ctx as any).filter = `blur(${(5 * f * dpr).toFixed(2)}px)`;
+        ORDER.forEach((key) => { if (key !== keep) draw1(key); });
+        if (hasFilter) (ctx as any).filter = "none";
+        ctx.globalAlpha = 0.4 * f;
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.globalAlpha = 1;
+        draw1(keep);
+      }
+      ring(cam);
     }
 
     function size() {
@@ -347,7 +444,7 @@ const file = (name: string) => `${base}/media/researchtour/${name}.webp`;
       else resume();
     }, { threshold: [0, 0.25, 0.5, 0.75, 1] }).observe(root);
 
-    reduce.addEventListener("change", () => { if (reduce.matches) pause(); else resume(); });
+    reduce.addEventListener("change", () => { if (reduce.matches) pause(); else resume(); paint(); });
     paint();
   });
 </script>

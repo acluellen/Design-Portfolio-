@@ -33,12 +33,15 @@ import Moments from "./Moments.astro";
 import Shot from "./Shot.astro";
 import DemoVideo from "./DemoVideo.astro";
 import BoardTour from "./BoardTour.astro";
+import Connections from "./Connections.astro";
+import Branch from "./Branch.astro";
+import Numbered from "./Numbered.astro";
 import DemoRow from "./DemoRow.astro";
 import Collaborators from "./Collaborators.astro";
 import Columns from "./Columns.astro";
 import PreviewOnly from "./PreviewOnly.astro";
 import AttachmentGap from "./AttachmentGap.astro";
 
-export const mdxComponents = { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team, Sources, Compare, Screens, Section, CardGrid, Card, Tag, Shift, Finding, ScreenPair, Steps, Split, Fixes, ActionLink, VideoSlot, Placeholders, VideoLink, Affiliations, Flow, Moments, Columns, DemoVideo, BoardTour, DemoRow, Collaborators, Tools, Voices, Shot, PreviewOnly, AttachmentGap };
+export const mdxComponents = { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team, Sources, Compare, Screens, Section, CardGrid, Card, Tag, Shift, Finding, ScreenPair, Steps, Split, Fixes, ActionLink, VideoSlot, Placeholders, VideoLink, Affiliations, Flow, Moments, Columns, DemoVideo, BoardTour, Connections, Branch, Numbered, DemoRow, Collaborators, Tools, Voices, Shot, PreviewOnly, AttachmentGap };
 
-export { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team, Sources, Compare, Screens, Section, CardGrid, Card, Tag, Shift, Finding, ScreenPair, Steps, Split, Fixes, ActionLink, VideoSlot, Placeholders, VideoLink, Affiliations, Flow, Moments, Columns, DemoVideo, BoardTour, DemoRow, Collaborators, Tools, Voices, Shot, PreviewOnly, AttachmentGap };
+export { Figure, Quote, Stat, StatGroup, Callout, Contribution, Mine, Team, Sources, Compare, Screens, Section, CardGrid, Card, Tag, Shift, Finding, ScreenPair, Steps, Split, Fixes, ActionLink, VideoSlot, Placeholders, VideoLink, Affiliations, Flow, Moments, Columns, DemoVideo, BoardTour, Connections, Branch, Numbered, DemoRow, Collaborators, Tools, Voices, Shot, PreviewOnly, AttachmentGap };

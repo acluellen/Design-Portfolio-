@@ -11,13 +11,15 @@ interface Props {
   alt: string;
   fit?: "cover" | "contain";
   sizes?: string;
+  /** For small tiles: no visible button; the whole image opens the enlarged view. */
+  compact?: boolean;
 }
 
-const { src, alt, fit = "cover", sizes = "(min-width: 72rem) 44rem, 92vw" } = Astro.props;
+const { src, alt, fit = "cover", sizes = "(min-width: 72rem) 44rem, 92vw", compact = false } = Astro.props;
 const widths = [...new Set([480, 720, 960, 1280, src.width])].filter((w) => w <= src.width).sort((a, b) => a - b);
 ---
 
-<div class:list={["shot", `shot--${fit}`]}>
+<div class:list={["shot", `shot--${fit}`, { "shot--compact": compact }]}>
   <Picture src={src} alt={alt} widths={widths} sizes={sizes} formats={["avif", "webp"]} fallbackFormat="jpg" quality={80} loading="lazy" decoding="async" />
   <button type="button" class="shot__btn" data-enlarge data-full={src.src} data-alt={alt}>
     Enlarge<span class="visually-hidden"> image: {alt}</span>
@@ -67,6 +69,21 @@ const widths = [...new Set([480, 720, 960, 1280, src.width])].filter((w) => w <=
     letter-spacing: var(--tracking-label);
     text-transform: uppercase;
     cursor: zoom-in;
+  }
+
+  /* Small tiles: the whole image is the button, with no pill over the picture. */
+  .shot--compact .shot__btn {
+    inset: 0;
+    padding: 0;
+    border: 0;
+    border-radius: inherit;
+    background: transparent;
+    color: transparent;
+    font-size: 0;
+  }
+
+  .shot--compact .shot__btn:focus-visible {
+    outline-offset: calc(var(--focus-offset) * -1);
   }
 
   .shot__btn:focus-visible {

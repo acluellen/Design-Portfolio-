@@ -30,13 +30,15 @@ program: "BRIDGEGOOD UX Design Apprenticeship"
 tools: ["Figma", "Lovable", "Claude", "Userlytics"]
 prototype: "TODO" # Aaron to send the live prototype URL.
 heroTile: "athenascribe"
-index: ["School tools", "Opportunity", "Research", "Priorities", "Core flows", "Testing", "Revision", "Milestones"]
-indexChildren: ["Attachment gap", "Shared workflow", "The takeaway", "Who checks it", "", "Queue changes", "Review and time", "Lessons"]
+index: ["School tools", "Opportunity", "Research", "Priorities", "Core flows", "Testing", "Revision", "Contribution"]
+indexChildren: ["Attachment gap", "Shared workflow", "The takeaway", "Who checks it", "", "Queue changes", "", "Open question"]
 order: 1
 status: "published"
 ---
 
 import queueOriginal from "../../assets/case-studies/athenascribe/round-one-queue-crop.webp";
+import journeyAnalysis from "../../assets/case-studies/athenascribe/journeyanalysis.webp";
+import journeyReview from "../../assets/case-studies/athenascribe/journeyreview.webp";
 
 <Section>
 
@@ -62,9 +64,7 @@ AthenaScribe helps school teams manage document translation and review so famili
 
 <Section>
 
-## Schools have useful tools for staying connected.
-
-Educators use digital tools to share updates, manage school information, and keep families informed.
+## Educators already make these tools work together…
 
 <DemoRow>
 
@@ -73,8 +73,7 @@ Educators use digital tools to share updates, manage school information, and kee
   poster="/video/demos/parentsquare-poster.webp"
   width={874}
   height={464}
-  label="Keeping families informed"
-  caption="A school communication tool: previewing a post, browsing drafts, then writing one with a scheduled send time."
+  caption="Messaging"
   description="Screen recording of a school communication tool. A post is previewed, the list of drafts is opened, and a new post is written with a date and time to send it."
 />
 
@@ -83,8 +82,7 @@ Educators use digital tools to share updates, manage school information, and kee
   poster="/video/demos/aeries-poster.webp"
   width={880}
   height={392}
-  label="Managing student information"
-  caption="A student information system: opening a student profile, then the gradebook for one class."
+  caption="Student records"
   description="Screen recording of a student information system. A student profile is opened from the menu, a class is chosen from the class summary, and its gradebook is shown."
 />
 
@@ -93,24 +91,19 @@ Educators use digital tools to share updates, manage school information, and kee
   poster="/video/demos/canvas-poster.webp"
   width={874}
   height={438}
-  label="Coordinating what comes next"
-  caption="A learning management system: creating a course and giving it a name."
+  caption="Course setup"
   description="Screen recording of a learning management system. A new course is created from the dashboard, named Spanish, and its settings page opens."
 />
 
 </DemoRow>
 
-<p class="note">Sanitized screen recordings, shown as demonstrations. Names, schools, emails, and photos are covered in the videos themselves.</p>
+### …but translation stops at the attachment.
 
-But a translated message can still arrive with an attachment a family cannot read.
-
-### Translation stops at the attachment.
-
-A permission slip or health form can introduce another task: finding someone to translate it, check important information, and return it to the family.
+Alerts and posts can be translated, but an attached form or file cannot. A permission slip or health form still needs someone to translate it, check important information, and return it to the family.
 
 <BoardTour
-  caption="School software in FigJam: emergency alerts and posts can be translated, but an attached form or file is not."
-  description="Animated tour of a research board in FigJam. The view starts on the whole board, then zooms into three kinds of school software in turn: Emergency Alerts, Posts and Events, and Forms and Attachments. Notes on the first two say they are translated. The note on Forms and Attachments says there is no translation for an attached file, and the screen shows a PDF flyer attached to a post. Then the view returns to the whole board."
+  caption="Direct competitor (SIS) feature analysis"
+  description="Animated tour of a feature analysis board for school software. The view starts on the whole board, then zooms into three sets of screens in turn: Emergency Alerts, Posts and Events, and Forms and Attachments. Notes on the first two say they are translated. The note on Forms and Attachments says there is no translation for an attached file, and the screen shows a PDF flyer attached to a post. Then the view returns to the whole board."
 />
 
 </Section>
@@ -127,14 +120,17 @@ Important documents go to staff for review before a family sees them.
 
 <p class="label">AthenaScribe prototype</p>
 
-{/* The one large actual administrator dashboard goes here, with no device frame. A smaller family delivery screen may join it only if it exists. */}
-<Placeholders
-  columns={1}
-  items={[{ kind: "dashboard", label: "Administrator dashboard", caption: "School teams manage translation and review. Families receive the document in their language." }]}
+<DemoVideo
+  device="wide"
+  src="/video/athenascribeprototype.mp4"
+  poster="/video/athenascribeprototypeposter.webp"
+  width={1200}
+  height={760}
+  caption="From attachment to staff approval"
+  description="Screen recording of the updated AthenaScribe prototype. A school staff member writes an email to a parent and attaches a field trip permission form. A notice says the student information system flagged Spanish as the home language and that a Spanish form is being prepared. The document is scanned and its key information is found. A review screen shows the family's language, an education law check, and the fastest path to a signature. Staff choose Approve and send, and a message confirms the Spanish form is on its way to the parent for signature."
 />
 
-{/* previewOnly keeps this line off the live site while the dashboard above it is still a placeholder. Remove it when the real dashboard is in. */}
-<Tools tools={frontmatter.tools} previewOnly />
+<Tools tools={frontmatter.tools} />
 
 </Section>
 
@@ -153,13 +149,13 @@ We combined stakeholder interviews, school software walkthroughs, and competitiv
 <Split>
   <Placeholders
     columns={1}
-    items={[{ kind: "artifact", label: "Affinity cluster: coordinating the document", caption: "One cluster from the affinity map." }]}
+    items={[{ kind: "artifact", label: "Affinity cluster: coordinating the document", caption: "One readable cluster from the affinity map: the cluster heading and a few relevant notes." }]}
   />
   <div class="flow">
     ### The document was only part of the task.
     <p>Translation also involved coordinating who would handle the document, check important information, and get it back to the family.</p>
-    {/* TODO: add href once Aaron sends the FigJam link. */}
-    <ActionLink label="View the full affinity map in FigJam" />
+    {/* TODO: add href once Aaron sends the FigJam link. The link stays as plain text, not a button. */}
+    <ActionLink variant="text" label="View the full affinity map in FigJam" />
   </div>
 </Split>
 
@@ -173,11 +169,12 @@ These findings helped us prioritize the document itself, the review process, and
 
 I used feature prioritization to connect our findings to three priorities for the first experience.
 
-<Columns
+{/* Checked against the research content in this study. Group 1 is supported by the software audit (translation stops at the attachment). Group 2 is supported by the affinity cluster (checking important information) and by the policy reading, though the policy reading is documents, not participants. Group 3 is the weak one: the study says the work included getting the document back to the family, and the product aim is that families understand what comes next, but no research record here shows families needing that. Its finding line is held with source TODO, so it shows only in previews until Aaron confirms a source or rewords it. */}
+<Connections
   items={[
-    { title: "Translate the whole document", caption: "Extend language access beyond the message to the attached file." },
-    { title: "Make review actionable", caption: "Help staff identify documents that need attention and understand the next step." },
-    { title: "Keep families informed", caption: "Make the translated document and its review status clear." },
+    { finding: "Translation stopped at attached files.", priority: "Translate the whole document.", response: "Document upload and translation." },
+    { finding: "Important content required someone to check it.", priority: "Make review actionable.", response: "Review routing and approval." },
+    { finding: "Families needed to understand what came next.", priority: "Keep families informed.", response: "Clear delivery and review status.", source: "TODO" },
   ]}
 />
 
@@ -191,16 +188,12 @@ I used feature prioritization to connect our findings to three priorities for th
 
 School documents can include consent, health, and student information. I examined education policy and district guidance, then worked with the product lead to incorporate staff review into the proposed workflow.
 
-<Flow
-  rows={[
-    {
-      title: "Routine document",
-      steps: [{ text: "Translated document" }, { text: "Review decision" }, { text: "Deliver with a machine translation label" }],
-    },
-    {
-      title: "Important document",
-      steps: [{ text: "Translated document" }, { text: "Review decision", state: "focus" }, { text: "Route to designated staff before delivery", state: "focus" }],
-    },
+<Branch
+  start="Translated document"
+  decision="Review decision"
+  branches={[
+    { label: "Routine document", outcome: "Deliver with a machine translation label" },
+    { label: "Important document", outcome: "Route to designated staff before delivery", state: "focus" },
   ]}
 />
 
@@ -215,18 +208,23 @@ Those priorities shaped the document journey, from upload to family access.
 
 ## One document, from upload to family access.
 
+<p class="label">Original prototype</p>
+
 The first prototype connected document intake, translation, review when needed, and delivery.
 
+{/* Four stills at one shape (4:5). Analysis and Review use cropped stills. The Review still is the queue screen from the first prototype, which the testing note calls the review queue. Upload and Family access stills are still needed. */}
 <Placeholders
-  columns={2}
-  uniform
+  columns={4}
+  stack
   items={[
-    { kind: "dashboard", eyebrow: "01 Upload", tag: "Proposed screen", label: "Upload", title: "Start with the document.", caption: "Upload or scan the school form and select a language." },
-    { kind: "dashboard", eyebrow: "02 Analysis", tag: "Proposed screen", label: "Analysis", title: "Identify what needs attention.", caption: "The prototype checks for important content and student information." },
-    { kind: "dashboard", eyebrow: "03 Review", tag: "Proposed screen", label: "Review", title: "Give staff a clear next step.", caption: "Documents flagged for review wait for designated staff to check and approve them." },
-    { kind: "dashboard", eyebrow: "04 Family access", tag: "Proposed screen", label: "Family access", title: "Deliver with the status explained.", caption: "Families receive the translation with a label showing whether it was machine translated or reviewed." },
+    { kind: "phone", eyebrow: "01 Upload", tag: "Original prototype", label: "Upload", caption: "Upload or scan the form and choose a language." },
+    { kind: "phone", eyebrow: "02 Analysis", label: "Analysis", caption: "The prototype checks for vital information and personal data.", src: journeyAnalysis, alt: "The original prototype’s analysis screen on a phone: a field trip permission slip is being scanned, a progress bar reads 86 percent, and two checks are complete, for vital information and for personal data.", fit: "cover" },
+    { kind: "phone", eyebrow: "03 Review", label: "Review", caption: "Flagged documents wait for designated staff to check and approve.", src: journeyReview, alt: "The original prototype’s review queue: a table of translation requests with document, language, due date, priority, and status columns.", fit: "cover" },
+    { kind: "phone", eyebrow: "04 Family access", tag: "Original prototype", label: "Family access", caption: "Families see whether the translation was machine translated or reviewed." },
   ]}
 />
+
+<p class="note">These stills are from the original prototype. The updated prototype is shown earlier on this page.</p>
 
 We then tested whether people could follow the journey and whether the review process fit their work.
 
@@ -234,7 +232,7 @@ We then tested whether people could follow the journey and whether the review pr
 
 <Section tone="panel">
 
-## Could people follow the flow and manage the work?
+## What testing changed.
 
 We tested the prototype with school staff to understand whether the document journey made sense and how review would fit into their responsibilities.
 
@@ -242,8 +240,6 @@ We tested the prototype with school staff to understand whether the document jou
 <p class="note">Round one used the live prototype with counselors and vice principals. Tasks: upload a document, work the review queue, approve for delivery.</p>
 
 ### The queue needed to reflect how staff organize documents.
-
-Feedback about grouping health forms, permission slips, and other document types gave us a direction for making the queue easier to scan.
 
 <Placeholders
   columns={1}
@@ -253,79 +249,71 @@ Feedback about grouping health forms, permission slips, and other document types
   ]}
 />
 
-<PreviewOnly>
+<p class="label">What participants raised</p>
 
-{/* Held until the deadline finding is confirmed against a session record. */}
-### Review also needed a visible timeframe.
+Feedback pointed to grouping health forms, permission slips, and other document types. Testing showed staff sort documents by type, so the queue should too.
 
-<Placeholders
-  columns={1}
-  items={[{ kind: "pair", tag: "Proposed revision", label: "Deadline treatment", sides: ["Before", "After"], caption: "The revised deadline treatment." }]}
-/>
+<p class="label">What changed in the interface</p>
 
-</PreviewOnly>
+The proposed revision groups documents by type. It also shows each document’s status, so staff can see the next action, and it makes deadlines visible.
 
-The next iteration focuses on helping staff find the right document, understand its status, and act.
+{/* The deadline finding is not confirmed against a session record, so it is stated as design analysis. If a session record shows participants raised it, move it up into "What participants raised". */}
+<p class="label">Where the deadline treatment came from</p>
+
+The deadline treatment comes from our design analysis. We are not reporting it as participant feedback.
+
+<p class="label">What remains to be tested</p>
+
+The revised queue is a proposal. Further testing will examine whether staff can find priority documents, understand responsibility, and complete the review process.
 
 </Section>
 
 <Section>
 
-## A clearer way to manage translation and review.
+## The revised workflow.
 
 The next iteration brings document organization, review status, and deadlines into the same workflow.
 
-{/* The actual revised dashboard goes here. Add the working prototype link only when it is verified. */}
+<p class="label">Proposed revision, awaiting validation</p>
+
+{/* The actual revised dashboard goes here as one large still. When it exists, the three numbers below can be placed on it. Add a working prototype link only when it is verified. */}
 <Placeholders
   columns={1}
-  items={[{ kind: "dashboard", tag: "In development", label: "Revised dashboard", caption: "The revised dashboard, in development." }]}
+  items={[{ kind: "dashboard", tag: "Proposed revision, awaiting validation", label: "Revised dashboard", caption: "One large still of the revised dashboard, with the three numbered annotations placed on it." }]}
 />
 
-<Columns
+<Numbered
   items={[
-    { title: "Document organization", caption: "Groups documents so staff can find the right one." },
-    { title: "Next action", caption: "Shows staff what to do with each document." },
+    "Document types help staff locate requests.",
+    "Status identifies the next action.",
+    "Deadlines make time sensitive work visible.",
   ]}
 />
-
-<ActionLink label="Try the prototype" variant="primary" />
-
-### Review still depends on people and time.
-
-Routing important documents to staff creates a practical question: how can review fit within the district’s workload without becoming another delay?
-
-<p class="note">Further testing will examine whether staff can find priority documents, understand responsibility, and complete the review process.</p>
 
 </Section>
 
 <Section tone="panel">
 
-## From research to a public presentation.
+## What I contributed and what remains.
 
-We developed an interactive prototype and presented AthenaScribe at BRIDGEGOOD Demo Day at Block HQ. I also discussed the project on KRON4.
+I led the user research and contributed product strategy, competitive analysis, and prototyping. The team developed an interactive prototype and presented AthenaScribe at BRIDGEGOOD Demo Day at Block HQ.
 
-<Split>
-  <Placeholders
-    columns={1}
-    items={[{ kind: "photo", label: "Demo Day at Block HQ", caption: "AthenaScribe at BRIDGEGOOD Demo Day, Block HQ." }]}
-  />
-  <VideoLink
-    photo="kron4-still-color"
-    href="https://www.youtube.com/watch?v=r4l9IsyDUD4"
-    label="Watch the KRON4 segment on YouTube"
-    caption="I discussed the project on KRON4."
-    linkText="Watch on YouTube"
-  />
-</Split>
+I used feature prioritization to connect our findings to three priorities for the first experience. I examined education policy and district guidance, then worked with the product lead to incorporate staff review into the proposed workflow.
 
-### What I learned.
+Research showed the problem was bigger than the document. The work also included who checks it and who gets it back to the family. Testing showed staff sort documents by type, so the queue should too. A clear flow still has to fit someone’s day.
 
-<Columns
-  items={[
-    { title: "The problem was bigger than the document.", caption: "We started with translation. Research showed the work also included who checks a document and who gets it back to the family." },
-    { title: "A clear flow still has to fit someone’s day.", caption: "Testing showed staff sort documents by type, so the queue should too." },
-  ]}
+### Review still depends on people and time.
+
+Routing important documents to staff creates a practical question: how can review fit within the district’s workload without becoming another delay?
+
+<Placeholders
+  columns={1}
+  items={[{ kind: "photo", label: "Demo Day at Block HQ", caption: "AthenaScribe at BRIDGEGOOD Demo Day, Block HQ." }]}
 />
+
+I also discussed the project on KRON4.
+
+<ActionLink variant="text" small label="Watch the KRON4 segment on YouTube" href="https://www.youtube.com/watch?v=r4l9IsyDUD4" />
 
 </Section>
 

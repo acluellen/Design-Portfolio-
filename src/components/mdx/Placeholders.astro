@@ -42,20 +42,22 @@ interface Props {
   columns?: 1 | 2 | 3 | 4;
   /** Every frame at 4:3, so a row of mixed kinds (a photo, an artifact, a capture) lines up. */
   uniform?: boolean;
+  /** With four across: one per row on phones (instead of two), so each screen stays readable. */
+  stack?: boolean;
 }
 
-const { items, columns = 1, uniform = false } = Astro.props;
+const { items, columns = 1, uniform = false, stack = false } = Astro.props;
 ---
 
 {
   (showPlaceholders || items.some((i) => i.src)) && (
-    <div class:list={["ph", "is-wide", "is-full", `ph--${columns}`, { "ph--uniform": uniform }]}>
+    <div class:list={["ph", "is-wide", "is-full", `ph--${columns}`, { "ph--uniform": uniform, "ph--stack": stack }]}>
       {items.map((item) =>
         item.src ? (
           <figure class={`ph__item ph__item--${item.kind}`}>
             {item.eyebrow && <p class="ph__eyebrow">{item.eyebrow}</p>}
             <div class="ph__frame ph__frame--shot">
-              <Shot src={item.src} alt={item.alt ?? ""} fit={item.fit ?? "cover"} />
+              <Shot src={item.src} alt={item.alt ?? ""} fit={item.fit ?? "cover"} compact={columns === 4} />
             </div>
             {item.title && <p class="ph__title">{item.title}</p>}
             <figcaption class="ph__caption">{item.caption}</figcaption>
@@ -91,6 +93,12 @@ const { items, columns = 1, uniform = false } = Astro.props;
 
   .ph--4 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 39.99rem) {
+    .ph--4.ph--stack {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
 
   @media (min-width: 40rem) {
