@@ -1,5 +1,5 @@
 ---
-// The tools behind a piece of work, in one quiet wrapping line. Reads from the case study's front
+// The tools behind a piece of work, as a label and a row of small boxes. Reads from the case study's front
 // matter `tools`, so there is one source. Sits directly under the thing it was used to make.
 import { showPlaceholders } from "../../lib/case-studies";
 
@@ -14,20 +14,54 @@ const { tools, previewOnly = false } = Astro.props;
 
 {
   tools.length > 0 && (!previewOnly || showPlaceholders) && (
-    <p class="tools">
-      <span class="tools__label">Tools</span> {tools.join(", ")}
-    </p>
+    <div class="tools">
+      <span class="tools__label">Tools</span>
+      <ul class="tools__list">
+        {tools.map((tool) => (
+          <li class="tools__item">{tool}</li>
+        ))}
+      </ul>
+    </div>
   )
 }
 
 <style>
   .tools {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-3);
     margin: 0;
-    font-size: var(--step--1);
-    color: var(--color-ink-muted);
   }
 
   .tools__label {
-    margin-inline-end: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--color-label-ink);
+  }
+
+  .tools__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* The same square outlined box as Tag, so a tool reads as a labelled part, not a sentence. */
+  .tools__item {
+    padding: var(--space-1) var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    font-weight: var(--weight-medium);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    line-height: var(--leading-snug);
+    color: var(--color-ink);
+    border: var(--rule-thin) solid var(--color-rule-strong);
+    border-radius: var(--radius-small);
   }
 </style>
