@@ -1257,3 +1257,7 @@ Brief: update only the sections below the opening. The opening (overview, KRON4 
 - Research section: the feature analysis captures strip is in above it, and the pluses and deltas table is in (five complete platform rows, one tall table so it reads at page width; the empty Talking Points and ReachMyTeach rows and the General Assembly MoSCoW slide are left out), and the full affinity map replaces the cluster placeholder, enlargeable. Software captures from the feature analysis are still to come. Names in the affinity map are as in the source; Aaron will review before publishing. Not committed or pushed.
 
 - Research artifacts reshaped: the feature analysis captures, the pluses and deltas table, and the affinity map now sit side by side as three small 4:3 tiles with one or two word captions ("Feature analysis", "Pluses and deltas", "Affinity map"), each enlargeable, instead of two large stacked images. Each image sits on its own background color, so no gray mat or border shows. The "document was only part of the task" text now follows them as plain text. Not committed or pushed.
+
+## 2026-10-22 (LinkedIn)
+
+- LinkedIn is linked: site.linkedin now holds https://www.linkedin.com/in/aaron-luellen/ (the public profile address, without the isSelfProfile tracking parameter). The header, footer, home row, and the contact block pick it up from that one setting. Nothing else changed.

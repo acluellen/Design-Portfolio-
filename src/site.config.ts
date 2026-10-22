@@ -3,7 +3,7 @@
 export const site = {
   name: "Aaron Luellen",
   email: "Aaronluellen@gmail.com",
-  linkedin: "", // TODO: Aaron to send the LinkedIn URL. Header and footer show it once filled in.
+  linkedin: "https://www.linkedin.com/in/aaron-luellen/", // Public profile, without the self profile tracking parameter.
   kron4Video: "https://www.youtube.com/watch?v=r4l9IsyDUD4&t=31s",
   bridgegood: "https://www.bridgegood.org",
   emailSubject: "Interested in working together",
