@@ -30,15 +30,13 @@ program: "BRIDGEGOOD UX Design Apprenticeship"
 tools: ["Figma", "Lovable", "Claude", "Userlytics"]
 prototype: "TODO" # Aaron to send the live prototype URL.
 heroTile: "athenascribe"
-index: ["School tools", "Opportunity", "Research", "Priorities", "Core flows", "Testing", "Revision", "Contribution"]
-indexChildren: ["Attachment gap", "Shared workflow", "The takeaway", "Who checks it", "", "Queue changes", "", "Open question"]
+index: ["School tools", "Opportunity", "Research", "Priorities", "Testing", "Contribution"]
+indexChildren: ["Attachment gap", "", "The takeaway", "Who checks it", "Queue changes", "Open question"]
 order: 1
 status: "published"
 ---
 
 import queueOriginal from "../../assets/case-studies/athenascribe/round-one-queue-crop.webp";
-import journeyAnalysis from "../../assets/case-studies/athenascribe/journeyanalysis.webp";
-import journeyReview from "../../assets/case-studies/athenascribe/journeyreview.webp";
 import platformAnalysis from "../../assets/case-studies/athenascribe/platformanalysis.webp";
 import affinityMap from "../../assets/case-studies/athenascribe/affinitymap.webp";
 import featureAnalysis from "../../assets/case-studies/athenascribe/featureanalysis.webp";
@@ -47,7 +45,9 @@ import featureAnalysis from "../../assets/case-studies/athenascribe/featureanaly
 
 <p class="label">Overview</p>
 
-Through BRIDGEGOOD and partner organizations, our team explored education and opportunity gaps in the East Bay. We focused on how schools share information with families.
+AthenaScribe helps school teams manage document translation and review so families can understand what comes next. I led the user research and contributed product strategy, competitive analysis, and prototyping.
+
+Through BRIDGEGOOD and partner organizations, our team explored education and opportunity gaps in the East Bay.
 
 <DemoVideo
   device="wide"
@@ -60,8 +60,25 @@ Through BRIDGEGOOD and partner organizations, our team explored education and op
   description="Silent clip from the KRON4 interview. Aaron Luellen sits on the set with two other guests."
 />
 
-AthenaScribe helps school teams manage document translation and review so families can understand what comes next. I led the user research and contributed product strategy, competitive analysis, and prototyping.
+</Section>
 
+<Section tone="panel">
+
+<p class="label">AthenaScribe prototype</p>
+
+Important documents go to staff for review before a family sees them.
+
+<DemoVideo
+  device="wide"
+  src="/video/athenascribeprototype.mp4"
+  poster="/video/athenascribeprototypeposter.webp"
+  width={1674}
+  height={1038}
+  caption="From attachment to staff approval"
+  description="Screen recording of the updated AthenaScribe prototype. A school staff member writes an email to a parent and attaches a field trip permission form. A notice says the student information system flagged Spanish as the home language and that a Spanish form is being prepared. The document is scanned and its key information is found. A review screen shows the family's language, an education law check, and the fastest path to a signature. Staff choose Approve and send, and a message confirms the Spanish form is on its way to the parent for signature."
+/>
+
+<Tools tools={frontmatter.tools} />
 
 </Section>
 
@@ -100,6 +117,8 @@ AthenaScribe helps school teams manage document translation and review so famili
 
 </DemoRow>
 
+<p class="label">Problem</p>
+
 ### …but translation stops at the attachment.
 
 Alerts and posts can be translated, but an attached form or file cannot. A permission slip or health form still needs someone to translate it, check important information, and return it to the family.
@@ -111,29 +130,16 @@ Alerts and posts can be translated, but an attached form or file cannot. A permi
 
 </Section>
 
-<Section tone="panel">
+<Section>
 
-## What if the document were as understandable as the message?
+<p class="label">Solution</p>
 
-One workflow could hold translation, staff review, and family access together.
+## What if every document were as understandable as the message?
 
-### A shared workflow for school document translation.
+From a PDF flyer to an IEP or a disciplinary notice, AthenaScribe puts translation, staff review, and family access in one workflow.
 
-Important documents go to staff for review before a family sees them.
-
-<p class="label">AthenaScribe prototype</p>
-
-<DemoVideo
-  device="wide"
-  src="/video/athenascribeprototype.mp4"
-  poster="/video/athenascribeprototypeposter.webp"
-  width={1674}
-  height={1038}
-  caption="From attachment to staff approval"
-  description="Screen recording of the updated AthenaScribe prototype. A school staff member writes an email to a parent and attaches a field trip permission form. A notice says the student information system flagged Spanish as the home language and that a Spanish form is being prepared. The document is scanned and its key information is found. A review screen shows the family's language, an education law check, and the fastest path to a signature. Staff choose Approve and send, and a message confirms the Spanish form is on its way to the parent for signature."
-/>
-
-<Tools tools={frontmatter.tools} />
+{/* TODO: the annotated still images of the highlights of the flow go here, small and slim. */}
+<ActionLink variant="text" label="Annotated still images of the highlights of the flow" />
 
 </Section>
 
@@ -141,7 +147,7 @@ Important documents go to staff for review before a family sees them.
 
 ## Understanding the work behind school document translation.
 
-We combined stakeholder interviews, school software walkthroughs, and competitive research to understand how documents moved between school staff and families.
+We combined 12 stakeholder interviews, school software walkthroughs, and competitive research.
 
 {/* Three small artifacts as proof of the work, each enlargeable. TODO: a larger export of the ParentSquare column would let its notes be read when enlarged. */}
 <Placeholders
@@ -156,12 +162,8 @@ We combined stakeholder interviews, school software walkthroughs, and competitiv
 
 ### The document was only part of the task.
 
-Translation also involved coordinating who would handle the document, check important information, and get it back to the family.
-
 {/* TODO: add href once Aaron sends the FigJam link. The link stays as plain text, not a button. */}
 <ActionLink variant="text" label="View the full affinity map in FigJam" />
-
-These findings helped us prioritize the document itself, the review process, and family access.
 
 </Section>
 
@@ -169,7 +171,7 @@ These findings helped us prioritize the document itself, the review process, and
 
 ## Turning research into product priorities.
 
-I used feature prioritization to connect our findings to three priorities for the first experience.
+Three findings became three priorities.
 
 {/* Checked against the research content in this study. Group 1 is supported by the software audit (translation stops at the attachment). Group 2 is supported by the affinity cluster (checking important information) and by the policy reading, though the policy reading is documents, not participants. Group 3 is the weak one: the study says the work included getting the document back to the family, and the product aim is that families understand what comes next, but no research record here shows families needing that. Its finding line is held with source TODO, so it shows only in previews until Aaron confirms a source or rewords it. */}
 <Connections
@@ -188,7 +190,7 @@ I used feature prioritization to connect our findings to three priorities for th
 
 ### Translation introduced another question: who checks it?
 
-School documents can include consent, health, and student information. I examined education policy and district guidance, then worked with the product lead to incorporate staff review into the proposed workflow.
+School documents can include consent, health, and student information, so important ones go to staff first.
 
 <Branch
   start="Translated document"
@@ -202,37 +204,9 @@ School documents can include consent, health, and student information. I examine
 {/* The sources below are documents we read. Check exactly what each supports before adding any claim about them. */}
 <p class="note">Sources: Cal. Educ. Code § 48985 · OUSD Board Policy 5124 · 34 CFR § 99.31. The review step is our design interpretation of them.</p>
 
-Those priorities shaped the document journey, from upload to family access.
-
 </Section>
 
 <Section>
-
-## One document, from upload to family access.
-
-<p class="label">Original prototype</p>
-
-The first prototype connected document intake, translation, review when needed, and delivery.
-
-{/* Four stills at one shape (4:5). Analysis and Review use cropped stills. The Review still is the queue screen from the first prototype, which the testing note calls the review queue. Upload and Family access stills are still needed. */}
-<Placeholders
-  columns={4}
-  stack
-  items={[
-    { kind: "phone", eyebrow: "01 Upload", tag: "Original prototype", label: "Upload", caption: "Upload or scan the form and choose a language." },
-    { kind: "phone", eyebrow: "02 Analysis", label: "Analysis", caption: "The prototype checks for vital information and personal data.", src: journeyAnalysis, alt: "The original prototype’s analysis screen on a phone: a field trip permission slip is being scanned, a progress bar reads 86 percent, and two checks are complete, for vital information and for personal data.", fit: "cover" },
-    { kind: "phone", eyebrow: "03 Review", label: "Review", caption: "Flagged documents wait for designated staff to check and approve.", src: journeyReview, alt: "The original prototype’s review queue: a table of translation requests with document, language, due date, priority, and status columns.", fit: "cover" },
-    { kind: "phone", eyebrow: "04 Family access", tag: "Original prototype", label: "Family access", caption: "Families see whether the translation was machine translated or reviewed." },
-  ]}
-/>
-
-<p class="note">These stills are from the original prototype. The updated prototype is shown earlier on this page.</p>
-
-We then tested whether people could follow the journey and whether the review process fit their work.
-
-</Section>
-
-<Section tone="panel">
 
 ## What testing changed.
 
@@ -257,7 +231,13 @@ Feedback pointed to grouping health forms, permission slips, and other document 
 
 <p class="label">What changed in the interface</p>
 
-The proposed revision groups documents by type. It also shows each document’s status, so staff can see the next action, and it makes deadlines visible.
+<Numbered
+  items={[
+    "Document types help staff locate requests.",
+    "Status identifies the next action.",
+    "Deadlines make time sensitive work visible.",
+  ]}
+/>
 
 {/* The deadline finding is not confirmed against a session record, so it is stated as design analysis. If a session record shows participants raised it, move it up into "What participants raised". */}
 <p class="label">Where the deadline treatment came from</p>
@@ -270,62 +250,19 @@ The revised queue is a proposal. Further testing will examine whether staff can 
 
 </Section>
 
-<Section>
-
-## The revised workflow.
-
-The next iteration brings document organization, review status, and deadlines into the same workflow.
-
-<p class="label">Proposed revision, awaiting validation</p>
-
-{/* The actual revised dashboard goes here as one large still. When it exists, the three numbers below can be placed on it. Add a working prototype link only when it is verified. */}
-<Placeholders
-  columns={1}
-  items={[{ kind: "dashboard", tag: "Proposed revision, awaiting validation", label: "Revised dashboard", caption: "One large still of the revised dashboard, with the three numbered annotations placed on it." }]}
-/>
-
-<Numbered
-  items={[
-    "Document types help staff locate requests.",
-    "Status identifies the next action.",
-    "Deadlines make time sensitive work visible.",
-  ]}
-/>
-
-</Section>
-
 <Section tone="panel">
 
 ## What I contributed and what remains.
 
-I led the user research and contributed product strategy, competitive analysis, and prototyping. The team developed an interactive prototype and presented AthenaScribe at BRIDGEGOOD Demo Day at Block HQ.
-
-I used feature prioritization to connect our findings to three priorities for the first experience. I examined education policy and district guidance, then worked with the product lead to incorporate staff review into the proposed workflow.
-
-Research showed the problem was bigger than the document. The work also included who checks it and who gets it back to the family. Testing showed staff sort documents by type, so the queue should too. A clear flow still has to fit someone’s day.
+The team presented AthenaScribe at BRIDGEGOOD Demo Day at Block HQ.
 
 ### Review still depends on people and time.
 
 Routing important documents to staff creates a practical question: how can review fit within the district’s workload without becoming another delay?
 
-<Placeholders
-  columns={1}
-  items={[{ kind: "photo", label: "Demo Day at Block HQ", caption: "AthenaScribe at BRIDGEGOOD Demo Day, Block HQ." }]}
-/>
-
-I also discussed the project on KRON4.
-
-<ActionLink variant="text" small label="Watch the KRON4 segment on YouTube" href="https://www.youtube.com/watch?v=r4l9IsyDUD4" />
+{/* TODO: Demo Day photo, kept slim until the real photo arrives. */}
+<ActionLink variant="text" label="Demo Day photo at Block HQ" />
 
 </Section>
 
-<Voices
-  heading="What mentors said."
-  id="mentors"
-  items={[
-    { role: "Quant researcher at Google Maps, mentor", quote: "Research findings became product priorities quickly, and each priority pointed back to evidence.", source: "TODO" },
-    { role: "Graphic designer, BRIDGEGOOD mentor", quote: "Every screen felt like part of one system. He noticed spacing details most people miss.", source: "TODO" },
-    { role: "Product manager at PayPal, mentor", quote: "He treated privacy as part of the design. School names and student details were handled before anyone asked.", source: "TODO" },
-    { role: "Product manager at State Farm, mentor and coach", quote: "He explained the review step in plain language, so people outside design understood why it mattered.", source: "TODO" },
-  ]}
-/>
+{/* The mentor quotes are left out for now. Each one needs to be verbatim from a recording or transcript before it comes back. The held text, all paraphrases with source TODO, is kept in the plan file history and in git. */}
