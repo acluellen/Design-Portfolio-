@@ -59,13 +59,16 @@ const widths = [...new Set([480, 720, 960, 1280, src.width])].filter((w) => w <=
   .shot__btn {
     position: absolute;
     inset: auto var(--space-3) var(--space-3) auto;
-    padding: var(--space-1) var(--space-3);
+    /* Centered by the glyphs, not the line box: the trailing letter space comes off the right
+       padding, and capitals sit a hair high in the line, so the top gains what the bottom gives. */
+    padding: calc(var(--space-1) + 0.06em) calc(var(--space-3) - var(--tracking-label)) calc(var(--space-1) - 0.06em) var(--space-3);
     border: var(--rule-thin) solid var(--color-rule-strong);
     border-radius: var(--radius-tag);
     background: var(--color-paper);
     color: var(--color-ink);
     font-family: var(--font-mono);
     font-size: var(--step--1);
+    line-height: 1.4;
     letter-spacing: var(--tracking-label);
     text-transform: uppercase;
     cursor: zoom-in;
@@ -109,10 +112,14 @@ const widths = [...new Set([480, 720, 960, 1280, src.width])].filter((w) => w <=
     background: rgb(0 0 0 / 0.6);
   }
 
+  /* Never larger than the picture itself: a small image sits at its own size, centered, instead of
+     being stretched to the dialog width and going soft. */
   .lightbox__img {
     display: block;
-    inline-size: 100%;
+    inline-size: auto;
+    max-inline-size: 100%;
     max-block-size: calc(94vh - var(--space-9));
+    margin-inline: auto;
     object-fit: contain;
   }
 

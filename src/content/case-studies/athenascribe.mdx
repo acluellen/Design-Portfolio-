@@ -37,6 +37,11 @@ status: "published"
 ---
 
 import queueOriginal from "../../assets/case-studies/athenascribe/round-one-queue-crop.webp";
+import stillNotice from "../../assets/case-studies/athenascribe/stills-01-notice.webp";
+import stillScan from "../../assets/case-studies/athenascribe/stills-02-scan.webp";
+import stillReview from "../../assets/case-studies/athenascribe/stills-03-review.webp";
+import stillApprove from "../../assets/case-studies/athenascribe/stills-04-approve.webp";
+import stillApproved from "../../assets/case-studies/athenascribe/stills-05-approved.webp";
 import platformAnalysis from "../../assets/case-studies/athenascribe/platformanalysis.webp";
 import affinityMap from "../../assets/case-studies/athenascribe/affinitymap.webp";
 import featureAnalysis from "../../assets/case-studies/athenascribe/featureanalysis.webp";
@@ -138,8 +143,15 @@ Alerts and posts can be translated, but an attached form or file cannot. A permi
 
 From a PDF flyer to an IEP or a disciplinary notice, AthenaScribe puts translation, staff review, and family access in one workflow.
 
-{/* TODO: the annotated still images of the highlights of the flow go here, small and slim. */}
-<ActionLink variant="text" label="Annotated still images of the highlights of the flow" />
+<Stills
+  items={[
+    { n: "01", title: "Attachment notice", src: stillNotice, alt: "A message to a parent with a permission slip PDF attached and a notice that Aeries flagged Spanish as the home language. The message text is shown as gray bars.", caption: "Aeries flagged Spanish as Sofia’s home language." },
+    { n: "02", title: "Scan", src: stillScan, alt: "The scan panel counting people, action needed, date or cost, and medical items found in the document.", caption: "Scanning: people, action needed, date or cost, medical." },
+    { n: "03", title: "Review panel", src: stillReview, alt: "The review panel for staff, showing the family language, the education law review result, and the fastest path to a signature.", caption: "Education law review: 2 apply, 2 set aside." },
+    { n: "04", title: "Approval", src: stillApprove, alt: "A dialog asking staff to approve and send the Spanish form to Sofia’s family.", caption: "Nothing sends until staff approves." },
+    { n: "05", title: "Approved", src: stillApproved, alt: "A confirmation that the Spanish form is on its way to Maria Ramirez for signature.", caption: "Approved. The Spanish form is on its way to Maria Ramirez for signature.", wide: true },
+  ]}
+/>
 
 </Section>
 

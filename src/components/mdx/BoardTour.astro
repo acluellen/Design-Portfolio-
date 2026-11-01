@@ -2,10 +2,11 @@
 // A camera tour of Aaron's FigJam research board, drawn on one fixed surface: the wide board
 // screenshot, a sharp export of each of the three category lists placed over the thumbnails, and the
 // full size highlighted card of each list placed over its own thumbnail. The camera moves over that
-// surface and never swaps an image: whole board, Emergency Alerts, Posts and Events, Forms and
-// Attachments, then back to the whole board. It plays while on screen, loops, and pauses on tap (the
-// same controls as the other demos). With reduced motion nothing plays by itself: the whole board
-// shows and the button starts the tour.
+// surface and never swaps an image: Emergency Alerts, Posts and Events, Forms and Attachments, then
+// back up to Emergency Alerts. The whole board is not shown (Aaron, Nov 1): the tour starts and loops
+// on the first list. It plays while on screen, loops, and pauses on tap (the same controls as the
+// other demos). With reduced motion nothing plays by itself: the first list shows and the button
+// starts the tour.
 interface Props {
   /** The visible line directly under the tour. */
   caption: string;
@@ -29,7 +30,7 @@ const file = (name: string) => `${base}/media/researchtour/${name}.webp`;
     data-cardposts-src={file("cardposts")}
     data-cardforms-src={file("cardforms")}
   >
-    <img class="tour__poster" src={file("board")} alt="" width={2000} height={1112} loading="lazy" decoding="async" />
+    <img class="tour__poster" src={file("start")} alt="" width={2000} height={1112} loading="lazy" decoding="async" />
     <canvas class="tour__canvas" role="img" aria-label={description} hidden></canvas>
     <button type="button" class="tour__tap" data-tour-btn aria-label="Play animation">
       <svg class="tour__i" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" /></svg>
@@ -128,14 +129,13 @@ const file = (name: string) => `${base}/media/researchtour/${name}.webp`;
   } as const;
   type Key = keyof typeof PLACE;
   const ORDER = Object.keys(PLACE) as Key[];
-  // Seconds. The tour reads like a scroll through one list: the whole board, in to a list (the card
-  // with its neighbors in view), in to the card, back out to the list, then a level pan to the next
-  // list. The last card returns straight to the whole board.
-  // Move times follow the size of the zoom, at a steady rate of about 1.7 times the scale each second:
-  // the small zoom from the whole board to a list is short, the long pull back from a card is longer.
-  // `open` is the short beat on the whole board when the loop comes round; the first play adds
-  // `openFirst` on top, so a visitor still gets a full establishing shot.
-  const T = { open: 0.5, openFirst: 0.7, intoList: 1.1, listHold: 0.3, toCard: 0.9, card: 3.5, fromCard: 0.9, pan: 1.2, back: 1.4 };
+  // Seconds. The tour reads like a scroll through one list: a list (the card with its neighbors in
+  // view), in to the card, back out to the list, then a level pan to the next list. The last card
+  // pulls back to its list and pans straight up to the first list, so the loop never shows the whole
+  // board.
+  // `open` is the beat on the first list when the loop comes round; the first play adds `openFirst`
+  // on top, so a visitor still gets a settled opening shot.
+  const T = { open: 0.5, openFirst: 0.7, listHold: 0.3, toCard: 0.9, card: 3.5, fromCard: 0.9, pan: 1.2, rewind: 1.8 };
 
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
   type Cam = { cx: number; cy: number; k: number };
@@ -216,7 +216,6 @@ const file = (name: string) => `${base}/media/researchtour/${name}.webp`;
     }
 
     function build() {
-      const wholeBoard: Cam = { cx: BOARD.w / 2, cy: BOARD.h / 2, k: vw / BOARD.w };
       const a = whole("cardemer");
       const b = whole("cardposts");
       const c = whole("cardforms", 722);
@@ -239,9 +238,7 @@ const file = (name: string) => `${base}/media/researchtour/${name}.webp`;
       const hold = (cam: Cam, dur: number): Seg => ({ dur, from: cam, to: cam });
       const move = (dur: number, from: Cam, to: Cam): Seg => ({ dur, from, to });
       segs = [
-        hold(wholeBoard, T.open),
-        move(T.intoList, wholeBoard, l1),
-        hold(l1, T.listHold),
+        hold(l1, T.open),
         move(T.toCard, l1, a),
         hold(a, T.card),
         move(T.fromCard, a, l1),
@@ -254,7 +251,8 @@ const file = (name: string) => `${base}/media/researchtour/${name}.webp`;
         hold(l3, T.listHold),
         move(T.toCard, l3, c),
         hold(c, T.card),
-        move(T.back, c, wholeBoard),
+        move(T.fromCard, c, l3),
+        move(T.rewind, l3, l1),
       ];
       total = segs.reduce((n, s) => n + s.dur, 0);
     }
@@ -414,7 +412,7 @@ const file = (name: string) => `${base}/media/researchtour/${name}.webp`;
         imgs = Object.fromEntries(ORDER.map((k, i) => [k, loaded[i]]));
       } catch {
         loading = false;
-        return; // the whole board poster stays
+        return; // the first list poster stays
       }
       canvas.hidden = false;
       size();

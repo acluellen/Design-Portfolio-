@@ -12,6 +12,8 @@
   --color-band: #ffffff; /* light panels use the card color */
   --color-panel: #ebeae6; /* soft backdrop behind media */
   --color-placeholder: #dcdbd7; /* gray media placeholders until the real images arrive */
+  --color-stage-problem: #f0e6da;
+  --color-stage-solution: #dde5f2;
   --color-ink: #201f1d; /* body text: 14.9:1 on paper */
   --color-heading: #1b2a3a; /* deep navy for headings: 13.2:1 on paper */
   --color-ink-muted: #524e49; /* 7.5:1 on paper */
@@ -273,6 +275,8 @@
     --color-band: #1a2029;
     --color-panel: #161c25;
     --color-placeholder: #252d39;
+    --color-stage-problem: #2a2520;
+    --color-stage-solution: #1d2837;
     --color-ink: #e9ecf1;
     --color-heading: #f1f3f7;
     --color-ink-muted: #a3abb7;
@@ -303,6 +307,8 @@
   --color-band: #1a2029;
   --color-panel: #161c25;
   --color-placeholder: #252d39;
+  --color-stage-problem: #2a2520;
+  --color-stage-solution: #1d2837;
   --color-ink: #e9ecf1;
   --color-heading: #f1f3f7;
   --color-ink-muted: #a3abb7;
