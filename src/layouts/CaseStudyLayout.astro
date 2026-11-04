@@ -580,12 +580,16 @@ const indexItems = [
   }
 
   /* A small label written just above a heading belongs to it: the space goes above the label. */
-  .body > :global(p.label:has(+ h2)) {
+  .body > :global(p.label:has(+ :is(h2, h3))) {
     margin-block-start: var(--space-8);
   }
 
-  .body > :global(p.label + h2),
-  .body :global(.section__inner > p.label + h2) {
+  .body :global(.section__inner > p.label:has(+ h3)) {
+    margin-block-start: var(--space-8);
+  }
+
+  .body > :global(p.label + :is(h2, h3)),
+  .body :global(.section__inner > p.label + :is(h2, h3)) {
     margin-block-start: var(--space-2);
   }
 
@@ -923,7 +927,7 @@ const indexItems = [
   }
 
   .cs-meta dt {
-    font-family: var(--font-text);
+    font-family: var(--font-mono);
     font-size: var(--step--1);
     letter-spacing: var(--tracking-label);
     text-transform: uppercase;
@@ -1024,15 +1028,6 @@ const indexItems = [
 
   .cs-body :global(.section__inner > :is(h2, h3) + *) {
     margin-block-start: var(--space-4);
-  }
-
-  /* The label above a section reads like the side links: sentence case, quiet. */
-  .cs-body :global(.section__inner > p.label) {
-    font-family: var(--font-text);
-    font-size: var(--step-0);
-    font-weight: var(--weight-regular);
-    letter-spacing: normal;
-    text-transform: none;
   }
 
   .cs-body :global(.section__inner > p:not([class])) {
