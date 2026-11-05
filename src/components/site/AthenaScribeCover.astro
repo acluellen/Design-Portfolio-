@@ -6,8 +6,8 @@
 //   4.20  "02 / Scan": a camera push on the slip; the due date, health info, and signature are flagged
 //   5.60  the camera pulls back, the phone moves left, and the three flags fly out as readable chips;
 //         the flagged state holds for about two seconds
-//   7.45  "03 / Approval": the review card, "Nothing sends until staff approves.", the button is
-//         pressed, then the confirmation settles in (the check draws, then the words) and holds 2 s
+//   7.45  "03 / Approval": a chip says "Nothing sends until staff approves."; the review card the staff see arrives; the button is
+//         pressed, and the button itself turns into the confirmation (the check draws) and holds 2 s
 //  10.45  the review card and the phone leave; the first form card returns at 10.75, so the last
 //         frame matches the first. There is no end slate and no wordmark: the confirmation is the last
 //         thing said, and the page title sits right below the cover.
@@ -38,18 +38,23 @@ const owl = "/media/athenascribe-owl.webp";
       <div class="el chip p" data-k="c1" style="top:177px"><i></i>Health info · private<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg></div>
       <div class="el chip v" data-k="c2" style="top:247px"><i></i>Signature needed</div>
 
+      <div class="el chip g" data-k="cg"><i></i>Nothing sends until staff approves.</div>
+
       <div class="el apv" data-k="apv">
-        <div class="apv-in" data-k="apvin">
-          <h3>Ready for family review</h3>
-          <p class="gate">Nothing sends until staff approves.</p>
-          <div class="go" data-k="go">Approve and send for signature</div>
+        <p class="apv-who">Reviewing as Mrs. Williams, assistant principal</p>
+        <p class="apv-k">Family language · Aeries</p>
+        <p class="apv-v">Spanish → Maria Ramirez</p>
+        <div class="go" data-k="go">
+          <span class="go-a" data-k="goa">Approve and send for signature</span>
+          <span class="go-b" data-k="gob"><span class="go-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-k="okc" pathLength="1" d="M6.5 12.5l3.5 3.5 7.5-8"></path></svg></span><span class="go-t"><b>Approved.</b> The Spanish form is on its way to Maria Ramirez for signature.</span></span>
         </div>
-        <div class="ok" data-k="ok">
-          <span class="ok-badge" data-k="okb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path data-k="okc" pathLength="1" d="M6.5 12.5l3.5 3.5 7.5-8"></path></svg></span>
-          <h3 data-k="okh">Approved.</h3>
-          <p class="okp" data-k="okp">The Spanish form is on its way to Maria Ramirez for signature.</p>
-          <p class="okf" data-k="okf">Spanish form → text → phone signature</p>
-        </div>
+        <ol class="trk" role="img" aria-label="Spanish form, text, phone signature">
+          <li class="trk-s" data-k="t1"><i></i><span>Spanish form</span></li>
+          <li class="trk-l" data-k="tl1"></li>
+          <li class="trk-s" data-k="t2"><i></i><span>Text</span></li>
+          <li class="trk-l"></li>
+          <li class="trk-s"><i></i><span>Phone signature</span></li>
+        </ol>
       </div>
 
       <div class="el phone" data-k="phone">
@@ -187,22 +192,29 @@ const owl = "/media/athenascribe-owl.webp";
   .ast .chip.p i { background: var(--as-plum); }
   .ast .chip svg { width: 22px; height: 22px; margin-left: auto; color: var(--as-plum); flex: none; }
 
-  /* The staff review card and its confirmation. */
-  .ast .apv { left: 500px; top: 84px; width: 400px; height: 244px; border-radius: 22px; background: var(--as-paper); color: var(--as-ink); box-shadow: var(--as-shadow-doc); overflow: hidden; opacity: 0; box-sizing: border-box; }
-  .ast .apv-in { position: absolute; inset: 0; padding: 26px 28px; }
-  .ast .apv h3 { margin: 0; font-family: var(--font-display); font-weight: var(--weight-heading); font-size: 28px; line-height: 1.1; letter-spacing: var(--tracking-tight); }
-  .ast .apv .gate { margin-top: 14px; font-size: 19px; font-weight: 600; line-height: 1.25; }
-  .ast .apv .go { position: absolute; left: 28px; right: 28px; bottom: 26px; height: 58px; border-radius: 14px; background: var(--as-indigo); color: var(--as-paper); display: grid; place-items: center; font-size: 19px; font-weight: 600; }
-  /* Approved: the same card, the same two voices as the review (Hanken for the line, Atkinson for the
-     rest), a drawn check in the green token, and the prototype's own path to a signature as a quiet
-     footer. The words arrive in order, so the eye reads them in order. */
-  .ast .ok { position: absolute; inset: 0; padding: 26px 28px; background: var(--as-paper); opacity: 0; }
-  .ast .ok-badge { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: color-mix(in srgb, var(--as-green) 14%, var(--as-paper)); color: var(--as-green); opacity: 0; }
-  .ast .ok-badge svg { width: 24px; height: 24px; }
-  .ast .ok-badge path { stroke-dasharray: 1; stroke-dashoffset: 1; }
-  .ast .apv .ok h3 { margin: 14px 0 0; opacity: 0; }
-  .ast .okp { margin-top: 8px; font-size: 18px; font-weight: 400; line-height: 1.4; color: var(--as-muted); opacity: 0; }
-  .ast .okf { position: absolute; left: 28px; right: 28px; bottom: 20px; padding-top: 12px; border-top: 1px solid var(--as-rule); font-family: var(--font-mono); font-size: 12.5px; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--as-muted); white-space: nowrap; opacity: 0; }
+  /* Beat 3 follows the same rule as beat 2: the product is the white card, the narrator is a chip.
+     The chip says the thesis; the card is only the screen staff would see, owned by the person using
+     it, with the button where the result lands. Rhythm: 18 and 20 around the edges, 16 between groups,
+     4 inside a pair. */
+  .ast .chip.g { left: 480px; top: 46px; width: 440px; font-size: 21px; }
+  .ast .chip.g i { background: var(--as-indigo); }
+  .ast .apv { left: 480px; top: 118px; width: 440px; padding: 18px 24px 20px; border-radius: 20px; background: var(--as-paper); color: var(--as-ink); box-shadow: var(--as-shadow-doc); opacity: 0; box-sizing: border-box; }
+  .ast .apv-who { padding-bottom: 12px; border-bottom: 1px solid var(--as-rule); font-size: 14px; font-weight: 500; line-height: 1.3; color: var(--as-muted); }
+  .ast .apv-k { margin-top: 16px; font-family: var(--font-mono); font-size: 12.5px; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--as-muted); }
+  .ast .apv-v { margin-top: 4px; font-family: var(--font-display); font-weight: var(--weight-heading); font-size: 22px; line-height: 1.2; letter-spacing: var(--tracking-tight); }
+  .ast .go { position: relative; margin-top: 18px; height: 60px; border-radius: 12px; background: var(--as-indigo); color: var(--as-paper); display: grid; place-items: center; font-size: 18px; font-weight: 600; }
+  /* The result lands in the button's own footprint, so cause and effect never leave the spot. */
+  .ast .go-b { position: absolute; inset: 0; display: flex; align-items: center; gap: 12px; padding: 0 14px; border-radius: 12px; background: color-mix(in srgb, var(--as-green) 12%, var(--as-paper)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--as-green) 30%, transparent); color: var(--as-ink); font-size: 14.5px; font-weight: 400; line-height: 1.3; text-align: left; opacity: 0; }
+  .ast .go-b b { font-weight: 700; }
+  .ast .go-badge { flex: none; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--as-green); color: var(--as-paper); }
+  .ast .go-badge svg { width: 16px; height: 16px; }
+  .ast .go-badge path { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  /* The prototype's path to a signature, as three steps. Step one fills when staff approve. */
+  .ast .trk { list-style: none; margin: 16px 0 0; padding: 0; display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 12px; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--as-muted); }
+  .ast .trk-s { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .ast .trk-s i { flex: none; width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid var(--as-faint); background: var(--as-paper); box-sizing: border-box; }
+  .ast .trk-l { position: relative; flex: 1; min-width: 10px; height: 1.5px; border-radius: 1px; background: var(--as-rule); overflow: hidden; }
+  .ast .trk-l::after { content: ""; position: absolute; inset: 0; background: var(--as-green); transform-origin: 0 0; transform: scaleX(var(--p, 0)); }
 
   /* Pause control, above the tile's link so it stays clickable. */
   .ast-pz { pointer-events: auto; position: absolute; right: 12px; bottom: 12px; z-index: 2; width: 34px; height: 34px; padding: 0; border-radius: 50%; display: grid; place-items: center; background: rgb(255 255 255 / .1); border: 1px solid rgb(255 255 255 / .22); color: var(--as-paper); cursor: pointer; opacity: .7; transition: opacity var(--duration-fast) var(--ease-standard); }
@@ -313,7 +325,7 @@ const owl = "/media/athenascribe-owl.webp";
       d: [0, 1, 2].map((i) => $("d" + i)),
       c: [0, 1, 2].map((i) => $("c" + i)),
       l: [1, 2, 3].map((i) => $("l" + i)),
-      apv: $("apv"), apvin: $("apvin"), go: $("go"), ok: $("ok"), okb: $("okb"), okc: $("okc"), okh: $("okh"), okp: $("okp"), okf: $("okf"),
+      cg: $("cg"), apv: $("apv"), go: $("go"), goa: $("goa"), gob: $("gob"), okc: $("okc"), t1: $("t1"), t2: $("t2"), tl1: $("tl1"),
     };
     BOX.forEach((b, i) => {
       const pad = 3, d = e.d[i];
@@ -399,21 +411,25 @@ const owl = "/media/athenascribe-owl.webp";
         xf(n, (1 - v) * 90, 0, 1, o);
       });
 
-      // 6 Staff review: the card arrives, the button is pressed, the confirmation holds
-      const av = spring(t - T_APV, 12, 0.72), ao = fin(t, T_APV, 0.2) * fout(t, B.exit, 0.3);
-      xf(e.apv, (1 - av) * 70, 0, 1, ao);
-      const pr = t > T_PRESS - 0.1 && t < T_PRESS + 0.1 ? 0.96 : 1;
+      // 6 Staff review. The thesis chip arrives first, then the product card; the button is pressed and
+      // its own footprint turns into the result; the first step of the path fills.
+      const leave = fout(t, B.exit, 0.3);
+      const gv = spring(t - T_APV, 13, 0.7);
+      xf(e.cg, (1 - gv) * 60, 0, 1, fin(t, T_APV, 0.15) * leave);
+      const av = spring(t - (T_APV + 0.1), 12, 0.72);
+      xf(e.apv, (1 - av) * 70, 0, 1, fin(t, T_APV + 0.1, 0.2) * leave);
+      const pr = t > T_PRESS - 0.1 && t < T_PRESS + 0.1 ? 0.97 : 1;
       e.go.style.transform = `scale(${pr})`;
       e.go.style.background = pr < 1 ? "var(--as-indigo-ink)" : "";
-      const okv = fin(t, T_OK - 0.05, 0.2), oq = t - T_OK;
-      e.ok.style.opacity = okv.toFixed(3);
-      e.apvin.style.opacity = (1 - okv).toFixed(3);
-      xf(e.okb, 0, 0, 0.8 + 0.2 * spring(oq - 0.04, 16, 0.65), fin(t, T_OK, 0.12));
-      e.okc.style.strokeDashoffset = (1 - io((oq - 0.12) / 0.38)).toFixed(3);
-      [[e.okh, 0.16], [e.okp, 0.26], [e.okf, 0.4]].forEach(([n, d]) => {
-        const v = DECEL(cl((oq - (d as number)) / 0.4));
-        xf(n as HTMLElement, 0, (1 - v) * 8, 1, v);
-      });
+      const oq = t - T_OK;
+      e.goa.style.opacity = (1 - sm(oq / 0.12)).toFixed(3);
+      e.gob.style.opacity = sm((oq - 0.06) / 0.2).toFixed(3);
+      e.okc.style.strokeDashoffset = (1 - io((oq - 0.14) / 0.35)).toFixed(3);
+      const s1 = sm((oq - 0.3) / 0.25), s2 = sm((oq - 0.55) / 0.3);
+      e.t1.style.color = `color-mix(in srgb, var(--as-ink) ${(s1 * 100).toFixed(1)}%, var(--as-muted))`;
+      (e.t1.firstElementChild as HTMLElement).style.cssText = `background:color-mix(in srgb, var(--as-green) ${(s1 * 100).toFixed(1)}%, var(--as-paper));border-color:color-mix(in srgb, var(--as-green) ${(s1 * 100).toFixed(1)}%, var(--as-faint))`;
+      e.tl1.style.setProperty("--p", s2.toFixed(3));
+      (e.t2.firstElementChild as HTMLElement).style.cssText = `border-color:color-mix(in srgb, var(--as-indigo) ${(s2 * 100).toFixed(1)}%, var(--as-faint))`;
     }
 
     const fit = () => { e.stage.style.transform = `scale(${root.clientWidth / 960})`; };
