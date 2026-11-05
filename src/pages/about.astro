@@ -264,6 +264,7 @@ const numbered = rows.map((row) => row.map((tile) => ({ ...tile, number: String(
     grid-row: 1;
     color: var(--color-ink-muted);
     font-variant-numeric: tabular-nums;
+    white-space: nowrap; /* a year never breaks, so "2022 to Present" stays on one line on phones */
   }
 
   .ledger__place {
@@ -279,7 +280,7 @@ const numbered = rows.map((row) => row.map((tile) => ({ ...tile, number: String(
 
   @media (min-width: 40rem) {
     .ledger__row {
-      grid-template-columns: 13ch 1fr 1fr; /* fixed year column, so every row lines up */
+      grid-template-columns: 17ch 1fr 1fr; /* fixed year column, wide enough for "2022 to Present", so every row lines up */
     }
 
     .ledger__when,

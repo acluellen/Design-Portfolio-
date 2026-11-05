@@ -32,10 +32,14 @@ export interface ShapedTile {
 
 // Aaron’s list, Oct 10 2026. Years only where he gave them.
 export const resume: ResumeRow[] = [
+  { when: "2026", place: "BACR", what: "After School Program Instructor, K to 5" },
+  { when: "2022 to Present", place: "WOODENMAN", what: "Muay Thai Coach and Professional Fighter" },
+  { when: "2022 to Present", place: "PRIVATE COACHING", what: "Muay Thai Coach and Owner" },
   { when: "2026", place: "BRIDGEGOOD", what: "UX Design Apprentice" },
   { when: "2026", place: "KRON4", what: "Feature", href: site.kron4Video },
   { when: "2024 to 2025", place: "General Assembly", what: "UX certificate" },
   { place: "Lovable", what: "Hackathon" },
+  { when: "2022", place: "CSU EAST BAY", what: "BA Psychology" },
 ];
 
 // Real, named quotes only, with permission. Empty until Aaron sends them.
